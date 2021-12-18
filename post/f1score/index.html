@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.89.4 with theme even" />
+<meta name="generator" content="Hugo 0.90.1 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/f1score/" />
@@ -49,7 +49,7 @@
 <meta itemprop="name" content="从混淆矩阵到 F1 score">
 <meta itemprop="description" content="简单介绍 Precision 和 Recall 以及 F1 score 的计算方式"><meta itemprop="datePublished" content="2021-12-05T21:25:19+08:00" />
 <meta itemprop="dateModified" content="2021-12-05T21:25:19+08:00" />
-<meta itemprop="wordCount" content="1328">
+<meta itemprop="wordCount" content="1325">
 <meta itemprop="keywords" content="ML," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从混淆矩阵到 F1 score"/>
 <meta name="twitter:description" content="简单介绍 Precision 和 Recall 以及 F1 score 的计算方式"/>
@@ -130,7 +130,7 @@
       <div class="post-meta">
         <span class="post-time"> 2021-12-05 </span>
         
-          <span class="more-meta"> 约 1328 字 </span>
+          <span class="more-meta"> 约 1325 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         
       </div>
@@ -266,9 +266,10 @@
 <li>情况二：比如 $P$ 和 $R$ 分别是 $50%$ 和 $70%$，可以看到他们和上一种情况的平均值是一样的，但是他们的 F1 score = $58.3%$</li>
 </ol>
 </li>
-<li>由 1. 可知：📒高 F1 score 不意味着分类器更好更适合你的任务，有时候你可能更关注 Precision 或者 Recall 中的某个部分</li>
+<li>由 1. 可知：📒高 F1 score 不意味着分类器更好或更适合你的任务，有时候你可能更关注 Precision 或者 Recall 这两个中的一个</li>
 </ol>
 <h2 id="一个完整的例子">一个完整的例子🌰</h2>
+<hr>
 <center>
 <table>
 <thead>
@@ -422,11 +423,9 @@
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
-</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">multilabel_confusion_matrix</span>
 
 <span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
