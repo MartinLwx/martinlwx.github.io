@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>怎么 debug 一个 Python 文件 - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="简单介绍了用 ipdb 对 Python 文件进行 debug" /><meta name="keywords" content="python, debug" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.0 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/how-to-debug-in-python/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="怎么 debug 一个 Python 文件" />
+<meta property="og:description" content="简单介绍了用 ipdb 对 Python 文件进行 debug" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/how-to-debug-in-python/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-12-28T11:19:00+08:00" />
+<meta property="article:modified_time" content="2021-12-28T11:19:00+08:00" />
+
+<meta itemprop="name" content="怎么 debug 一个 Python 文件">
+<meta itemprop="description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"><meta itemprop="datePublished" content="2021-12-28T11:19:00+08:00" />
+<meta itemprop="dateModified" content="2021-12-28T11:19:00+08:00" />
+<meta itemprop="wordCount" content="1037">
+<meta itemprop="keywords" content="debug,python," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="怎么 debug 一个 Python 文件"/>
+<meta name="twitter:description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">怎么 debug 一个 Python 文件</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2021-12-28 </span>
+        
+          <span class="more-meta"> 约 1037 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#引言">引言</a></li>
+        <li><a href="#快速上手">快速上手</a></li>
+        <li><a href="#ipdb-中的命令">ipdb 中的命令</a>
+          <ul>
+            <li><a href="#控制程序运行"><strong>控制程序运行</strong></a></li>
+            <li><a href="#程序断点专题"><strong>程序断点专题</strong></a></li>
+            <li><a href="#查看各种信息"><strong>查看各种信息</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#常见问题">常见问题</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="引言">引言</h2>
+<hr>
+<p>很长一段时间内我写代码都是用最简单的 debug 方法, 手动在程序里面插入 <code>print</code> 代码来看具体的变量的值, 然后自己推断程序到底是在哪里出问题. 根据 <code>print</code> 的结果可能还要到别的地方重复这个步骤. debug 完之后还得去把这些 <code>print</code> 语句注释掉. 这个就是我以前的日常 debug 流程.</p>
+<p>最近在看 MIT.Missing semester 的课讲到 debug, 顿时感到应该系统学习一下在 Python 里面如何 debug, 虽然用 <code>print</code> 也凑合, 学完之后只恨自己没有早点了解😢</p>
+<h2 id="快速上手">快速上手</h2>
+<hr>
+<p><strong>安装</strong></p>
+<p>虽然 Python 有自带的 <code>pdb</code>, 但是 <code>ipdb</code> 的跟它大差不差, 还带颜色输出, 当然用这个了(其实就跟你在命令行要用 <code>python</code> 还是 <code>ipython</code> 一样, 我肯定是选择 UI 比较好看的 <code>ipython</code>)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; pip install ipdb
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>开始 debug</strong></p>
+<p>直接在命令行输入以下内容即可, 其中 <code>&lt;filename&gt;</code> 表示你要 debug 的文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; python -m ipdb &lt;filename&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="ipdb-中的命令">ipdb 中的命令</h2>
+<hr>
+<p><code>[ ]</code> 表示是可选参数, 如果没有 <code>[ ]</code> 表示一定要给这个参数</p>
+<p><code>( )</code> 表示里面的可以不写, 简写命令</p>
+<h3 id="控制程序运行"><strong>控制程序运行</strong></h3>
+<ul>
+<li><code>l(ist)</code> - 展示当前行附近的行, <del>具体来说是附近的 11 行, 但是记这个具体的数字好像也没啥意义</del></li>
+<li><code>s(tep)</code>  - 单步执行下一步, 如果是函数调用语句, 会进到函数里一步步执行</li>
+<li><code>n(ext)</code> - 单步执行下一步, 如果是函数调用语句, 不会进去函数里一步步执行, 它会一直运行到函返回结果</li>
+<li><code>c(ontinue)</code> - 继续执行, 直到程序发生错误或者正常退出
+<ul>
+<li>如果程序是正常退出的, 那么就会输出 <code>The program finished and will be restarted</code></li>
+</ul>
+</li>
+<li><code>q(uit)</code> - 退出程序执行</li>
+<li><code>r(eturn)</code> - 继续运行到当前函数返回结果为止</li>
+<li><code>w(here)</code> - 打印 stack trace, 看调用轨迹, 从上到下分别是从最内层到最外层的调用入口
+<ul>
+<li>然后你可以根据这个调用栈, 用 <code>d(own) [count]</code> 和 <code>u(up) [count]</code> 来在不同的层次间移动</li>
+</ul>
+</li>
+</ul>
+<h3 id="程序断点专题"><strong>程序断点专题</strong></h3>
+<p>每次设置程序断点的时候都会输出你当前这个程序断点的序号, 默认从 1 开始, 也就是后面提到的 <code>breakpoint count]</code></p>
+<ul>
+<li><code>b(reak) [line_number]</code> - 在 <code>line_number</code> 设置 breakpoint</li>
+<li><code>tbreak [line_number]</code> - 暂时的程序断点, 第一次命中之后就会自己取消</li>
+<li><code>disable [breakpoint count]</code> - 暂时不用这个程序断点, 和 <code>clear</code> 不同, 你后面可以通过 <code>enable</code> 重新激活这个程序断点</li>
+<li><code>enable [breakpoint count]</code> - 激活程序断点</li>
+<li><code>cl(ear) [breakpoint count | line_number]</code> - 通过程序断点的序号或者是对应的行来清除程序断点</li>
+<li><code>unt(il) line_number</code> - 运行到 <code>line_number</code> 这一行</li>
+<li><code>restart [args...]</code> - 可以给丁不同的参数再次重新运行来 debug</li>
+</ul>
+<h3 id="查看各种信息"><strong>查看各种信息</strong></h3>
+<ul>
+<li><code>h(elp) [command]</code> - 不知道命令可以查询一下</li>
+<li><code>p expression</code> - 相当于 <code>print expression</code>, 也可以使用 <code>pp</code>(对应 <code>pprint</code>)
+<ul>
+<li>一个比较特殊的 <code>expression</code> 是 <code>locals()</code>, 可以查看当前所在位置的 context</li>
+</ul>
+</li>
+<li><code>a(rgs)</code> - 打印当前所有的变量的值</li>
+<li><code>whatis expression</code> - 相当于 <code>type(expression)</code></li>
+<li><code>source expression</code> - 查看 <code>expression</code> 的源码. 常用的 <code>expression</code> 是函数名</li>
+</ul>
+<h2 id="常见问题">常见问题</h2>
+<hr>
+<p>Q: 我的变量名跟命令重复了怎么办, 比如变量名是 <code>p</code> ?</p>
+<p>A: 这个其实不影响, 你还是可以通过 <code>p p</code> 来获取变量名的值</p>
+<p>Q: 每次单步执行之后都要用 <code>p expression</code> 的方式来看变量的值, 有没有更为简便的方法?</p>
+<p>A: 可以用 <code>display expression</code>, 那么在 <code>expression</code> 的值发生变动的时候, 它就会输出对应的值. 如果要取消就用 <code>undisplay expression</code></p>
+<p>Q: 觉得命令有点少不满足自己的需要 ?</p>
+<p>A: 可以在 ipdb 里面直接写 python 的代码 🤗</p>
+<h2 id="参考">参考</h2>
+<hr>
+<ol>
+<li><a href="https://docs.python.org/3/library/pdb.html">pdb 的官方文档</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2021-12-28
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/debug/">debug</a>
+          <a href="/tags/python/">python</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/exercise05-06-missingsemester-2020/">
+            <span class="next-text nav-default">the exercise 05&amp;06 of MIT.Missing-semester(2020)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            label="💬"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
