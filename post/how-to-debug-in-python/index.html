@@ -49,7 +49,7 @@
 <meta itemprop="name" content="怎么 debug 一个 Python 文件">
 <meta itemprop="description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"><meta itemprop="datePublished" content="2021-12-28T11:19:00+08:00" />
 <meta itemprop="dateModified" content="2021-12-28T11:19:00+08:00" />
-<meta itemprop="wordCount" content="1037">
+<meta itemprop="wordCount" content="1670">
 <meta itemprop="keywords" content="debug,python," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="怎么 debug 一个 Python 文件"/>
 <meta name="twitter:description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"/>
@@ -145,8 +145,8 @@ if (!doNotTrack) {
       <div class="post-meta">
         <span class="post-time"> 2021-12-28 </span>
         
-          <span class="more-meta"> 约 1037 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
+          <span class="more-meta"> 约 1670 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
         
       </div>
     </header>
@@ -208,7 +208,12 @@ if (!doNotTrack) {
 <p><code>( )</code> 表示里面的可以不写, 简写命令</p>
 <h3 id="控制程序运行"><strong>控制程序运行</strong></h3>
 <ul>
-<li><code>l(ist)</code> - 展示当前行附近的行, <del>具体来说是附近的 11 行, 但是记这个具体的数字好像也没啥意义</del></li>
+<li><code>l(ist)</code> - 展示当前行附近的行, <del>具体来说是附近的 11 行, 但是记这个具体的数字好像也没啥意义</del>
+<ul>
+<li>也可以使用 <code>ll</code> 命令, 会展示当前所在函数或者是堆栈帧的源代码</li>
+<li>可以传入参数, 比如要看 1 到 12 行的内容可以用 <code>l 1,12</code></li>
+</ul>
+</li>
 <li><code>s(tep)</code>  - 单步执行下一步, 如果是函数调用语句, 会进到函数里一步步执行</li>
 <li><code>n(ext)</code> - 单步执行下一步, 如果是函数调用语句, 不会进去函数里一步步执行, 它会一直运行到函返回结果</li>
 <li><code>c(ontinue)</code> - 继续执行, 直到程序发生错误或者正常退出
@@ -227,39 +232,101 @@ if (!doNotTrack) {
 <h3 id="程序断点专题"><strong>程序断点专题</strong></h3>
 <p>每次设置程序断点的时候都会输出你当前这个程序断点的序号, 默认从 1 开始, 也就是后面提到的 <code>breakpoint count]</code></p>
 <ul>
-<li><code>b(reak) [line_number]</code> - 在 <code>line_number</code> 设置 breakpoint</li>
-<li><code>tbreak [line_number]</code> - 暂时的程序断点, 第一次命中之后就会自己取消</li>
-<li><code>disable [breakpoint count]</code> - 暂时不用这个程序断点, 和 <code>clear</code> 不同, 你后面可以通过 <code>enable</code> 重新激活这个程序断点</li>
-<li><code>enable [breakpoint count]</code> - 激活程序断点</li>
-<li><code>cl(ear) [breakpoint count | line_number]</code> - 通过程序断点的序号或者是对应的行来清除程序断点</li>
-<li><code>unt(il) line_number</code> - 运行到 <code>line_number</code> 这一行</li>
-<li><code>restart [args...]</code> - 可以给丁不同的参数再次重新运行来 debug</li>
+<li>
+<p><code>b(reak) [line_number]</code> - 在 <code>line_number</code> 设置 breakpoint</p>
+<ul>
+<li>不提供参数的话就是查看我们设置的所有程序断点</li>
+<li>⭐ 高级用法, 你还可以指定文件! 比如你想停在 <code>util.py</code> 文件的第 10 行, 你可以用 <code>b util:10</code></li>
+<li>⭐ 高级用法, 你在指定文件的同时, 可以指定函数, 还是刚才那个例子, 比如 <code>util.py</code> 文件里面有个 <code>get_result</code> 函数, 你可以用 <code>b util.get_result</code></li>
+<li>⭐ 高级用法: 你还可以指定满足某些条件才会设置程序断点, 用法如下: <code>b ..., condition</code></li>
+</ul>
+</li>
+<li>
+<p><code>tbreak [line_number]</code> - 暂时的程序断点, 第一次命中之后就会自己取消</p>
+</li>
+<li>
+<p><code>disable [breakpoint count]</code> - 暂时不用这个程序断点, 和 <code>clear</code> 不同, 你后面可以通过 <code>enable</code> 重新激活这个程序断点</p>
+</li>
+<li>
+<p><code>enable [breakpoint count]</code> - 激活程序断点</p>
+</li>
+<li>
+<p><code>cl(ear) [breakpoint count | line_number]</code> - 通过程序断点的序号或者是对应的行来清除程序断点</p>
+</li>
+<li>
+<p><code>unt(il) [line_number]</code> - 运行大于等于 <code>line_number</code> 的地方</p>
+<ul>
+<li>
+<p>当然你也可以不提供参数, 此时 <code>unt(il)</code> 命令会继续运行程序到行数比当前行大的那一行(有点绕口, 但意思其实就是下一行🧐), 此时它的功能类似于 <code>n(ext)</code></p>
+<blockquote>
+<p>📒 <code>unt(il)</code> 命令默认会停在当前函数(或者是堆栈帧) return 的地方, 而 <code>c(ontinue)</code> 会一直运行到下去</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p><code>restart [args...]</code> - 可以给定不同的参数再次重新运行来 debug</p>
+</li>
 </ul>
 <h3 id="查看各种信息"><strong>查看各种信息</strong></h3>
 <ul>
-<li><code>h(elp) [command]</code> - 不知道命令可以查询一下</li>
-<li><code>p expression</code> - 相当于 <code>print expression</code>, 也可以使用 <code>pp</code>(对应 <code>pprint</code>)
+<li>
+<p><code>h(elp) [command]</code> - 不知道命令可以查询一下</p>
+</li>
+<li>
+<p><code>p expression</code> - 相当于 <code>print expression</code>, 也可以使用 <code>pp</code>(对应 <code>pprint</code>)</p>
 <ul>
-<li>一个比较特殊的 <code>expression</code> 是 <code>locals()</code>, 可以查看当前所在位置的 context</li>
+<li>
+<p>一个比较特殊的 <code>expression</code> 是 <code>locals()</code>, 可以查看当前所在位置的 context</p>
+<blockquote>
+<p>📒 要深刻理解这里是 <code>expression</code> 的好处, 如果本来的 <code>expression</code> 不对, 其实你可以直接在这里想要怎么改, 然后直接进行测试😮</p>
+</blockquote>
+</li>
 </ul>
 </li>
-<li><code>a(rgs)</code> - 打印当前所有的变量的值</li>
-<li><code>whatis expression</code> - 相当于 <code>type(expression)</code></li>
-<li><code>source expression</code> - 查看 <code>expression</code> 的源码. 常用的 <code>expression</code> 是函数名</li>
+<li>
+<p><code>a(rgs)</code> - 打印当前所有的变量的值</p>
+</li>
+<li>
+<p><code>whatis expression</code> - 相当于 <code>type(expression)</code></p>
+</li>
+<li>
+<p><code>source expression</code> - 查看 <code>expression</code> 的源码. 常用的 <code>expression</code> 是函数名</p>
+</li>
 </ul>
 <h2 id="常见问题">常见问题</h2>
 <hr>
 <p>Q: 我的变量名跟命令重复了怎么办, 比如变量名是 <code>p</code> ?</p>
-<p>A: 这个其实不影响, 你还是可以通过 <code>p p</code> 来获取变量名的值</p>
+<p>A: 这个其实不影响, 你还是可以通过 <code>p p</code> 来获取变量名的值. 如果你直接输入 <code>p</code> 显示 <code>p</code> 对应的值的话, 你可以使用 <code>!p</code>, 用 <code>!</code> 来告诉 <code>ipdb</code> 在它后面的是 python 语句</p>
 <p>Q: 每次单步执行之后都要用 <code>p expression</code> 的方式来看变量的值, 有没有更为简便的方法?</p>
 <p>A: 可以用 <code>display expression</code>, 那么在 <code>expression</code> 的值发生变动的时候, 它就会输出对应的值. 如果要取消就用 <code>undisplay expression</code></p>
 <p>Q: 觉得命令有点少不满足自己的需要 ?</p>
-<p>A: 可以在 ipdb 里面直接写 python 的代码 🤗</p>
+<p>A: 可以在 <code>ipdb</code> 里面直接写 python 的代码 🤗</p>
+<p>Q: 不想使用 <code>python -m ipdb &lt;filename&gt;</code> 想直接在代码里插入程序断点 ?</p>
+<p>A: 这也是可以的, 你可以在要插入的行之前设置, 像这样:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="o">......</span>
+<span class="kn">import</span> <span class="nn">ipdb</span><span class="p">;</span> <span class="n">ipdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">();</span>
+<span class="o">......</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果你是用是 &gt;= Python 3.7 的版本, 可以插入 <code>breakpoint()</code> 而不是 <code>import ipdb; ipdb.set_trace();</code>, 这样设置的好处是<strong>你可以一次性取消所有的程序断点</strong>😮, 你就可以区分开正常运行的模式和调试程序的模式. 这种方式默认采用的是 <code>pdb</code></p>
+<p>Q: <code>-&gt;</code> 指向的行运行了吗 ?</p>
+<p>A: 没有</p>
+<p>Q: 如果我一直在调用 <code>step</code> 命令, 难道我每一次都要输入 <code>s</code> 吗, 有没有更快捷的方法 ?</p>
+<p>A: 可以直接使用回车键(ENTER), 会自动重复上一次的命令</p>
 <h2 id="参考">参考</h2>
 <hr>
 <ol>
 <li><a href="https://docs.python.org/3/library/pdb.html">pdb 的官方文档</a></li>
 </ol>
+<p>ps. 有兴趣的可以查看我翻译的一个项目 - <a href="https://github.com/MartinLwx/pdb-tutorial">pdb 教程</a>, 还挺有意思的</p>
 
     </div>
 
@@ -336,7 +403,8 @@ if (!doNotTrack) {
 
   <span class="copyright-year">
     &copy; 
-    2021<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
   </span>
 </div>
 
