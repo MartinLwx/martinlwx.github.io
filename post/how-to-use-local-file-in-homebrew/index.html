@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>怎么在 homebrew 里面安装本地安装包 - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="简单介绍怎么用 homebrew 安装本地安装包" /><meta name="keywords" content="homebrew, local file" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.91.2 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/how-to-use-local-file-in-homebrew/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="怎么在 homebrew 里面安装本地安装包" />
+<meta property="og:description" content="简单介绍怎么用 homebrew 安装本地安装包" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/how-to-use-local-file-in-homebrew/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-04T18:55:30+08:00" />
+<meta property="article:modified_time" content="2022-01-04T18:55:30+08:00" />
+
+<meta itemprop="name" content="怎么在 homebrew 里面安装本地安装包">
+<meta itemprop="description" content="简单介绍怎么用 homebrew 安装本地安装包"><meta itemprop="datePublished" content="2022-01-04T18:55:30+08:00" />
+<meta itemprop="dateModified" content="2022-01-04T18:55:30+08:00" />
+<meta itemprop="wordCount" content="783">
+<meta itemprop="keywords" content="mac,homebrew," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="怎么在 homebrew 里面安装本地安装包"/>
+<meta name="twitter:description" content="简单介绍怎么用 homebrew 安装本地安装包"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">怎么在 homebrew 里面安装本地安装包</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-04 </span>
+        
+          <span class="more-meta"> 约 783 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#引言">引言</a></li>
+        <li><a href="#step-1-获取路径文件名">Step 1. 获取路径文件名</a></li>
+        <li><a href="#step-2-移动本地安装包到对应的目录下">Step 2. 移动本地安装包到对应的目录下</a></li>
+        <li><a href="#step-3-再次运行-brew-install">Step 3. 再次运行 <code>brew install</code></a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="引言">引言</h2>
+<hr>
+<p>最近想要在 homebrew 上面下载 qbittorent, 发现我即使用的是中科大的源也下载不下来, 终端显示如下内容⬇️</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">==</span>&gt; Downloading https://downloads.sourceforge.net/qbittorrent/qbittorrent-mac/qbittorrent-4.3.9/qbittorrent-4.3.9.dmg
+curl: <span class="o">(</span>35<span class="o">)</span> error:06FFF089:digital envelope routines:CRYPTO_internal:bad key <span class="nv">length</span><span class="o">=</span><span class="c1">#   #   #</span>
+
+Error: Download failed on Cask <span class="s1">&#39;qbittorrent&#39;</span> with message: Download failed: https://downloads.sourceforge.net/qbittorrent/qbittorrent-mac/qbittorrent-4.3.9/qbittorrent-4.3.9.dmg
+</code></pre></td></tr></table>
+</div>
+</div><p>此时我就想到要不干脆把这个文件下载下来, 然后用 homebrew 本地安装(应该是有这个功能的), 做了一番检索之后, 终于知道要怎么弄了, 下面我将以 qbittorrent-4.3.9.dmg 为例</p>
+<h2 id="step-1-获取路径文件名">Step 1. 获取路径文件名</h2>
+<hr>
+<p>可以先运行 <code>brew --cache</code> 查看 homebrew 的缓存路径, 一般来说应该是在 <code>~/Library/Caches/Homebrew</code> 下.</p>
+<p>homebrew 会把安装包下载到里面的 <code>downloads</code> 文件夹里面, 也就是在 <code>~/Library/Caches/Homebrew/downloads</code> 下, 进入这个文件夹可以发现里面的文件名的格式都是 <code>&lt;url-hash&gt;--&lt;formula&gt;-&lt;version&gt;</code>, 显然, 我们也要把我们的安装包弄成这种格式放在里面.</p>
+<blockquote>
+<p>📒 使用 <code>brew --cache -s &lt;formula&gt;</code> 来获取对应的路径文件名</p>
+</blockquote>
+<p>对应我们这篇文章的例子就是 <code>brew --cache -s qbittorrent</code>, 可以看到输出内容是 <code>/Users/&lt;对应你的用户名&gt;/Library/Caches/Homebrew/downloads/7ee479ba2a19cf904e4c415805a6adaead76e7c191d595c016c86b72044c22fa--qbittorrent-4.3.9.dmg</code></p>
+<h2 id="step-2-移动本地安装包到对应的目录下">Step 2. 移动本地安装包到对应的目录下</h2>
+<hr>
+<p>在 Step 1. 中我们已经可以知道该把文件放到什么地方, 接下来要做的无非就是移动文件可以, 如果打开文件浏览器移动那就慢了, 直接在命令行输入对应命令即可</p>
+<blockquote>
+<p>📒 使用 <code>mv &lt;local-file&gt; &quot;$(brew --cache -s &lt;formula&gt;)&quot;</code> 移动本地安装包到对应目录下</p>
+</blockquote>
+<p>对应我们的例子就是 <code>mv qbittorrent-4.3.9.dmg  &quot;$(brew --cache -s qbittorrent)&quot;</code></p>
+<h2 id="step-3-再次运行-brew-install">Step 3. 再次运行 <code>brew install</code></h2>
+<hr>
+<p>此时再次运行 <code>brew install qbittorrent</code> 即可, 可以看到命令行找到了缓存文件🤗, 而且安装成功了</p>
+<blockquote>
+<p>📒 再次运行 <code>brew install &lt;formula&gt;</code></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">==</span>&gt; Downloading https://downloads.sourceforge.net/qbittorrent/qbittorrent-mac/qbittorrent-4.3.9/qbittorrent-4.3.9.dmg
+Already downloaded: /Users/&lt;对应你的用户名&gt;/Library/Caches/Homebrew/downloads/7ee479ba2a19cf904e4c415805a6adaead76e7c191d595c016c86b72044c22fa--qbittorrent-4.3.9.dmg
+<span class="o">==</span>&gt; Installing Cask <span class="nv">qbittorrent</span>
+<span class="o">==</span>&gt; Moving App <span class="s1">&#39;qbittorrent.app&#39;</span> to <span class="s1">&#39;/Applications/qBittorrent.app&#39;</span>
+🍺  qbittorrent was successfully installed!
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<hr>
+<ol>
+<li><a href="https://docs.brew.sh/Tips-N'-Tricks">homebrew 文档</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2022-01-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mac/">mac</a>
+          <a href="/tags/homebrew/">homebrew</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/exercise07-missingsemester-2020/">
+            <span class="next-text nav-default">the solutions for exercise07 of Missingsemester 2020</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
