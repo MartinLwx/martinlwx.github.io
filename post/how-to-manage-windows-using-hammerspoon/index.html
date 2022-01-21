@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>How to Manage Windows Using Hammerspoon - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="Explain how to use hammerspoon to manage windows" /><meta name="keywords" content="windows manager, hammerspoon" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/how-to-manage-windows-using-hammerspoon/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="How to Manage Windows Using Hammerspoon" />
+<meta property="og:description" content="Explain how to use hammerspoon to manage windows" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/how-to-manage-windows-using-hammerspoon/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-21T21:45:21+08:00" />
+<meta property="article:modified_time" content="2022-01-21T21:45:21+08:00" />
+
+<meta itemprop="name" content="How to Manage Windows Using Hammerspoon">
+<meta itemprop="description" content="Explain how to use hammerspoon to manage windows"><meta itemprop="datePublished" content="2022-01-21T21:45:21+08:00" />
+<meta itemprop="dateModified" content="2022-01-21T21:45:21+08:00" />
+<meta itemprop="wordCount" content="509">
+<meta itemprop="keywords" content="tool," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to Manage Windows Using Hammerspoon"/>
+<meta name="twitter:description" content="Explain how to use hammerspoon to manage windows"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">How to Manage Windows Using Hammerspoon</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-21 </span>
+        
+          <span class="more-meta"> 509 words </span>
+          <span class="more-meta"> 3 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#intro">Intro</a></li>
+        <li><a href="#what-is-hammerspoon-">What is hammerspoon ?</a></li>
+        <li><a href="#how-to-manage-windows-">How to manage windows ?</a></li>
+        <li><a href="#code-explained">Code Explained</a></li>
+        <li><a href="#ref">Ref</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="intro">Intro</h2>
+<hr>
+<p>I found that the windows management built in macOS is difficult to use. As a result, I always using my mouse to move and resize my window, which is less efficient. We should keep our hands on the keyboard as much as possible. After finishing the MIT-Missing-Semester, I came across the <a href="https://www.hammerspoon.org">hammerspoon</a> tool. I really like this one :)</p>
+<h2 id="what-is-hammerspoon-">What is hammerspoon ?</h2>
+<hr>
+<p>According to the official site&rsquo;s introduction, <em>hammerspoon is a tool for powerful automation of OS X, which is just a bridge between the operating system and a Lua scripting engine</em>. The windows management is kind of automation.</p>
+<p>To be honest, I once heard the <code>Lua</code> language but I don&rsquo;t know anything about it. I follow <a href="https://learnxinyminutes.com/docs/lua/">Learn Lua in Y minutes</a> to have a basic understanding of this language.</p>
+<h2 id="how-to-manage-windows-">How to manage windows ?</h2>
+<hr>
+<p>I would like to have the following features:</p>
+<ol>
+<li>Move and resize my window to the left/right of screen.</li>
+<li>The full screen mode</li>
+<li>Move and resize my window to the top-left/top-right/bottom-left/bottom-right of screen</li>
+<li>Move current window to the center of screen</li>
+</ol>
+<p>My solution consists of 3 <code>*.lua</code> file(I have put this in my <a href="https://github.com/MartinLwx/dotfiles">dotfiles</a>)</p>
+<p>👉<strong>config.lua</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="n">MACBOOK_MONITOR</span> <span class="o">=</span> <span class="s1">&#39;Built-in Retina Display&#39;</span>
+
+<span class="c1">-- disable animations, default value = 0.2</span>
+<span class="n">hs.window</span><span class="p">.</span><span class="n">animationDuration</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>👉<strong>init.lua</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">)</span>
+<span class="n">require</span><span class="p">(</span><span class="s1">&#39;window&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>👉<strong>window.lua</strong></p>
+<p>This is the main part of windows management.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="c1">-- half of screen</span>
+<span class="c1">-- {frame.x, frame.y, window.w, window.h}</span>
+<span class="c1">-- First two elements: we decide the position of frame</span>
+<span class="c1">-- Last two elements: we decide the size of frame</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;down&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+
+<span class="c1">-- quarter of screen</span>
+<span class="cm">--[[
+</span><span class="cm">    u i
+</span><span class="cm">    j k
+</span><span class="cm">--]]</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+
+
+<span class="c1">-- full screen</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+
+<span class="c1">-- center screen</span>
+<span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">centerOnScreen</span><span class="p">()</span> <span class="kr">end</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>You shoule put these files in <code>~/.hammerspoon/</code> and then click on <code>Reload config</code> 🤗</p>
+<h2 id="code-explained">Code Explained</h2>
+<hr>
+<ul>
+<li><code>hs.hotkey.bind(mods, key, pressedfn)</code>
+<ul>
+<li>This is a simple function to create a new hotkey and bind it to <code>pressedfn</code>.</li>
+<li>We press and hold <code>mods</code> and use <code>key</code> to enable <code>pressedfn</code>. For example, If we want to make a window full screen. We first press and hold <code>alt</code>(option) and <code>cmd</code>, then we press <code>f</code>.</li>
+</ul>
+</li>
+<li><code>pressedfn</code>
+<ul>
+<li>This is an anonymous function in <code>Lua</code>.</li>
+<li>The key of this function is <code>hs.window.focusedWindow():moveToUnit({...})</code>. Its job is get the <em>focused</em> window and make some changes of position and size. The parameters are a <em>table</em> in Lua. You may combine the previous comments in <strong>window.lua</strong> and the image below to understand this.</li>
+</ul>
+</li>
+</ul>
+<p><img src="" alt="/img/movetounit.png"></p>
+<h2 id="ref">Ref</h2>
+<hr>
+<ol>
+<li><a href="https://github.com/anishathalye/dotfiles-local/tree/mac/hammerspoon">Anish’s Hammerspoon config</a></li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-01-21
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/tool/">tool</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/hw00-of-cs61b-of-ucb/">
+            <span class="next-text nav-default">Hw00 of CS61B of UCB</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
