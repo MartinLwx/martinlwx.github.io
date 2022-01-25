@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hw03 of CS61A of UCB - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="The simple solutions of hw03 of CS61A of UCB" /><meta name="keywords" content="CS61A, hw, solutions" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/hw03-of-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Hw03 of CS61A of UCB" />
+<meta property="og:description" content="The simple solutions of hw03 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/hw03-of-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-24T11:04:10+08:00" />
+<meta property="article:modified_time" content="2022-01-24T11:04:10+08:00" />
+
+<meta itemprop="name" content="Hw03 of CS61A of UCB">
+<meta itemprop="description" content="The simple solutions of hw03 of CS61A of UCB"><meta itemprop="datePublished" content="2022-01-24T11:04:10+08:00" />
+<meta itemprop="dateModified" content="2022-01-24T11:04:10+08:00" />
+<meta itemprop="wordCount" content="1577">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hw03 of CS61A of UCB"/>
+<meta name="twitter:description" content="The simple solutions of hw03 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Hw03 of CS61A of UCB</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-24 </span>
+        
+          <span class="more-meta"> 1577 words </span>
+          <span class="more-meta"> 8 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#hw03-recursion-tree-recursion">hw03. Recursion, Tree Recursion</a>
+          <ul>
+            <li><a href="#q1-num-eights">Q1: Num eights</a></li>
+            <li><a href="#q2-ping-pong">Q2: Ping-pong</a></li>
+            <li><a href="#q3-missing-digits">Q3: Missing Digits</a></li>
+            <li><a href="#q4-count-coins">Q4: Count coins</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="hw03-recursion-tree-recursion">hw03. Recursion, Tree Recursion</h2>
+<hr>
+<h3 id="q1-num-eights">Q1: Num eights</h3>
+<blockquote>
+<p>Write a recursive function <code>num_eights</code> that takes a positive integer <code>pos</code> and returns the number of times the digit 8 appears in <code>pos</code>.</p>
+<p><strong>Important:</strong> Use recursion; the tests will fail if you use any assignment statements. (You can however use function definitions if you so wish.)</p>
+</blockquote>
+<p>It is easy to think of the answer to this question, for we have seen a similar one in lecture. We can split the <code>pos</code> into <code>all_bust_last</code> and <code>last</code>. When we arrive at the base case, we just need to check if it is equals to 8. Because we can not use <code>=</code> in this problem, we need to use function instead.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">is_single_digit</span><span class="p">(</span><span class="n">digits</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">digits</span> <span class="o">//</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">is_eight</span><span class="p">(</span><span class="n">digit</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">digit</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">num_eights</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Returns the number of times 8 appears as a digit of pos.
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; num_eights(3)
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; num_eights(8)
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; num_eights(88888888)
+</span><span class="s2">    8
+</span><span class="s2">    &gt;&gt;&gt; num_eights(2638)
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; num_eights(86380)
+</span><span class="s2">    2
+</span><span class="s2">    &gt;&gt;&gt; num_eights(12345)
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span><span class="s2">    &gt;&gt;&gt; # ban all assignment statements
+</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;num_eights&#39;,
+</span><span class="s2">    ...       [&#39;Assign&#39;, &#39;AnnAssign&#39;, &#39;AugAssign&#39;, &#39;NamedExpr&#39;])
+</span><span class="s2">    True
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># base case: if pos is a single digit, check if it == 8</span>
+    <span class="k">if</span> <span class="n">is_single_digit</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">is_eight</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">is_eight</span><span class="p">(</span><span class="n">pos</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="n">num_eights</span><span class="p">(</span><span class="n">pos</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q2-ping-pong">Q2: Ping-pong</h3>
+<blockquote>
+<p>The ping-pong sequence counts up starting from 1 and is always either counting up or counting down. At element <code>k</code>, the direction switches if <code>k</code> is a multiple of 8 or contains the digit 8. The first 30 elements of the ping-pong sequence are listed below, with direction swaps marked using brackets at the 8th, 16th, 18th, 24th, and 28th elements:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Index</th>
+<th style="text-align:left">1</th>
+<th style="text-align:left">2</th>
+<th style="text-align:left">3</th>
+<th style="text-align:left">4</th>
+<th style="text-align:left">5</th>
+<th style="text-align:left">6</th>
+<th style="text-align:left">7</th>
+<th style="text-align:left">[8]</th>
+<th style="text-align:left">9</th>
+<th style="text-align:left">10</th>
+<th style="text-align:left">11</th>
+<th style="text-align:left">12</th>
+<th style="text-align:left">13</th>
+<th style="text-align:left">14</th>
+<th style="text-align:left">15</th>
+<th style="text-align:left">[16]</th>
+<th style="text-align:left">17</th>
+<th style="text-align:left">[18]</th>
+<th style="text-align:left">19</th>
+<th style="text-align:left">20</th>
+<th style="text-align:left">21</th>
+<th style="text-align:left">22</th>
+<th style="text-align:left">23</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">PingPong Value</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">[8]</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">[0]</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">[2]</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">-1</td>
+<td style="text-align:left">-2</td>
+<td style="text-align:left">-3</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Index (cont.)</th>
+<th style="text-align:left">[24]</th>
+<th style="text-align:left">25</th>
+<th style="text-align:left">26</th>
+<th style="text-align:left">27</th>
+<th style="text-align:left">[28]</th>
+<th style="text-align:left">29</th>
+<th style="text-align:left">30</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">PingPong Value</td>
+<td style="text-align:left">[-4]</td>
+<td style="text-align:left">-3</td>
+<td style="text-align:left">-2</td>
+<td style="text-align:left">-1</td>
+<td style="text-align:left">[0]</td>
+<td style="text-align:left">-1</td>
+<td style="text-align:left">-2</td>
+</tr>
+</tbody>
+</table>
+<p>Implement a function <code>pingpong</code> that returns the nth element of the ping-pong sequence <em>without using any assignment statements</em>. (You are allowed to use function definitions.)</p>
+<p>You may use the function <code>num_eights</code>, which you defined in the previous question.</p>
+<p><strong>Important:</strong> Use recursion; the tests will fail if you use any assignment statements. (You can however use function definitions if you so wish.)</p>
+</blockquote>
+<p>At first, we need to define what is the base case in this problem.</p>
+<p>Let&rsquo;s solve this problem from scratch. The iterative solutioin is quite easy and intuitive. We need to track these things⬇️</p>
+<ol>
+<li>index(<code>i</code>), we need to count it to <code>n</code>.</li>
+<li>value(<code>val</code>), we need to keep track of this state. When we count <code>i</code> to <code>n</code>, this is the expected output.</li>
+<li><code>direction</code>, this is a variable that is either equal to <code>-1</code> or <code>1</code>. We maintain this variable to indicate counting up or counting down. If it is a multiple of 8 or contains the digit 8, we need to change its value.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">pingpong</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">val</span> <span class="o">+=</span> <span class="n">direction</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">num_eights</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="o">-</span><span class="n">direction</span>
+    <span class="k">return</span> <span class="n">val</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The problem is how to convert this iterative solution to recursive solution. The parameters of this function should be these variables which changes in <code>while</code> loop. The next problem is: <em>what is the base case</em>? Apparently, the base case can be defined as <code>index &lt; 8</code>, then return <code>index</code>. Because in this range, <code>index</code> = <code>value</code>. Then, how can we know what the <code>direction</code> is? If we define <code>direction(n)</code> as the direction when the <code>index = n</code>, we can reason its value from <code>direction(n-1)</code>. The base case are quite similar. Finally, the recursive solution will be like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">pingpong</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the nth element of the ping-pong sequence.
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; pingpong(8)
+</span><span class="s2">    8
+</span><span class="s2">    &gt;&gt;&gt; pingpong(10)
+</span><span class="s2">    6
+</span><span class="s2">    &gt;&gt;&gt; pingpong(15)
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; pingpong(21)
+</span><span class="s2">    -1
+</span><span class="s2">    &gt;&gt;&gt; pingpong(22)
+</span><span class="s2">    -2
+</span><span class="s2">    &gt;&gt;&gt; pingpong(30)
+</span><span class="s2">    -2
+</span><span class="s2">    &gt;&gt;&gt; pingpong(68)
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; pingpong(69)
+</span><span class="s2">    -1
+</span><span class="s2">    &gt;&gt;&gt; pingpong(80)
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; pingpong(81)
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; pingpong(82)
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; pingpong(100)
+</span><span class="s2">    -6
+</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span><span class="s2">    &gt;&gt;&gt; # ban assignment statements
+</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;pingpong&#39;,
+</span><span class="s2">            ...       [&#39;Assign&#39;, &#39;AnnAssign&#39;, &#39;AugAssign&#39;, &#39;NamedExpr&#39;])
+</span><span class="s2">    True
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="c1"># the base case</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">num_eights</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">direction</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">direction</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># the base case</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pingpong</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">direction</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-missing-digits">Q3: Missing Digits</h3>
+<blockquote>
+<p>Write the recursive function <code>missing_digits</code> that takes a number <code>n</code> that is sorted in non-decreasing order (for example, <code>12289</code> is valid but <code>15362</code> and <code>98764</code> are not). It returns the number of missing digits in <code>n</code>. A missing digit is a number between the first and last digit of <code>n</code> of a that is not in <code>n</code>.</p>
+</blockquote>
+<p>The solution of this problem is quite similiar to Q1: split this problem by <code>n % 100</code> and <code>n // 10</code>. The procudure is(take <code>1248</code> for an example)⬇️</p>
+<ol>
+<li>split <code>1248</code> into <code>12</code> and <code>48</code></li>
+<li>check missing digits of <code>48</code> and <code>12</code> recursively.</li>
+</ol>
+<p>The reason why we split this problem by <code>n % 100</code> and <code>n // 10</code> rather than <code>n % 10</code> and <code>n // 10</code> is that we need to process 2 adjacent digits each time. <code>n % 100</code> will give us last 2 digits.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">missing_digits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Given a number a that is in sorted, non-decreasing order,
+</span><span class="s2">    return the number of missing digits in n. A missing digit is
+</span><span class="s2">    a number between the first and last digit of a that is not in n.
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(1248) # 3, 5, 6, 7
+</span><span class="s2">    4
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(19) # 2, 3, 4, 5, 6, 7, 8
+</span><span class="s2">    7
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(1122) # No missing numbers
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(123456) # No missing numbers
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(3558) # 4, 6, 7
+</span><span class="s2">    3
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(35578) # 4, 6
+</span><span class="s2">    2
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(12456) # 3
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(16789) # 2, 3, 4, 5
+</span><span class="s2">    4
+</span><span class="s2">    &gt;&gt;&gt; missing_digits(4) # No missing numbers between 4 and 4
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span><span class="s2">    &gt;&gt;&gt; # ban while or for loops
+</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;missing_digits&#39;, [&#39;While&#39;, &#39;For&#39;])
+</span><span class="s2">    True
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span> <span class="o">==</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">-</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">missing_digits</span><span class="p">(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="n">missing_digits</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q4-count-coins">Q4: Count coins</h3>
+<blockquote>
+<p>Given a positive integer <code>change</code>, a set of coins makes change for <code>change</code> if the sum of the values of the coins is <code>change</code>. Here we will use standard US Coin values: 1, 5, 10, 25. For example, the following sets make change for <code>15</code>:</p>
+<ul>
+<li>15 1-cent coins</li>
+<li>10 1-cent, 1 5-cent coins</li>
+<li>5 1-cent, 2 5-cent coins</li>
+<li>5 1-cent, 1 10-cent coins</li>
+<li>3 5-cent coins</li>
+<li>1 5-cent, 1 10-cent coin</li>
+</ul>
+<p>Thus, there are 6 ways to make change for <code>15</code>. Write a <strong>recursive</strong> function <code>count_coins</code> that takes a positive integer <code>change</code> and returns the number of ways to make change for <code>change</code> using coins.</p>
+<p>You can use either of the functions given to you:</p>
+<ul>
+<li><code>ascending_coin</code> will return the next larger coin denomination from the input, i.e. <code>ascending_coin(5)</code> is <code>10</code>.</li>
+<li><code>descending_coin</code> will return the next smaller coin denomination from the input, i.e. <code>descending_coin(5)</code> is <code>1</code>.</li>
+</ul>
+<p>There are two main ways in which you can approach this problem. One way uses <code>ascending_coin</code>, and another uses <code>descending_coin</code>.</p>
+<p><strong>Important:</strong> Use recursion; the tests will fail if you use loops.</p>
+<blockquote>
+<p><strong>Hint:</strong> Refer the <a href="http://composingprograms.com/pages/17-recursive-functions.html#example-partitions">implementation</a> of <code>count_partitions</code> for an example of how to count the ways to sum up to a final value with smaller parts. If you need to keep track of more than one value across recursive calls, consider writing a helper function.</p>
+</blockquote>
+</blockquote>
+<p>Similiar to this <a href="http://composingprograms.com/pages/17-recursive-functions.html#example-partitions">implementation</a>, we can slove this problem use tree-recursive function. For every coin value, we can pick or drop. So we can write code like this⬇️</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">count_coins</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the number of ways to make change using coins of value of 1, 5, 10, 25.
+</span><span class="s2">    &gt;&gt;&gt; count_coins(15)
+</span><span class="s2">    6
+</span><span class="s2">    &gt;&gt;&gt; count_coins(10)
+</span><span class="s2">    4
+</span><span class="s2">    &gt;&gt;&gt; count_coins(20)
+</span><span class="s2">    9
+</span><span class="s2">    &gt;&gt;&gt; count_coins(100) # How many ways to make change for a dollar?
+</span><span class="s2">    242
+</span><span class="s2">    &gt;&gt;&gt; count_coins(200)
+</span><span class="s2">    1463
+</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span><span class="s2">    &gt;&gt;&gt; # ban iteration
+</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;count_coins&#39;, [&#39;While&#39;, &#39;For&#39;])
+</span><span class="s2">    True
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">coin</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">coin</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">coin</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>       <span class="c1"># 1 coin for n</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">coin</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>        <span class="c1"># the coin value is too large</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">pickcoin</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="n">coin</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">coin</span><span class="p">)</span>
+        <span class="n">dropcoin</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="n">ascending_coin</span><span class="p">(</span><span class="n">coin</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pickcoin</span> <span class="o">+</span> <span class="n">dropcoin</span>
+    <span class="k">return</span> <span class="n">helper</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-01-24
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/how-to-manage-windows-using-hammerspoon/">
+            <span class="next-text nav-default">How to Manage Windows Using Hammerspoon</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
