@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Proj0.2048 of CS61B - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="The simple solution of proj0.2048 of CS61B" /><meta name="keywords" content="project, solution" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/proj0.2048-of-cs61b/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Proj0.2048 of CS61B" />
+<meta property="og:description" content="The simple solution of proj0.2048 of CS61B" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/proj0.2048-of-cs61b/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-30T20:28:13+08:00" />
+<meta property="article:modified_time" content="2022-01-30T20:28:13+08:00" />
+
+<meta itemprop="name" content="Proj0.2048 of CS61B">
+<meta itemprop="description" content="The simple solution of proj0.2048 of CS61B"><meta itemprop="datePublished" content="2022-01-30T20:28:13+08:00" />
+<meta itemprop="dateModified" content="2022-01-30T20:28:13+08:00" />
+<meta itemprop="wordCount" content="1323">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Proj0.2048 of CS61B"/>
+<meta name="twitter:description" content="The simple solution of proj0.2048 of CS61B"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Proj0.2048 of CS61B</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-30 </span>
+        
+          <span class="more-meta"> 1323 words </span>
+          <span class="more-meta"> 7 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#intro">Intro</a></li>
+        <li><a href="#task-1-public-static-boolean-emptyspaceexistsboard-b">Task 1. <code>public static boolean emptySpaceExists(Board b)</code></a></li>
+        <li><a href="#task-2-public-static-boolean-maxtileexistsboard-b">Task 2. <code>public static boolean maxTileExists(Board b)</code></a></li>
+        <li><a href="#task-3-public-static-boolean-atleastonemoveexistsboard-b">Task 3. <code>public static boolean atLeastOneMoveExists(Board b)</code></a></li>
+        <li><a href="#task-4-building-the-game-logic">Task 4. Building the Game Logic</a></li>
+        <li><a href="#play-">Play !</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="intro">Intro</h2>
+<hr>
+<p>In this assignment, we need to cope with four tasks. I will talk about these solutions in detail.</p>
+<h2 id="task-1-public-static-boolean-emptyspaceexistsboard-b">Task 1. <code>public static boolean emptySpaceExists(Board b)</code></h2>
+<hr>
+<p>Task 0 asks us for checking if any of the tiles in the given board are null. The solution is to the problem is quite simple. All we need to do is iterating all tiles in the board. By using <code>board.tile(col, row)</code>, we can easily get the state of the corresponding tile. 🤗</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/** Returns true if at least one space on the Board is empty.
+</span><span class="cm"> *  Empty spaces are stored as null.
+</span><span class="cm"> * */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">emptySpaceExists</span><span class="o">(</span><span class="n">Board</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">col</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">row</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">b</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">row</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="task-2-public-static-boolean-maxtileexistsboard-b">Task 2. <code>public static boolean maxTileExists(Board b)</code></h2>
+<hr>
+<p>The solution of this problem is similar to task 1. We still need to iterate all tiles. The difference is using <code>t.values() == MAX_PIECE</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * Returns true if any tile is equal to the maximum valid value.
+</span><span class="cm"> * Maximum valid value is given by MAX_PIECE. Note that
+</span><span class="cm"> * given a Tile object t, we get its value with t.value().
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">maxTileExists</span><span class="o">(</span><span class="n">Board</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">col</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">row</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">Tile</span> <span class="n">t</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">row</span><span class="o">);</span>
+            <span class="c1">// only when t != null should we check t.value()
+</span><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">t</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">t</span><span class="o">.</span><span class="na">value</span><span class="o">()</span> <span class="o">==</span> <span class="n">MAX_PIECE</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="task-3-public-static-boolean-atleastonemoveexistsboard-b">Task 3. <code>public static boolean atLeastOneMoveExists(Board b)</code></h2>
+<hr>
+<p>Indeed, this problem is more challenging for a beginner. Fortunately, I am a CS student, so I am not stuck on this issue for long. The key of this problem is how to check if there are any valid moves. There are two ways:</p>
+<ol>
+<li>There is at least one empty space on the board. <strong>We can use <code>emptySpaceExists()</code></strong></li>
+<li>There are two adjacent tiles with the same value. <strong>For every tile, we need to check its four directions - LEFT/UP/RIGHT/DOWN.</strong> I implement this by <code>dx</code> and <code>dy</code>.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * Returns true if there are any valid moves on the board.
+</span><span class="cm"> * There are two ways that there can be valid moves:
+</span><span class="cm"> * 1. There is at least one empty space on the board.
+</span><span class="cm"> * 2. There are two adjacent tiles with the same value.
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">atLeastOneMoveExists</span><span class="o">(</span><span class="n">Board</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">emptySpaceExists</span><span class="o">(</span><span class="n">b</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">// 4 directions, LEFT/UP/RIGHT/DOWN
+</span><span class="c1"></span>    <span class="kt">int</span><span class="o">[]</span> <span class="n">dx</span> <span class="o">=</span> <span class="o">{</span><span class="n">0</span><span class="o">,</span> <span class="o">-</span><span class="n">1</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">1</span><span class="o">};</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">dy</span> <span class="o">=</span> <span class="o">{-</span><span class="n">1</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">1</span><span class="o">,</span> <span class="n">0</span><span class="o">};</span>
+
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">col</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">row</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="c1">// Because we have checked emptySpace, t.values() must exist
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">curTileValue</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">row</span><span class="o">).</span><span class="na">value</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">move</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">move</span> <span class="o">&lt;</span> <span class="n">4</span><span class="o">;</span> <span class="n">move</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">colNew</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="n">dx</span><span class="o">[</span><span class="n">move</span><span class="o">];</span>
+                <span class="kt">int</span> <span class="n">rowNew</span> <span class="o">=</span> <span class="n">row</span> <span class="o">+</span> <span class="n">dy</span><span class="o">[</span><span class="n">move</span><span class="o">];</span>
+                <span class="c1">// make sure the tile is within the boundary
+</span><span class="c1"></span>                <span class="k">if</span> <span class="o">(</span><span class="n">colNew</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="n">colNew</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="o">&amp;&amp;</span> <span class="n">rowNew</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span class="n">rowNew</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">Tile</span> <span class="n">newTile</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">colNew</span><span class="o">,</span> <span class="n">rowNew</span><span class="o">);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">newTile</span><span class="o">.</span><span class="na">value</span><span class="o">()</span> <span class="o">==</span> <span class="n">curTileValue</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="task-4-building-the-game-logic">Task 4. Building the Game Logic</h2>
+<hr>
+<p>I spent 2 hours on this problem :(</p>
+<blockquote>
+<p>:happy: CS61B has provided us with functions so that we can focus on the up direction. We just need to do something like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">board</span><span class="o">.</span><span class="na">setViewingPerspective</span><span class="o">(</span><span class="n">side</span><span class="o">);</span>
+<span class="c1">// put your code here
+</span><span class="c1"></span><span class="n">board</span><span class="o">.</span><span class="na">setViewingPerspective</span><span class="o">(</span><span class="n">Side</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p>Finally, I come up with this solution ⬇️</p>
+<ol>
+<li>Move every tile(DON&rsquo;T MERGE IN THIS STEP) so that all empty tiles are in the back. See followed picture to get an intuitive understanding.</li>
+</ol>
+<p><img src="/img/moveTiles.gif" alt=""></p>
+<ol start="2">
+<li>Try to merge. We will process the board column by column. For every column, we will check each tile from up to down(<code>for (int row = 3; row &gt;= 0; row--) {...}</code>). If we find that we can merge two adjacent tiles, we will merge them and move the non-empty tiles below up. Then we move to the next tile and repeat aforementioned procedure.</li>
+<li>For example, we have <code>[2, 2, 2, x]</code>(<code>x</code> means empty). The processing procedure(merging <code>2</code> and <code>2</code>) is <code>[2, 2, 2, x] -&gt; [4, x, 2, x] -&gt; [4, 2, x, x]</code>. Then we will move to <code>2</code> to see if we can merge <code>2</code> and <code>x</code>.</li>
+</ol>
+<p>More details can be found code below ⬇️</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="cm">/** Tilt the board toward SIDE. Return true iff this changes the board.
+</span><span class="cm"> *
+</span><span class="cm"> * 1. If two Tile objects are adjacent in the direction of motion and have
+</span><span class="cm"> *    the same value, they are merged into one Tile of twice the original
+</span><span class="cm"> *    value and that new value is added to the score instance variable
+</span><span class="cm"> * 2. A tile that is the result of a merge will not merge again on that
+</span><span class="cm"> *    tilt. So each move, every tile will only ever be part of at most one
+</span><span class="cm"> *    merge (perhaps zero).
+</span><span class="cm"> * 3. When three adjacent tiles in the direction of motion have the same
+</span><span class="cm"> *    value, then the leading two tiles in the direction of motion merge,
+</span><span class="cm"> *    and the trailing tile does not.
+</span><span class="cm"> * */</span>
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">tilt</span><span class="o">(</span><span class="n">Side</span> <span class="n">side</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="n">changed</span><span class="o">;</span>
+    <span class="n">changed</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="cm">/** The coordinates are:
+</span><span class="cm">     *  3
+</span><span class="cm">     *  2
+</span><span class="cm">     *  1
+</span><span class="cm">     *  0 1 2 3
+</span><span class="cm">     */</span>
+    <span class="n">board</span><span class="o">.</span><span class="na">setViewingPerspective</span><span class="o">(</span><span class="n">side</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">board</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">;</span> <span class="n">col</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="c1">// Step1. move every non-empty tile in order
+</span><span class="c1"></span>        <span class="c1">// [x, 2, 2, x] -&gt; [2, 2, x, x]
+</span><span class="c1"></span>        <span class="c1">// skip merging this step.
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">size</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span> <span class="n">row</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">;</span> <span class="n">row</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="n">Tile</span> <span class="n">t</span> <span class="o">=</span> <span class="n">board</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">row</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">t</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// find nextPos which is null
+</span><span class="c1"></span>                <span class="kt">int</span> <span class="n">nextPos</span> <span class="o">=</span> <span class="n">3</span><span class="o">;</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">nextPos</span> <span class="o">&gt;=</span> <span class="n">row</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">board</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">nextPos</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">nextPos</span><span class="o">--;</span>
+                <span class="o">}</span>
+                <span class="c1">// check if nextPos is a legal position
+</span><span class="c1"></span>                <span class="k">if</span> <span class="o">(</span><span class="n">nextPos</span> <span class="o">&gt;=</span> <span class="n">row</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">board</span><span class="o">.</span><span class="na">move</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">nextPos</span><span class="o">,</span> <span class="n">t</span><span class="o">);</span>
+                    <span class="n">changed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// Step2. try to merge
+</span><span class="c1"></span>        <span class="c1">// [2, 2, x, x] -&gt; [4, x, x, x]
+</span><span class="c1"></span>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">3</span><span class="o">;</span> <span class="n">row</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">;</span> <span class="n">row</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="n">Tile</span> <span class="n">curTile</span> <span class="o">=</span> <span class="n">board</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">row</span><span class="o">);</span>
+            <span class="kt">int</span> <span class="n">nextLine</span> <span class="o">=</span> <span class="n">row</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">nextLine</span> <span class="o">&lt;</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">Tile</span> <span class="n">nextTile</span> <span class="o">=</span> <span class="n">board</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">nextLine</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">curTile</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">nextTile</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="kt">int</span> <span class="n">nextValue</span> <span class="o">=</span> <span class="n">nextTile</span><span class="o">.</span><span class="na">value</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">nextValue</span> <span class="o">==</span> <span class="n">curTile</span><span class="o">.</span><span class="na">value</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">board</span><span class="o">.</span><span class="na">move</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">row</span><span class="o">,</span> <span class="n">nextTile</span><span class="o">);</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="n">curTile</span><span class="o">.</span><span class="na">value</span><span class="o">()</span> <span class="o">*</span> <span class="n">2</span><span class="o">;</span>
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">nextLine</span> <span class="o">-</span> <span class="n">1</span><span class="o">;</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="n">0</span><span class="o">;</span> <span class="n">p</span><span class="o">--)</span> <span class="o">{</span>
+                    <span class="n">Tile</span> <span class="n">tt</span> <span class="o">=</span> <span class="n">board</span><span class="o">.</span><span class="na">tile</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">p</span><span class="o">);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">tt</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">p</span> <span class="o">&lt;</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">board</span><span class="o">.</span><span class="na">move</span><span class="o">(</span><span class="n">col</span><span class="o">,</span> <span class="n">p</span> <span class="o">+</span> <span class="n">1</span><span class="o">,</span> <span class="n">tt</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">board</span><span class="o">.</span><span class="na">setViewingPerspective</span><span class="o">(</span><span class="n">Side</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+
+    <span class="n">checkGameOver</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">changed</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">setChanged</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">changed</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="play-">Play !</h2>
+<hr>
+<p>To be honest, I am proud of myself finishing this little tough project. I want to check other code in the future to get an better understanding of this whole project. 🤗</p>
+<p><img src="/img/play2048.gif" alt=""></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-01-30
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/hw03-of-cs61a-of-ucb/">
+            <span class="next-text nav-default">Hw03 of CS61A of UCB</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
