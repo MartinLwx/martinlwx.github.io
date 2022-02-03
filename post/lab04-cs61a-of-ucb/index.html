@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Lab04 CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="the simple solutions for lab04 of CS61A of UCB" /><meta name="keywords" content="CS61A, solution, lab" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/lab04-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Lab04 CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="the simple solutions for lab04 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/lab04-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-03T15:24:28+08:00" />
+<meta property="article:modified_time" content="2022-02-03T15:24:28+08:00" />
+
+<meta itemprop="name" content="Lab04 CS61A of UCB(2021-Fall)">
+<meta itemprop="description" content="the simple solutions for lab04 of CS61A of UCB"><meta itemprop="datePublished" content="2022-02-03T15:24:28+08:00" />
+<meta itemprop="dateModified" content="2022-02-03T15:24:28+08:00" />
+<meta itemprop="wordCount" content="1678">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lab04 CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="the simple solutions for lab04 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Lab04 CS61A of UCB(2021-Fall)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-03 </span>
+        
+          <span class="more-meta"> 1678 words </span>
+          <span class="more-meta"> 8 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#intro">Intro</a></li>
+        <li><a href="#recursion">Recursion</a>
+          <ul>
+            <li><a href="#q2-summation">Q2: Summation</a></li>
+          </ul>
+        </li>
+        <li><a href="#tree-recursion">Tree Recursion</a>
+          <ul>
+            <li><a href="#q3-pascals-triangle">Q3: Pascal&rsquo;s Triangle</a></li>
+            <li><a href="#q4-insect-combinatorics">Q4: Insect Combinatorics</a></li>
+          </ul>
+        </li>
+        <li><a href="#list-comprehensions">List Comprehensions</a>
+          <ul>
+            <li><a href="#q5-couple">Q5: Couple</a></li>
+            <li><a href="#q6-coordinates">Q6: Coordinates</a></li>
+            <li><a href="#q7-riffle-shuffle">Q7: Riffle Shuffle</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="intro">Intro</h2>
+<hr>
+<p>I find it really interesting to solve recursive problems. I like this way of solving problems, the code is concise and intuitive, which is why I wrote this blog.</p>
+<blockquote>
+<p>📒 How to solve a recursive problem ?</p>
+<ol>
+<li>What is the base case ?</li>
+<li>How to break down the current problem into simpler ones ?</li>
+</ol>
+</blockquote>
+<p>Later, I will follow this idea to solve the recursion problem in this lab.</p>
+<h2 id="recursion">Recursion</h2>
+<hr>
+<h3 id="q2-summation">Q2: Summation</h3>
+<blockquote>
+<p>Write a recursive implementation of <code>summation</code>, which takes a positive integer <code>n</code> and a function <code>term</code>. It applies <code>term</code> to every number from <code>1</code> to <code>n</code> including <code>n</code> and returns the sum.</p>
+<p><strong>Important:</strong> Use recursion; the tests will fail if you use any loops (for, while).</p>
+</blockquote>
+<ol>
+<li>
+<p>What is the base case ? This is easy to think, because we have to calculate from <code>1</code> to <code>n</code>. Apparently, <code>n = 1</code> is the base case, which returns <code>term(n)</code></p>
+</li>
+<li>
+<p>How to break down the current problem into simpler ones ? We call <code>summation(n - 1)</code> to make this problem simpler.</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the sum of numbers 1 through n (including n) wíth term applied to each number.
+</span><span class="s2">    Implement using recursion!
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; summation(5, lambda x: x * x * x) # 1^3 + 2^3 + 3^3 + 4^3 + 5^3
+</span><span class="s2">    225
+</span><span class="s2">    &gt;&gt;&gt; summation(9, lambda x: x + 1) # 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+</span><span class="s2">    54
+</span><span class="s2">    &gt;&gt;&gt; summation(5, lambda x: 2**x) # 2^1 + 2^2 + 2^3 + 2^4 + 2^5
+</span><span class="s2">    62
+</span><span class="s2">    &gt;&gt;&gt; # Do not use while/for loops!
+</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span><span class="s2">    &gt;&gt;&gt; # ban iteration
+</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;summation&#39;,
+</span><span class="s2">    ...       [&#39;While&#39;, &#39;For&#39;])
+</span><span class="s2">    True
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+    <span class="c1"># base case: n = 1</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">term</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">term</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">summation</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="tree-recursion">Tree Recursion</h2>
+<hr>
+<h3 id="q3-pascals-triangle">Q3: Pascal&rsquo;s Triangle</h3>
+<blockquote>
+<p>Here&rsquo;s a part of the Pascal&rsquo;s trangle:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1
+1 1
+1 2 1
+1 3 3 1
+1 4 6 4 1
+</code></pre></td></tr></table>
+</div>
+</div><p>Every number in Pascal&rsquo;s triangle is defined as the sum of the item above it and the item above and to the left of it. Use <code>0</code> if the item does not exist.</p>
+<p>Define the procedure <code>pascal(row, column)</code> which takes a row and a column, and finds the value of the item at that position in Pascal&rsquo;s triangle. Rows and columns are zero-indexed; that is, the first row is row 0 instead of 1 and the first column is column 0 instead of column 1.</p>
+<p>For example, the item at row 2, column 1 in Pascal&rsquo;s triangle is 2.</p>
+</blockquote>
+<p>This probelm is a classical Problem. According to the definition, we know <code>Pascal(i, j) = Pascal(i - 1, j) + Pascal(i - 1, j - 1)</code>. Apparently, the definition gives us a way to make this recursive problem easier. Then we have to ask us what is the base case ? By looking closely at Pascal&rsquo;s triangle above, we will find it is always <code>1</code> when <code>j = 0</code> and <code>i == j</code>.</p>
+<p>Remember that we have to take care of empty entry. 🤔</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">pascal</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;returns the value of the item in pascal&#39;s triangle 
+</span><span class="s2">    whose position is specified by row and column.
+</span><span class="s2">    &gt;&gt;&gt; pascal(0, 0)
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; pascal(0, 5)	# empty entry; outside of pascal&#39;s triangle
+</span><span class="s2">    0
+</span><span class="s2">    &gt;&gt;&gt; pascal(3, 2)	# row 3 (1 3 3 1), column 2
+</span><span class="s2">    3
+</span><span class="s2">    &gt;&gt;&gt; pascal(4, 2)     # row 4 (1 4 6 4 1), column 2
+</span><span class="s2">    6
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># in pascal&#39;s triangle, \</span>
+    <span class="c1"># pascal(i, j) = pascal(i - 1, j - 1) + pascal(i - 1, j)</span>
+
+    <span class="c1"># base case 1. empty entry</span>
+    <span class="k">if</span> <span class="n">column</span> <span class="o">&gt;</span> <span class="n">row</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="c1"># base case 2. pascal(i, 0)</span>
+    <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="c1"># base case 3. pascal(i, i)</span>
+    <span class="k">elif</span> <span class="n">row</span> <span class="o">==</span> <span class="n">column</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">pascal</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> <span class="o">+</span> <span class="n">pascal</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q4-insect-combinatorics">Q4: Insect Combinatorics</h3>
+<blockquote>
+<p>Consider an insect in an <em>M</em> by <em>N</em> grid. The insect starts at the bottom left corner, <em>(0, 0)</em>, and wants to end up at the top right corner, <em>(M-1, N-1)</em>. The insect is only capable of moving right or up. Write a function <code>paths</code> that takes a grid length and width and returns the number of different paths the insect can take from the start to the goal. (There is a <a href="https://en.wikipedia.org/wiki/Closed-form_expression">closed-form solution</a> to this problem, but try to answer it procedurally using recursion.)</p>
+<p><img src="https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab04/assets/grid.jpg" alt="grid"></p>
+<p>For example, the 2 by 2 grid has a total of two ways for the insect to move from the start to the goal. For the 3 by 3 grid, the insect has 6 diferent paths (only 3 are shown above).</p>
+<p><em>Hint:</em> What happens if we hit the top or rightmost edge?</p>
+</blockquote>
+<p>From the description, we know that we can only move right or up. Suppose we are in <code>paths(i, j)</code>, we know we can only come from the left or the bottom. So we can draw a conclusion: <code>path(i, j - 1) + path(i - 1, j)</code>. (the bottom left = <code>(0, 0)</code>). Then, what is the base case ?」, see the table below:</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>According to the above formula, we can know that the complete table should be like this:</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>3</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>To make this problem easier, we let the index start at <code>1</code></strong> 🤗</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">paths</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the number of paths from one corner of an
+</span><span class="s2">    M by N grid to the opposite corner.
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; paths(2, 2)
+</span><span class="s2">    2
+</span><span class="s2">    &gt;&gt;&gt; paths(5, 7)
+</span><span class="s2">    210
+</span><span class="s2">    &gt;&gt;&gt; paths(117, 1)
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; paths(1, 157)
+</span><span class="s2">    1
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># base case  path(i, 0) or path(0, i)</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">paths</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">paths</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="list-comprehensions">List Comprehensions</h2>
+<hr>
+<h3 id="q5-couple">Q5: Couple</h3>
+<blockquote>
+<p>Implement the function <code>couple</code>, which takes in two lists and returns a list that contains lists with i-th elements of two sequences coupled together. You can assume the lengths of two sequences are the same. Try using a list comprehension.</p>
+<blockquote>
+<p><em>Hint</em>: You may find the built in <a href="https://www.w3schools.com/python/ref_func_range.asp">range</a> function helpful.</p>
+</blockquote>
+</blockquote>
+<p>This is a simple question, because the two lists are the same length. We just need to use the same index to fetch numbers from the two lists.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">couple</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return a list of two-element lists in which the i-th element is [s[i], t[i]].
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; a = [1, 2, 3]
+</span><span class="s2">    &gt;&gt;&gt; b = [4, 5, 6]
+</span><span class="s2">    &gt;&gt;&gt; couple(a, b)
+</span><span class="s2">    [[1, 4], [2, 5], [3, 6]]
+</span><span class="s2">    &gt;&gt;&gt; c = [&#39;c&#39;, 6]
+</span><span class="s2">    &gt;&gt;&gt; d = [&#39;s&#39;, &#39;1&#39;]
+</span><span class="s2">    &gt;&gt;&gt; couple(c, d)
+</span><span class="s2">    [[&#39;c&#39;, &#39;s&#39;], [6, &#39;1&#39;]]
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q6-coordinates">Q6: Coordinates</h3>
+<blockquote>
+<p>Implement a function <code>coords</code> that takes a function <code>fn</code>, a sequence <code>seq</code>, and a <code>lower</code> and <code>upper</code> bound on the output of the function. <code>coords</code> then returns a list of coordinate pairs (lists) such that:</p>
+<ul>
+<li>Each (x, y) pair is represented as <code>[x, fn(x)]</code></li>
+<li>The x-coordinates are elements in the sequence</li>
+<li>The result contains only pairs whose y-coordinate is within the upper and lower bounds (inclusive)</li>
+</ul>
+<p>See the doctest for examples.</p>
+<blockquote>
+<p><em>Note</em>: your answer can only be <em>one line long</em>. You should make use of list comprehensions!</p>
+</blockquote>
+</blockquote>
+<p>We need to add an <code>if</code> statement to filter out the results that do not meet the conditions.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    &gt;&gt;&gt; seq = [-4, -2, 0, 1, 3]
+</span><span class="s2">    &gt;&gt;&gt; fn = lambda x: x**2
+</span><span class="s2">    &gt;&gt;&gt; coords(fn, seq, 1, 9)
+</span><span class="s2">    [[-2, 4], [1, 1], [3, 9]]
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">fn</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">seq</span> <span class="k">if</span> <span class="n">lower</span> <span class="o">&lt;=</span> <span class="n">fn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">upper</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q7-riffle-shuffle">Q7: Riffle Shuffle</h3>
+<blockquote>
+<p>A common way of shuffling cards is known as the <a href="https://www.youtube.com/watch?v=JmbVNyIiD54">riffle shuffle</a>. The shuffle produces a new configuration of cards in which the top card is followed by the middle card, then by the second card, then the card after the middle, and so forth.</p>
+<p>Write a list comprehension that riffle shuffles a sequence of items. You can assume the sequence contains an even number of items.</p>
+<p><em>Hint:</em> There are two ways you can write this as a single list comprension: 1) You may find the expression <code>k%2</code>, which evaluates to 0 on even numbers and 1 on odd numbers, to be alternatively access the beginning and middle of the deck. 2) You can utilize an if expression in your comprehension for the odd and even numbers respectively.</p>
+</blockquote>
+<p>This problem will be a little more difficult. We are actually trying to find a way to get the correct index in List Comprehensions. Obviously, the situation is different when the index is odd and even. We can look at the following table to <em>guess</em> the rules⬇️:</p>
+<table>
+<thead>
+<tr>
+<th>Origin index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real index for deck[&hellip;]</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Guess ? (M = 2)</td>
+<td>0</td>
+<td>M</td>
+<td>2 // 2 ?</td>
+<td>M + 1 = M  + 3 // 2 ?</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>odd: 0, 1, 2, &hellip; -&gt; <code>i // 2</code></li>
+<li>even: M+0, M+1, M+2, &hellip; -&gt; <code>M + i // 2</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">riffle</span><span class="p">(</span><span class="n">deck</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Produces a single, perfect riffle shuffle of DECK, consisting of
+</span><span class="s2">    DECK[0], DECK[M], DECK[1], DECK[M+1], ... where M is position of the
+</span><span class="s2">    second half of the deck.  Assume that len(DECK) is even.
+</span><span class="s2">    &gt;&gt;&gt; riffle([3, 4, 5, 6])
+</span><span class="s2">    [3, 5, 4, 6]
+</span><span class="s2">    &gt;&gt;&gt; riffle(range(20))
+</span><span class="s2">    [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">deck</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="p">))]</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-02-03
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/proj0.2048-of-cs61b/">
+            <span class="next-text nav-default">Proj0.2048 of CS61B(2021-Spring)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
