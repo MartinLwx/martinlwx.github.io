@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Lab06 CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="the simple solutions for lab06 of CS61A of UCB" /><meta name="keywords" content="CS61A, solution, lab" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.2 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/lab06-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Lab06 CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="the simple solutions for lab06 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/lab06-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-20T21:45:45+08:00" />
+<meta property="article:modified_time" content="2022-02-20T21:45:45+08:00" />
+
+<meta itemprop="name" content="Lab06 CS61A of UCB(2021-Fall)">
+<meta itemprop="description" content="the simple solutions for lab06 of CS61A of UCB"><meta itemprop="datePublished" content="2022-02-20T21:45:45+08:00" />
+<meta itemprop="dateModified" content="2022-02-20T21:45:45+08:00" />
+<meta itemprop="wordCount" content="1222">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lab06 CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="the simple solutions for lab06 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Lab06 CS61A of UCB(2021-Fall)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-20 </span>
+        
+          <span class="more-meta"> 1222 words </span>
+          <span class="more-meta"> 6 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#mutability">Mutability</a></li>
+        <li><a href="#iterators">Iterators</a>
+          <ul>
+            <li><a href="#q4-count-occurrences">Q4: Count Occurrences</a></li>
+            <li><a href="#q5-repeated">Q5: Repeated</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="mutability">Mutability</h2>
+<hr>
+<blockquote>
+<p>Write a function which takes in a list <code>lst</code>, an argument <code>entry</code>, and another argument <code>elem</code>. This function will check through each item in <code>lst</code> to see if it is equal to <code>entry</code>. Upon finding an item equal to <code>entry</code>, the function should modify the list by placing <code>elem</code> into <code>lst</code> right after the item. At the end of the function, the modified list should be returned.</p>
+<p>See the doctests for examples on how this function is utilized.</p>
+<p><strong>Important:</strong> Use list mutation to modify the original list. No new lists should be created or returned.</p>
+<blockquote>
+<p><strong>Note:</strong> If the values passed into <code>entry</code> and <code>elem</code> are equivalent, make sure you&rsquo;re not creating an infinitely long list while iterating through it. If you find that your code is taking more than a few seconds to run, the function may be in a loop of inserting new values.</p>
+</blockquote>
+</blockquote>
+<p>Note that we can&rsquo;t insert elements when we iterate using <code>for</code> loop. I remember I once saw this in <em>Effective Python</em>. You can find out by debugging yourself. Because the range of <code>i</code> is determined when we use <code>for i in range(len (lst))</code>. But when we insert new values inside the <code>for</code> loop, the <code>list</code> actually becomes longer (but the <code>i</code> is still in the original range). Therefore, elements that exceed the original length will not be accessed.</p>
+<p>Note that the code below is wrong 🙅‍♂️</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">insert_items</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">elem</span><span class="p">):</span>
+    <span class="n">is_the_same</span> <span class="o">=</span> <span class="p">(</span><span class="n">entry</span> <span class="o">==</span> <span class="n">elem</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">no_entry</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">entry</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">lst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+                <span class="n">no_entry</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># avoid infinite loop</span>
+            <span class="k">if</span> <span class="n">is_the_same</span><span class="p">:</span>                 
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">no_entry</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">lst</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The correct solution should be to use the <code>while</code> loop with the <code>list.index(x[, start[, end]])</code> method, the code is as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">insert_items</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">elem</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Inserts elem into lst after each occurence of entry and then returns lst.
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; test_lst = [1, 5, 8, 5, 2, 3]
+</span><span class="s2">    &gt;&gt;&gt; new_lst = insert_items(test_lst, 5, 7)
+</span><span class="s2">    &gt;&gt;&gt; new_lst
+</span><span class="s2">    [1, 5, 7, 8, 5, 7, 2, 3]
+</span><span class="s2">    &gt;&gt;&gt; double_lst = [1, 2, 1, 2, 3, 3]
+</span><span class="s2">    &gt;&gt;&gt; double_lst = insert_items(double_lst, 3, 4)
+</span><span class="s2">    &gt;&gt;&gt; double_lst
+</span><span class="s2">    [1, 2, 1, 2, 3, 4, 3, 4]
+</span><span class="s2">    &gt;&gt;&gt; large_lst = [1, 4, 8]
+</span><span class="s2">    &gt;&gt;&gt; large_lst2 = insert_items(large_lst, 4, 4)
+</span><span class="s2">    &gt;&gt;&gt; large_lst2
+</span><span class="s2">    [1, 4, 4, 8]
+</span><span class="s2">    &gt;&gt;&gt; large_lst3 = insert_items(large_lst2, 4, 6)
+</span><span class="s2">    &gt;&gt;&gt; large_lst3
+</span><span class="s2">    [1, 4, 6, 4, 6, 8]
+</span><span class="s2">    &gt;&gt;&gt; large_lst3 is large_lst
+</span><span class="s2">    True
+</span><span class="s2">    &gt;&gt;&gt; # Ban creating new lists
+</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;insert_items&#39;,
+</span><span class="s2">    ...       [&#39;List&#39;, &#39;ListComp&#39;, &#39;Slice&#39;])
+</span><span class="s2">    True
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">pos</span><span class="p">,</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">entry</span><span class="p">:</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">while</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">lst</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">lst</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="iterators">Iterators</h2>
+<hr>
+<h3 id="q4-count-occurrences">Q4: Count Occurrences</h3>
+<blockquote>
+<p>Implement <code>count_occurrences</code>, which takes in an iterator <code>t</code> and returns the number of times the value <code>x</code> appears in the first <code>n</code> elements of <code>t</code>. A value appears in a sequence of elements if it is equal to an entry in the sequence.</p>
+<blockquote>
+<p><strong>Note:</strong> You can assume that <code>t</code> will have at least <code>n</code> elements.</p>
+</blockquote>
+</blockquote>
+<p>This question is mainly to let us learn to use the two functions: <code>iter</code> and <code>next</code>. We can use <code>while n &gt; 0</code> to control access to only the first <code>n</code> elements. We will iterate the range while counting occurrences.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">count_occurrences</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the number of times that x appears in the first n elements of iterator t.
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; s = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
+</span><span class="s2">    &gt;&gt;&gt; count_occurrences(s, 10, 9)
+</span><span class="s2">    3
+</span><span class="s2">    &gt;&gt;&gt; s2 = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
+</span><span class="s2">    &gt;&gt;&gt; count_occurrences(s2, 3, 10)
+</span><span class="s2">    2
+</span><span class="s2">    &gt;&gt;&gt; s = iter([3, 2, 2, 2, 1, 2, 1, 4, 4, 5, 5, 5])
+</span><span class="s2">    &gt;&gt;&gt; count_occurrences(s, 1, 3)
+</span><span class="s2">    1
+</span><span class="s2">    &gt;&gt;&gt; count_occurrences(s, 4, 2)
+</span><span class="s2">    3
+</span><span class="s2">    &gt;&gt;&gt; next(s)
+</span><span class="s2">    2
+</span><span class="s2">    &gt;&gt;&gt; s2 = iter([4, 1, 6, 6, 7, 7, 8, 8, 2, 2, 2, 5])
+</span><span class="s2">    &gt;&gt;&gt; count_occurrences(s2, 6, 6)
+</span><span class="s2">    2
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">cnt</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-repeated">Q5: Repeated</h3>
+<blockquote>
+<p>Implement <code>repeated</code>, which takes in an iterator <code>t</code> and returns the first value in <code>t</code> that appears <code>k</code> times in a row.</p>
+<blockquote>
+<p><strong>Note:</strong> You can assume that the iterator <code>t</code> will have a value that appears at least <code>k</code> times in a row. If you are receiving a <code>StopIteration</code>, your <code>repeated</code> function is likely not identifying the correct value.</p>
+</blockquote>
+<p>Your implementation should iterate through the items in a way such that if the same iterator is passed into <code>repeated</code> twice, it should continue in the second call at the point it left off in the first. An example of this behavior is in the doctests.</p>
+</blockquote>
+<p>We address two important issues in this problem:</p>
+<ol>
+<li>How to find consecutive <code>k</code> values? We need to set <code>last_val</code> to remember what the previous value was, so that it can be compared with the current value(while we iterate the <code>list</code>).</li>
+<li>How to ensure that the next call will start from the point it left off in the first? If you have followed the course carefully, you may remember how to do it. We should use a higher-order function, define another function in <code>repeated</code> and bind the iterator to this nested function. This way we can guarantee that we can start from the previous position every time. If you forget, you can look at this [link](<a href="http://composingprograms.com/pages/24-mutable">http://composingprograms.com/pages/24-mutable</a> -data.html)(2.4.4 Local state)</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">repeated</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the first value in iterator T that appears K times in a row.
+</span><span class="s2">    Iterate through the items such that if the same iterator is passed into
+</span><span class="s2">    the function twice, it continues in the second call at the point it left
+</span><span class="s2">    off in the first.
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; s = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
+</span><span class="s2">    &gt;&gt;&gt; repeated(s, 2)
+</span><span class="s2">    9
+</span><span class="s2">    &gt;&gt;&gt; s2 = iter([10, 9, 10, 9, 9, 10, 8, 8, 8, 7])
+</span><span class="s2">    &gt;&gt;&gt; repeated(s2, 3)
+</span><span class="s2">    8
+</span><span class="s2">    &gt;&gt;&gt; s = iter([3, 2, 2, 2, 1, 2, 1, 4, 4, 5, 5, 5])
+</span><span class="s2">    &gt;&gt;&gt; repeated(s, 3)
+</span><span class="s2">    2
+</span><span class="s2">    &gt;&gt;&gt; repeated(s, 3)
+</span><span class="s2">    5
+</span><span class="s2">    &gt;&gt;&gt; s2 = iter([4, 1, 6, 6, 7, 7, 8, 8, 2, 2, 2, 5])
+</span><span class="s2">    &gt;&gt;&gt; repeated(s2, 3)
+</span><span class="s2">    2
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">assert</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">1</span>
+    <span class="n">last_val</span><span class="p">,</span> <span class="n">it</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">iter</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="k">nonlocal</span> <span class="n">last_val</span>
+        <span class="k">nonlocal</span> <span class="n">it</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">last_val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">val</span> <span class="o">!=</span> <span class="n">last_val</span><span class="p">:</span>
+                <span class="n">last_val</span><span class="p">,</span> <span class="n">cnt</span> <span class="o">=</span> <span class="n">val</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">cnt</span> <span class="o">==</span> <span class="n">k</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">helper</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-02-20
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/hw04-of-cs61a-of-ucb/">
+            <span class="next-text nav-default">Hw04 of CS61A of UCB(2021-Fall)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
