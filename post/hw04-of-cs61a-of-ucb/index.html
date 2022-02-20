@@ -49,7 +49,7 @@
 <meta itemprop="name" content="Hw04 of CS61A of UCB(2021-Fall)">
 <meta itemprop="description" content="The simple solutions of hw04 of CS61A of UCB"><meta itemprop="datePublished" content="2022-02-20T14:44:19+08:00" />
 <meta itemprop="dateModified" content="2022-02-20T14:44:19+08:00" />
-<meta itemprop="wordCount" content="2418">
+<meta itemprop="wordCount" content="2474">
 <meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Hw04 of CS61A of UCB(2021-Fall)"/>
 <meta name="twitter:description" content="The simple solutions of hw04 of CS61A of UCB"/>
@@ -145,7 +145,7 @@ if (!doNotTrack) {
       <div class="post-meta">
         <span class="post-time"> 2022-02-20 </span>
         
-          <span class="more-meta"> 2418 words </span>
+          <span class="more-meta"> 2474 words </span>
           <span class="more-meta"> 12 mins read </span>
         
       </div>
@@ -615,7 +615,7 @@ if (!doNotTrack) {
 <blockquote>
 <p>Alyssa&rsquo;s program is incomplete because she has not specified the implementation of the interval abstraction. She has implemented the constructor for you; fill in the implementation of the selectors.</p>
 </blockquote>
-<p>The <code>interval</code> is just a <code>list</code> with size 2. To get the lower bound and the upper bound. We just need to return <code>x[0]</code> or <code>x[1]</code></p>
+<p>The calculation system of this question is actually used to calculate the resistance. We know that there will be tolerance in the resistor (such as $\pm5%$), so the real resistance value should be in an interval. This is the <code> interval</code> indicates. The <code>interval</code> is just a <code>list</code> with size 2. To get the lower bound and the upper bound. We just need to return <code>x[0]</code> or <code>x[1]</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -681,9 +681,23 @@ if (!doNotTrack) {
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>    <span class="s2">&#34;&#34;&#34;Return the interval that contains the product of any value in x and any    value in y.&#34;&#34;&#34;</span>    <span class="n">p1</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>    <span class="n">p2</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>    <span class="n">p3</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>    <span class="n">p4</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>    <span class="k">return</span> <span class="n">interval</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">))</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the interval that contains the product of any value in x and any
+</span><span class="s2">    value in y.&#34;&#34;&#34;</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">p4</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">interval</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">))</span>
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="interval-subtraction">Interval Subtraction</h4>
@@ -762,9 +776,17 @@ if (!doNotTrack) {
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">par1</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>    <span class="k">return</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">mul_interval</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">),</span> <span class="n">add_interval</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">))</span><span class="k">def</span> <span class="nf">par2</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>    <span class="n">one</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>    <span class="n">rep_r1</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r1</span><span class="p">)</span>    <span class="n">rep_r2</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>    <span class="k">return</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">add_interval</span><span class="p">(</span><span class="n">rep_r1</span><span class="p">,</span> <span class="n">rep_r2</span><span class="p">))</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">par2</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">rep_r1</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r1</span><span class="p">)</span>
+    <span class="n">rep_r2</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">add_interval</span><span class="p">(</span><span class="n">rep_r1</span><span class="p">,</span> <span class="n">rep_r2</span><span class="p">))</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Lem points out that Alyssa&rsquo;s program gives different answers for the two ways of computing. Find two intervals <code>r1</code> and <code>r2</code> that demonstrate the difference in behavior between <code>par1</code> and <code>par2</code> when passed into each of the two functions.</p>
@@ -773,10 +795,32 @@ if (!doNotTrack) {
 <p>If you want to understand the mechanism why this happens, you may check this <a href="http://jots-jottings.blogspot.com/2011/09/sicp-exercise-214-broken-intervals.html">link</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">check_par</span><span class="p">():</span>    <span class="s2">&#34;&#34;&#34;Return two intervals that give different results for parallel resistors.    &gt;&gt;&gt; r1, r2 = check_par()    &gt;&gt;&gt; x = par1(r1, r2)    &gt;&gt;&gt; y = par2(r1, r2)    &gt;&gt;&gt; lower_bound(x) != lower_bound(y) or upper_bound(x) != upper_bound(y)    True    &#34;&#34;&#34;</span>    <span class="n">r1</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>      <span class="n">r2</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>      <span class="k">return</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">check_par</span><span class="p">():</span>
+    <span class="s2">&#34;&#34;&#34;Return two intervals that give different results for parallel resistors.
+</span><span class="s2">
+</span><span class="s2">    &gt;&gt;&gt; r1, r2 = check_par()
+</span><span class="s2">    &gt;&gt;&gt; x = par1(r1, r2)
+</span><span class="s2">    &gt;&gt;&gt; y = par2(r1, r2)
+</span><span class="s2">    &gt;&gt;&gt; lower_bound(x) != lower_bound(y) or upper_bound(x) != upper_bound(y)
+</span><span class="s2">    True
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  
+    <span class="k">return</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span>
 </code></pre></td></tr></table>
 </div>
 </div>
