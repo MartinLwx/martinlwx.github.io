@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Lab07 CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="the simple solutions for lab07 of CS61A of UCB" /><meta name="keywords" content="CS61A, solution, lab" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.2 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/lab07-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Lab07 CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="the simple solutions for lab07 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/lab07-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-24T09:47:24+08:00" />
+<meta property="article:modified_time" content="2022-02-24T09:47:24+08:00" />
+
+<meta itemprop="name" content="Lab07 CS61A of UCB(2021-Fall)">
+<meta itemprop="description" content="the simple solutions for lab07 of CS61A of UCB"><meta itemprop="datePublished" content="2022-02-24T09:47:24+08:00" />
+<meta itemprop="dateModified" content="2022-02-24T09:47:24+08:00" />
+<meta itemprop="wordCount" content="1497">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lab07 CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="the simple solutions for lab07 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Lab07 CS61A of UCB(2021-Fall)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-24 </span>
+        
+          <span class="more-meta"> 1497 words </span>
+          <span class="more-meta"> 8 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#accounts">Accounts</a>
+          <ul>
+            <li><a href="#q2-retirement">Q2: Retirement</a></li>
+            <li><a href="#q3-freechecking">Q3: FreeChecking</a></li>
+          </ul>
+        </li>
+        <li><a href="#magic-the-lambda-ing">Magic: the Lambda-ing</a>
+          <ul>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#q4-making-cards">Q4: Making Cards</a></li>
+            <li><a href="#q5-making-a-player">Q5: Making a Player</a></li>
+          </ul>
+        </li>
+        <li><a href="#optional-questions">Optional Questions</a>
+          <ul>
+            <li><a href="#q6-ais-defenders">Q6: AIs: Defenders</a></li>
+            <li><a href="#q7-tutors-flummox">Q7: Tutors: Flummox</a></li>
+            <li><a href="#q8-tas-shift">Q8: TAs: Shift</a></li>
+            <li><a href="#q9-the-instructor-arrives">Q9: The Instructor Arrives</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="accounts">Accounts</h2>
+<hr>
+<h3 id="q2-retirement">Q2: Retirement</h3>
+<blockquote>
+<p>Add a <code>time_to_retire</code> method to the <code>Account</code> class. This method takes in an <code>amount</code> and returns how many years the holder would need to wait in order for the current <code>balance</code> to grow to at least <code>amount</code>, assuming that the bank adds <code>balance</code> times the <code>interest</code> rate to the total balance at the end of every year.</p>
+</blockquote>
+<p>The description tells us that: We will add our <code>balance</code> every year, so when may we retire? Both the math and code are simple.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">time_to_retire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Return the number of years until balance would grow to amount.&#34;&#34;&#34;</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interest</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">year</span><span class="p">,</span> <span class="n">curAmount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">year</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">curAmount</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">interest</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">curAmount</span> <span class="o">&gt;</span> <span class="n">amount</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">year</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-freechecking">Q3: FreeChecking</h3>
+<blockquote>
+<p>Implement the <code>FreeChecking</code> class, which is like the <code>Account</code> class from lecture except that it charges a withdraw fee after 2 withdrawals. If a withdrawal is unsuccessful, it still counts towards the number of free withdrawals remaining, but no fee for the withdrawal will be charged.</p>
+</blockquote>
+<p>We need to check an additional parameter(<code>free_withdrawals</code>) compare with <code>withdraw</code>, which indicates the number of times we can withdraw without being charged the fee. There are 2 points to note here:</p>
+<ol>
+<li>The number of <code>free_wighdrawals</code> will be reduced even if we fail to withdraw.</li>
+<li>The sum of the fee and the <code>amount</code> should be bigger than the <code>balance</code> so that we can withdraw successfully when we need to pay the fee.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="s2">&#34;Insufficient funds&#34;</span>
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_withdrawal</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="s2">&#34;Can&#39;t withdraw that amount&#34;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="n">amount</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="s2">&#34;Insufficient funds&#34;</span>
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_withdrawal</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="s2">&#34;Can&#39;t withdraw that amount&#34;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="n">amount</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="magic-the-lambda-ing">Magic: the Lambda-ing</h2>
+<hr>
+<h3 id="description">Description</h3>
+<p>We will be implementing a card game in the lab. You can check the rules <a href="https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab07/#magic-the-lambda-ing">here</a></p>
+<h3 id="q4-making-cards">Q4: Making Cards</h3>
+<blockquote>
+<p>To play a card game, we&rsquo;re going to need to have cards, so let&rsquo;s make some! We&rsquo;re gonna implement the basics of the <code>Card</code> class first.</p>
+<p>First, implement the <code>Card</code> class constructor in <code>classes.py</code>. This constructor takes three arguments:</p>
+<ul>
+<li>a string as the <code>name</code> of the card</li>
+<li>an integer as the <code>attack</code> value of the card</li>
+<li>an integer as the <code>defense</code> value of the card</li>
+</ul>
+<p>Each <code>Card</code> instance should keep track of these values using instance attributes called <code>name</code>, <code>attack</code>, and <code>defense</code>.</p>
+<p>You should also implement the <code>power</code> method in <code>Card</code>, which takes in another card as an input and calculates the current card&rsquo;s power. Refer to the <a href="https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab07/#rules-of-the-game">Rules of the Game</a> if you&rsquo;d like a refresher on how power is calculated.</p>
+</blockquote>
+<p>We need to implement the constructor and the <code>power</code> functions.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
+    <span class="n">cardtype</span> <span class="o">=</span> <span class="s1">&#39;Staff&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">attack</span><span class="p">,</span> <span class="n">defense</span><span class="p">):</span>
+        <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">        Create a Card object with a name, attack,
+</span><span class="s2">        and defense.
+</span><span class="s2">        &#34;&#34;&#34;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attack</span> <span class="o">=</span> <span class="n">attack</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">defense</span> <span class="o">=</span> <span class="n">defense</span>
+
+    <span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">):</span>
+        <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">        Calculate power as:
+</span><span class="s2">        (player card&#39;s attack) - (opponent card&#39;s defense)/2
+</span><span class="s2">        &#34;&#34;&#34;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attack</span> <span class="o">-</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">/</span> <span class="mi">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-making-a-player">Q5: Making a Player</h3>
+<blockquote>
+<p>Now that we have cards, we can make a deck, but we still need players to actually use them. We&rsquo;ll now fill in the implementation of the <code>Player</code> class.</p>
+<p>A <code>Player</code> instance has three instance attributes:</p>
+<ul>
+<li><code>name</code> is the player&rsquo;s name. When you play the game, you can enter your name, which will be converted into a string to be passed to the constructor.</li>
+<li><code>deck</code> is an instance of the <code>Deck</code> class. You can draw from it using its <code>.draw()</code> method.</li>
+<li><code>hand</code> is a list of <code>Card</code> instances. Each player should start with 5 cards in their hand, drawn from their <code>deck</code>. Each card in the hand can be selected by its index in the list during the game. When a player draws a new card from the deck, it is added to the end of this list.</li>
+</ul>
+<p>Complete the implementation of the constructor for <code>Player</code> so that <code>self.hand</code> is set to a list of 5 cards drawn from the player&rsquo;s <code>deck</code>.</p>
+<p>Next, implement the <code>draw</code> and <code>play</code> methods in the <code>Player</code> class. The <code>draw</code> method draws a card from the deck and adds it to the player&rsquo;s hand. The <code>play</code> method removes and returns a card from the player&rsquo;s hand at the given index.</p>
+<blockquote>
+<p>Call <code>deck.draw()</code> when implementing <code>Player.__init__</code> and <code>Player.draw</code>. Don&rsquo;t worry about how this function works - leave it all to the abstraction!</p>
+</blockquote>
+</blockquote>
+<p>The tasks are as follow:</p>
+<p>We have 5 cards at the beginning of the game. We need to implement these:</p>
+<ol>
+<li>the constructor. We need to draw 5 cards from the <code>deck</code>. For the simplicity, we can use list comprehension here.</li>
+<li>the <code>draw</code> function. Use <code>deck.draw()</code> is enough.</li>
+<li>the <code>play</code> function. We need to play card at the given index. You should distinguish between <code>.remove()</code> and <code>.pop()</code>.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deck</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Initialize a Player object.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">deck</span> <span class="o">=</span> <span class="n">deck</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span> <span class="o">=</span> <span class="p">[</span><span class="n">deck</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Draw a card from the player&#39;s deck and add it to their hand.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(),</span> <span class="s1">&#39;Deck is empty!&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card_index</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Remove and return a card from the player&#39;s hand at the given index.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="p">[</span><span class="n">card_index</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">card_index</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">card</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="optional-questions">Optional Questions</h2>
+<h3 id="q6-ais-defenders">Q6: AIs: Defenders</h3>
+<blockquote>
+<p>Implement the <code>effect</code> method for AIs, which reduces the opponent card&rsquo;s attack by the opponent card&rsquo;s defense, and then doubles the opponent card&rsquo;s defense.</p>
+<blockquote>
+<p><em>Note:</em> The opponent card&rsquo;s resulting attack value cannot be negative.</p>
+</blockquote>
+</blockquote>
+<p>Note that if the attack is less than zero, we need to set it to zero.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    Reduce the opponent&#39;s card&#39;s attack by its defense,
+</span><span class="s2">    then double its defense.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">-=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span>
+    <span class="k">if</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">*=</span> <span class="mi">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q7-tutors-flummox">Q7: Tutors: Flummox</h3>
+<blockquote>
+<p>Implement the <code>effect</code> method for TAs, which swaps the attack and defense of the opponent&rsquo;s card.</p>
+</blockquote>
+<p>We should discard our cards <strong>without breaking the abstraction</strong>. So we can use <code>.play</code> and <code>.draw</code> methods here.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    Discard the first 3 cards in the opponent&#39;s hand and have
+</span><span class="s2">    them draw the same number of cards from their deck.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># discard 3 cards</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">opponent</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="c1"># draw 3 cards</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">opponent</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+    <span class="c1"># You should add your implementation above this.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> discarded and re-drew 3 cards!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q8-tas-shift">Q8: TAs: Shift</h3>
+<blockquote>
+<p>Implement the <code>effect</code> method for TAs, which swaps the attack and defense of the opponent&rsquo;s card.</p>
+</blockquote>
+<p>Just swap the attack and the defense</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    Swap the attack and defense of an opponent&#39;s card.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span><span class="p">,</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span><span class="p">,</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q9-the-instructor-arrives">Q9: The Instructor Arrives</h3>
+<blockquote>
+<p>A new challenger has appeared! Implement the <code>effect</code> method for the Instructors, who add the opponent card&rsquo;s attack and defense to all cards in the player&rsquo;s deck and then removes <em>all</em> cards in the opponent&rsquo;s deck that have the same attack or defense as the opponent&rsquo;s card.</p>
+<blockquote>
+<p><em>Note:</em> If you mutate a list while iterating through it, you may run into trouble. Try iterating through a copy of the list instead. You can use slicing to make a copy of a list:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">  &gt;&gt;&gt; original = [1, 2, 3, 4]
+  &gt;&gt;&gt; copy = original[:]
+  &gt;&gt;&gt; copy
+  [1, 2, 3, 4]
+  &gt;&gt;&gt; copy is original
+  False
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+</blockquote>
+<p>This one is a little more difficult compared with the other ones. The key of this question is how can we mutate the list while we iterate it. You may check <a href="https://stackoverflow.com/questions/1207406/how-to-remove-items-from-a-list-while-iterating">this</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    Adds the attack and defense of the opponent&#39;s card to
+</span><span class="s2">    all cards in the player&#39;s deck, then removes all cards
+</span><span class="s2">    in the opponent&#39;s deck that share an attack or defense
+</span><span class="s2">    stat with the opponent&#39;s card.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">orig_opponent_deck_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
+
+    <span class="c1"># add the attack and defense of the opponent&#39;s card ...</span>
+    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">player</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+        <span class="n">card</span><span class="o">.</span><span class="n">attack</span> <span class="o">+=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span>
+        <span class="n">card</span><span class="o">.</span><span class="n">defense</span> <span class="o">+=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span>
+
+    <span class="c1"># remove all cards in the opponent&#39;s deck that share ...</span>
+    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">[:]:</span>
+        <span class="k">if</span> <span class="n">card</span><span class="o">.</span><span class="n">attack</span> <span class="o">==</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="ow">and</span> <span class="n">card</span><span class="o">.</span><span class="n">defense</span> <span class="o">==</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span><span class="p">:</span>
+            <span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+
+
+    <span class="c1"># You should add your implementation above this.</span>
+    <span class="n">discarded</span> <span class="o">=</span> <span class="n">orig_opponent_deck_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">discarded</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> cards were discarded from </span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">s deck!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">discarded</span><span class="p">,</span> <span class="n">opponent</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-02-24
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/hw05-of-cs61a-of-ucb/">
+            <span class="next-text nav-default">Hw05 of CS61A of UCB(2021-Fall)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
