@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Lab08 CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="the simple solutions for lab08 of CS61A of UCB" /><meta name="keywords" content="CS61A, solution, lab" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.2 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/lab08-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Lab08 CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="the simple solutions for lab08 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/lab08-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-24T20:22:51+08:00" />
+<meta property="article:modified_time" content="2022-02-24T20:22:51+08:00" />
+
+<meta itemprop="name" content="Lab08 CS61A of UCB(2021-Fall)">
+<meta itemprop="description" content="the simple solutions for lab08 of CS61A of UCB"><meta itemprop="datePublished" content="2022-02-24T20:22:51+08:00" />
+<meta itemprop="dateModified" content="2022-02-24T20:22:51+08:00" />
+<meta itemprop="wordCount" content="1143">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lab08 CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="the simple solutions for lab08 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Lab08 CS61A of UCB(2021-Fall)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-24 </span>
+        
+          <span class="more-meta"> 1143 words </span>
+          <span class="more-meta"> 6 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#q2-convert-link">Q2: Convert Link</a></li>
+          </ul>
+        </li>
+        <li><a href="#trees">Trees</a>
+          <ul>
+            <li><a href="#q4-square">Q4: Square</a></li>
+            <li><a href="#q5-cumulative-mul">Q5: Cumulative Mul</a></li>
+            <li><a href="#q6-add-leaves">Q6: Add Leaves</a></li>
+          </ul>
+        </li>
+        <li><a href="#optional-questions">Optional Questions</a>
+          <ul>
+            <li><a href="#q7-every-other">Q7: Every Other</a></li>
+            <li><a href="#q8-prune-small">Q8: Prune Small</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="q2-convert-link">Q2: Convert Link</h3>
+<blockquote>
+<p>Write a function <code>convert_link</code> that takes in a linked list and returns the sequence as a Python list. You may assume that the input list is shallow; that is none of the elements is another linked list.</p>
+<p>Try to find both an iterative and recursive solution for this problem!</p>
+</blockquote>
+<p>It is easy to solve this problem iteratively. All we have to do is to make a <code>list</code> to store these nodes we have visited while we iterating this linklist.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">convert_link</span><span class="p">(</span><span class="n">link</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Takes a linked list and returns a Python list with the same elements.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">link</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">))</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">rest</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The recursive algorithm is also easy. The base case is that when we encounter an empty node, an empty list will be returned. Otherwise, we will break down this problem: current node + the rest of tinkliest</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">convert_link</span><span class="p">(</span><span class="n">link</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Takes a linked list and returns a Python list with the same elements.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># recursive solution</span>
+    <span class="k">if</span> <span class="n">link</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)]</span> <span class="o">+</span> <span class="n">convert_link</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="trees">Trees</h2>
+<hr>
+<h3 id="q4-square">Q4: Square</h3>
+<blockquote>
+<p>Write a function <code>label_squarer</code> that mutates a <code>Tree</code> with numerical labels so that each label is squared.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">label_squarer</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Mutates a Tree t by squaring all its elements.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># base case</span>
+    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="c1"># check every branch</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">**</span> <span class="mi">2</span>          <span class="c1"># change the current node&#39;s label</span>
+        <span class="n">label_squarer</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>                <span class="c1"># change branches</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-cumulative-mul">Q5: Cumulative Mul</h3>
+<blockquote>
+<p>Write a function <code>cumulative_mul</code> that mutates the Tree <code>t</code> so that each node&rsquo;s label becomes the product of its label and all labels in the subtrees rooted at the node.</p>
+</blockquote>
+<p>The description indicates that we should make the label of the node equal to the product of its label and all labels in the subtrees in the tree.</p>
+<p>The base is the leaf node, which has no subtrees. We will return its label. Otherwise, we check every subtree of the current node. The procedure of changing is bottom-up 🤗</p>
+<p>To make the code simple, I use <code>math.prod</code> here. If you also want to use this, you will need to <code>import math</code> at the beginning of the code.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">cumulative_mul</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Mutates t so that each node&#39;s label becomes the product of all labels in
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># base case</span>
+    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
+    <span class="c1"># get all label value in subtree</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">cumulative_mul</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">]</span>
+
+    <span class="c1"># calculate</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">*=</span> <span class="n">math</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q6-add-leaves">Q6: Add Leaves</h3>
+<blockquote>
+<p>Implement <code>add_d_leaves</code>, a function that takes in a <code>Tree</code> instance <code>t</code> and a number <code>v</code>.</p>
+<p>We define the depth of a node in <code>t</code> to be the number of edges from the root to that node. The depth of root is therefore 0.</p>
+<p>For each node in the tree, you should add <code>d</code> leaves to it, where <code>d</code> is the depth of the node. Every added leaf should have a label of <code>v</code>. If the node at this depth has existing branches, you should add these leaves to the end of that list of branches.</p>
+<p>For example, you should be adding 1 leaf with label <code>v</code> to each node at depth 1, 2 leaves to each node at depth 2, and so on.</p>
+<p>Here is an example of a tree <code>t</code>(shown on the left) and the result after <code>add_d_leaves</code> is applied with <code>v</code> as 5.</p>
+</blockquote>
+<p>We have to some details into account:</p>
+<ol>
+<li>How to get the height of the current node? We need to add leaves depending on the height, we can define a <code>helper</code> function with an additional parameter to represent height. Every time we go deeper in the tree, we will <code>+1</code>.</li>
+<li>How to solve it recursively? The base is the leaf node. We will add leaves to it and return here. Otherwise, we need to repeat the procedure to all its subtrees, and also determine whether the current node needs to add leaves.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">add_d_leaves</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Add d leaves containing v to each node at every depth d.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+        <span class="c1"># base case</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="c1"># check every branch</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+            <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        
+
+        <span class="c1"># check current node</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="optional-questions">Optional Questions</h2>
+<hr>
+<h3 id="q7-every-other">Q7: Every Other</h3>
+<blockquote>
+<p>Implement <code>every_other</code>, which takes a linked list <code>s</code>. It mutates <code>s</code> such that all of the odd-indexed elements (using 0-based indexing) are removed from the list. For example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">&gt;&gt;&gt; s = Link(&#39;a&#39;, Link(&#39;b&#39;, Link(&#39;c&#39;, Link(&#39;d&#39;))))
+&gt;&gt;&gt; every_other(s)
+&gt;&gt;&gt; s.first
+&#39;a&#39;
+&gt;&gt;&gt; s.rest.first
+&#39;c&#39;
+&gt;&gt;&gt; s.rest.rest is Link.empty
+True
+</code></pre></td></tr></table>
+</div>
+</div><p>If <code>s</code> contains fewer than two elements, <code>s</code> remains unchanged.</p>
+<blockquote>
+<p>Do not return anything! <code>every_other</code> should mutate the original list.</p>
+</blockquote>
+</blockquote>
+<p>First, If the length of the linklist is less than 2, we will keep it unchanged. Otherwise, we will solve this problem iteratively.</p>
+<p>We maintain 2 pointers - <code>last_pos</code> and <code>pos</code>, which indicate the current position and the last position we visited. If the current node is odd-indexed, we let <code>last_pos.rest = post.rest</code> and add the pointers.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">every_other</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Mutates a linked list so that all the odd-indiced elements are removed
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="c1"># if it contains fewer than 2, do nothing</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">s</span><span class="o">.</span><span class="n">rest</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">last_pos</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">rest</span>
+    <span class="n">current_index</span> <span class="o">=</span> <span class="mi">1</span>               <span class="c1"># start from 2nd position</span>
+    <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current_index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> 
+            <span class="n">last_pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+        <span class="n">last_pos</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+        <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q8-prune-small">Q8: Prune Small</h3>
+<blockquote>
+<p>Complete the function <code>prune_small</code> that takes in a <code>Tree</code> <code>t</code> and a number <code>n</code> and prunes <code>t</code> mutatively. If <code>t</code> or any of its branches has more than <code>n</code> branches, the <code>n</code> branches with the smallest labels should be kept and any other branches should be <em>pruned</em>, or removed, from the tree.</p>
+</blockquote>
+<p>Before we start to write the code, we need to think about what is the fast way to prune? The bottom-up way or the up-down way? The latter is the answer. Because we don&rsquo;t have to check the nodes in the subtrees we have pruned. You may figure out this by observing the template provided in the hint. 🤗</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">prune_small</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Prune the tree mutatively, keeping only the n branches
+</span><span class="s2">    of each node with the smallest label.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">largest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">largest</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+        <span class="n">prune_small</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-02-24
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/lab07-cs61a-of-ucb/">
+            <span class="next-text nav-default">Lab07 CS61A of UCB(2021-Fall)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
