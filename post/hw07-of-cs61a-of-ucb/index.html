@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hw07 of CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="The simple solutions of hw07 of CS61A of UCB" /><meta name="keywords" content="CS61A, hw, solutions" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.2 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/hw07-of-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Hw07 of CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="The simple solutions of hw07 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/hw07-of-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-27T16:58:10+08:00" />
+<meta property="article:modified_time" content="2022-02-27T16:58:10+08:00" />
+
+<meta itemprop="name" content="Hw07 of CS61A of UCB(2021-Fall)">
+<meta itemprop="description" content="The simple solutions of hw07 of CS61A of UCB"><meta itemprop="datePublished" content="2022-02-27T16:58:10+08:00" />
+<meta itemprop="dateModified" content="2022-02-27T16:58:10+08:00" />
+<meta itemprop="wordCount" content="473">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hw07 of CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="The simple solutions of hw07 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Hw07 of CS61A of UCB(2021-Fall)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-27 </span>
+        
+          <span class="more-meta"> 473 words </span>
+          <span class="more-meta"> 3 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#q1-thane-of-cadr">Q1: Thane of Cadr</a></li>
+            <li><a href="#q2-ordered">Q2: Ordered</a></li>
+            <li><a href="#q3-pow">Q3: Pow</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="q1-thane-of-cadr">Q1: Thane of Cadr</h3>
+<blockquote>
+<p>Define the procedures <code>cadr</code> and <code>caddr</code>, which return the second and third elements of a list, respectively. If you would like a quick refresher on scheme syntax consider looking at <a href="https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab10/#scheme">Lab 10 Scheme Refresher</a>.</p>
+</blockquote>
+<p>We need to implement the function <code>c???r</code>. To have a better understanding of this notation, you should look from back to the front in <code>???</code>. For example, the <code>cadr</code> function will call <code>cdr</code> then call <code>car</code> on the input.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nb">cadr </span><span class="nv">s</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">s</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nb">caddr </span><span class="nv">s</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">car </span><span class="p">(</span><span class="nb">cdr </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">s</span><span class="p">)))</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q2-ordered">Q2: Ordered</h3>
+<blockquote>
+<p>Implement a procedure called <code>ordered?</code>, which takes a list of numbers and returns <code>True</code> if the numbers are in nondescending order, and <code>False</code> otherwise. Numbers are considered nondescending if each subsequent number is either larger or equal to the previous, that is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1 2 3 3 4
+</code></pre></td></tr></table>
+</div>
+</div><p>Is nondescending, but:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1 2 3 3 2
+</code></pre></td></tr></table>
+</div>
+</div><p>Is not.</p>
+<blockquote>
+<p><em>Hint</em>: The built-in <code>null?</code> function returns whether its argument is <code>nil</code>.</p>
+</blockquote>
+</blockquote>
+<p>We need to solve this problem recursively:</p>
+<ol>
+<li>base case: an empty list or a list with a size 1</li>
+<li>Recursive decomposition: the current node is less than or equal to the first node of the sub-linked list, and the sub-linked list must also be in non-descending order</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">ordered?</span> <span class="nv">s</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">null? </span><span class="nv">s</span><span class="p">)</span> <span class="no">#t</span><span class="p">)</span>
+        <span class="p">(</span> <span class="p">(</span><span class="nb">null? </span><span class="p">(</span><span class="nb">cdr </span><span class="nv">s</span><span class="p">))</span> <span class="no">#t</span><span class="p">)</span>
+        <span class="p">(</span> <span class="k">else </span><span class="p">(</span><span class="k">and </span><span class="p">(</span><span class="nb">&lt;= </span><span class="p">(</span><span class="nb">car </span><span class="nv">s</span><span class="p">)</span> <span class="p">(</span><span class="nb">cadr </span><span class="nv">s</span><span class="p">))</span>
+               <span class="p">(</span><span class="nf">ordered?</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">s</span><span class="p">)))))</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-pow">Q3: Pow</h3>
+<blockquote>
+<p>Implement a procedure <code>pow</code> for raising the number <code>base</code> to the power of a nonnegative integer <code>exp</code> for which the number of operations grows logarithmically, rather than linearly (the number of recursive calls should be much smaller than the input <code>exp</code>). For example, for <code>(pow 2 32)</code> should take 5 recursive calls rather than 32 recursive calls. Similarly, <code>(pow 2 64)</code> should take 6 recursive calls.</p>
+<blockquote>
+<p><em>Hint:</em> Consider the following observations:</p>
+<ol>
+<li>$x^{2y} = (x^y)2$</li>
+<li>$x^{2y+1} = x(x^y)2$</li>
+</ol>
+<p>For example we see that 232 is (216)2, 216 is (28)2, etc. You may use the built-in predicates <code>even?</code> and <code>odd?</code>. Scheme doesn&rsquo;t support iteration in the same manner as Python, so consider another way to solve this problem.</p>
+</blockquote>
+</blockquote>
+<p>The procedure of calculating this <code>(pow base exp)</code> has been provided in the description.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">pow</span> <span class="nv">base</span> <span class="nv">exp</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">exp</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">base</span> <span class="p">)</span>                                    <span class="c1">; base^1 = base</span>
+        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">exp</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>                                        <span class="c1">; base^0 = 1</span>
+        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="mi">0</span> <span class="p">(</span><span class="nb">modulo </span><span class="nv">exp</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="p">(</span><span class="nf">begin</span>
+              <span class="p">(</span><span class="k">define </span><span class="nv">tmp</span> <span class="p">(</span><span class="nf">pow</span> <span class="nv">base</span> <span class="p">(</span><span class="nb">quotient </span><span class="nv">exp</span> <span class="mi">2</span><span class="p">)))</span>        <span class="c1">; store the value temporarily</span>
+              <span class="p">(</span><span class="nb">* </span><span class="nv">tmp</span> <span class="nv">tmp</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="mi">1</span> <span class="p">(</span><span class="nb">modulo </span><span class="nv">exp</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="p">(</span><span class="nf">begin</span>
+              <span class="p">(</span><span class="k">define </span><span class="nv">tmp</span> <span class="p">(</span><span class="nf">pow</span> <span class="nv">base</span> <span class="p">(</span><span class="nb">quotient </span><span class="nv">exp</span> <span class="mi">2</span><span class="p">)))</span>        <span class="c1">; store the value temporarily</span>
+              <span class="p">(</span><span class="nb">* </span><span class="nv">tmp</span> <span class="nv">tmp</span> <span class="nv">base</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-02-27
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/hw06-of-cs61a-of-ucb/">
+            <span class="next-text nav-default">Hw06 of CS61A of UCB(2021-Fall)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
