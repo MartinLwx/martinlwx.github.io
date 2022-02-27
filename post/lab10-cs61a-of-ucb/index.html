@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Lab10 CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="the simple solutions for lab10 of CS61A of UCB" /><meta name="keywords" content="CS61A, solution, lab" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.2 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/lab10-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Lab10 CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="the simple solutions for lab10 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/lab10-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-02-27T01:04:02+08:00" />
+<meta property="article:modified_time" content="2022-02-27T01:04:02+08:00" />
+
+<meta itemprop="name" content="Lab10 CS61A of UCB(2021-Fall)">
+<meta itemprop="description" content="the simple solutions for lab10 of CS61A of UCB"><meta itemprop="datePublished" content="2022-02-27T01:04:02+08:00" />
+<meta itemprop="dateModified" content="2022-02-27T01:04:02+08:00" />
+<meta itemprop="wordCount" content="698">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lab10 CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="the simple solutions for lab10 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Lab10 CS61A of UCB(2021-Fall)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-02-27 </span>
+        
+          <span class="more-meta"> 698 words </span>
+          <span class="more-meta"> 2 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#coding-questions">Coding Questions</a>
+          <ul>
+            <li><a href="#q2-over-or-under">Q2: Over or Under</a></li>
+            <li><a href="#q3-make-adder">Q3: Make Adder</a></li>
+            <li><a href="#q4-compose">Q4: Compose</a></li>
+            <li><a href="#q5-make-a-list">Q5: Make a List</a></li>
+          </ul>
+        </li>
+        <li><a href="#optional-questions">Optional Questions</a>
+          <ul>
+            <li><a href="#q6-remove">Q6: Remove</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="coding-questions">Coding Questions</h2>
+<hr>
+<h3 id="q2-over-or-under">Q2: Over or Under</h3>
+<blockquote>
+<p>Define a procedure <code>over-or-under</code> which takes in a number <code>num1</code> and a number <code>num2</code> and returns the following:</p>
+<ul>
+<li>-1 if <code>num1</code> is less than <code>num2</code></li>
+<li>0 if <code>num1</code> is equal to <code>num2</code></li>
+<li>1 if <code>num1</code> is greater than <code>num2</code></li>
+</ul>
+<blockquote>
+<p>Challenge: Implement this in 2 different ways using <code>if</code> and <code>cond</code>!</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">(define (over-or-under num1 num2)
+  &#39;YOUR-CODE-HERE
+)
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p>The problem itself is not difficult. We just need to get used to the grammar of the scheme language. If we want to indicate the conditional branches, we may use:</p>
+<ol>
+<li><code>(if &lt;predicate&gt; &lt;consequent&gt; &lt;alternative&gt;)</code></li>
+<li><code>(cond (&lt;condition&gt; &lt;consequent&gt;) ...)</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">over-or-under</span> <span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> 
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> 
+            <span class="p">(</span><span class="nf">print</span> <span class="mi">-1</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
+            <span class="p">(</span><span class="nf">print</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
+            <span class="p">(</span><span class="nf">print</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">over-or-under</span> <span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">&lt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">)</span>
+        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">)</span>
+        <span class="p">(</span> <span class="p">(</span><span class="nb">&gt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">1</span><span class="p">)</span>  <span class="p">))</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-make-adder">Q3: Make Adder</h3>
+<blockquote>
+<p>Write the procedure <code>make-adder</code> which takes in an initial number, <code>num</code>, and then returns a procedure. This returned procedure takes in a number <code>inc</code> and returns the result of <code>num + inc</code>.</p>
+<blockquote>
+<p><em>Hint</em>: To return a procedure, you can either return a <code>lambda</code> expression or <code>define</code> another nested procedure. Remember that Scheme will automatically return the last clause in your procedure.</p>
+<p>You can find documentation on the syntax of <code>lambda</code> expressions in <a href="https://cs61a.org/articles/scheme-spec/#lambda">the 61A scheme specification!</a></p>
+</blockquote>
+</blockquote>
+<p>We once saw <code>make-adder</code> written in python in the course. Now we have to translate it to the scheme language. I will use the lambda function to implement the high-order function.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">make-adder</span> <span class="nv">num</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">inc</span><span class="p">)</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">num</span> <span class="nv">inc</span><span class="p">))</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q4-compose">Q4: Compose</h3>
+<blockquote>
+<p>Write the procedure <code>composed</code>, which takes in procedures <code>f</code> and <code>g</code> and outputs a new procedure. This new procedure takes in a number <code>x</code> and outputs the result of calling <code>f</code> on <code>g</code> of <code>x</code>.</p>
+</blockquote>
+<p>Is is similar to Q3.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">composed</span> <span class="nv">f</span> <span class="nv">g</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">g</span> <span class="nv">x</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-make-a-list">Q5: Make a List</h3>
+<blockquote>
+<p>In this problem you will create the list with the following box-and-pointer diagram:</p>
+<p><img src="https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab10/assets/list2.png" alt="linked list"></p>
+<blockquote>
+<p>Challenge: try to create this list in multiple ways, and using multiple list constructors!要求</p>
+</blockquote>
+</blockquote>
+<p>This problem asks us to make a list depending on the structure provided. We can implement this in many different ways:</p>
+<ol>
+<li><code>cons</code>, the basic way to define a list in scheme. I felt a little dizzy after finishing this 😢</li>
+<li><code>list</code>, the code is shorter. Notice that every time we call <code>(list ...)</code>, it is equivalent to making a sublist in the list(a new direction)</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="nv">lst</span> 
+  <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">cons </span><span class="mi">1</span> <span class="nv">nil</span><span class="p">)</span>
+        <span class="p">(</span><span class="nb">cons </span><span class="mi">2</span> <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">cons </span><span class="mi">3</span> <span class="p">(</span><span class="nb">cons </span><span class="mi">4</span> <span class="nv">nil</span><span class="p">))</span>
+                      <span class="p">(</span><span class="nb">cons </span><span class="mi">5</span> <span class="nv">nil</span><span class="p">))))</span>
+<span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="nv">lst</span> 
+  <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nb">list </span><span class="mi">1</span><span class="p">)</span>
+        <span class="mi">2</span> <span class="p">(</span><span class="nb">list </span><span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="optional-questions">Optional Questions</h2>
+<hr>
+<h3 id="q6-remove">Q6: Remove</h3>
+<blockquote>
+<p>Implement a procedure <code>remove</code> that takes in a list and returns a new list with <em>all</em> instances of <code>item</code> removed from <code>lst</code>. You may assume the list will only consist of numbers and will not have nested lists.</p>
+<blockquote>
+<p><em>Hint</em>: You might find the built-in <code>filter</code> procedure useful (though it is definitely possible to complete this question without it).</p>
+<p>You can find information about how to use <code>filter</code> in <a href="https://cs61a.org/articles/scheme-builtins/#pair-and-list-manipulation">the 61A Scheme builtin specification</a>!</p>
+</blockquote>
+</blockquote>
+<p>In face, the list of the scheme language is a linklist. So the problem is removing elements whose value are equal to <code>item</code>. Apparently, We can solve this problem recursively. The assumption that there are no nested lists in Q6 makes the problem easier.</p>
+<p>The base case is a empty list, we will return <code>'()</code>. Otherwise,</p>
+<ol>
+<li>The value of current node = <code>item</code>, exclude it and process sublist recursively.</li>
+<li>The value of current node != <code>item</code>, include it and process sublist recursively.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="nv">lst</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">null? </span><span class="nv">lst</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">()</span> <span class="p">)</span>             <span class="c1">; base case</span>
+        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">item</span> <span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">))</span> <span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">)))</span>           <span class="c1">; exclude item</span>
+        <span class="p">(</span> <span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">)))))</span>       <span class="c1">; include item</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-02-27
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/lab09-cs61a-of-ucb/">
+            <span class="next-text nav-default">Lab09 CS61A of UCB(2021-Fall)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
