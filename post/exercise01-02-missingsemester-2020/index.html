@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/exercise01-02-missingsemester-2020/" />
@@ -182,8 +182,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; mkdir -p /tmp/missing
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; mkdir -p /tmp/missing
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>📒 <code>-p</code> means <em>Create intermediate directories as required</em></p>
 <blockquote>
@@ -195,9 +195,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">cd</span> ~/tmp/missing
-&gt; touch semester
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; <span class="nb">cd</span> ~/tmp/missing
+</span></span><span class="line"><span class="cl">&gt; touch semester
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Write the following into that file, one line at a time:</p>
@@ -207,9 +207,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
-</span><span class="cp"></span>curl --head --silent https://missing.csail.mit.edu
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>curl --head --silent https://missing.csail.mit.edu
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>⚠️ Make sure you are in the <code>tmp/missing</code> directory start from now.</p>
@@ -219,9 +219,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">echo</span> <span class="s2">&#34;#\!/bin/sh&#34;</span> &gt;&gt; semester
-&gt; <span class="nb">echo</span> <span class="s2">&#34;curl --head --silent https://missing.csail.mit.edu&#34;</span> &gt;&gt; semester
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; <span class="nb">echo</span> <span class="s2">&#34;#\!/bin/sh&#34;</span> &gt;&gt; semester
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">echo</span> <span class="s2">&#34;curl --head --silent https://missing.csail.mit.edu&#34;</span> &gt;&gt; semester
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>⚠️ Warning：<code>!</code> has a special meaning even within double-quoted(<code>&quot;</code>) strings, so when we use <code>echo &quot;...&quot;</code> to append a string to a file, remember to use <code>\</code> to escape <code>!</code></p>
 <blockquote>
@@ -249,25 +249,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; ./semeseter
-<span class="c1"># ... permission denied</span>
-
-&gt; ls -l
-<span class="c1"># you can see the permission bits are  -rw-r--r--</span>
-<span class="c1"># It suggests that we don&#39;t have execute(x) permission</span>
-
-<span class="c1">## Solution 1.</span>
-<span class="c1"># run command below to, u means user, x means execute</span>
-&gt; chmod u+x semester
-&gt; ./semester
-<span class="c1"># You should see the outputs like: </span>
-<span class="c1"># HTTP/2 200</span>
-<span class="c1"># server: GitHub.com</span>
-<span class="c1"># ...</span>
-
-<span class="c1">## Solution 2.</span>
-&gt; sh ./semester
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; ./semeseter
+</span></span><span class="line"><span class="cl"><span class="c1"># ... permission denied</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; ls -l
+</span></span><span class="line"><span class="cl"><span class="c1"># you can see the permission bits are  -rw-r--r--</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># It suggests that we don&#39;t have execute(x) permission</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Solution 1.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># run command below to, u means user, x means execute</span>
+</span></span><span class="line"><span class="cl">&gt; chmod u+x semester
+</span></span><span class="line"><span class="cl">&gt; ./semester
+</span></span><span class="line"><span class="cl"><span class="c1"># You should see the outputs like: </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># HTTP/2 200</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># server: GitHub.com</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## Solution 2.</span>
+</span></span><span class="line"><span class="cl">&gt; sh ./semester
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>📒 use <code>chmod</code> to change the file permission, see <code>man chmod</code> for more information. I will suggest the <code>tldr</code> tool, which is quite handy, you may check <code>tldr chmod</code> by yourself🤗</p>
 <blockquote>
@@ -282,12 +282,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Solution 1.</span>
-&gt; date -r semester &gt; last-modified.txt
-
-<span class="c1"># Solution 2.</span>
-&gt; ls -l semester  <span class="p">|</span> awk <span class="s1">&#39;{print $6,$7,$8}&#39;</span> &gt; last-modified.txt
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Solution 1.</span>
+</span></span><span class="line"><span class="cl">&gt; date -r semester &gt; last-modified.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Solution 2.</span>
+</span></span><span class="line"><span class="cl">&gt; ls -l semester  <span class="p">|</span> awk <span class="s1">&#39;{print $6,$7,$8}&#39;</span> &gt; last-modified.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Write a command that reads out your laptop battery’s power level or your desktop machine’s CPU temperature from <code>/sys</code></p>
@@ -313,12 +313,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"> -rw-r--r--   <span class="m">1</span> user group 1.1M Jan <span class="m">14</span> 09:53 baz
- drwxr-xr-x   <span class="m">5</span> user group  <span class="m">160</span> Jan <span class="m">14</span> 09:53 .
- -rw-r--r--   <span class="m">1</span> user group  <span class="m">514</span> Jan <span class="m">14</span> 06:42 bar
- -rw-r--r--   <span class="m">1</span> user group 106M Jan <span class="m">13</span> 12:12 foo
- drwx------+ <span class="m">47</span> user group 1.5K Jan <span class="m">12</span> 18:08 ..
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"> -rw-r--r--   <span class="m">1</span> user group 1.1M Jan <span class="m">14</span> 09:53 baz
+</span></span><span class="line"><span class="cl"> drwxr-xr-x   <span class="m">5</span> user group  <span class="m">160</span> Jan <span class="m">14</span> 09:53 .
+</span></span><span class="line"><span class="cl"> -rw-r--r--   <span class="m">1</span> user group  <span class="m">514</span> Jan <span class="m">14</span> 06:42 bar
+</span></span><span class="line"><span class="cl"> -rw-r--r--   <span class="m">1</span> user group 106M Jan <span class="m">13</span> 12:12 foo
+</span></span><span class="line"><span class="cl"> drwx------+ <span class="m">47</span> user group 1.5K Jan <span class="m">12</span> 18:08 ..
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>Interpretation</p>
@@ -334,8 +334,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; ls -a -lh -t -G
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; ls -a -lh -t -G
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Write bash functions <code>marco</code> and <code>polo</code> that do the following. Whenever you execute <code>marco</code> the current working directory should be saved in some manner, then when you execute <code>polo</code>, no matter what directory you are in, <code>polo</code> should <code>cd</code> you back to the directory where you executed <code>marco</code>. For ease of debugging you can write the code in a file <code>marco.sh</code> and (re)load the definitions to your shell by executing <code>source marco.sh</code>.</p>
@@ -351,12 +351,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
-</span><span class="cp"></span>marco<span class="o">()</span> <span class="o">{</span>
-    touch ~/pwd.txt
-    <span class="nb">pwd</span> &gt;&gt; ~/pwd.txt
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>marco<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    touch ~/pwd.txt
+</span></span><span class="line"><span class="cl">    <span class="nb">pwd</span> &gt;&gt; ~/pwd.txt
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The <code>poli.sh</code>⬇️</p>
 <p>Just use <code>cat ~/pwd.txt</code> to get the origin working directory.</p>
@@ -369,12 +369,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
-</span><span class="cp"></span>poli<span class="o">()</span> <span class="o">{</span>
-    <span class="nv">destination</span><span class="o">=</span><span class="k">$(</span>cat ~/pwd.txt<span class="k">)</span>
-    <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$destination</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">exit</span>
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>poli<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">destination</span><span class="o">=</span><span class="k">$(</span>cat ~/pwd.txt<span class="k">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$destination</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Quick test⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -386,12 +386,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">source</span> marco.sh
-&gt; <span class="nb">source</span> poli.sh
-&gt; marco
-&gt; <span class="nb">cd</span> ..            <span class="c1"># you can cd wherever you want</span>
-&gt; poli             <span class="c1"># now you will go back to origin working directory</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; <span class="nb">source</span> marco.sh
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">source</span> poli.sh
+</span></span><span class="line"><span class="cl">&gt; marco
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">cd</span> ..            <span class="c1"># you can cd wherever you want</span>
+</span></span><span class="line"><span class="cl">&gt; poli             <span class="c1"># now you will go back to origin working directory</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>📒 I highly recommend the <code>shellcheck</code> tool. Use it to check your <code>*.sh</code> file after you have finished your code.</p>
 <blockquote>
@@ -411,18 +411,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/usr/bin/env bash
-</span><span class="cp"></span>
-<span class="nv">n</span><span class="o">=</span><span class="k">$((</span> RANDOM <span class="o">%</span> <span class="m">100</span> <span class="k">))</span>
-
-<span class="k">if</span> <span class="o">[[</span> n -eq <span class="m">42</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
- <span class="nb">echo</span> <span class="s2">&#34;Something went wrong&#34;</span>
- &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="nb">echo</span> <span class="s2">&#34;The error was using magic numbers&#34;</span>
- <span class="nb">exit</span> <span class="m">1</span>
-<span class="k">fi</span>
-
-<span class="nb">echo</span> <span class="s2">&#34;Everything went according to plan&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nv">n</span><span class="o">=</span><span class="k">$((</span> RANDOM <span class="o">%</span> <span class="m">100</span> <span class="k">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> n -eq <span class="m">42</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">echo</span> <span class="s2">&#34;Something went wrong&#34;</span>
+</span></span><span class="line"><span class="cl"> &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="nb">echo</span> <span class="s2">&#34;The error was using magic numbers&#34;</span>
+</span></span><span class="line"><span class="cl"> <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Everything went according to plan&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>The meaning of this script is judge if a random number(<code>n</code>) equal 42 or not. The random number ranges from 0 to 99, so we may need to run many many time until we get a <code>42</code>. In order to debug this <code>*.sh</code> file, we can measure how many times we run this <code>*.sh</code>. Apparently, we can use <em>do-while</em> loop, which corresponds to <code>until-loop</code> in bash. I found this <a href="https://www.tutorialkart.com/bash-shell-scripting/bash-until-loop-statement/">Link</a> helpful. The solution is(<code>test.sh</code>)⬇️</p>
@@ -441,18 +441,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
-</span><span class="cp"></span><span class="nv">count</span><span class="o">=</span><span class="m">0</span>
-
-<span class="c1"># run random.sh until it goes wrong</span>
-<span class="k">until</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span><span class="k">do</span>								<span class="c1"># $? will return the exit status of the most recently executed command</span>
-<span class="nv">count</span><span class="o">=</span><span class="k">$((</span>count <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-bash ./random.sh <span class="p">&amp;</span>&gt; result.txt					<span class="c1"># &amp; means we run the random.sh in the background.</span>
-<span class="k">done</span>
-
-<span class="nb">echo</span> <span class="s2">&#34;Error dectected: </span><span class="nv">$count</span><span class="s2"> runs&#34;</span>
-cat result.txt
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">count</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># run random.sh until it goes wrong</span>
+</span></span><span class="line"><span class="cl"><span class="k">until</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$?</span><span class="s2">&#34;</span> -ne <span class="m">0</span> <span class="o">]]</span><span class="p">;</span><span class="k">do</span>								<span class="c1"># $? will return the exit status of the most recently executed command</span>
+</span></span><span class="line"><span class="cl"><span class="nv">count</span><span class="o">=</span><span class="k">$((</span>count <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
+</span></span><span class="line"><span class="cl">bash ./random.sh <span class="p">&amp;</span>&gt; result.txt					<span class="c1"># &amp; means we run the random.sh in the background.</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Error dectected: </span><span class="nv">$count</span><span class="s2"> runs&#34;</span>
+</span></span><span class="line"><span class="cl">cat result.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Quick test⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -460,8 +460,8 @@ cat result.txt
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; bash test.sh
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; bash test.sh
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>As we covered in the lecture <code>find</code>’s <code>-exec</code> can be very powerful for performing operations over the files we are searching for. However, what if we want to do something with <strong>all</strong> the files, like creating a zip file? As you have seen so far commands will take input from both arguments and STDIN. When piping commands, we are connecting STDOUT to STDIN, but some commands like <code>tar</code> take inputs from arguments. To bridge this disconnect there’s the <a href="https://www.man7.org/linux/man-pages/man1/xargs.1.html"><code>xargs</code></a> command which will execute a command using STDIN as arguments. For example <code>ls | xargs rm</code> will delete the files in the current directory.</p>
@@ -484,8 +484,8 @@ cat result.txt
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; find . -name <span class="s1">&#39;*.html&#39;</span> -print0 <span class="p">|</span> xargs -0 tar czf html_files.tar.gz
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; find . -name <span class="s1">&#39;*.html&#39;</span> -print0 <span class="p">|</span> xargs -0 tar czf html_files.tar.gz
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>📒 I would recommend use <code>fd</code> instead of <code>find</code>. In <code>fd</code>, <code>-X</code> means <em>execute command once, with all search results as arguments</em>, we can use a placeholder <code>{}</code> to capture all results returned by <code>fd</code>. The nicer solution is like⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -493,8 +493,8 @@ cat result.txt
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; fd -e html -X tar czf html_files.tar.gz <span class="o">{}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; fd -e html -X tar czf html_files.tar.gz <span class="o">{}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>(Advanced) Write a command or script to recursively find the most recently modified file in a directory. More generally, can you list all files by recency?</p>
@@ -504,8 +504,8 @@ cat result.txt
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; find . -type f -print0 <span class="p">|</span> xargs -0 ls -trlh <span class="p">|</span> tail -n <span class="m">1</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; find . -type f -print0 <span class="p">|</span> xargs -0 ls -trlh <span class="p">|</span> tail -n <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Again, use <code>fd</code> will make this easier.⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -513,8 +513,8 @@ cat result.txt
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; fd -t f -X ls -trlh <span class="o">{}</span> <span class="p">|</span> tail -n <span class="m">1</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; fd -t f -X ls -trlh <span class="o">{}</span> <span class="p">|</span> tail -n <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -620,7 +620,7 @@ cat result.txt
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/exercise07-missingsemester-2020/" />
@@ -189,11 +189,11 @@ if (!doNotTrack) {
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; sudo ls
-&gt; log show --last 10s <span class="p">|</span> grep -E <span class="s2">&#34;sudo&#34;</span>
-<span class="c1"># you should see the last line of output says </span>
-<span class="c1"># you once run ls in super user access</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; sudo ls
+</span></span><span class="line"><span class="cl">&gt; log show --last 10s <span class="p">|</span> grep -E <span class="s2">&#34;sudo&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># you should see the last line of output says </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># you once run ls in super user access</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Do <a href="https://github.com/spiside/pdb-tutorial">this</a> hands on <code>pdb</code> tutorial to familiarize yourself with the commands. For a more in depth tutorial read <a href="https://realpython.com/python-debugging-pdb">this</a>.</p>
@@ -212,14 +212,14 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/sh
-</span><span class="cp"></span><span class="c1">## Example: a typical script with several problems</span>
-<span class="k">for</span> f in <span class="k">$(</span>ls *.m3u<span class="k">)</span>
-<span class="k">do</span>
-  grep -qi hq.*mp3 <span class="nv">$f</span> <span class="se">\
-</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;Playlist $f contains a HQ file in mp3 format&#39;</span>
-<span class="k">done</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">## Example: a typical script with several problems</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> f in <span class="k">$(</span>ls *.m3u<span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  grep -qi hq.*mp3 <span class="nv">$f</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s1">&#39;Playlist $f contains a HQ file in mp3 format&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p><strong>ERROR</strong></p>
@@ -260,15 +260,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
-</span><span class="cp"></span><span class="c1">## Example: a typical script with several problems</span>
-<span class="k">for</span> f in  *.m3u
-<span class="k">do</span>
-    <span class="o">[[</span> -e <span class="s2">&#34;</span><span class="nv">$f</span><span class="s2">&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="nb">break</span>    <span class="c1"># handle the case of no *.m3u files</span>
-    grep -qi <span class="s2">&#34;hq.*mp3&#34;</span> <span class="s2">&#34;</span><span class="nv">$f</span><span class="s2">&#34;</span> <span class="se">\
-</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&#34;Playlist </span><span class="nv">$f</span><span class="s2"> contains a HQ file in mp3 format&#34;</span>
-<span class="k">done</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">## Example: a typical script with several problems</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> f in  *.m3u
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[[</span> -e <span class="s2">&#34;</span><span class="nv">$f</span><span class="s2">&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="nb">break</span>    <span class="c1"># handle the case of no *.m3u files</span>
+</span></span><span class="line"><span class="cl">    grep -qi <span class="s2">&#34;hq.*mp3&#34;</span> <span class="s2">&#34;</span><span class="nv">$f</span><span class="s2">&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&#34;Playlist </span><span class="nv">$f</span><span class="s2"> contains a HQ file in mp3 format&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>(Advanced) Read about <a href="https://undo.io/resources/reverse-debugging-whitepaper/">reversible debugging</a> and get a simple example working using <a href="https://rr-project.org/"><code>rr</code></a> or <a href="https://morepypy.blogspot.com/2016/07/reverse-debugging-for-python.html"><code>RevPDB</code></a>.</p>
@@ -288,12 +288,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">     ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-     ...
-     1000     0.045    0.000    0.045    0.000 sorts.py:12(insertionsort)
-33218/1000    0.044    0.000    0.068    0.000 sorts.py:25(quicksort)
-		 ...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">     ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+</span></span><span class="line"><span class="cl">     ...
+</span></span><span class="line"><span class="cl">     1000     0.045    0.000    0.045    0.000 sorts.py:12(insertionsort)
+</span></span><span class="line"><span class="cl">33218/1000    0.044    0.000    0.068    0.000 sorts.py:25(quicksort)
+</span></span><span class="line"><span class="cl">		 ...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>🤔If you want to use <code>line_profiler</code> to compare the runtime of insertion sort and quicksort, you need to add <code>@profile</code> decorator above insertion sort and quicksort(You should install <code>line_profiler</code> fist by <code>pip install line_profiler</code>). The code will be like ⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -307,14 +307,14 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nd">@profile</span>
-<span class="k">def</span> <span class="nf">insertionsort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-  <span class="o">...</span>
-  
-<span class="nd">@profile</span>
-<span class="k">def</span> <span class="nf">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
-	<span class="o">...</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@profile</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">insertionsort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">  <span class="o">...</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="nd">@profile</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">quicksort</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="o">...</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then type <code>kernprof -v -l sorts.py</code> in your terminal. The output will look like: ⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -356,42 +356,42 @@ if (!doNotTrack) {
 </span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Wrote profile results to sorts.py.lprof
-Timer unit: 1e-06 s
-
-Total time: 0.382157 s
-File: sorts.py
-Function: insertionsort at line 11
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-    11                                           @profile
-    12                                           def insertionsort(array):
-    13
-    14     25881      10925.0      0.4      2.9      for i in range(len(array)):
-    15     24881      10814.0      0.4      2.8          j = i-1
-    16     24881      11411.0      0.5      3.0          v = array[i]
-    17    221660     133321.0      0.6     34.9          while j &gt;= 0 and v &lt; array[j]:
-    18    196779     113095.0      0.6     29.6              array[j+1] = array[j]
-    19    196779      88824.0      0.5     23.2              j -= 1
-    20     24881      13333.0      0.5      3.5          array[j+1] = v
-    21      1000        434.0      0.4      0.1      return array
-
-Total time: 0.162542 s
-File: sorts.py
-Function: quicksort at line 24
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-    24                                           @profile
-    25                                           def quicksort(array):
-    26     33150      24083.0      0.7     14.8      if len(array) &lt;= 1:
-    27     17075       9918.0      0.6      6.1          return array
-    28     16075      10775.0      0.7      6.6      pivot = array[0]
-    29     16075      46333.0      2.9     28.5      left = [i for i in array[1:] if i &lt; pivot]
-    30     16075      46896.0      2.9     28.9      right = [i for i in array[1:] if i &gt;= pivot]
-    31     16075      24537.0      1.5     15.1      return quicksort(left) + [pivot] + quicksort(right)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Wrote profile results to sorts.py.lprof
+</span></span><span class="line"><span class="cl">Timer unit: 1e-06 s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Total time: 0.382157 s
+</span></span><span class="line"><span class="cl">File: sorts.py
+</span></span><span class="line"><span class="cl">Function: insertionsort at line 11
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Line #      Hits         Time  Per Hit   % Time  Line Contents
+</span></span><span class="line"><span class="cl">==============================================================
+</span></span><span class="line"><span class="cl">    11                                           @profile
+</span></span><span class="line"><span class="cl">    12                                           def insertionsort(array):
+</span></span><span class="line"><span class="cl">    13
+</span></span><span class="line"><span class="cl">    14     25881      10925.0      0.4      2.9      for i in range(len(array)):
+</span></span><span class="line"><span class="cl">    15     24881      10814.0      0.4      2.8          j = i-1
+</span></span><span class="line"><span class="cl">    16     24881      11411.0      0.5      3.0          v = array[i]
+</span></span><span class="line"><span class="cl">    17    221660     133321.0      0.6     34.9          while j &gt;= 0 and v &lt; array[j]:
+</span></span><span class="line"><span class="cl">    18    196779     113095.0      0.6     29.6              array[j+1] = array[j]
+</span></span><span class="line"><span class="cl">    19    196779      88824.0      0.5     23.2              j -= 1
+</span></span><span class="line"><span class="cl">    20     24881      13333.0      0.5      3.5          array[j+1] = v
+</span></span><span class="line"><span class="cl">    21      1000        434.0      0.4      0.1      return array
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Total time: 0.162542 s
+</span></span><span class="line"><span class="cl">File: sorts.py
+</span></span><span class="line"><span class="cl">Function: quicksort at line 24
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Line #      Hits         Time  Per Hit   % Time  Line Contents
+</span></span><span class="line"><span class="cl">==============================================================
+</span></span><span class="line"><span class="cl">    24                                           @profile
+</span></span><span class="line"><span class="cl">    25                                           def quicksort(array):
+</span></span><span class="line"><span class="cl">    26     33150      24083.0      0.7     14.8      if len(array) &lt;= 1:
+</span></span><span class="line"><span class="cl">    27     17075       9918.0      0.6      6.1          return array
+</span></span><span class="line"><span class="cl">    28     16075      10775.0      0.7      6.6      pivot = array[0]
+</span></span><span class="line"><span class="cl">    29     16075      46333.0      2.9     28.5      left = [i for i in array[1:] if i &lt; pivot]
+</span></span><span class="line"><span class="cl">    30     16075      46896.0      2.9     28.9      right = [i for i in array[1:] if i &gt;= pivot]
+</span></span><span class="line"><span class="cl">    31     16075      24537.0      1.5     15.1      return quicksort(left) + [pivot] + quicksort(right)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>So we can easily find that the bottleneck(rows which have high <code>% Time</code>)</strong>. More details can be found on <a href="https://github.com/pyutils/line_profiler">this</a></p>
 <p>🤔Now we come to the <code>memory_profiler</code> part. If you haven&rsquo;t installed it, you may run <code>pip install -U memory_profiler</code>. The usage of <code>memory_profiler</code> is quite similar to the <code>line_profiler</code>. Both of them need to add <code>@profile</code> first, then you can run ``. The output will be like ⬇️</p>
@@ -428,36 +428,36 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Filename: sorts.py
-
-Line #    Mem usage    Increment  Occurences   Line Contents
-============================================================
-    11   38.176 MiB   38.176 MiB        1000   @profile
-    12                                         def insertionsort(array):
-    13
-    14   38.176 MiB    0.000 MiB       25694       for i in range(len(array)):
-    15   38.176 MiB    0.000 MiB       24694           j = i-1
-    16   38.176 MiB    0.000 MiB       24694           v = array[i]
-    17   38.176 MiB    0.000 MiB      223188           while j &gt;= 0 and v &lt; array[j]:
-    18   38.176 MiB    0.000 MiB      198494               array[j+1] = array[j]
-    19   38.176 MiB    0.000 MiB      198494               j -= 1
-    20   38.176 MiB    0.000 MiB       24694           array[j+1] = v
-    21   38.176 MiB    0.000 MiB        1000       return array
-
-
-Filename: sorts.py
-
-Line #    Mem usage    Increment  Occurences   Line Contents
-============================================================
-    24   38.172 MiB   38.148 MiB       33522   @profile
-    25                                         def quicksort(array):
-    26   38.172 MiB    0.000 MiB       33522       if len(array) &lt;= 1:
-    27   38.172 MiB    0.000 MiB       17261           return array
-    28   38.172 MiB    0.000 MiB       16261       pivot = array[0]
-    29   38.172 MiB    0.004 MiB      156337       left = [i for i in array[1:] if i &lt; pivot]
-    30   38.172 MiB    0.000 MiB      156337       right = [i for i in array[1:] if i &gt;= pivot]
-    31   38.172 MiB    0.020 MiB       16261       return quicksort(left) + [pivot] + quicksort(right)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Filename: sorts.py
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Line #    Mem usage    Increment  Occurences   Line Contents
+</span></span><span class="line"><span class="cl">============================================================
+</span></span><span class="line"><span class="cl">    11   38.176 MiB   38.176 MiB        1000   @profile
+</span></span><span class="line"><span class="cl">    12                                         def insertionsort(array):
+</span></span><span class="line"><span class="cl">    13
+</span></span><span class="line"><span class="cl">    14   38.176 MiB    0.000 MiB       25694       for i in range(len(array)):
+</span></span><span class="line"><span class="cl">    15   38.176 MiB    0.000 MiB       24694           j = i-1
+</span></span><span class="line"><span class="cl">    16   38.176 MiB    0.000 MiB       24694           v = array[i]
+</span></span><span class="line"><span class="cl">    17   38.176 MiB    0.000 MiB      223188           while j &gt;= 0 and v &lt; array[j]:
+</span></span><span class="line"><span class="cl">    18   38.176 MiB    0.000 MiB      198494               array[j+1] = array[j]
+</span></span><span class="line"><span class="cl">    19   38.176 MiB    0.000 MiB      198494               j -= 1
+</span></span><span class="line"><span class="cl">    20   38.176 MiB    0.000 MiB       24694           array[j+1] = v
+</span></span><span class="line"><span class="cl">    21   38.176 MiB    0.000 MiB        1000       return array
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Filename: sorts.py
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Line #    Mem usage    Increment  Occurences   Line Contents
+</span></span><span class="line"><span class="cl">============================================================
+</span></span><span class="line"><span class="cl">    24   38.172 MiB   38.148 MiB       33522   @profile
+</span></span><span class="line"><span class="cl">    25                                         def quicksort(array):
+</span></span><span class="line"><span class="cl">    26   38.172 MiB    0.000 MiB       33522       if len(array) &lt;= 1:
+</span></span><span class="line"><span class="cl">    27   38.172 MiB    0.000 MiB       17261           return array
+</span></span><span class="line"><span class="cl">    28   38.172 MiB    0.000 MiB       16261       pivot = array[0]
+</span></span><span class="line"><span class="cl">    29   38.172 MiB    0.004 MiB      156337       left = [i for i in array[1:] if i &lt; pivot]
+</span></span><span class="line"><span class="cl">    30   38.172 MiB    0.000 MiB      156337       right = [i for i in array[1:] if i &gt;= pivot]
+</span></span><span class="line"><span class="cl">    31   38.172 MiB    0.020 MiB       16261       return quicksort(left) + [pivot] + quicksort(right)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>It is weird, insertion sort is no better than quicksort in memory usage 😿</p>
 <p>🤔If we use the inlace version of quicksort, we can find that it uses slightly less memory.</p>
@@ -483,22 +483,22 @@ Line #    Mem usage    Increment  Occurences   Line Contents
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/env python</span>
-<span class="k">def</span> <span class="nf">fib0</span><span class="p">():</span> <span class="k">return</span> <span class="mi">0</span>
-
-<span class="k">def</span> <span class="nf">fib1</span><span class="p">():</span> <span class="k">return</span> <span class="mi">1</span>
-
-<span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;def fib</span><span class="si">{}</span><span class="s2">(): return fib</span><span class="si">{}</span><span class="s2">() + fib</span><span class="si">{}</span><span class="s2">()&#34;&#34;&#34;</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-
-    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-        <span class="n">exec</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
-    <span class="c1"># from functools import lru_cache</span>
-    <span class="c1"># for n in range(10):</span>
-    <span class="c1">#     exec(&#34;fib{} = lru_cache(1)(fib{})&#34;.format(n, n))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s2">&#34;fib9()&#34;</span><span class="p">))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">fib0</span><span class="p">():</span> <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">fib1</span><span class="p">():</span> <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;def fib</span><span class="si">{}</span><span class="s2">(): return fib</span><span class="si">{}</span><span class="s2">() + fib</span><span class="si">{}</span><span class="s2">()&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">exec</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># from functools import lru_cache</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># for n in range(10):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     exec(&#34;fib{} = lru_cache(1)(fib{})&#34;.format(n, n))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s2">&#34;fib9()&#34;</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Put the code into a file and make it executable. Install prerequisites: <a href="http://pycallgraph.slowchop.com/en/master/"><code>pycallgraph</code></a> and <a href="http://graphviz.org/"><code>graphviz</code></a>. (If you can run <code>dot</code>, you already have GraphViz.) Run the code as is with <code>pycallgraph graphviz -- ./fib.py</code>and check the <code>pycallgraph.png</code> file. How many times is <code>fib0</code> called?. We can do better than that by memoizing the functions. Uncomment the commented lines and regenerate the images. How many times are we calling each <code>fibN</code> function now?</p>
 </blockquote>
@@ -508,8 +508,8 @@ Line #    Mem usage    Increment  Occurences   Line Contents
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; pip install pycallgraph&gt; brew install graphviz
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; pip install pycallgraph&gt; brew install graphviz
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then we can run commands followed ⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -517,8 +517,8 @@ Line #    Mem usage    Increment  Occurences   Line Contents
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; pycallgraph graphviz -- ./fib.py
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; pycallgraph graphviz -- ./fib.py
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Open <code>pycallgraph.png</code>(in the same working dir). We can know that <code>fib0</code> was called 21 times.</p>
 <blockquote>
@@ -529,8 +529,8 @@ Line #    Mem usage    Increment  Occurences   Line Contents
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; python -m http.server 4444&gt; lsof <span class="p">|</span> grep LISTEN&gt; <span class="nb">kill</span> &lt;PID&gt;             <span class="c1"># &lt;PID&gt; can be found in the output of last command</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; python -m http.server 4444&gt; lsof <span class="p">|</span> grep LISTEN&gt; <span class="nb">kill</span> &lt;PID&gt;             <span class="c1"># &lt;PID&gt; can be found in the output of last command</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Limiting processes resources can be another handy tool in your toolbox. Try running <code>stress -c 3</code> and visualize the CPU consumption with <code>htop</code>. Now, execute <code>taskset --cpu-list 0,2 stress -c 3</code> and visualize it. Is <code>stress</code> taking three CPUs? Why not? Read <a href="https://www.man7.org/linux/man-pages/man1/taskset.1.html"><code>man taskset</code></a>. Challenge: achieve the same using <a href="https://www.man7.org/linux/man-pages/man7/cgroups.7.html"><code>cgroups</code></a>. Try limiting the memory consumption of <code>stress -m</code>.</p>
@@ -645,7 +645,7 @@ Line #    Mem usage    Increment  Occurences   Line Contents
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

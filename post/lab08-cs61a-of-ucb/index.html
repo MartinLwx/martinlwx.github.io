@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/lab08-cs61a-of-ucb/" />
@@ -201,15 +201,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">convert_link</span><span class="p">(</span><span class="n">link</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Takes a linked list and returns a Python list with the same elements.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">while</span> <span class="n">link</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">))</span>
-        <span class="n">link</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">rest</span>
-    <span class="k">return</span> <span class="n">result</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">convert_link</span><span class="p">(</span><span class="n">link</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Takes a linked list and returns a Python list with the same elements.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">link</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">link</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The recursive algorithm is also easy. The base case is that when we encounter an empty node, an empty list will be returned. Otherwise, we will break down this problem: current node + the rest of tinkliest</p>
 <div class="highlight"><div class="chroma">
@@ -224,15 +224,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">convert_link</span><span class="p">(</span><span class="n">link</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Takes a linked list and returns a Python list with the same elements.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># recursive solution</span>
-    <span class="k">if</span> <span class="n">link</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)]</span> <span class="o">+</span> <span class="n">convert_link</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">convert_link</span><span class="p">(</span><span class="n">link</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Takes a linked list and returns a Python list with the same elements.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># recursive solution</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">link</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)]</span> <span class="o">+</span> <span class="n">convert_link</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="trees">Trees</h2>
 <hr>
@@ -255,18 +255,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">label_squarer</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Mutates a Tree t by squaring all its elements.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># base case</span>
-    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">**</span> <span class="mi">2</span>
-
-    <span class="c1"># check every branch</span>
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">**</span> <span class="mi">2</span>          <span class="c1"># change the current node&#39;s label</span>
-        <span class="n">label_squarer</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>                <span class="c1"># change branches</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">label_squarer</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Mutates a Tree t by squaring all its elements.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">**</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># check every branch</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">**</span> <span class="mi">2</span>          <span class="c1"># change the current node&#39;s label</span>
+</span></span><span class="line"><span class="cl">        <span class="n">label_squarer</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>                <span class="c1"># change branches</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q5-cumulative-mul">Q5: Cumulative Mul</h3>
 <blockquote>
@@ -290,18 +290,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">cumulative_mul</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Mutates t so that each node&#39;s label becomes the product of all labels in
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># base case</span>
-    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
-    <span class="c1"># get all label value in subtree</span>
-    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">cumulative_mul</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">]</span>
-
-    <span class="c1"># calculate</span>
-    <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">*=</span> <span class="n">math</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">cumulative_mul</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Mutates t so that each node&#39;s label becomes the product of all labels in
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># get all label value in subtree</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">cumulative_mul</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># calculate</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">*=</span> <span class="n">math</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q6-add-leaves">Q6: Add Leaves</h3>
 <blockquote>
@@ -340,27 +340,27 @@ if (!doNotTrack) {
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">add_d_leaves</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Add d leaves containing v to each node at every depth d.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
-        <span class="c1"># base case</span>
-        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
-                <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-            <span class="k">return</span>
-
-        <span class="c1"># check every branch</span>
-        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
-            <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        
-
-        <span class="c1"># check current node</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
-            <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-
-    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_d_leaves</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Add d leaves containing v to each node at every depth d.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># base case</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># check every branch</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># check current node</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Tree</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="optional-questions">Optional Questions</h2>
 <hr>
@@ -379,15 +379,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">&gt;&gt;&gt; s = Link(&#39;a&#39;, Link(&#39;b&#39;, Link(&#39;c&#39;, Link(&#39;d&#39;))))
-&gt;&gt;&gt; every_other(s)
-&gt;&gt;&gt; s.first
-&#39;a&#39;
-&gt;&gt;&gt; s.rest.first
-&#39;c&#39;
-&gt;&gt;&gt; s.rest.rest is Link.empty
-True
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;&gt;&gt; s = Link(&#39;a&#39;, Link(&#39;b&#39;, Link(&#39;c&#39;, Link(&#39;d&#39;))))
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; every_other(s)
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; s.first
+</span></span><span class="line"><span class="cl">&#39;a&#39;
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; s.rest.first
+</span></span><span class="line"><span class="cl">&#39;c&#39;
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; s.rest.rest is Link.empty
+</span></span><span class="line"><span class="cl">True
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>If <code>s</code> contains fewer than two elements, <code>s</code> remains unchanged.</p>
 <blockquote>
@@ -415,22 +415,22 @@ True
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">every_other</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Mutates a linked list so that all the odd-indiced elements are removed
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># if it contains fewer than 2, do nothing</span>
-    <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">s</span><span class="o">.</span><span class="n">rest</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="k">return</span>
-
-    <span class="n">last_pos</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">rest</span>
-    <span class="n">current_index</span> <span class="o">=</span> <span class="mi">1</span>               <span class="c1"># start from 2nd position</span>
-    <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">current_index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> 
-            <span class="n">last_pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
-        <span class="n">last_pos</span> <span class="o">=</span> <span class="n">pos</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
-        <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">every_other</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Mutates a linked list so that all the odd-indiced elements are removed
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># if it contains fewer than 2, do nothing</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">s</span><span class="o">.</span><span class="n">rest</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">last_pos</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_index</span> <span class="o">=</span> <span class="mi">1</span>               <span class="c1"># start from 2nd position</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">current_index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">last_pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">        <span class="n">last_pos</span> <span class="o">=</span> <span class="n">pos</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q8-prune-small">Q8: Prune Small</h3>
 <blockquote>
@@ -451,17 +451,17 @@ True
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">prune_small</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Prune the tree mutatively, keeping only the n branches
-</span><span class="s2">    of each node with the smallest label.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
-        <span class="n">largest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">largest</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
-        <span class="n">prune_small</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">prune_small</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Prune the tree mutatively, keeping only the n branches
+</span></span></span><span class="line"><span class="cl"><span class="s2">    of each node with the smallest label.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">largest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">largest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">prune_small</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -567,7 +567,7 @@ True
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

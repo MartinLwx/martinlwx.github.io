@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/hw04-of-cs61a-of-ucb/" />
@@ -211,17 +211,17 @@ if (!doNotTrack) {
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">planet</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Construct a planet of some size.&#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;planet&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">]</span>
-
-
-<span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Select the size of a planet.&#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="n">is_planet</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="s1">&#39;must call size on a planet&#39;</span>
-    <span class="k">return</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">planet</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Construct a planet of some size.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;planet&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Select the size of a planet.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">is_planet</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="s1">&#39;must call size on a planet&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q3-balanced">Q3: Balanced</h3>
 <blockquote>
@@ -272,37 +272,37 @@ if (!doNotTrack) {
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">balanced</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return whether m is balanced.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; t, u, v = examples()
-</span><span class="s2">    &gt;&gt;&gt; balanced(t)
-</span><span class="s2">    True
-</span><span class="s2">    &gt;&gt;&gt; balanced(v)
-</span><span class="s2">    True
-</span><span class="s2">    &gt;&gt;&gt; w = mobile(arm(3, t), arm(2, u))
-</span><span class="s2">    &gt;&gt;&gt; balanced(w)
-</span><span class="s2">    False
-</span><span class="s2">    &gt;&gt;&gt; balanced(mobile(arm(1, v), arm(1, w)))
-</span><span class="s2">    False
-</span><span class="s2">    &gt;&gt;&gt; balanced(mobile(arm(1, w), arm(1, v)))
-</span><span class="s2">    False
-</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
-</span><span class="s2">    &gt;&gt;&gt; # checking for abstraction barrier violations by banning indexing
-</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;balanced&#39;, [&#39;Index&#39;])
-</span><span class="s2">    True
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># planet is balanced </span>
-    <span class="k">if</span> <span class="n">is_planet</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span>
-
-    <span class="n">left_arm</span><span class="p">,</span> <span class="n">right_arm</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">right</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-    
-    <span class="c1"># end(...arm) will is a mobile or a planet</span>
-    <span class="n">left_val</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">left_arm</span><span class="p">)</span> <span class="o">*</span> <span class="n">total_weight</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">left_arm</span><span class="p">))</span>
-    <span class="n">right_val</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">right_arm</span><span class="p">)</span> <span class="o">*</span> <span class="n">total_weight</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">right_arm</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">left_val</span> <span class="o">==</span> <span class="n">right_val</span> <span class="ow">and</span> <span class="n">balanced</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">left_arm</span><span class="p">))</span> <span class="ow">and</span> <span class="n">balanced</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">right_arm</span><span class="p">))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">balanced</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return whether m is balanced.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t, u, v = examples()
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; balanced(t)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; balanced(v)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; w = mobile(arm(3, t), arm(2, u))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; balanced(w)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    False
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; balanced(mobile(arm(1, v), arm(1, w)))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    False
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; balanced(mobile(arm(1, w), arm(1, v)))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    False
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; # checking for abstraction barrier violations by banning indexing
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;balanced&#39;, [&#39;Index&#39;])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># planet is balanced </span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">is_planet</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">left_arm</span><span class="p">,</span> <span class="n">right_arm</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">right</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># end(...arm) will is a mobile or a planet</span>
+</span></span><span class="line"><span class="cl">    <span class="n">left_val</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">left_arm</span><span class="p">)</span> <span class="o">*</span> <span class="n">total_weight</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">left_arm</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">right_val</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">right_arm</span><span class="p">)</span> <span class="o">*</span> <span class="n">total_weight</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">right_arm</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">left_val</span> <span class="o">==</span> <span class="n">right_val</span> <span class="ow">and</span> <span class="n">balanced</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">left_arm</span><span class="p">))</span> <span class="ow">and</span> <span class="n">balanced</span><span class="p">(</span><span class="n">end</span><span class="p">(</span><span class="n">right_arm</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q4-totals">Q4: Totals</h3>
 <blockquote>
@@ -346,40 +346,40 @@ if (!doNotTrack) {
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">totals_tree</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a tree representing the mobile with its total weight at the root.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; t, u, v = examples()
-</span><span class="s2">    &gt;&gt;&gt; print_tree(totals_tree(t))
-</span><span class="s2">    3
-</span><span class="s2">      2
-</span><span class="s2">      1
-</span><span class="s2">    &gt;&gt;&gt; print_tree(totals_tree(u))
-</span><span class="s2">    6
-</span><span class="s2">      1
-</span><span class="s2">      5
-</span><span class="s2">        3
-</span><span class="s2">        2
-</span><span class="s2">    &gt;&gt;&gt; print_tree(totals_tree(v))
-</span><span class="s2">    9
-</span><span class="s2">      3
-</span><span class="s2">        2
-</span><span class="s2">        1
-</span><span class="s2">      6
-</span><span class="s2">        1
-</span><span class="s2">        5
-</span><span class="s2">          3
-</span><span class="s2">          2
-</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
-</span><span class="s2">    &gt;&gt;&gt; # checking for abstraction barrier violations by banning indexing
-</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;totals_tree&#39;, [&#39;Index&#39;])
-</span><span class="s2">    True
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">if</span> <span class="n">is_planet</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">total_weight</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="p">[</span><span class="n">totals_tree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">end</span><span class="p">(</span><span class="n">left</span><span class="p">(</span><span class="n">m</span><span class="p">)),</span> <span class="n">end</span><span class="p">(</span><span class="n">right</span><span class="p">(</span><span class="n">m</span><span class="p">))]])</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">totals_tree</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a tree representing the mobile with its total weight at the root.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t, u, v = examples()
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(totals_tree(t))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    3
+</span></span></span><span class="line"><span class="cl"><span class="s2">      2
+</span></span></span><span class="line"><span class="cl"><span class="s2">      1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(totals_tree(u))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    6
+</span></span></span><span class="line"><span class="cl"><span class="s2">      1
+</span></span></span><span class="line"><span class="cl"><span class="s2">      5
+</span></span></span><span class="line"><span class="cl"><span class="s2">        3
+</span></span></span><span class="line"><span class="cl"><span class="s2">        2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(totals_tree(v))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    9
+</span></span></span><span class="line"><span class="cl"><span class="s2">      3
+</span></span></span><span class="line"><span class="cl"><span class="s2">        2
+</span></span></span><span class="line"><span class="cl"><span class="s2">        1
+</span></span></span><span class="line"><span class="cl"><span class="s2">      6
+</span></span></span><span class="line"><span class="cl"><span class="s2">        1
+</span></span></span><span class="line"><span class="cl"><span class="s2">        5
+</span></span></span><span class="line"><span class="cl"><span class="s2">          3
+</span></span></span><span class="line"><span class="cl"><span class="s2">          2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; # checking for abstraction barrier violations by banning indexing
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;totals_tree&#39;, [&#39;Index&#39;])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">is_planet</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">total_weight</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="p">[</span><span class="n">totals_tree</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">end</span><span class="p">(</span><span class="n">left</span><span class="p">(</span><span class="n">m</span><span class="p">)),</span> <span class="n">end</span><span class="p">(</span><span class="n">right</span><span class="p">(</span><span class="n">m</span><span class="p">))]])</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="more-trees">More trees</h2>
 <hr>
@@ -388,7 +388,7 @@ if (!doNotTrack) {
 <p>Define <code>replace_loki_at_leaf</code>, which takes a tree <code>t</code> and a value <code>lokis_replacement</code>. <code>replace_loki_at_leaf</code> returns a new tree that&rsquo;s the same as <code>t</code> except that every leaf label equal to <code>&quot;loki&quot;</code> has been replaced with <code>lokis_replacement</code>.</p>
 <p>If you want to learn about the Norse mythology referenced in this problem, you can read about it <a href="https://en.wikipedia.org/wiki/Yggdrasil">here</a>.</p>
 </blockquote>
-<p>The base case is the <code>leaf</code> node. We need to check if its label is equal to &lsquo;loki&rsquo;. If it is the truth, we will make a new leaf, otherwise, we will just return the original leaf.</p>
+<p>The base case is the <code>leaf</code> node. We need to check if its label is equal to &rsquo;loki&rsquo;. If it is the truth, we will make a new leaf, otherwise, we will just return the original leaf.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -427,41 +427,41 @@ if (!doNotTrack) {
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">replace_loki_at_leaf</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">lokis_replacement</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Returns a new tree where every leaf value equal to &#34;loki&#34; has
-</span><span class="s2">    been replaced with lokis_replacement.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; yggdrasil = tree(&#39;odin&#39;,
-</span><span class="s2">    ...                  [tree(&#39;balder&#39;,
-</span><span class="s2">    ...                        [tree(&#39;loki&#39;),
-</span><span class="s2">    ...                         tree(&#39;freya&#39;)]),
-</span><span class="s2">    ...                   tree(&#39;frigg&#39;,
-</span><span class="s2">    ...                        [tree(&#39;loki&#39;)]),
-</span><span class="s2">    ...                   tree(&#39;loki&#39;,
-</span><span class="s2">    ...                        [tree(&#39;sif&#39;),
-</span><span class="s2">    ...                         tree(&#39;loki&#39;)]),
-</span><span class="s2">    ...                   tree(&#39;loki&#39;)])
-</span><span class="s2">    &gt;&gt;&gt; laerad = copy_tree(yggdrasil) # copy yggdrasil for testing purposes
-</span><span class="s2">    &gt;&gt;&gt; print_tree(replace_loki_at_leaf(yggdrasil, &#39;freya&#39;))
-</span><span class="s2">    odin
-</span><span class="s2">      balder
-</span><span class="s2">        freya
-</span><span class="s2">        freya
-</span><span class="s2">      frigg
-</span><span class="s2">        freya
-</span><span class="s2">      loki
-</span><span class="s2">        sif
-</span><span class="s2">        freya
-</span><span class="s2">      freya
-</span><span class="s2">    &gt;&gt;&gt; laerad == yggdrasil # Make sure original tree is unmodified
-</span><span class="s2">    True
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">if</span> <span class="n">is_leaf</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;loki&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">lokis_replacement</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">t</span>
-    <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="p">[</span><span class="n">replace_loki_at_leaf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">lokis_replacement</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">)])</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">replace_loki_at_leaf</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">lokis_replacement</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Returns a new tree where every leaf value equal to &#34;loki&#34; has
+</span></span></span><span class="line"><span class="cl"><span class="s2">    been replaced with lokis_replacement.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; yggdrasil = tree(&#39;odin&#39;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                  [tree(&#39;balder&#39;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                        [tree(&#39;loki&#39;),
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                         tree(&#39;freya&#39;)]),
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                   tree(&#39;frigg&#39;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                        [tree(&#39;loki&#39;)]),
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                   tree(&#39;loki&#39;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                        [tree(&#39;sif&#39;),
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                         tree(&#39;loki&#39;)]),
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                   tree(&#39;loki&#39;)])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; laerad = copy_tree(yggdrasil) # copy yggdrasil for testing purposes
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(replace_loki_at_leaf(yggdrasil, &#39;freya&#39;))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    odin
+</span></span></span><span class="line"><span class="cl"><span class="s2">      balder
+</span></span></span><span class="line"><span class="cl"><span class="s2">        freya
+</span></span></span><span class="line"><span class="cl"><span class="s2">        freya
+</span></span></span><span class="line"><span class="cl"><span class="s2">      frigg
+</span></span></span><span class="line"><span class="cl"><span class="s2">        freya
+</span></span></span><span class="line"><span class="cl"><span class="s2">      loki
+</span></span></span><span class="line"><span class="cl"><span class="s2">        sif
+</span></span></span><span class="line"><span class="cl"><span class="s2">        freya
+</span></span></span><span class="line"><span class="cl"><span class="s2">      freya
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; laerad == yggdrasil # Make sure original tree is unmodified
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">is_leaf</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;loki&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">lokis_replacement</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">t</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">tree</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="p">[</span><span class="n">replace_loki_at_leaf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">lokis_replacement</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">)])</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q6-has-path">Q6: Has Path</h3>
 <blockquote>
@@ -513,45 +513,45 @@ if (!doNotTrack) {
 </span><span class="lnt">38
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">has_path</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return whether there is a path in a tree where the entries along the path
-</span><span class="s2">    spell out a particular word.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; greetings = tree(&#39;h&#39;, [tree(&#39;i&#39;),
-</span><span class="s2">    ...                        tree(&#39;e&#39;, [tree(&#39;l&#39;, [tree(&#39;l&#39;, [tree(&#39;o&#39;)])]),
-</span><span class="s2">    ...                                   tree(&#39;y&#39;)])])
-</span><span class="s2">    &gt;&gt;&gt; print_tree(greetings)
-</span><span class="s2">    h
-</span><span class="s2">      i
-</span><span class="s2">      e
-</span><span class="s2">        l
-</span><span class="s2">          l
-</span><span class="s2">            o
-</span><span class="s2">        y
-</span><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;h&#39;)
-</span><span class="s2">    True
-</span><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;i&#39;)
-</span><span class="s2">    False
-</span><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hi&#39;)
-</span><span class="s2">    True
-</span><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hello&#39;)
-</span><span class="s2">    True
-</span><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hey&#39;)
-</span><span class="s2">    True
-</span><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;bye&#39;)
-</span><span class="s2">    False
-</span><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hint&#39;)
-</span><span class="s2">    False
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;no path for empty word.&#39;</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">cur</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">cur</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="n">cur</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">cur</span> <span class="o">+</span> <span class="n">label</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">)])</span>
-    <span class="k">return</span> <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">has_path</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return whether there is a path in a tree where the entries along the path
+</span></span></span><span class="line"><span class="cl"><span class="s2">    spell out a particular word.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; greetings = tree(&#39;h&#39;, [tree(&#39;i&#39;),
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                        tree(&#39;e&#39;, [tree(&#39;l&#39;, [tree(&#39;l&#39;, [tree(&#39;o&#39;)])]),
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...                                   tree(&#39;y&#39;)])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(greetings)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    h
+</span></span></span><span class="line"><span class="cl"><span class="s2">      i
+</span></span></span><span class="line"><span class="cl"><span class="s2">      e
+</span></span></span><span class="line"><span class="cl"><span class="s2">        l
+</span></span></span><span class="line"><span class="cl"><span class="s2">          l
+</span></span></span><span class="line"><span class="cl"><span class="s2">            o
+</span></span></span><span class="line"><span class="cl"><span class="s2">        y
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;h&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;i&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    False
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hi&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hello&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hey&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;bye&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    False
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; has_path(greetings, &#39;hint&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    False
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;no path for empty word.&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">cur</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">cur</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">cur</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">cur</span> <span class="o">+</span> <span class="n">label</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="trees">Trees</h2>
 <hr>
@@ -583,25 +583,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a list of the entries in this tree in the order that they
-</span><span class="s2">    would be visited by a preorder traversal (see problem description).
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
-</span><span class="s2">    &gt;&gt;&gt; preorder(numbers)
-</span><span class="s2">    [1, 2, 3, 4, 5, 6, 7]
-</span><span class="s2">    &gt;&gt;&gt; preorder(tree(2, [tree(4, [tree(6)])]))
-</span><span class="s2">    [2, 4, 6]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-                <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a list of the entries in this tree in the order that they
+</span></span></span><span class="line"><span class="cl"><span class="s2">    would be visited by a preorder traversal (see problem description).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(numbers)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [1, 2, 3, 4, 5, 6, 7]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(tree(2, [tree(4, [tree(6)])]))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [2, 4, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="data-abstraction">Data Abstraction</h2>
 <hr>
@@ -634,21 +634,21 @@ if (!doNotTrack) {
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">interval</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Construct an interval from a to b.&#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;Lower bound cannot be greater than upper bound&#39;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
-
-
-<span class="k">def</span> <span class="nf">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the lower bound of interval x.&#34;&#34;&#34;</span>
-    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-
-<span class="k">def</span> <span class="nf">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the upper bound of interval x.&#34;&#34;&#34;</span>
-    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">interval</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Construct an interval from a to b.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;Lower bound cannot be greater than upper bound&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the lower bound of interval x.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the upper bound of interval x.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q9-interval-arithmetic">Q9: Interval Arithmetic</h3>
 <blockquote>
@@ -666,15 +666,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the interval that contains the product of any value in x and any
-</span><span class="s2">    value in y.&#34;&#34;&#34;</span>
-    <span class="n">p1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">p2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">p3</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">p4</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">)]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the interval that contains the product of any value in x and any
+</span></span></span><span class="line"><span class="cl"><span class="s2">    value in y.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p3</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p4</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">)]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>There are many data abstraction violations in <code>mul_interval</code>. We can&rsquo;t use <code>x[0]</code> or <code>x[1]</code> to get the lower bound and the upper bound. We should use the function <code>lower_bound()</code> and the <code>upper_bound()</code> instead. In addition, we can&rsquo;t use <code>[...]</code> to make an interval. That&rsquo;s a violation too!</p>
@@ -690,15 +690,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the interval that contains the product of any value in x and any
-</span><span class="s2">    value in y.&#34;&#34;&#34;</span>
-    <span class="n">p1</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">p2</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">p3</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">p4</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">interval</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the interval that contains the product of any value in x and any
+</span></span></span><span class="line"><span class="cl"><span class="s2">    value in y.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p2</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p3</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p4</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">interval</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="interval-subtraction">Interval Subtraction</h4>
 <blockquote>
@@ -717,15 +717,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">sub_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the interval that contains the difference between any value in x
-</span><span class="s2">    and any value in y.&#34;&#34;&#34;</span>
-    <span class="n">p1</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">p2</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">p3</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">p4</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">interval</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sub_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the interval that contains the difference between any value in x
+</span></span></span><span class="line"><span class="cl"><span class="s2">    and any value in y.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p1</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p2</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p3</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p4</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">interval</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="interval-division">Interval Division</h4>
 <blockquote>
@@ -743,14 +743,14 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">div_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the interval that contains the quotient of any value in x divided by
-</span><span class="s2">    any value in y. Division is implemented as the multiplication of x by the
-</span><span class="s2">    reciprocal of y.&#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;AssertionError!&#34;</span>
-    <span class="n">reciprocal_y</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">reciprocal_y</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">div_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the interval that contains the quotient of any value in x divided by
+</span></span></span><span class="line"><span class="cl"><span class="s2">    any value in y. Division is implemented as the multiplication of x by the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    reciprocal of y.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&#34;AssertionError!&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">reciprocal_y</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">upper_bound</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">lower_bound</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">mul_interval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">reciprocal_y</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q10-par-diff">Q10: Par Diff</h3>
 <blockquote>
@@ -760,8 +760,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">par1(r1, r2) = (r1 * r2) / (r1 + r2)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">par1(r1, r2) = (r1 * r2) / (r1 + r2)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>or</p>
 <div class="highlight"><div class="chroma">
@@ -769,8 +769,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">par2(r1, r2) = 1 / (1/r1 + 1/r2)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">par2(r1, r2) = 1 / (1/r1 + 1/r2)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>He has written the following two programs, each of which computes the <code>parallel_resistors</code> formula differently:</p>
 <div class="highlight"><div class="chroma">
@@ -782,12 +782,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">par2</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
-    <span class="n">one</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">rep_r1</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r1</span><span class="p">)</span>
-    <span class="n">rep_r2</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">add_interval</span><span class="p">(</span><span class="n">rep_r1</span><span class="p">,</span> <span class="n">rep_r2</span><span class="p">))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">par2</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">one</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rep_r1</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rep_r2</span> <span class="o">=</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">div_interval</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">add_interval</span><span class="p">(</span><span class="n">rep_r1</span><span class="p">,</span> <span class="n">rep_r2</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Lem points out that Alyssa&rsquo;s program gives different answers for the two ways of computing. Find two intervals <code>r1</code> and <code>r2</code> that demonstrate the difference in behavior between <code>par1</code> and <code>par2</code> when passed into each of the two functions.</p>
 <p>Demonstrate that Lem is right. Investigate the behavior of the system on a variety of arithmetic expressions. Make some intervals <code>r1</code> and <code>r2</code>, and show that <code>par1</code> and <code>par2</code> can give different results.</p>
@@ -809,19 +809,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">check_par</span><span class="p">():</span>
-    <span class="s2">&#34;&#34;&#34;Return two intervals that give different results for parallel resistors.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; r1, r2 = check_par()
-</span><span class="s2">    &gt;&gt;&gt; x = par1(r1, r2)
-</span><span class="s2">    &gt;&gt;&gt; y = par2(r1, r2)
-</span><span class="s2">    &gt;&gt;&gt; lower_bound(x) != lower_bound(y) or upper_bound(x) != upper_bound(y)
-</span><span class="s2">    True
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">r1</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  
-    <span class="n">r2</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  
-    <span class="k">return</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">check_par</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return two intervals that give different results for parallel resistors.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; r1, r2 = check_par()
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; x = par1(r1, r2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; y = par2(r1, r2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; lower_bound(x) != lower_bound(y) or upper_bound(x) != upper_bound(y)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r1</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">r2</span> <span class="o">=</span> <span class="n">interval</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -927,7 +927,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/exercise05-06-missingsemester-2020/" />
@@ -202,19 +202,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; sleep <span class="m">10000</span>
-<span class="c1"># press Ctril-Z</span>
-<span class="c1"># output: [1]  + 29705 suspended  sleep 10000</span>
-
-&gt; <span class="nb">bg</span> %1
-<span class="c1"># output: [1]  + 29705 continued  sleep 10000</span>
-
-&gt; pgrep -af <span class="s2">&#34;sleep&#34;</span>
-<span class="c1"># output: 29705</span>
-
-&gt; pkill -af <span class="s2">&#34;sleep&#34;</span>
-<span class="c1"># output: [1]  + 29705 terminated  sleep 10000</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; sleep <span class="m">10000</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># press Ctril-Z</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># output: [1]  + 29705 suspended  sleep 10000</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">bg</span> %1
+</span></span><span class="line"><span class="cl"><span class="c1"># output: [1]  + 29705 continued  sleep 10000</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; pgrep -af <span class="s2">&#34;sleep&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># output: 29705</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; pkill -af <span class="s2">&#34;sleep&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># output: [1]  + 29705 terminated  sleep 10000</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Apparently, <code>pgrep</code> and <code>pkill</code> are quite handy. We won&rsquo;t be bothered to find out the <code>pid</code> ourselves.</p>
 <blockquote>
@@ -228,9 +228,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; sleep <span class="m">60</span> <span class="p">&amp;</span>
-&gt; pgrep <span class="s2">&#34;sleep&#34;</span> <span class="p">|</span> <span class="nb">wait</span> <span class="o">&amp;&amp;</span> ls
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; sleep <span class="m">60</span> <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">&gt; pgrep <span class="s2">&#34;sleep&#34;</span> <span class="p">|</span> <span class="nb">wait</span> <span class="o">&amp;&amp;</span> ls
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>However, the <code>wait</code> command is session-dependent. So we need to use <code>kill -0</code>. The <code>pidwait()</code> in <code>pidwait.sh</code> is like ⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -245,15 +245,15 @@ if (!doNotTrack) {
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
-</span><span class="cp"></span>pidwait<span class="o">()</span> <span class="o">{</span>
-    <span class="k">while</span> <span class="nb">kill</span> -0 <span class="nv">$1</span> 2&gt;/dev/null  <span class="c1"># catch stderr to /dev/null</span>
-    <span class="k">do</span>
-        sleep <span class="m">1</span>
-    <span class="k">done</span>
-    ls
-<span class="o">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>pidwait<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="nb">kill</span> -0 <span class="nv">$1</span> 2&gt;/dev/null  <span class="c1"># catch stderr to /dev/null</span>
+</span></span><span class="line"><span class="cl">    <span class="k">do</span>
+</span></span><span class="line"><span class="cl">        sleep <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">done</span>
+</span></span><span class="line"><span class="cl">    ls
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>You can test like this ⬇️</p>
 <div class="highlight"><div class="chroma">
@@ -263,10 +263,10 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">source</span> pidwait.sh
-&gt; sleep <span class="m">60</span> <span class="p">&amp;</span>
-&gt; pidwait <span class="k">$(</span>pgrep <span class="s2">&#34;sleep&#34;</span><span class="k">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; <span class="nb">source</span> pidwait.sh
+</span></span><span class="line"><span class="cl">&gt; sleep <span class="m">60</span> <span class="p">&amp;</span>
+</span></span><span class="line"><span class="cl">&gt; pidwait <span class="k">$(</span>pgrep <span class="s2">&#34;sleep&#34;</span><span class="k">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="terminal-multiplexer">Terminal multiplexer</h3>
 <blockquote>
@@ -282,8 +282,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">alias</span> <span class="nv">dc</span><span class="o">=</span><span class="nb">cd</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; <span class="nb">alias</span> <span class="nv">dc</span><span class="o">=</span><span class="nb">cd</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <ol>
@@ -295,8 +295,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; <span class="nb">alias</span> <span class="nv">top10</span><span class="o">=</span><span class="s2">&#34;history 1| awk &#39;{\$1=\&#34;\&#34;;print substr(\$0,2)}&#39; | sort | uniq -c | sort -n | tail -n 10&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; <span class="nb">alias</span> <span class="nv">top10</span><span class="o">=</span><span class="s2">&#34;history 1| awk &#39;{\$1=\&#34;\&#34;;print substr(\$0,2)}&#39; | sort | uniq -c | sort -n | tail -n 10&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>⚠️ WARNING: You need to use <code>\</code> to escape <code>&quot;</code> and <code>$n</code></p>
 <h3 id="dotfiles">Dotfiles</h3>
@@ -330,12 +330,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"> Host vm
-     User username_goes_here
-     HostName ip_goes_here
-     IdentityFile ~/.ssh/id_ed25519
-     LocalForward 9999 localhost:8888
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> Host vm
+</span></span><span class="line"><span class="cl">     User username_goes_here
+</span></span><span class="line"><span class="cl">     HostName ip_goes_here
+</span></span><span class="line"><span class="cl">     IdentityFile ~/.ssh/id_ed25519
+</span></span><span class="line"><span class="cl">     LocalForward 9999 localhost:8888
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -389,22 +389,22 @@ if (!doNotTrack) {
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; git clone git@github.com:missing-semester/missing-semester.git
-&gt; <span class="nb">cd</span> missing-semester
-
-<span class="c1"># step 1.</span>
-&gt; git log --oneline --all --graph --color          
-
-<span class="c1"># step 2.</span>
-&gt; git log -1 README.md			<span class="c1"># -1 means showing last related commit</span>
-<span class="c1"># then we know Anish Athalye is the last person modify README.md</span>
-
-<span class="c1"># step 3.</span>
-&gt; git blame _config.yml <span class="p">|</span> grep -E <span class="s2">&#34;collections:&#34;</span>
-<span class="c1"># then we know the commit&#39;s sha-1 value is a88b4eac</span>
-<span class="c1"># we can use `git show` command to get commit message</span>
-&gt; git show -q a88b4eac			<span class="c1"># -q means --quiet, it will suppress diff output</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; git clone git@github.com:missing-semester/missing-semester.git
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">cd</span> missing-semester
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># step 1.</span>
+</span></span><span class="line"><span class="cl">&gt; git log --oneline --all --graph --color          
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># step 2.</span>
+</span></span><span class="line"><span class="cl">&gt; git log -1 README.md			<span class="c1"># -1 means showing last related commit</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># then we know Anish Athalye is the last person modify README.md</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># step 3.</span>
+</span></span><span class="line"><span class="cl">&gt; git blame _config.yml <span class="p">|</span> grep -E <span class="s2">&#34;collections:&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># then we know the commit&#39;s sha-1 value is a88b4eac</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># we can use `git show` command to get commit message</span>
+</span></span><span class="line"><span class="cl">&gt; git show -q a88b4eac			<span class="c1"># -q means --quiet, it will suppress diff output</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>One common mistake when learning Git is to commit large files that should not be managed by Git or adding sensitive information. Try adding a file to a repository, making some commits and then deleting that file from history (you may want to look at <a href="https://help.github.com/articles/removing-sensitive-data-from-a-repository/">this</a>).</p>
@@ -416,8 +416,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; git filter-repo --invert-paths --force --path &lt;file&gt;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; git filter-repo --invert-paths --force --path &lt;file&gt;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The reason why I use <code>--force</code> is that <code>git filter-repo</code> refuses to overwrite my repo. It says my repo doesn&rsquo;t look like a fresh clone.</p>
 <p>The mechanism behind this command is: <code>--invert-paths</code> will only select files matching none of options which we specify by <code>--path</code>. So it will keep everything except <code>&lt;file&gt;</code>, and overwrite this commit history.</p>
@@ -435,12 +435,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">*   96cca4b (refs/stash) WIP on master: c2f9535 Merge pull request #172 from chapmanjacobd/patch-1
-|\
-| * a95c46f index on master: c2f9535 Merge pull request #172 from chapmanjacobd/patch-1
-|/
-*   c2f9535 (HEAD -&gt; master, origin/master, origin/HEAD) Merge pull request #172 from chapmanjacobd/patch-1
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">*   96cca4b (refs/stash) WIP on master: c2f9535 Merge pull request #172 from chapmanjacobd/patch-1
+</span></span><span class="line"><span class="cl">|\
+</span></span><span class="line"><span class="cl">| * a95c46f index on master: c2f9535 Merge pull request #172 from chapmanjacobd/patch-1
+</span></span><span class="line"><span class="cl">|/
+</span></span><span class="line"><span class="cl">*   c2f9535 (HEAD -&gt; master, origin/master, origin/HEAD) Merge pull request #172 from chapmanjacobd/patch-1
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then I ran <code>git stash pop</code>. My modification has come back.</p>
 <p>The scenario of using <code>git stash</code> is that: For exmaple, say I have beening working on my project in <code>master</code> branch for quite a long time. Now I want to switch to another branch, but my working directory is in a mess. I don&rsquo;t want to make a dirty commit to temporarily save my work. Here comes the <code>git stash</code>. <strong>I can use this command to temporarily save my half-finished work.</strong> 🤗</p>
@@ -453,9 +453,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; git config --global --add alias.graph <span class="s1">&#39;log --all --graph --decorate --oneline&#39;</span>
-&gt; git graph
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; git config --global --add alias.graph <span class="s1">&#39;log --all --graph --decorate --oneline&#39;</span>
+</span></span><span class="line"><span class="cl">&gt; git graph
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>You can define global ignore patterns in <code>~/.gitignore_global</code> after running <code>git config --global core.excludesfile ~/.gitignore_global</code>. Do this, and set up your global gitignore file to ignore OS-specific or editor-specific temporary files, like <code>.DS_Store</code>.</p>
@@ -466,9 +466,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; git config --global core.excludesfile ~/.gitignore_global
-&gt; <span class="nb">echo</span> <span class="s2">&#34;.DS_Store&#34;</span> &gt;&gt; ~/.test
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; git config --global core.excludesfile ~/.gitignore_global
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">echo</span> <span class="s2">&#34;.DS_Store&#34;</span> &gt;&gt; ~/.test
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Fork the <a href="https://github.com/missing-semester/missing-semester">repository for the class website</a>, find a typo or some other improvement you can make, and submit a pull request on GitHub (you may want to look at <a href="https://github.com/firstcontributions/first-contributions">this</a>).</p>
@@ -578,7 +578,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

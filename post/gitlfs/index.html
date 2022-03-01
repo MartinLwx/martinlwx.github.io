@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/gitlfs/" />
@@ -223,10 +223,10 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">version https://git-lfs.github.com/spec/v1
-oid sha256:4cac19622fc3ada9c0fdeadb33f88f367b541f38b89102a3f1261ac81fd5bcb5
-size 84977953
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version https://git-lfs.github.com/spec/v1
+</span></span><span class="line"><span class="cl">oid sha256:4cac19622fc3ada9c0fdeadb33f88f367b541f38b89102a3f1261ac81fd5bcb5
+</span></span><span class="line"><span class="cl">size 84977953
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中 <code>version</code> 是你正在使用的 <code>git-lfs</code> 的版本，<code>oid</code> 是标志符（id），<code>size</code> 是文件的真实大小</p>
 <h2 id="开始使用-git-lfs">开始使用 <code>git-lfs</code></h2>
@@ -238,9 +238,9 @@ size 84977953
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; brew install git-lfs
-&gt; git lfa install                 <span class="c1"># 如果输出为 Git LFS initialized. 就是正常安装好了</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; brew install git-lfs
+</span></span><span class="line"><span class="cl">&gt; git lfa install                 <span class="c1"># 如果输出为 Git LFS initialized. 就是正常安装好了</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="case-1-从-0-开始配置使用-git-lfs">Case 1. 从 0 开始配置使用 <code>git-lfs</code></h3>
 <p>我们要指定 <code>git-lfs</code> 会把哪些文件当作大文件，指定方式比如有：</p>
@@ -276,30 +276,30 @@ size 84977953
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; mkdir &lt;repo&gt;
-&gt; <span class="nb">cd</span> &lt;repo&gt;
-&gt; git init
-&gt; git lfs track <span class="s2">&#34;*.filetype&#34;</span>			<span class="c1"># 比如 *.zip</span>
-
-<span class="c1"># 其实 git lfs track 会修改 .gitattributes 文件的内容，可以做一个快速的验证</span>
-<span class="c1"># &gt; cat .gitattributes</span>
-<span class="c1"># *.zip filter=lfs diff=lfs merge=lfs -text</span>
-
-<span class="c1"># 下面假定在 Github 有一个远程仓库供我们使用</span>
-<span class="c1"># 往仓库里加你先前指定的文件类型的大文件</span>
-&gt; git add . 											
-&gt; git commit -m <span class="s2">&#34;&#34;</span>
-&gt; git branch -M main
-&gt; git remote add origin git@github.com:&lt;username&gt;/&lt;remote_repo_name&gt;.git		<span class="c1"># 这里替换为自己的用户名和远程仓库名</span>
-&gt; git push -u origin main
-<span class="c1"># 此时命令行会显示</span>
-<span class="c1"># &gt; uploading LFS objects</span>
-<span class="c1"># 如果没有采用 git-lfs，则显示如下内容</span>
-<span class="c1"># &gt; Enumerating objects: 3, done.</span>
-<span class="c1">#   Counting objects: 100% (3/3), done.</span>
-<span class="c1">#   Delta compression using up to 8 threads</span>
-<span class="c1">#   Compressing objects: 100% (2/2), done.</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; mkdir &lt;repo&gt;
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">cd</span> &lt;repo&gt;
+</span></span><span class="line"><span class="cl">&gt; git init
+</span></span><span class="line"><span class="cl">&gt; git lfs track <span class="s2">&#34;*.filetype&#34;</span>			<span class="c1"># 比如 *.zip</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 其实 git lfs track 会修改 .gitattributes 文件的内容，可以做一个快速的验证</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt; cat .gitattributes</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># *.zip filter=lfs diff=lfs merge=lfs -text</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 下面假定在 Github 有一个远程仓库供我们使用</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 往仓库里加你先前指定的文件类型的大文件</span>
+</span></span><span class="line"><span class="cl">&gt; git add . 											
+</span></span><span class="line"><span class="cl">&gt; git commit -m <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">&gt; git branch -M main
+</span></span><span class="line"><span class="cl">&gt; git remote add origin git@github.com:&lt;username&gt;/&lt;remote_repo_name&gt;.git		<span class="c1"># 这里替换为自己的用户名和远程仓库名</span>
+</span></span><span class="line"><span class="cl">&gt; git push -u origin main
+</span></span><span class="line"><span class="cl"><span class="c1"># 此时命令行会显示</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt; uploading LFS objects</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果没有采用 git-lfs，则显示如下内容</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt; Enumerating objects: 3, done.</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   Counting objects: 100% (3/3), done.</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   Delta compression using up to 8 threads</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   Compressing objects: 100% (2/2), done.</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="case-2-要在已有的仓库上用-git-lfs-追踪某些文件">Case 2. 要在已有的仓库上用 <code>git-lfs</code> 追踪某些文件</h3>
 <p>此时只是简单的使用 <code>git lfs track &quot;&quot;</code> 是没用的，因为你之前的 commit 已经生成了快照，你无法追踪历史中的这些大文件。</p>
@@ -324,22 +324,22 @@ size 84977953
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; ls &gt; test1.txt
-&gt; ls -l &gt; test2.txt
-&gt; git add test1.txt test2.txt
-&gt; git commit -m <span class="s2">&#34;Add txt files&#34;</span>
-
-<span class="c1"># 假设我们现在要把 txt 文件当成是大文件，我们可能会想这么做</span>
-&gt; git lfs track <span class="s2">&#34;*.txt&#34;</span>
-&gt; git add .gitattributes
-&gt; git commit -m <span class="s2">&#34;Track *.txt files&#34;</span>
-&gt; git lfs ls-files                      <span class="c1"># 此时你会发现 git-lfs 并没有追踪 txt 文件</span>
-
-&gt; <span class="nb">echo</span> <span class="s2">&#34;hello&#34;</span> &gt; test3.txt
-&gt; git add test3.txt
-&gt; git commit -m <span class="s2">&#34;Add test3.txt&#34;</span>
-&gt; git lfs ls-files                      <span class="c1"># 此时你可以在输出中看到 test3.txt</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; ls &gt; test1.txt
+</span></span><span class="line"><span class="cl">&gt; ls -l &gt; test2.txt
+</span></span><span class="line"><span class="cl">&gt; git add test1.txt test2.txt
+</span></span><span class="line"><span class="cl">&gt; git commit -m <span class="s2">&#34;Add txt files&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 假设我们现在要把 txt 文件当成是大文件，我们可能会想这么做</span>
+</span></span><span class="line"><span class="cl">&gt; git lfs track <span class="s2">&#34;*.txt&#34;</span>
+</span></span><span class="line"><span class="cl">&gt; git add .gitattributes
+</span></span><span class="line"><span class="cl">&gt; git commit -m <span class="s2">&#34;Track *.txt files&#34;</span>
+</span></span><span class="line"><span class="cl">&gt; git lfs ls-files                      <span class="c1"># 此时你会发现 git-lfs 并没有追踪 txt 文件</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">echo</span> <span class="s2">&#34;hello&#34;</span> &gt; test3.txt
+</span></span><span class="line"><span class="cl">&gt; git add test3.txt
+</span></span><span class="line"><span class="cl">&gt; git commit -m <span class="s2">&#34;Add test3.txt&#34;</span>
+</span></span><span class="line"><span class="cl">&gt; git lfs ls-files                      <span class="c1"># 此时你可以在输出中看到 test3.txt</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>正确的方法是使用 <code>git lfs migrate</code>，这里只列举了简单的用法，更复杂的可以看看手册。比如可以用 <code>--include-ref=</code> 指定分支，多个分支的时候最好一个分支一个分支地迁移，最后是 <code>git push --all -f</code></p>
 <div class="highlight"><div class="chroma">
@@ -349,10 +349,10 @@ size 84977953
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; git lfs migrate import --include<span class="o">=</span><span class="s2">&#34;*.txt&#34;</span>  <span class="c1"># 在当前分支上执行</span>
-&gt; git lfs ls-files                          <span class="c1"># 此时可以发现 text1.txt 和 text2.txt 也被追踪到了</span>
-&gt; git push --force                          <span class="c1"># 让远程仓库也改过来</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; git lfs migrate import --include<span class="o">=</span><span class="s2">&#34;*.txt&#34;</span>  <span class="c1"># 在当前分支上执行</span>
+</span></span><span class="line"><span class="cl">&gt; git lfs ls-files                          <span class="c1"># 此时可以发现 text1.txt 和 text2.txt 也被追踪到了</span>
+</span></span><span class="line"><span class="cl">&gt; git push --force                          <span class="c1"># 让远程仓库也改过来</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="case-3-不再跟踪某些文件">Case 3. 不再跟踪某些文件</h3>
 <div class="highlight"><div class="chroma">
@@ -361,9 +361,9 @@ size 84977953
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; git lfs untrack <span class="s2">&#34;*.filetype&#34;</span>
-&gt; git rm --cached <span class="s2">&#34;*.txt&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; git lfs untrack <span class="s2">&#34;*.filetype&#34;</span>
+</span></span><span class="line"><span class="cl">&gt; git rm --cached <span class="s2">&#34;*.txt&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="其他常用命令">其他常用命令</h2>
 <hr>
@@ -484,7 +484,7 @@ size 84977953
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/lab07-cs61a-of-ucb/" />
@@ -206,16 +206,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">time_to_retire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the number of years until balance would grow to amount.&#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interest</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    <span class="n">year</span><span class="p">,</span> <span class="n">curAmount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">year</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">curAmount</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">interest</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">curAmount</span> <span class="o">&gt;</span> <span class="n">amount</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">year</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">time_to_retire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the number of years until balance would grow to amount.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interest</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">year</span><span class="p">,</span> <span class="n">curAmount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">year</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curAmount</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">interest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">curAmount</span> <span class="o">&gt;</span> <span class="n">amount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">year</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q3-freechecking">Q3: FreeChecking</h3>
 <blockquote>
@@ -248,25 +248,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="s2">&#34;Insufficient funds&#34;</span>
-        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_withdrawal</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="s2">&#34;Can&#39;t withdraw that amount&#34;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="n">amount</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">amount</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="s2">&#34;Insufficient funds&#34;</span>
-        <span class="k">if</span> <span class="n">amount</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_withdrawal</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="s2">&#34;Can&#39;t withdraw that amount&#34;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="n">amount</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;Insufficient funds&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_withdrawal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;Can&#39;t withdraw that amount&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="n">amount</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">amount</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;Insufficient funds&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">amount</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_withdrawal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">free_withdrawals</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;Can&#39;t withdraw that amount&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="n">amount</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_fee</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="magic-the-lambda-ing">Magic: the Lambda-ing</h2>
 <hr>
@@ -307,25 +307,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
-    <span class="n">cardtype</span> <span class="o">=</span> <span class="s1">&#39;Staff&#39;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">attack</span><span class="p">,</span> <span class="n">defense</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">        Create a Card object with a name, attack,
-</span><span class="s2">        and defense.
-</span><span class="s2">        &#34;&#34;&#34;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attack</span> <span class="o">=</span> <span class="n">attack</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">defense</span> <span class="o">=</span> <span class="n">defense</span>
-
-    <span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">        Calculate power as:
-</span><span class="s2">        (player card&#39;s attack) - (opponent card&#39;s defense)/2
-</span><span class="s2">        &#34;&#34;&#34;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attack</span> <span class="o">-</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">/</span> <span class="mi">2</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cardtype</span> <span class="o">=</span> <span class="s1">&#39;Staff&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">attack</span><span class="p">,</span> <span class="n">defense</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Create a Card object with a name, attack,
+</span></span></span><span class="line"><span class="cl"><span class="s2">        and defense.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attack</span> <span class="o">=</span> <span class="n">attack</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">defense</span> <span class="o">=</span> <span class="n">defense</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Calculate power as:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        (player card&#39;s attack) - (opponent card&#39;s defense)/2
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attack</span> <span class="o">-</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">/</span> <span class="mi">2</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q5-making-a-player">Q5: Making a Player</h3>
 <blockquote>
@@ -372,26 +372,26 @@ if (!doNotTrack) {
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deck</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Initialize a Player object.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">deck</span> <span class="o">=</span> <span class="n">deck</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span> <span class="o">=</span> <span class="p">[</span><span class="n">deck</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-
-<span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Draw a card from the player&#39;s deck and add it to their hand.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(),</span> <span class="s1">&#39;Deck is empty!&#39;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
-
-<span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card_index</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Remove and return a card from the player&#39;s hand at the given index.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="p">[</span><span class="n">card_index</span><span class="p">]</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">card_index</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">card</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deck</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Initialize a Player object.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">deck</span> <span class="o">=</span> <span class="n">deck</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span> <span class="o">=</span> <span class="p">[</span><span class="n">deck</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Draw a card from the player&#39;s deck and add it to their hand.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(),</span> <span class="s1">&#39;Deck is empty!&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card_index</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Remove and return a card from the player&#39;s hand at the given index.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="p">[</span><span class="n">card_index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">hand</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">card_index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">card</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="optional-questions">Optional Questions</h2>
 <h3 id="q6-ais-defenders">Q6: AIs: Defenders</h3>
@@ -415,16 +415,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">    Reduce the opponent&#39;s card&#39;s attack by its defense,
-</span><span class="s2">    then double its defense.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">-=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span>
-    <span class="k">if</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">*=</span> <span class="mi">2</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Reduce the opponent&#39;s card&#39;s attack by its defense,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    then double its defense.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">-=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">*=</span> <span class="mi">2</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q7-tutors-flummox">Q7: Tutors: Flummox</h3>
 <blockquote>
@@ -448,20 +448,20 @@ if (!doNotTrack) {
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">    Discard the first 3 cards in the opponent&#39;s hand and have
-</span><span class="s2">    them draw the same number of cards from their deck.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># discard 3 cards</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-        <span class="n">opponent</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="c1"># draw 3 cards</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-        <span class="n">opponent</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-    <span class="c1"># You should add your implementation above this.</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> discarded and re-drew 3 cards!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Discard the first 3 cards in the opponent&#39;s hand and have
+</span></span></span><span class="line"><span class="cl"><span class="s2">    them draw the same number of cards from their deck.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># discard 3 cards</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">opponent</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># draw 3 cards</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">opponent</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># You should add your implementation above this.</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> discarded and re-drew 3 cards!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q8-tas-shift">Q8: TAs: Shift</h3>
 <blockquote>
@@ -477,12 +477,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">    Swap the attack and defense of an opponent&#39;s card.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span><span class="p">,</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span><span class="p">,</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Swap the attack and defense of an opponent&#39;s card.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span><span class="p">,</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span> <span class="o">=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span><span class="p">,</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q9-the-instructor-arrives">Q9: The Instructor Arrives</h3>
 <blockquote>
@@ -499,13 +499,13 @@ if (!doNotTrack) {
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">  &gt;&gt;&gt; original = [1, 2, 3, 4]
-  &gt;&gt;&gt; copy = original[:]
-  &gt;&gt;&gt; copy
-  [1, 2, 3, 4]
-  &gt;&gt;&gt; copy is original
-  False
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  &gt;&gt;&gt; original = [1, 2, 3, 4]
+</span></span><span class="line"><span class="cl">  &gt;&gt;&gt; copy = original[:]
+</span></span><span class="line"><span class="cl">  &gt;&gt;&gt; copy
+</span></span><span class="line"><span class="cl">  [1, 2, 3, 4]
+</span></span><span class="line"><span class="cl">  &gt;&gt;&gt; copy is original
+</span></span><span class="line"><span class="cl">  False
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 </blockquote>
@@ -539,32 +539,32 @@ if (!doNotTrack) {
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">    Adds the attack and defense of the opponent&#39;s card to
-</span><span class="s2">    all cards in the player&#39;s deck, then removes all cards
-</span><span class="s2">    in the opponent&#39;s deck that share an attack or defense
-</span><span class="s2">    stat with the opponent&#39;s card.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">orig_opponent_deck_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
-
-    <span class="c1"># add the attack and defense of the opponent&#39;s card ...</span>
-    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">player</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
-        <span class="n">card</span><span class="o">.</span><span class="n">attack</span> <span class="o">+=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span>
-        <span class="n">card</span><span class="o">.</span><span class="n">defense</span> <span class="o">+=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span>
-
-    <span class="c1"># remove all cards in the opponent&#39;s deck that share ...</span>
-    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">[:]:</span>
-        <span class="k">if</span> <span class="n">card</span><span class="o">.</span><span class="n">attack</span> <span class="o">==</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="ow">and</span> <span class="n">card</span><span class="o">.</span><span class="n">defense</span> <span class="o">==</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span><span class="p">:</span>
-            <span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
-
-
-    <span class="c1"># You should add your implementation above this.</span>
-    <span class="n">discarded</span> <span class="o">=</span> <span class="n">orig_opponent_deck_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">discarded</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> cards were discarded from </span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">s deck!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">discarded</span><span class="p">,</span> <span class="n">opponent</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-        <span class="k">return</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponent_card</span><span class="p">,</span> <span class="n">player</span><span class="p">,</span> <span class="n">opponent</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Adds the attack and defense of the opponent&#39;s card to
+</span></span></span><span class="line"><span class="cl"><span class="s2">    all cards in the player&#39;s deck, then removes all cards
+</span></span></span><span class="line"><span class="cl"><span class="s2">    in the opponent&#39;s deck that share an attack or defense
+</span></span></span><span class="line"><span class="cl"><span class="s2">    stat with the opponent&#39;s card.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">orig_opponent_deck_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># add the attack and defense of the opponent&#39;s card ...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">player</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">card</span><span class="o">.</span><span class="n">attack</span> <span class="o">+=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span>
+</span></span><span class="line"><span class="cl">        <span class="n">card</span><span class="o">.</span><span class="n">defense</span> <span class="o">+=</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># remove all cards in the opponent&#39;s deck that share ...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">[:]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">card</span><span class="o">.</span><span class="n">attack</span> <span class="o">==</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">attack</span> <span class="ow">and</span> <span class="n">card</span><span class="o">.</span><span class="n">defense</span> <span class="o">==</span> <span class="n">opponent_card</span><span class="o">.</span><span class="n">defense</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># You should add your implementation above this.</span>
+</span></span><span class="line"><span class="cl">    <span class="n">discarded</span> <span class="o">=</span> <span class="n">orig_opponent_deck_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponent</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">discarded</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> cards were discarded from </span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">s deck!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">discarded</span><span class="p">,</span> <span class="n">opponent</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -670,7 +670,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

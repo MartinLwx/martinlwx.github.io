@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/lab10-cs61a-of-ucb/" />
@@ -198,10 +198,10 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">(define (over-or-under num1 num2)
-  &#39;YOUR-CODE-HERE
-)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(define (over-or-under num1 num2)
+</span></span><span class="line"><span class="cl">  &#39;YOUR-CODE-HERE
+</span></span><span class="line"><span class="cl">)
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>The problem itself is not difficult. We just need to get used to the grammar of the scheme language. If we want to indicate the conditional branches, we may use:</p>
@@ -227,21 +227,21 @@ if (!doNotTrack) {
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">over-or-under</span> <span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> 
-    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> 
-            <span class="p">(</span><span class="nf">print</span> <span class="mi">-1</span><span class="p">))</span>
-    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
-            <span class="p">(</span><span class="nf">print</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
-            <span class="p">(</span><span class="nf">print</span> <span class="mi">1</span><span class="p">))</span>
-<span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">over-or-under</span> <span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">&lt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">)</span>
-        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">)</span>
-        <span class="p">(</span> <span class="p">(</span><span class="nb">&gt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">1</span><span class="p">)</span>  <span class="p">))</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">over-or-under</span> <span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nf">print</span> <span class="mi">-1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nf">print</span> <span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nf">print</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">over-or-under</span> <span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">&lt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span> <span class="p">(</span><span class="nb">&gt; </span><span class="nv">num1</span> <span class="nv">num2</span><span class="p">)</span> <span class="p">(</span><span class="nf">print</span> <span class="mi">1</span><span class="p">)</span>  <span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q3-make-adder">Q3: Make Adder</h3>
 <blockquote>
@@ -259,10 +259,10 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">make-adder</span> <span class="nv">num</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">inc</span><span class="p">)</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">num</span> <span class="nv">inc</span><span class="p">))</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">make-adder</span> <span class="nv">num</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">inc</span><span class="p">)</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">num</span> <span class="nv">inc</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q4-compose">Q4: Compose</h3>
 <blockquote>
@@ -276,10 +276,10 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">composed</span> <span class="nv">f</span> <span class="nv">g</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">g</span> <span class="nv">x</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">composed</span> <span class="nv">f</span> <span class="nv">g</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">f</span> <span class="p">(</span><span class="nf">g</span> <span class="nv">x</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q5-make-a-list">Q5: Make a List</h3>
 <blockquote>
@@ -309,18 +309,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="nv">lst</span> 
-  <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">cons </span><span class="mi">1</span> <span class="nv">nil</span><span class="p">)</span>
-        <span class="p">(</span><span class="nb">cons </span><span class="mi">2</span> <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">cons </span><span class="mi">3</span> <span class="p">(</span><span class="nb">cons </span><span class="mi">4</span> <span class="nv">nil</span><span class="p">))</span>
-                      <span class="p">(</span><span class="nb">cons </span><span class="mi">5</span> <span class="nv">nil</span><span class="p">))))</span>
-<span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="nv">lst</span> 
-  <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nb">list </span><span class="mi">1</span><span class="p">)</span>
-        <span class="mi">2</span> <span class="p">(</span><span class="nb">list </span><span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="mi">5</span><span class="p">)</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="nv">lst</span> 
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">cons </span><span class="mi">1</span> <span class="nv">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nb">cons </span><span class="mi">2</span> <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">cons </span><span class="mi">3</span> <span class="p">(</span><span class="nb">cons </span><span class="mi">4</span> <span class="nv">nil</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                      <span class="p">(</span><span class="nb">cons </span><span class="mi">5</span> <span class="nv">nil</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="nv">lst</span> 
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nb">list </span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">2</span> <span class="p">(</span><span class="nb">list </span><span class="mi">3</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="optional-questions">Optional Questions</h2>
 <hr>
@@ -347,12 +347,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="nv">lst</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">null? </span><span class="nv">lst</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">()</span> <span class="p">)</span>             <span class="c1">; base case</span>
-        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">item</span> <span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">))</span> <span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">)))</span>           <span class="c1">; exclude item</span>
-        <span class="p">(</span> <span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">)))))</span>       <span class="c1">; include item</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="nv">lst</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond </span><span class="p">(</span> <span class="p">(</span><span class="nb">null? </span><span class="nv">lst</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">()</span> <span class="p">)</span>             <span class="c1">; base case</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span> <span class="p">(</span><span class="nb">= </span><span class="nv">item</span> <span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">))</span> <span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">)))</span>           <span class="c1">; exclude item</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span> <span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nf">remove</span> <span class="nv">item</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">)))))</span>       <span class="c1">; include item</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -458,7 +458,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

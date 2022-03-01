@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/lab11-cs61a-of-ucb/" />
@@ -251,52 +251,52 @@ if (!doNotTrack) {
 </span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Buffer</span><span class="p">:</span>
-    <span class="s2">&#34;&#34;&#34;A Buffer provides a way of accessing a sequence of tokens across lines.
-</span><span class="s2">
-</span><span class="s2">    Its constructor takes an iterator, called &#34;the source&#34;, that returns the
-</span><span class="s2">    next line of tokens as a list each time it is queried, or None to indicate
-</span><span class="s2">    the end of data.
-</span><span class="s2">
-</span><span class="s2">    The Buffer in effect concatenates the sequences returned from its source
-</span><span class="s2">    and then supplies the items from them one at a time through its pop_first()
-</span><span class="s2">    method, calling the source for more sequences of items only when needed.
-</span><span class="s2">
-</span><span class="s2">    In addition, Buffer provides a current method to look at the
-</span><span class="s2">    next item to be supplied, without sequencing past it.
-</span><span class="s2">
-</span><span class="s2">    The __str__ method prints all tokens read so far, up to the end of the
-</span><span class="s2">    current line, and marks the current token with &gt;&gt;.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span> <span class="o">=</span> <span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">pop_first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Remove the next item from self and return it. If self has
-</span><span class="s2">        exhausted its source, returns None.&#34;&#34;&#34;</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">current</span>
-
-    <span class="k">def</span> <span class="nf">current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Return the current element, or None if none exists.&#34;&#34;&#34;</span>
-        <span class="c1"># if there are any token in current line we don&#39;t return </span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">more_on_line</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span> <span class="o">=</span> <span class="p">()</span>
-                <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">more_on_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_line</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Buffer</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A Buffer provides a way of accessing a sequence of tokens across lines.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Its constructor takes an iterator, called &#34;the source&#34;, that returns the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    next line of tokens as a list each time it is queried, or None to indicate
+</span></span></span><span class="line"><span class="cl"><span class="s2">    the end of data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The Buffer in effect concatenates the sequences returned from its source
+</span></span></span><span class="line"><span class="cl"><span class="s2">    and then supplies the items from them one at a time through its pop_first()
+</span></span></span><span class="line"><span class="cl"><span class="s2">    method, calling the source for more sequences of items only when needed.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    In addition, Buffer provides a current method to look at the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    next item to be supplied, without sequencing past it.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The __str__ method prints all tokens read so far, up to the end of the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    current line, and marks the current token with &gt;&gt;.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span> <span class="o">=</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">pop_first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Remove the next item from self and return it. If self has
+</span></span></span><span class="line"><span class="cl"><span class="s2">        exhausted its source, returns None.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">current</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return the current element, or None if none exists.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># if there are any token in current line we don&#39;t return </span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">more_on_line</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span> <span class="o">=</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_line</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">more_on_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_line</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="internal-representations">Internal Representations</h2>
 <hr>
@@ -380,38 +380,38 @@ if (!doNotTrack) {
 </span><span class="lnt">31
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">scheme_read</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Read the next expression from SRC, a Buffer of tokens.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">if</span> <span class="n">src</span><span class="o">.</span><span class="n">current</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">EOFError</span>
-    <span class="n">val</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">pop_first</span><span class="p">()</span>  <span class="c1"># Get and remove the first token</span>
-    <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="s1">&#39;nil&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">nil</span>
-    <span class="k">elif</span> <span class="n">val</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">read_tail</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">val</span> <span class="o">==</span> <span class="s2">&#34;&#39;&#34;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Pair</span><span class="p">(</span><span class="s1">&#39;quote&#39;</span><span class="p">,</span> <span class="n">Pair</span><span class="p">(</span><span class="n">scheme_read</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="n">nil</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DELIMITERS</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">val</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s1">&#39;unexpected token: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
-
-
-<span class="k">def</span> <span class="nf">read_tail</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the remainder of a list in SRC, starting before an element or ).
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">src</span><span class="o">.</span><span class="n">current</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s1">&#39;unexpected end of file&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">src</span><span class="o">.</span><span class="n">current</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span><span class="p">:</span>
-            <span class="n">src</span><span class="o">.</span><span class="n">pop_first</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">nil</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Pair</span><span class="p">(</span><span class="n">scheme_read</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="n">read_tail</span><span class="p">(</span><span class="n">src</span><span class="p">))</span>
-    <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s1">&#39;unexpected end of file&#39;</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scheme_read</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Read the next expression from SRC, a Buffer of tokens.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">src</span><span class="o">.</span><span class="n">current</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">EOFError</span>
+</span></span><span class="line"><span class="cl">    <span class="n">val</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">pop_first</span><span class="p">()</span>  <span class="c1"># Get and remove the first token</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="s1">&#39;nil&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">val</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">read_tail</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">val</span> <span class="o">==</span> <span class="s2">&#34;&#39;&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Pair</span><span class="p">(</span><span class="s1">&#39;quote&#39;</span><span class="p">,</span> <span class="n">Pair</span><span class="p">(</span><span class="n">scheme_read</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="n">nil</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DELIMITERS</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">val</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s1">&#39;unexpected token: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_tail</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the remainder of a list in SRC, starting before an element or ).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">src</span><span class="o">.</span><span class="n">current</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s1">&#39;unexpected end of file&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">src</span><span class="o">.</span><span class="n">current</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">src</span><span class="o">.</span><span class="n">pop_first</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">Pair</span><span class="p">(</span><span class="n">scheme_read</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="n">read_tail</span><span class="p">(</span><span class="n">src</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s1">&#39;unexpected end of file&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -439,7 +439,11 @@ if (!doNotTrack) {
           <a href="/tags/course/">Course</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/hw09-of-cs61a-of-ucb/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Hw09 of CS61A of UCB(2021-Fall)</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/hw08-of-cs61a-of-ucb/">
             <span class="next-text nav-default">Hw08 of CS61A of UCB(2021-Fall)</span>
             <span class="next-text nav-mobile">Next</span>
@@ -513,7 +517,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

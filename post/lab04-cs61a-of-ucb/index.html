@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/lab04-cs61a-of-ucb/" />
@@ -237,30 +237,30 @@ if (!doNotTrack) {
 </span><span class="lnt">23
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the sum of numbers 1 through n (including n) wíth term applied to each number.
-</span><span class="s2">    Implement using recursion!
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; summation(5, lambda x: x * x * x) # 1^3 + 2^3 + 3^3 + 4^3 + 5^3
-</span><span class="s2">    225
-</span><span class="s2">    &gt;&gt;&gt; summation(9, lambda x: x + 1) # 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
-</span><span class="s2">    54
-</span><span class="s2">    &gt;&gt;&gt; summation(5, lambda x: 2**x) # 2^1 + 2^2 + 2^3 + 2^4 + 2^5
-</span><span class="s2">    62
-</span><span class="s2">    &gt;&gt;&gt; # Do not use while/for loops!
-</span><span class="s2">    &gt;&gt;&gt; from construct_check import check
-</span><span class="s2">    &gt;&gt;&gt; # ban iteration
-</span><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;summation&#39;,
-</span><span class="s2">    ...       [&#39;While&#39;, &#39;For&#39;])
-</span><span class="s2">    True
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">1</span>
-    <span class="c1"># base case: n = 1</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">term</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">term</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">summation</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">summation</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the sum of numbers 1 through n (including n) wíth term applied to each number.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Implement using recursion!
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; summation(5, lambda x: x * x * x) # 1^3 + 2^3 + 3^3 + 4^3 + 5^3
+</span></span></span><span class="line"><span class="cl"><span class="s2">    225
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; summation(9, lambda x: x + 1) # 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+</span></span></span><span class="line"><span class="cl"><span class="s2">    54
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; summation(5, lambda x: 2**x) # 2^1 + 2^2 + 2^3 + 2^4 + 2^5
+</span></span></span><span class="line"><span class="cl"><span class="s2">    62
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; # Do not use while/for loops!
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; from construct_check import check
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; # ban iteration
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#39;summation&#39;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...       [&#39;While&#39;, &#39;For&#39;])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    True
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case: n = 1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">term</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">term</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">summation</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="tree-recursion">Tree Recursion</h2>
 <hr>
@@ -276,12 +276,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">1
-1 1
-1 2 1
-1 3 3 1
-1 4 6 4 1
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1
+</span></span><span class="line"><span class="cl">1 1
+</span></span><span class="line"><span class="cl">1 2 1
+</span></span><span class="line"><span class="cl">1 3 3 1
+</span></span><span class="line"><span class="cl">1 4 6 4 1
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Every number in Pascal&rsquo;s triangle is defined as the sum of the item above it and the item above and to the left of it. Use <code>0</code> if the item does not exist.</p>
 <p>Define the procedure <code>pascal(row, column)</code> which takes a row and a column, and finds the value of the item at that position in Pascal&rsquo;s triangle. Rows and columns are zero-indexed; that is, the first row is row 0 instead of 1 and the first column is column 0 instead of column 1.</p>
@@ -318,32 +318,32 @@ if (!doNotTrack) {
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">pascal</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;returns the value of the item in pascal&#39;s triangle 
-</span><span class="s2">    whose position is specified by row and column.
-</span><span class="s2">    &gt;&gt;&gt; pascal(0, 0)
-</span><span class="s2">    1
-</span><span class="s2">    &gt;&gt;&gt; pascal(0, 5)	# empty entry; outside of pascal&#39;s triangle
-</span><span class="s2">    0
-</span><span class="s2">    &gt;&gt;&gt; pascal(3, 2)	# row 3 (1 3 3 1), column 2
-</span><span class="s2">    3
-</span><span class="s2">    &gt;&gt;&gt; pascal(4, 2)     # row 4 (1 4 6 4 1), column 2
-</span><span class="s2">    6
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># in pascal&#39;s triangle, \</span>
-    <span class="c1"># pascal(i, j) = pascal(i - 1, j - 1) + pascal(i - 1, j)</span>
-
-    <span class="c1"># base case 1. empty entry</span>
-    <span class="k">if</span> <span class="n">column</span> <span class="o">&gt;</span> <span class="n">row</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="c1"># base case 2. pascal(i, 0)</span>
-    <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="c1"># base case 3. pascal(i, i)</span>
-    <span class="k">elif</span> <span class="n">row</span> <span class="o">==</span> <span class="n">column</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">pascal</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> <span class="o">+</span> <span class="n">pascal</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pascal</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;returns the value of the item in pascal&#39;s triangle 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    whose position is specified by row and column.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; pascal(0, 0)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; pascal(0, 5)	# empty entry; outside of pascal&#39;s triangle
+</span></span></span><span class="line"><span class="cl"><span class="s2">    0
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; pascal(3, 2)	# row 3 (1 3 3 1), column 2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    3
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; pascal(4, 2)     # row 4 (1 4 6 4 1), column 2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    6
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># in pascal&#39;s triangle, \</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># pascal(i, j) = pascal(i - 1, j - 1) + pascal(i - 1, j)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 1. empty entry</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">column</span> <span class="o">&gt;</span> <span class="n">row</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 2. pascal(i, 0)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 3. pascal(i, i)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">row</span> <span class="o">==</span> <span class="n">column</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">pascal</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> <span class="o">+</span> <span class="n">pascal</span><span class="p">(</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q4-insect-combinatorics">Q4: Insect Combinatorics</h3>
 <blockquote>
@@ -418,24 +418,24 @@ if (!doNotTrack) {
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">paths</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return the number of paths from one corner of an
-</span><span class="s2">    M by N grid to the opposite corner.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; paths(2, 2)
-</span><span class="s2">    2
-</span><span class="s2">    &gt;&gt;&gt; paths(5, 7)
-</span><span class="s2">    210
-</span><span class="s2">    &gt;&gt;&gt; paths(117, 1)
-</span><span class="s2">    1
-</span><span class="s2">    &gt;&gt;&gt; paths(1, 157)
-</span><span class="s2">    1
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># base case  path(i, 0) or path(0, i)</span>
-    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">paths</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">paths</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">paths</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the number of paths from one corner of an
+</span></span></span><span class="line"><span class="cl"><span class="s2">    M by N grid to the opposite corner.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; paths(2, 2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; paths(5, 7)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    210
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; paths(117, 1)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; paths(1, 157)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case  path(i, 0) or path(0, i)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">paths</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">paths</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="list-comprehensions">List Comprehensions</h2>
 <hr>
@@ -465,21 +465,21 @@ if (!doNotTrack) {
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">couple</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a list of two-element lists in which the i-th element is [s[i], t[i]].
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; a = [1, 2, 3]
-</span><span class="s2">    &gt;&gt;&gt; b = [4, 5, 6]
-</span><span class="s2">    &gt;&gt;&gt; couple(a, b)
-</span><span class="s2">    [[1, 4], [2, 5], [3, 6]]
-</span><span class="s2">    &gt;&gt;&gt; c = [&#39;c&#39;, 6]
-</span><span class="s2">    &gt;&gt;&gt; d = [&#39;s&#39;, &#39;1&#39;]
-</span><span class="s2">    &gt;&gt;&gt; couple(c, d)
-</span><span class="s2">    [[&#39;c&#39;, &#39;s&#39;], [6, &#39;1&#39;]]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">couple</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a list of two-element lists in which the i-th element is [s[i], t[i]].
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; a = [1, 2, 3]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; b = [4, 5, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; couple(a, b)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[1, 4], [2, 5], [3, 6]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; c = [&#39;c&#39;, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; d = [&#39;s&#39;, &#39;1&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; couple(c, d)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[&#39;c&#39;, &#39;s&#39;], [6, &#39;1&#39;]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q6-coordinates">Q6: Coordinates</h3>
 <blockquote>
@@ -508,16 +508,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">    &gt;&gt;&gt; seq = [-4, -2, 0, 1, 3]
-</span><span class="s2">    &gt;&gt;&gt; fn = lambda x: x**2
-</span><span class="s2">    &gt;&gt;&gt; coords(fn, seq, 1, 9)
-</span><span class="s2">    [[-2, 4], [1, 1], [3, 9]]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
-    <span class="k">return</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">fn</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">seq</span> <span class="k">if</span> <span class="n">lower</span> <span class="o">&lt;=</span> <span class="n">fn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">upper</span><span class="p">]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; seq = [-4, -2, 0, 1, 3]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; fn = lambda x: x**2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; coords(fn, seq, 1, 9)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[-2, 4], [1, 1], [3, 9]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">fn</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">seq</span> <span class="k">if</span> <span class="n">lower</span> <span class="o">&lt;=</span> <span class="n">fn</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">upper</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q7-riffle-shuffle">Q7: Riffle Shuffle</h3>
 <blockquote>
@@ -571,17 +571,17 @@ if (!doNotTrack) {
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">riffle</span><span class="p">(</span><span class="n">deck</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Produces a single, perfect riffle shuffle of DECK, consisting of
-</span><span class="s2">    DECK[0], DECK[M], DECK[1], DECK[M+1], ... where M is position of the
-</span><span class="s2">    second half of the deck.  Assume that len(DECK) is even.
-</span><span class="s2">    &gt;&gt;&gt; riffle([3, 4, 5, 6])
-</span><span class="s2">    [3, 5, 4, 6]
-</span><span class="s2">    &gt;&gt;&gt; riffle(range(20))
-</span><span class="s2">    [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">deck</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="p">))]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">riffle</span><span class="p">(</span><span class="n">deck</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Produces a single, perfect riffle shuffle of DECK, consisting of
+</span></span></span><span class="line"><span class="cl"><span class="s2">    DECK[0], DECK[M], DECK[1], DECK[M+1], ... where M is position of the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    second half of the deck.  Assume that len(DECK) is even.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; riffle([3, 4, 5, 6])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [3, 5, 4, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; riffle(range(20))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="n">deck</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="p">))]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -687,7 +687,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/hw05-of-cs61a-of-ucb/" />
@@ -195,11 +195,11 @@ if (!doNotTrack) {
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">seq</span>
-    <span class="o">...</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">seq</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, the problem is how can we break down this problem into simpler ones? We can learn from the hint that we should recursively process elements other than the element in the first position. Try to think about a question like this: If we have already got the permutations of <code>l[1:]</code>, what should we do with <code>l[0]</code>. The answer is quite intuitive: we insert <code>l[0]</code> to every possible position in the permutations of <code>l[1:]</code>.</p>
 <p>For example, we have <code>[2, 3]</code>, whose permutations are <code>[[2, 3], [3, 2]]</code>. First, we insert <code>1</code> to <code>[2, 3]</code>, which give us <code>[1, 2, 3], [2, 1, 3], [2, 3, 1]</code>. Then we repeat the procedure on <code>[3, 2]</code>.</p>
@@ -242,41 +242,41 @@ if (!doNotTrack) {
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Generates all permutations of the given sequence. Each permutation is a
-</span><span class="s2">    list of the elements in SEQ in a different order. The permutations may be
-</span><span class="s2">    yielded in any order.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; perms = gen_perms([100])
-</span><span class="s2">    &gt;&gt;&gt; type(perms)
-</span><span class="s2">    &lt;class &#39;generator&#39;&gt;
-</span><span class="s2">    &gt;&gt;&gt; next(perms)
-</span><span class="s2">    [100]
-</span><span class="s2">    &gt;&gt;&gt; try: #this piece of code prints &#34;No more permutations!&#34; if calling next would cause an error
-</span><span class="s2">    ...     next(perms)
-</span><span class="s2">    ... except StopIteration:
-</span><span class="s2">    ...     print(&#39;No more permutations!&#39;)
-</span><span class="s2">    No more permutations!
-</span><span class="s2">    &gt;&gt;&gt; sorted(gen_perms([1, 2, 3])) # Returns a sorted list containing elements of the generator
-</span><span class="s2">    [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
-</span><span class="s2">    &gt;&gt;&gt; sorted(gen_perms((10, 20, 30)))
-</span><span class="s2">    [[10, 20, 30], [10, 30, 20], [20, 10, 30], [20, 30, 10], [30, 10, 20], [30, 20, 10]]
-</span><span class="s2">    &gt;&gt;&gt; sorted(gen_perms(&#34;ab&#34;))
-</span><span class="s2">    [[&#39;a&#39;, &#39;b&#39;], [&#39;b&#39;, &#39;a&#39;]]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># This problem requires list type, see example above</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="n">seq</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
-    <span class="c1"># base case</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">seq</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># iterate every permutation in the generator</span>
-        <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
-            <span class="c1"># enumerate every position for insertation</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)):</span>
-                <span class="k">yield</span> <span class="n">perm</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Generates all permutations of the given sequence. Each permutation is a
+</span></span></span><span class="line"><span class="cl"><span class="s2">    list of the elements in SEQ in a different order. The permutations may be
+</span></span></span><span class="line"><span class="cl"><span class="s2">    yielded in any order.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; perms = gen_perms([100])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; type(perms)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &lt;class &#39;generator&#39;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(perms)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [100]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; try: #this piece of code prints &#34;No more permutations!&#34; if calling next would cause an error
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     next(perms)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ... except StopIteration:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     print(&#39;No more permutations!&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    No more permutations!
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms([1, 2, 3])) # Returns a sorted list containing elements of the generator
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms((10, 20, 30)))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[10, 20, 30], [10, 30, 20], [20, 10, 30], [20, 30, 10], [30, 10, 20], [30, 20, 10]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms(&#34;ab&#34;))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[&#39;a&#39;, &#39;b&#39;], [&#39;b&#39;, &#39;a&#39;]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># This problem requires list type, see example above</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">seq</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">seq</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># iterate every permutation in the generator</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># enumerate every position for insertation</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">perm</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q2-yield-paths">Q2: Yield Paths</h3>
 <blockquote>
@@ -294,12 +294,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
-    <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
-            <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>You can find it that the template is quite similar to the solution in Q1 if you observe it carefully. First, we should ask ourselves the most important question? - What is the base case? Well, apparently, we meet the base case when we encounter the node with the <code>value</code> label. It can be any branch of the current node, so we need to check each branch. When we find the sub-path, we return it and add the label of the current node.</p>
 <p>For example, check the example in the doctoring. We want all the paths to lead us to <code>3</code>. First, we start from the root node(<code>1</code>). It has 2 branches - <code>2</code> and <code>5</code>. In the first branch of <code>1</code>, we can find <code>3</code>, at this point we <code>yield [3]</code>. When we backtrack to <code>2</code>, we get the sub-path - <code>[2, 3]</code>. Finally, we will get <code>[1] + [2, 3] = [1, 2, 3]</code> when we come back to the root node(<code>1</code>)</p>
@@ -347,46 +347,46 @@ if (!doNotTrack) {
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Yields all possible paths from the root of t to a node with the label
-</span><span class="s2">    value as a list.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
-</span><span class="s2">    &gt;&gt;&gt; print_tree(t1)
-</span><span class="s2">    1
-</span><span class="s2">      2
-</span><span class="s2">        3
-</span><span class="s2">        4
-</span><span class="s2">          6
-</span><span class="s2">        5
-</span><span class="s2">      5
-</span><span class="s2">    &gt;&gt;&gt; next(path_yielder(t1, 6))
-</span><span class="s2">    [1, 2, 4, 6]
-</span><span class="s2">    &gt;&gt;&gt; path_to_5 = path_yielder(t1, 5)
-</span><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_5))
-</span><span class="s2">    [[1, 2, 5], [1, 5]]
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; t2 = tree(0, [tree(2, [t1])])
-</span><span class="s2">    &gt;&gt;&gt; print_tree(t2)
-</span><span class="s2">    0
-</span><span class="s2">      2
-</span><span class="s2">        1
-</span><span class="s2">          2
-</span><span class="s2">            3
-</span><span class="s2">            4
-</span><span class="s2">              6
-</span><span class="s2">            5
-</span><span class="s2">          5
-</span><span class="s2">    &gt;&gt;&gt; path_to_2 = path_yielder(t2, 2)
-</span><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_2))
-</span><span class="s2">    [[0, 2], [0, 2, 1, 2]]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">if</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path_yielder</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span> <span class="o">+</span> <span class="n">path</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yields all possible paths from the root of t to a node with the label
+</span></span></span><span class="line"><span class="cl"><span class="s2">    value as a list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(t1)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">      2
+</span></span></span><span class="line"><span class="cl"><span class="s2">        3
+</span></span></span><span class="line"><span class="cl"><span class="s2">        4
+</span></span></span><span class="line"><span class="cl"><span class="s2">          6
+</span></span></span><span class="line"><span class="cl"><span class="s2">        5
+</span></span></span><span class="line"><span class="cl"><span class="s2">      5
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(path_yielder(t1, 6))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [1, 2, 4, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; path_to_5 = path_yielder(t1, 5)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_5))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[1, 2, 5], [1, 5]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t2 = tree(0, [tree(2, [t1])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(t2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    0
+</span></span></span><span class="line"><span class="cl"><span class="s2">      2
+</span></span></span><span class="line"><span class="cl"><span class="s2">        1
+</span></span></span><span class="line"><span class="cl"><span class="s2">          2
+</span></span></span><span class="line"><span class="cl"><span class="s2">            3
+</span></span></span><span class="line"><span class="cl"><span class="s2">            4
+</span></span></span><span class="line"><span class="cl"><span class="s2">              6
+</span></span></span><span class="line"><span class="cl"><span class="s2">            5
+</span></span></span><span class="line"><span class="cl"><span class="s2">          5
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; path_to_2 = path_yielder(t2, 2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_2))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[0, 2], [0, 2, 1, 2]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path_yielder</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span> <span class="o">+</span> <span class="n">path</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q3-preorder">Q3: Preorder</h3>
 <blockquote>
@@ -416,25 +416,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a list of the entries in this tree in the order that they
-</span><span class="s2">    would be visited by a preorder traversal (see problem description).
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
-</span><span class="s2">    &gt;&gt;&gt; preorder(numbers)
-</span><span class="s2">    [1, 2, 3, 4, 5, 6, 7]
-</span><span class="s2">    &gt;&gt;&gt; preorder(tree(2, [tree(4, [tree(6)])]))
-</span><span class="s2">    [2, 4, 6]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-                <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a list of the entries in this tree in the order that they
+</span></span></span><span class="line"><span class="cl"><span class="s2">    would be visited by a preorder traversal (see problem description).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(numbers)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [1, 2, 3, 4, 5, 6, 7]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(tree(2, [tree(4, [tree(6)])]))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [2, 4, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q4-generate-preorder">Q4: Generate Preorder</h3>
 <blockquote>
@@ -460,21 +460,21 @@ if (!doNotTrack) {
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">generate_preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Yield the entries in this tree in the order that they
-</span><span class="s2">    would be visited by a preorder traversal (see problem description).
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
-</span><span class="s2">    &gt;&gt;&gt; gen = generate_preorder(numbers)
-</span><span class="s2">    &gt;&gt;&gt; next(gen)
-</span><span class="s2">    1
-</span><span class="s2">    &gt;&gt;&gt; list(gen)
-</span><span class="s2">    [2, 3, 4, 5, 6, 7]
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">yield</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="k">yield from</span> <span class="n">generate_preorder</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">generate_preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yield the entries in this tree in the order that they
+</span></span></span><span class="line"><span class="cl"><span class="s2">    would be visited by a preorder traversal (see problem description).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; gen = generate_preorder(numbers)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(gen)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; list(gen)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [2, 3, 4, 5, 6, 7]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">yield</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield from</span> <span class="n">generate_preorder</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q5-remainder-generator">Q5: Remainder Generator</h3>
 <blockquote>
@@ -508,21 +508,21 @@ if (!doNotTrack) {
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-    <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">num</span>
-        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="c1"># you can give it a test</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-<span class="mi">2</span>				<span class="c1"># 2 % 3 == 2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-<span class="mi">5</span>				<span class="c1"># 5 % 3 == 2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-<span class="mi">8</span>				<span class="c1"># 8 % 3 == 2</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># you can give it a test</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>				<span class="c1"># 2 % 3 == 2</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">5</span>				<span class="c1"># 5 % 3 == 2</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">8</span>				<span class="c1"># 8 % 3 == 2</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then how can we get a list of generators. <code>for</code> loop !🤗</p>
 <div class="highlight"><div class="chroma">
@@ -568,46 +568,46 @@ if (!doNotTrack) {
 </span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">remainders_generator</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">    Yields m generators. The ith yielded generator yields natural numbers whose
-</span><span class="s2">    remainder is i when divided by m.
-</span><span class="s2">
-</span><span class="s2">    &gt;&gt;&gt; import types
-</span><span class="s2">    &gt;&gt;&gt; [isinstance(gen, types.GeneratorType) for gen in remainders_generator(5)]
-</span><span class="s2">    [True, True, True, True, True]
-</span><span class="s2">    &gt;&gt;&gt; remainders_four = remainders_generator(4)
-</span><span class="s2">    &gt;&gt;&gt; for i in range(4):
-</span><span class="s2">    ...     print(&#34;First 3 natural numbers with remainder </span><span class="si">{0}</span><span class="s2"> when divided by 4:&#34;.format(i))
-</span><span class="s2">    ...     gen = next(remainders_four)
-</span><span class="s2">    ...     for _ in range(3):
-</span><span class="s2">    ...         print(next(gen))
-</span><span class="s2">    First 3 natural numbers with remainder 0 when divided by 4:
-</span><span class="s2">    4
-</span><span class="s2">    8
-</span><span class="s2">    12
-</span><span class="s2">    First 3 natural numbers with remainder 1 when divided by 4:
-</span><span class="s2">    1
-</span><span class="s2">    5
-</span><span class="s2">    9
-</span><span class="s2">    First 3 natural numbers with remainder 2 when divided by 4:
-</span><span class="s2">    2
-</span><span class="s2">    6
-</span><span class="s2">    10
-</span><span class="s2">    First 3 natural numbers with remainder 3 when divided by 4:
-</span><span class="s2">    3
-</span><span class="s2">    7
-</span><span class="s2">    11
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-        <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">num</span>
-            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-        <span class="k">yield</span> <span class="n">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">remainders_generator</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Yields m generators. The ith yielded generator yields natural numbers whose
+</span></span></span><span class="line"><span class="cl"><span class="s2">    remainder is i when divided by m.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; import types
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; [isinstance(gen, types.GeneratorType) for gen in remainders_generator(5)]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [True, True, True, True, True]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; remainders_four = remainders_generator(4)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; for i in range(4):
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     print(&#34;First 3 natural numbers with remainder </span><span class="si">{0}</span><span class="s2"> when divided by 4:&#34;.format(i))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     gen = next(remainders_four)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     for _ in range(3):
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...         print(next(gen))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 0 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    4
+</span></span></span><span class="line"><span class="cl"><span class="s2">    8
+</span></span></span><span class="line"><span class="cl"><span class="s2">    12
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 1 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    5
+</span></span></span><span class="line"><span class="cl"><span class="s2">    9
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 2 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    6
+</span></span></span><span class="line"><span class="cl"><span class="s2">    10
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 3 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    3
+</span></span></span><span class="line"><span class="cl"><span class="s2">    7
+</span></span></span><span class="line"><span class="cl"><span class="s2">    11
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -713,7 +713,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

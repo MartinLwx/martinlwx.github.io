@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/exercise03-04-missingsemester-2020/" />
@@ -336,12 +336,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">diff &lt;<span class="o">(</span><span class="nb">echo</span> <span class="o">{</span>a..z<span class="o">}{</span>a..z<span class="o">}</span> <span class="p">|</span> tr <span class="s2">&#34; &#34;</span> <span class="s2">&#34;\n&#34;</span><span class="o">)</span> <span class="se">\
-</span><span class="se"></span>		 &lt;<span class="o">(</span>tr <span class="s1">&#39;A-Z&#39;</span> <span class="s1">&#39;a-z&#39;</span> &lt; /usr/share/dict/words <span class="p">|</span> grep -E <span class="s1">&#39;.*a.*a.*a.*[^s]$&#39;</span> <span class="p">|</span> grep -E -o <span class="s1">&#39;.{2}$&#39;</span> <span class="p">|</span> sort <span class="p">|</span> uniq -c <span class="p">|</span> sort <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sort<span class="o">)</span> <span class="se">\
-</span><span class="se"></span>		 <span class="p">|</span> grep -E <span class="s2">&#34;&lt;&#34;</span> <span class="se">\
-</span><span class="se"></span>		 <span class="p">|</span> wc -l
-<span class="c1"># output: 536</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">diff &lt;<span class="o">(</span><span class="nb">echo</span> <span class="o">{</span>a..z<span class="o">}{</span>a..z<span class="o">}</span> <span class="p">|</span> tr <span class="s2">&#34; &#34;</span> <span class="s2">&#34;\n&#34;</span><span class="o">)</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>		 &lt;<span class="o">(</span>tr <span class="s1">&#39;A-Z&#39;</span> <span class="s1">&#39;a-z&#39;</span> &lt; /usr/share/dict/words <span class="p">|</span> grep -E <span class="s1">&#39;.*a.*a.*a.*[^s]$&#39;</span> <span class="p">|</span> grep -E -o <span class="s1">&#39;.{2}$&#39;</span> <span class="p">|</span> sort <span class="p">|</span> uniq -c <span class="p">|</span> sort <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sort<span class="o">)</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>		 <span class="p">|</span> grep -E <span class="s2">&#34;&lt;&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>		 <span class="p">|</span> wc -l
+</span></span><span class="line"><span class="cl"><span class="c1"># output: 536</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ol>
 <li>Use <code>echo {a..z}{a..z}</code> to get all two-letter combinations. However, in order to compare 2 sets of combinations(this one &amp;&amp; Our previous results), we need to use <code>\n</code> as delimiter of each combination. We can use <code>tr &quot; &quot; &quot;\n&quot;</code>.</li>
@@ -359,8 +359,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">journalctl
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">journalctl
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>on Linux and</p>
 <div class="highlight"><div class="chroma">
@@ -368,8 +368,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">log show
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">log show
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>on macOS, and look for log timestamps near the beginning and end of each boot. On Linux, they may look something like:</p>
 <div class="highlight"><div class="chroma">
@@ -377,8 +377,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Logs begin at ...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Logs begin at ...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>and</p>
 <div class="highlight"><div class="chroma">
@@ -386,8 +386,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">systemd<span class="o">[</span>577<span class="o">]</span>: Startup finished in ...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemd<span class="o">[</span>577<span class="o">]</span>: Startup finished in ...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>On macOS, <a href="https://eclecticlight.co/2018/03/21/macos-unified-log-3-finding-your-way/">look for</a>:</p>
 <div class="highlight"><div class="chroma">
@@ -395,8 +395,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="o">===</span> system boot:
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">===</span> system boot:
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>and</p>
 <div class="highlight"><div class="chroma">
@@ -404,8 +404,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Previous shutdown cause: <span class="m">5</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Previous shutdown cause: <span class="m">5</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>I am a macos user. I barely shutdown my Macbook Pro. So when I ran <code>log show | grep -E &quot;log show | grep -E &quot;system boot&quot;</code>, it kept running like it will never stop 😿. So I decided to skip this exercise.</p>
@@ -531,7 +531,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

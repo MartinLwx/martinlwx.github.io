@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/exercise08-missingsemester-2020/" />
@@ -201,27 +201,27 @@ if (!doNotTrack) {
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="nf">paper.pdf</span><span class="o">:</span> <span class="n">paper</span>.<span class="n">tex</span> <span class="n">plot</span>-<span class="n">data</span>.<span class="n">png</span>
-	pdflatex paper.tex
-
-<span class="nf">plot-%.png</span><span class="o">:</span> %.<span class="n">dat</span> <span class="n">plot</span>.<span class="n">py</span>
-	./plot.py -i <span class="nv">$*</span>.dat -o <span class="nv">$@</span>
-
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>
-<span class="nf">cleanall</span><span class="o">:</span> <span class="n">cleanaux</span> <span class="n">cleanlog</span> <span class="n">cleanpdf</span> <span class="n">cleanpng</span>
-
-<span class="nf">cleanaux</span><span class="o">:</span>
-	rm *.aux
-
-<span class="nf">cleanlog</span><span class="o">:</span>
-	rm *.log
-
-<span class="nf">cleanpdf</span><span class="o">:</span>
-	rm *.pdf
-
-<span class="nf">cleanpng</span><span class="o">:</span>
-	rm *.png
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nf">paper.pdf</span><span class="o">:</span> <span class="n">paper</span>.<span class="n">tex</span> <span class="n">plot</span>-<span class="n">data</span>.<span class="n">png</span>
+</span></span><span class="line"><span class="cl">	pdflatex paper.tex
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">plot-%.png</span><span class="o">:</span> %.<span class="n">dat</span> <span class="n">plot</span>.<span class="n">py</span>
+</span></span><span class="line"><span class="cl">	./plot.py -i <span class="nv">$*</span>.dat -o <span class="nv">$@</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cleanall</span><span class="o">:</span> <span class="n">cleanaux</span> <span class="n">cleanlog</span> <span class="n">cleanpdf</span> <span class="n">cleanpng</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cleanaux</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	rm *.aux
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cleanlog</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	rm *.log
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cleanpdf</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	rm *.pdf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cleanpng</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	rm *.png
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Take a look at the various ways to specify version requirements for dependencies in <a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html">Rust’s build system</a>. Most package repositories support similar syntax. For each one (caret, tilde, wildcard, comparison, and multiple), try to come up with a use-case in which that particular kind of requirement makes sense.</p>
@@ -252,16 +252,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/usr/bin/env bash
-</span><span class="cp"></span><span class="k">if</span> ! make paper.pdf<span class="p">;</span>
-<span class="k">then</span> 
-    <span class="nb">echo</span> <span class="s2">&#34;==&gt; Running make command fail :(&#34;</span>
-    <span class="nb">exit</span> <span class="m">1</span>
-<span class="k">else</span>
-    <span class="nb">echo</span> <span class="s2">&#34;==&gt; Running make command successfully :)&#34;</span>
-    <span class="nb">exit</span> <span class="m">0</span>
-<span class="k">fi</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">if</span> ! make paper.pdf<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">then</span> 
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;==&gt; Running make command fail :(&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;==&gt; Running make command successfully :)&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -278,9 +278,9 @@ if (!doNotTrack) {
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">&gt; git add .
-&gt; git commit -m <span class="s2">&#34;Try to commit&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; git add .
+</span></span><span class="line"><span class="cl">&gt; git commit -m <span class="s2">&#34;Try to commit&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
 <p>Set up a simple auto-published page using <a href="https://pages.github.com/">GitHub Pages</a>. Add a <a href="https://github.com/features/actions">GitHub Action</a> to the repository to run <code>shellcheck</code> on any shell files in that repository (here is <a href="https://github.com/marketplace/actions/shellcheck">one way to do it</a>). Check that it works!</p>
@@ -305,19 +305,19 @@ if (!doNotTrack) {
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">push]</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">name: &#39;Trigger</span><span class="p">:</span><span class="w"> </span><span class="l">Push action&#39;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">shellcheck</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Shellcheck</span><span class="w">
-</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
-</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
-</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Run ShellCheck</span><span class="w">
-</span><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">ludeeus/action-shellcheck@master</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">push]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">name: &#39;Trigger</span><span class="p">:</span><span class="w"> </span><span class="l">Push action&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">shellcheck</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Shellcheck</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Run ShellCheck</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">ludeeus/action-shellcheck@master</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 <li>
@@ -330,8 +330,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">date
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">date
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>If you run <code>shellcheck</code> in your local machine, you should get a warning says: <code>SC2148 (error): Tips depend on target shell and yours is unknown. Add a shebang or a 'shell' directive.</code></p>
 </li>
@@ -362,28 +362,28 @@ if (!doNotTrack) {
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Run ludeeus/action-shellcheck@master
-Run problem_matcher_file=&#34;/home/runner/work/_actions/ludeeus/action-shellcheck/master/.github/problem-matcher-gcc.json&#34;
-Run if [[ &#34;Linux&#34; == &#34;macOS&#34; ]]; then
-Run &#34;/home/runner/work/_actions/ludeeus/action-shellcheck/master/shellcheck&#34; --version
-ShellCheck - shell script analysis tool
-version: 0.8.0
-license: GNU General Public License, version 3
-website: https://www.shellcheck.net
-Run declare -a options
-Run declare -a excludes
-Run declare -a files
-Run declare -a filepaths
-Run statuscode=0
-Error: ./another.sh:1:1: error: Tips depend on target shell and yours is unknown. Add a shebang or a &#39;shell&#39; directive. [SC2148]
-Error: ./sample.sh:1:1: error: Tips depend on target shell and yours is unknown. Add a shebang or a &#39;shell&#39; directive. [SC2148]
-Run echo &#34;Files: ./another.sh ./sample.sh&#34;
-Files: ./another.sh ./sample.sh
-Excluded: ! -path *./.git/* ! -path *.go ! -path */mvnw
-Options: --format=gcc
-Status code: 1
-Error: Process completed with exit code 1.
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Run ludeeus/action-shellcheck@master
+</span></span><span class="line"><span class="cl">Run problem_matcher_file=&#34;/home/runner/work/_actions/ludeeus/action-shellcheck/master/.github/problem-matcher-gcc.json&#34;
+</span></span><span class="line"><span class="cl">Run if [[ &#34;Linux&#34; == &#34;macOS&#34; ]]; then
+</span></span><span class="line"><span class="cl">Run &#34;/home/runner/work/_actions/ludeeus/action-shellcheck/master/shellcheck&#34; --version
+</span></span><span class="line"><span class="cl">ShellCheck - shell script analysis tool
+</span></span><span class="line"><span class="cl">version: 0.8.0
+</span></span><span class="line"><span class="cl">license: GNU General Public License, version 3
+</span></span><span class="line"><span class="cl">website: https://www.shellcheck.net
+</span></span><span class="line"><span class="cl">Run declare -a options
+</span></span><span class="line"><span class="cl">Run declare -a excludes
+</span></span><span class="line"><span class="cl">Run declare -a files
+</span></span><span class="line"><span class="cl">Run declare -a filepaths
+</span></span><span class="line"><span class="cl">Run statuscode=0
+</span></span><span class="line"><span class="cl">Error: ./another.sh:1:1: error: Tips depend on target shell and yours is unknown. Add a shebang or a &#39;shell&#39; directive. [SC2148]
+</span></span><span class="line"><span class="cl">Error: ./sample.sh:1:1: error: Tips depend on target shell and yours is unknown. Add a shebang or a &#39;shell&#39; directive. [SC2148]
+</span></span><span class="line"><span class="cl">Run echo &#34;Files: ./another.sh ./sample.sh&#34;
+</span></span><span class="line"><span class="cl">Files: ./another.sh ./sample.sh
+</span></span><span class="line"><span class="cl">Excluded: ! -path *./.git/* ! -path *.go ! -path */mvnw
+</span></span><span class="line"><span class="cl">Options: --format=gcc
+</span></span><span class="line"><span class="cl">Status code: 1
+</span></span><span class="line"><span class="cl">Error: Process completed with exit code 1.
+</span></span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
@@ -495,7 +495,7 @@ Error: Process completed with exit code 1.
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

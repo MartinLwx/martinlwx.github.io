@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/hw08-of-cs61a-of-ucb/" />
@@ -190,13 +190,13 @@ if (!doNotTrack) {
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">my-filter</span> <span class="nv">func</span> <span class="nv">lst</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">null? </span><span class="nv">lst</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">())</span>
-        <span class="p">((</span><span class="nf">func</span> <span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">))</span>
-           <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nf">my-filter</span> <span class="nv">func</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">))))</span>
-        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nf">my-filter</span> <span class="nv">func</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">))))</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">my-filter</span> <span class="nv">func</span> <span class="nv">lst</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">null? </span><span class="nv">lst</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="p">((</span><span class="nf">func</span> <span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">           <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nf">my-filter</span> <span class="nv">func</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nf">my-filter</span> <span class="nv">func</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q2-interleave">Q2: Interleave</h3>
 <blockquote>
@@ -216,12 +216,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">interleave</span> <span class="nv">s1</span> <span class="nv">s2</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="k">and </span><span class="p">(</span><span class="nb">null? </span><span class="nv">s1</span><span class="p">)</span> <span class="p">(</span><span class="nb">null? </span><span class="nv">s2</span><span class="p">))</span> <span class="nv">nil</span><span class="p">)</span>                <span class="c1">; base case: return nil if both are empty</span>
-        <span class="p">((</span><span class="nb">null? </span><span class="nv">s1</span><span class="p">)</span> <span class="p">(</span><span class="nf">interleave</span> <span class="nv">s2</span> <span class="nv">s1</span><span class="p">))</span>                  <span class="c1">; change the positions of s1 and s2</span>
-        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">s1</span><span class="p">)</span> <span class="p">(</span><span class="nf">interleave</span> <span class="nv">s2</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">s1</span><span class="p">)))))</span> <span class="c1">; we always insert (car s1) to the result :)</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">interleave</span> <span class="nv">s1</span> <span class="nv">s2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="k">and </span><span class="p">(</span><span class="nb">null? </span><span class="nv">s1</span><span class="p">)</span> <span class="p">(</span><span class="nb">null? </span><span class="nv">s2</span><span class="p">))</span> <span class="nv">nil</span><span class="p">)</span>                <span class="c1">; base case: return nil if both are empty</span>
+</span></span><span class="line"><span class="cl">        <span class="p">((</span><span class="nb">null? </span><span class="nv">s1</span><span class="p">)</span> <span class="p">(</span><span class="nf">interleave</span> <span class="nv">s2</span> <span class="nv">s1</span><span class="p">))</span>                  <span class="c1">; change the positions of s1 and s2</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">s1</span><span class="p">)</span> <span class="p">(</span><span class="nf">interleave</span> <span class="nv">s2</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">s1</span><span class="p">)))))</span> <span class="c1">; we always insert (car s1) to the result :)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q3-accumulate">Q3: Accumulate</h3>
 <blockquote>
@@ -244,11 +244,11 @@ if (!doNotTrack) {
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">accumulate</span> <span class="nv">merger</span> <span class="nv">start</span> <span class="nv">n</span> <span class="nv">term</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">= </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nf">merger</span> <span class="p">(</span><span class="nf">term</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">start</span><span class="p">))</span>           <span class="c1">; base case: n = 1</span>
-        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nf">merger</span> <span class="p">(</span><span class="nf">term</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nf">accumulate</span> <span class="nv">merger</span> <span class="nv">start</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">term</span><span class="p">))))</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">accumulate</span> <span class="nv">merger</span> <span class="nv">start</span> <span class="nv">n</span> <span class="nv">term</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">= </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nf">merger</span> <span class="p">(</span><span class="nf">term</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">start</span><span class="p">))</span>           <span class="c1">; base case: n = 1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nf">merger</span> <span class="p">(</span><span class="nf">term</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nf">accumulate</span> <span class="nv">merger</span> <span class="nv">start</span> <span class="p">(</span><span class="nb">- </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">term</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q4-no-repeats">Q4: No Repeats</h3>
 <blockquote>
@@ -273,14 +273,14 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">no-repeats</span> <span class="nv">lst</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">null? </span><span class="nv">lst</span><span class="p">)</span> <span class="nv">nil</span><span class="p">)</span>
-        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">)</span> 
-                    <span class="p">(</span><span class="nf">no-repeats</span> 
-                       <span class="c1">; choose the elements that are not equal to `car lst`</span>
-                       <span class="p">(</span><span class="nf">my-filter</span> <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nb">= </span><span class="nv">x</span> <span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">))))</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">))))))</span>
-<span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">no-repeats</span> <span class="nv">lst</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">null? </span><span class="nv">lst</span><span class="p">)</span> <span class="nv">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">                    <span class="p">(</span><span class="nf">no-repeats</span> 
+</span></span><span class="line"><span class="cl">                       <span class="c1">; choose the elements that are not equal to `car lst`</span>
+</span></span><span class="line"><span class="cl">                       <span class="p">(</span><span class="nf">my-filter</span> <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">not </span><span class="p">(</span><span class="nb">= </span><span class="nv">x</span> <span class="p">(</span><span class="nb">car </span><span class="nv">lst</span><span class="p">))))</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">lst</span><span class="p">))))))</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -386,7 +386,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

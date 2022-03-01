@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/hw06-of-cs61a-of-ucb/" />
@@ -259,44 +259,44 @@ if (!doNotTrack) {
 </span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">VendingMachine</span><span class="p">:</span>
-    <span class="s2">&#34;&#34;&#34;A vending machine that vends some product for some price.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">product</span> <span class="o">=</span> <span class="n">product</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">def</span> <span class="nf">restock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Restock num items to our vending machine&#34;&#34;&#34;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">+=</span> <span class="n">num</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Current </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2"> stock: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stocks</span><span class="si">}</span><span class="s2">&#34;</span>
-    
-    <span class="k">def</span> <span class="nf">add_funds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fund</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Add funds to balance, return funds if no stocks&#34;&#34;&#34;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">fund</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Current balance: $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">&#34;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Nothing left to vend. Please restock. Here is your $</span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2">.&#34;</span>
-
-    <span class="k">def</span> <span class="nf">vend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Vend a product&#34;&#34;&#34;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;Nothing left to vend. Please restock.&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;You must add $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2"> more funds.&#34;</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">change</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">-=</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Here is your </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2">.&#34;</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Here is your </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2"> and $</span><span class="si">{</span><span class="n">change</span><span class="si">}</span><span class="s2"> change.&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">VendingMachine</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A vending machine that vends some product for some price.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">product</span> <span class="o">=</span> <span class="n">product</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">restock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Restock num items to our vending machine&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">+=</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Current </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2"> stock: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stocks</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">add_funds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fund</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Add funds to balance, return funds if no stocks&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">fund</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Current balance: $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Nothing left to vend. Please restock. Here is your $</span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2">.&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">vend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Vend a product&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s1">&#39;Nothing left to vend. Please restock.&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;You must add $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2"> more funds.&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">change</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Here is your </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2">.&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Here is your </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2"> and $</span><span class="si">{</span><span class="n">change</span><span class="si">}</span><span class="s2"> change.&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q2-mint">Q2: Mint</h3>
 <blockquote>
@@ -337,32 +337,32 @@ if (!doNotTrack) {
 </span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Mint</span><span class="p">:</span>
-    <span class="s2">&#34;&#34;&#34;A mint creates coins by stamping on years.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">present_year</span> <span class="o">=</span> <span class="mi">2021</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">kind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">Mint</span><span class="o">.</span><span class="n">present_year</span>
-
-
-<span class="k">class</span> <span class="nc">Coin</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
-
-    <span class="k">def</span> <span class="nf">worth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">age</span> <span class="o">=</span> <span class="n">Mint</span><span class="o">.</span><span class="n">present_year</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span>
-        <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cents</span> <span class="o">+</span> <span class="p">(</span><span class="n">age</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> 
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cents</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Mint</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A mint creates coins by stamping on years.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">present_year</span> <span class="o">=</span> <span class="mi">2021</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">kind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">Mint</span><span class="o">.</span><span class="n">present_year</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Coin</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">worth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">age</span> <span class="o">=</span> <span class="n">Mint</span><span class="o">.</span><span class="n">present_year</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cents</span> <span class="o">+</span> <span class="p">(</span><span class="n">age</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cents</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="linked-lists">Linked Lists</h2>
 <hr>
@@ -387,18 +387,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">store_digits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Stores the digits of a positive number n in a linked list.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">sentinel</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">all_but_last</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>
-        <span class="c1"># every time we insert node in the front of the linklist</span>
-        <span class="n">new_node</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
-        <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">new_node</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="n">all_but_last</span>
-    <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">store_digits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Stores the digits of a positive number n in a linked list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sentinel</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">all_but_last</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># every time we insert node in the front of the linklist</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_node</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">new_node</span>
+</span></span><span class="line"><span class="cl">        <span class="n">n</span> <span class="o">=</span> <span class="n">all_but_last</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q4-mutable-mapping">Q4: Mutable Mapping</h3>
 <blockquote>
@@ -415,12 +415,12 @@ if (!doNotTrack) {
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">&gt;&gt;&gt; s = Link(1, Link(2, Link(3, Link(4))))
-&gt;&gt;&gt; isinstance(s, Link)
-True
-&gt;&gt;&gt; isinstance(s, int)
-False
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;&gt;&gt; s = Link(1, Link(2, Link(3, Link(4))))
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; isinstance(s, Link)
+</span></span><span class="line"><span class="cl">True
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; isinstance(s, int)
+</span></span><span class="line"><span class="cl">False
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 </blockquote>
@@ -446,24 +446,24 @@ False
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Mutates a deep link by replacing each item found with the
-</span><span class="s2">    result of calling fn on the item.  Does NOT create new Links (so
-</span><span class="s2">    no use of Link&#39;s constructor)
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># base case 1. do thing if it is empty</span>
-    <span class="k">if</span> <span class="n">link</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="k">return</span> 
-    <span class="c1"># base case 2. if it is an integer</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="n">link</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="n">link</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
-    <span class="n">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Mutates a deep link by replacing each item found with the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    result of calling fn on the item.  Does NOT create new Links (so
+</span></span></span><span class="line"><span class="cl"><span class="s2">    no use of Link&#39;s constructor)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 1. do thing if it is empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">link</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> 
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 2. if it is an integer</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">link</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">link</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q5-two-list">Q5: Two List</h3>
 <blockquote>
@@ -493,26 +493,26 @@ False
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">two_list</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">amounts</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;
-</span><span class="s2">    Returns a linked list according to the two lists that were passed in. Assume
-</span><span class="s2">    vals and amounts are the same size. Elements in vals represent the value, and the
-</span><span class="s2">    corresponding element in amounts represents the number of this value desired in the
-</span><span class="s2">    final linked list. Assume all elements in amounts are greater than 0. Assume both
-</span><span class="s2">    lists have at least one element.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">sentinel</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">pos</span> <span class="o">=</span> <span class="n">sentinel</span>
-    <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
-        <span class="n">val</span><span class="p">,</span> <span class="n">amount</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">amounts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
-            <span class="n">new_node</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-            <span class="n">pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">new_node</span>
-            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
-        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">two_list</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">amounts</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns a linked list according to the two lists that were passed in. Assume
+</span></span></span><span class="line"><span class="cl"><span class="s2">    vals and amounts are the same size. Elements in vals represent the value, and the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    corresponding element in amounts represents the number of this value desired in the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    final linked list. Assume all elements in amounts are greater than 0. Assume both
+</span></span></span><span class="line"><span class="cl"><span class="s2">    lists have at least one element.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sentinel</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="n">sentinel</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val</span><span class="p">,</span> <span class="n">amount</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">amounts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">new_node</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">new_node</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="extra-questions">Extra Questions</h2>
 <hr>
@@ -544,22 +544,22 @@ False
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">VirFib</span><span class="p">():</span>
-    <span class="s2">&#34;&#34;&#34;A Virahanka Fibonacci number.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev</span>
-        <span class="n">next_fin</span> <span class="o">=</span> <span class="n">VirFib</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
-        <span class="n">next_fin</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">return</span> <span class="n">next_fin</span>
-
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&#34;VirFib object, value &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">VirFib</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A Virahanka Fibonacci number.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_fin</span> <span class="o">=</span> <span class="n">VirFib</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_fin</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">next_fin</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;VirFib object, value &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q7-is-bst">Q7: Is BST</h3>
 <blockquote>
@@ -616,39 +616,39 @@ False
 </span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">is_bst</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Returns True if the Tree t has the structure of a valid BST.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="nf">bst_min</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Return the min value of the tree t&#34;&#34;&#34;</span>
-        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-            <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
-        <span class="n">sub_branch_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">bst_min</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">])</span>
-        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">sub_branch_min</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">bst_max</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Return the max value of the tree t&#34;&#34;&#34;</span>
-        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-            <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
-        <span class="n">sub_branch_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">bst_max</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">])</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">sub_branch_max</span><span class="p">)</span>
-
-    <span class="c1"># base case 1. a leaf node is a BST</span>
-    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="c1"># base case 2. each node has at most 2 children</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="c1"># base case 3. a node with a single child</span>
-    <span class="c1"># it can be considered either the left or the right</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">bst_max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="n">bst_min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span> \
-                <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-    <span class="n">left_max</span> <span class="o">=</span> <span class="n">bst_max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">right_min</span> <span class="o">=</span> <span class="n">bst_min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">left_max</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">&lt;</span> <span class="n">right_min</span> <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">is_bst</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Returns True if the Tree t has the structure of a valid BST.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">bst_min</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return the min value of the tree t&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sub_branch_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">bst_min</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">sub_branch_min</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">bst_max</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return the max value of the tree t&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sub_branch_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">bst_max</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">sub_branch_max</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 1. a leaf node is a BST</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 2. each node has at most 2 children</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 3. a node with a single child</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># it can be considered either the left or the right</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">bst_max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="n">bst_min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span> \
+</span></span><span class="line"><span class="cl">                <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">left_max</span> <span class="o">=</span> <span class="n">bst_max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">right_min</span> <span class="o">=</span> <span class="n">bst_min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">left_max</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">&lt;</span> <span class="n">right_min</span> <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -754,7 +754,7 @@ False
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

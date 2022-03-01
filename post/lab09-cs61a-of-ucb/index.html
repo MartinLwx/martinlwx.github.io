@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.92.2 with theme even" />
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/lab09-cs61a-of-ucb/" />
@@ -220,13 +220,13 @@ if (!doNotTrack) {
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">insert_into_all</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">nested_list</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a new list consisting of all the lists in nested_list,
-</span><span class="s2">    but with item added to the front of each. You can assume that
-</span><span class="s2">     nested_list is a list of lists.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">return</span> <span class="p">[[</span><span class="n">item</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">nested_list</span><span class="p">]</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">insert_into_all</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">nested_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a new list consisting of all the lists in nested_list,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    but with item added to the front of each. You can assume that
+</span></span></span><span class="line"><span class="cl"><span class="s2">     nested_list is a list of lists.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[[</span><span class="n">item</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">nested_list</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The <code>insert_into_all</code> function indicates the way to solve this problem. We need to ask ourself what we can do with this function? We can slove it recursively. The input can be broken down into 2 parts: the first element and the subsequences of the rest part of input(<code>tmp</code>). We need to add the first element in <code>tmp</code>, which can be done with the <code>insert_into_all</code> function. Finally, what is the base case? It is an empty list or a list with a size 1.</p>
 <div class="highlight"><div class="chroma">
@@ -242,16 +242,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a nested list (a list of lists) of all subsequences of S.
-</span><span class="s2">    The subsequences can appear in any order. You can assume S is a list.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[[],</span> <span class="n">s</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span> <span class="o">!=</span><span class="p">[]</span> <span class="k">else</span> <span class="p">[[]]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-        <span class="k">return</span> <span class="n">insert_into_all</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="n">tmp</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a nested list (a list of lists) of all subsequences of S.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The subsequences can appear in any order. You can assume S is a list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[[],</span> <span class="n">s</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span> <span class="o">!=</span><span class="p">[]</span> <span class="k">else</span> <span class="p">[[]]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tmp</span> <span class="o">=</span> <span class="n">subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">insert_into_all</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="n">tmp</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q2-non-decreasing-subsequences">Q2: Non-Decreasing Subsequences</h3>
 <blockquote>
@@ -281,22 +281,22 @@ if (!doNotTrack) {
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">non_decrease_subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Assuming that S is a list, return a nested list of all subsequences
-</span><span class="s2">    of S (a list of lists) for which the elements of the subsequence
-</span><span class="s2">    are strictly nondecreasing. The subsequences can appear in any order.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="nf">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">prev</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[[]]</span>
-        <span class="k">elif</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">prev</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">prev</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># include s[0]</span>
-            <span class="n">b</span> <span class="o">=</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">prev</span><span class="p">)</span>  <span class="c1"># exclude s[0]</span>
-            <span class="k">return</span> <span class="n">insert_into_all</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-    <span class="k">return</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">non_decrease_subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Assuming that S is a list, return a nested list of all subsequences
+</span></span></span><span class="line"><span class="cl"><span class="s2">    of S (a list of lists) for which the elements of the subsequence
+</span></span></span><span class="line"><span class="cl"><span class="s2">    are strictly nondecreasing. The subsequences can appear in any order.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">prev</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">[[]]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">prev</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">a</span> <span class="o">=</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># include s[0]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">b</span> <span class="o">=</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">prev</span><span class="p">)</span>  <span class="c1"># exclude s[0]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">insert_into_all</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q3-number-of-trees">Q3: Number of Trees</h3>
 <blockquote>
@@ -320,17 +320,17 @@ if (!doNotTrack) {
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">num_trees</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Returns the number of unique full binary trees with exactly n leaves. E.g.,
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="c1"># catalan number</span>
-    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="n">ans</span> <span class="o">+=</span> <span class="n">num_trees</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_trees</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ans</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">num_trees</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Returns the number of unique full binary trees with exactly n leaves. E.g.,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># catalan number</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ans</span> <span class="o">+=</span> <span class="n">num_trees</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_trees</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ans</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="generators">Generators</h2>
 <hr>
@@ -387,35 +387,35 @@ if (!doNotTrack) {
 </span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">incr_a</span><span class="p">,</span> <span class="n">incr_b</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Yield the elements of strictly increasing iterables incr_a and incr_b, removing
-</span><span class="s2">    repeats. Assume that incr_a and incr_b have no repeats. incr_a or incr_b may or may not
-</span><span class="s2">    be infinite sequences.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">iter_a</span><span class="p">,</span> <span class="n">iter_b</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">incr_a</span><span class="p">),</span> <span class="nb">iter</span><span class="p">(</span><span class="n">incr_b</span><span class="p">)</span>
-    <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-
-    <span class="c1"># both are non-empty</span>
-    <span class="k">while</span> <span class="n">next_a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">next_b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">val_a</span><span class="p">,</span> <span class="n">val_b</span> <span class="o">=</span> <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span>
-        <span class="k">if</span> <span class="n">val_a</span> <span class="o">==</span> <span class="n">val_b</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">next_a</span>
-            <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">val_a</span> <span class="o">&lt;</span> <span class="n">val_b</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">next_a</span>
-            <span class="n">next_a</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">next_b</span>
-            <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="c1"># incr_a is not empty</span>
-    <span class="k">while</span> <span class="n">next_a</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">next_a</span>
-        <span class="n">next_a</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="c1"># incr_b is not empty</span>
-    <span class="k">while</span> <span class="n">next_b</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">next_b</span>
-        <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">incr_a</span><span class="p">,</span> <span class="n">incr_b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yield the elements of strictly increasing iterables incr_a and incr_b, removing
+</span></span></span><span class="line"><span class="cl"><span class="s2">    repeats. Assume that incr_a and incr_b have no repeats. incr_a or incr_b may or may not
+</span></span></span><span class="line"><span class="cl"><span class="s2">    be infinite sequences.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">iter_a</span><span class="p">,</span> <span class="n">iter_b</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">incr_a</span><span class="p">),</span> <span class="nb">iter</span><span class="p">(</span><span class="n">incr_b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># both are non-empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">next_a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">next_b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val_a</span><span class="p">,</span> <span class="n">val_b</span> <span class="o">=</span> <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">val_a</span> <span class="o">==</span> <span class="n">val_b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">next_a</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">val_a</span> <span class="o">&lt;</span> <span class="n">val_b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">next_a</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_a</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">next_b</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># incr_a is not empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">next_a</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">next_a</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_a</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># incr_b is not empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">next_b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">next_b</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="objects">Objects</h2>
 <hr>
@@ -480,48 +480,48 @@ if (!doNotTrack) {
 </span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Account</span><span class="p">:</span>
-    <span class="s2">&#34;&#34;&#34;A bank account that allows deposits and withdrawals.
-</span><span class="s2">    It tracks the current account balance and a transaction
-</span><span class="s2">    history of deposits and withdrawals.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-
-    <span class="n">interest</span> <span class="o">=</span> <span class="mf">0.02</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account_holder</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">holder</span> <span class="o">=</span> <span class="n">account_holder</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">def</span> <span class="nf">deposit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Increase the account balance by amount, add the deposit
-</span><span class="s2">        to the transaction history, and return the new balance.
-</span><span class="s2">        &#34;&#34;&#34;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">amount</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;deposit&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
-
-    <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
-        <span class="s2">&#34;&#34;&#34;Decrease the account balance by amount, add the withdraw
-</span><span class="s2">        to the transaction history, and return the new balance.
-</span><span class="s2">        &#34;&#34;&#34;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&gt;</span> <span class="n">amount</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-=</span> <span class="n">amount</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;withdraw&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
-        <span class="c1"># prevent illegal withdraw</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">holder</span><span class="si">}</span><span class="s2">&#39;s Balance: $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">&#34;</span>
-
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Accountholder: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">holder</span><span class="si">}</span><span class="s2">, Deposits: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span><span class="si">}</span><span class="s2">, Withdraws: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span><span class="si">}</span><span class="s2">&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Account</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A bank account that allows deposits and withdrawals.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    It tracks the current account balance and a transaction
+</span></span></span><span class="line"><span class="cl"><span class="s2">    history of deposits and withdrawals.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">interest</span> <span class="o">=</span> <span class="mf">0.02</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account_holder</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">holder</span> <span class="o">=</span> <span class="n">account_holder</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">deposit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Increase the account balance by amount, add the deposit
+</span></span></span><span class="line"><span class="cl"><span class="s2">        to the transaction history, and return the new balance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">amount</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;deposit&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Decrease the account balance by amount, add the withdraw
+</span></span></span><span class="line"><span class="cl"><span class="s2">        to the transaction history, and return the new balance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&gt;</span> <span class="n">amount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-=</span> <span class="n">amount</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;withdraw&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># prevent illegal withdraw</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">holder</span><span class="si">}</span><span class="s2">&#39;s Balance: $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Accountholder: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">holder</span><span class="si">}</span><span class="s2">, Deposits: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span><span class="si">}</span><span class="s2">, Withdraws: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="mutable-lists">Mutable Lists</h2>
 <hr>
@@ -542,14 +542,14 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
-&gt;&gt;&gt; b = a
-&gt;&gt;&gt; a[2:5] = [10, 11, 12, 13]
-&gt;&gt;&gt; a
-[1, 2, 10, 11, 12, 13, 6]
-&gt;&gt;&gt; b
-[1, 2, 10, 11, 12, 13, 6]
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; b = a
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; a[2:5] = [10, 11, 12, 13]
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; a
+</span></span><span class="line"><span class="cl">[1, 2, 10, 11, 12, 13, 6]
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; b
+</span></span><span class="line"><span class="cl">[1, 2, 10, 11, 12, 13, 6]
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Additionally, recall that the starting and ending indices for a slice can be left out and Python will use a default value. <code>lst[i:]</code> is the same as <code>lst[i:len(lst)]</code>, and <code>lst[:j]</code> is the same as <code>lst[0:j]</code>.</p>
 </blockquote>
@@ -576,24 +576,24 @@ if (!doNotTrack) {
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Exchange the smallest prefixes of first and second that have equal sum.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
-
-    <span class="n">equal_prefix</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
-    <span class="k">while</span> <span class="n">m</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">first</span><span class="p">)</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">second</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">equal_prefix</span><span class="p">():</span>
-        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">sum</span><span class="p">(</span><span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">]):</span>
-            <span class="n">m</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">if</span> <span class="n">equal_prefix</span><span class="p">():</span>
-        <span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">],</span> <span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">]</span>
-        <span class="k">return</span> <span class="s1">&#39;Deal!&#39;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;No deal!&#39;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Exchange the smallest prefixes of first and second that have equal sum.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">equal_prefix</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">m</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">first</span><span class="p">)</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">second</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">equal_prefix</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">sum</span><span class="p">(</span><span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">equal_prefix</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">],</span> <span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;Deal!&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;No deal!&#39;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q7-shuffle">Q7: Shuffle</h3>
 <blockquote>
@@ -619,17 +619,17 @@ if (!doNotTrack) {
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">cards</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a shuffled list that interleaves the two halves of cards.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;len(cards) must be even&#39;</span>
-    <span class="n">half</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-    <span class="n">shuffled</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">half</span><span class="p">):</span>
-        <span class="n">shuffled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cards</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">shuffled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cards</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">half</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">shuffled</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">cards</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a shuffled list that interleaves the two halves of cards.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;len(cards) must be even&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">half</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">shuffled</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">half</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shuffled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cards</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shuffled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cards</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">half</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">shuffled</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="linked-lists">Linked Lists</h2>
 <hr>
@@ -643,8 +643,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">raise IndexError(&#39;Out of bounds!&#39;)
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">raise IndexError(&#39;Out of bounds!&#39;)
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 </blockquote>
@@ -671,25 +671,25 @@ if (!doNotTrack) {
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Insert a value into a Link at the given index.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">pos</span> <span class="o">=</span> <span class="n">link</span>
-    <span class="n">current_index</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">current_index</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
-            <span class="c1"># make a copy of current node, and modify the current node&#39;s value \</span>
-            <span class="c1"># which is equal to insert a new node :)</span>
-            <span class="n">current_copy</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
-            <span class="n">origin_next</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
-            <span class="n">pos</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="n">pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">current_copy</span>
-            <span class="c1">#print(f&#34;link: {link.first}&#34;)</span>
-            <span class="k">return</span> 
-        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
-        <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Out of bounds!&#39;</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Insert a value into a Link at the given index.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="n">link</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_index</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">current_index</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># make a copy of current node, and modify the current node&#39;s value \</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># which is equal to insert a new node :)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_copy</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">origin_next</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">current_copy</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#print(f&#34;link: {link.first}&#34;)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Out of bounds!&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q9-deep-linked-list-length">Q9: Deep Linked List Length</h3>
 <blockquote>
@@ -715,18 +715,18 @@ if (!doNotTrack) {
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34; Returns the deep length of a possibly deep linked list.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="c1"># base case 1. an empty node</span>
-    <span class="k">if</span> <span class="n">lnk</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="c1"># base case 2. an integer</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lnk</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span> 
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; Returns the deep length of a possibly deep linked list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 1. an empty node</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">lnk</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 2. an integer</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lnk</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q10-linked-lists-as-strings">Q10: Linked Lists as Strings</h3>
 <blockquote>
@@ -740,11 +740,11 @@ if (!doNotTrack) {
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">&gt;&gt;&gt; str(4)
-&#39;4&#39;
-&gt;&gt;&gt; &#39;cs &#39; + str(61) + &#39;a&#39;
-&#39;cs 61a&#39;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;&gt;&gt; str(4)
+</span></span><span class="line"><span class="cl">&#39;4&#39;
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; &#39;cs &#39; + str(61) + &#39;a&#39;
+</span></span><span class="line"><span class="cl">&#39;cs 61a&#39;
+</span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <p>The format:  <code>front + the value of the current node + mid + the string of lnk.rest + back</code></p>
@@ -761,16 +761,16 @@ if (!doNotTrack) {
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">make_to_string</span><span class="p">(</span><span class="n">front</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">back</span><span class="p">,</span> <span class="n">empty_repr</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34; Returns a function that turns linked lists to strings.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="k">def</span> <span class="nf">printer</span><span class="p">(</span><span class="n">lnk</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">lnk</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">empty_repr</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">front</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">printer</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span> <span class="o">+</span> <span class="n">back</span>
-    <span class="k">return</span> <span class="n">printer</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">make_to_string</span><span class="p">(</span><span class="n">front</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">back</span><span class="p">,</span> <span class="n">empty_repr</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; Returns a function that turns linked lists to strings.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">printer</span><span class="p">(</span><span class="n">lnk</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">lnk</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">empty_repr</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">front</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">printer</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span> <span class="o">+</span> <span class="n">back</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">printer</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="trees">Trees</h2>
 <hr>
@@ -791,14 +791,14 @@ if (!doNotTrack) {
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">function_name</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-    <span class="c1"># base case </span>
-    <span class="o">...</span>
-    
-    <span class="n">dothing</span> <span class="n">thing</span>
-    <span class="o">...</span>              <span class="c1"># recursively solve this problem</span>
-    <span class="n">undo</span> <span class="n">what</span> <span class="n">you</span> <span class="n">have</span> <span class="n">done</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">function_name</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case </span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">dothing</span> <span class="n">thing</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>              <span class="c1"># recursively solve this problem</span>
+</span></span><span class="line"><span class="cl">    <span class="n">undo</span> <span class="n">what</span> <span class="n">you</span> <span class="n">have</span> <span class="n">done</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>We need to <em>add</em> the label of the current node in our <code>current_path</code> list when we are about to go deepr in the tree and undo what our modifications when we are about move up in the tree.</p>
 <div class="highlight"><div class="chroma">
@@ -824,26 +824,26 @@ if (!doNotTrack) {
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">long_paths</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="s2">&#34;&#34;&#34;Return a list of all paths in t with length at least n.
-</span><span class="s2">    &#34;&#34;&#34;</span>
-    <span class="n">path_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
-        <span class="k">nonlocal</span> <span class="n">path_list</span>
-        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-            <span class="n">current_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
-                <span class="c1"># warning: we need to pass a copy instead fo a ref</span>
-                <span class="n">path_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_path</span><span class="p">[:])</span>
-            <span class="n">current_path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-            <span class="k">return</span>
-        <span class="n">current_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
-            <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">current_path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">path_list</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">long_paths</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a list of all paths in t with length at least n.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">nonlocal</span> <span class="n">path_list</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># warning: we need to pass a copy instead fo a ref</span>
+</span></span><span class="line"><span class="cl">                <span class="n">path_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_path</span><span class="p">[:])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">path_list</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -949,7 +949,7 @@ if (!doNotTrack) {
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
   <script type="text/javascript">
     window.MathJax = {
       tex: {

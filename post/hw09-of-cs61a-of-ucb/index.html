@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hw09 of CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="MartinLwx" /><meta name="description" content="The simple solutions of hw09 of CS61A of UCB" /><meta name="keywords" content="CS61A, hw, solutions" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.93.0 with theme even" />
+
+
+<link rel="canonical" href="https://martinlwx.github.io/post/hw09-of-cs61a-of-ucb/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Hw09 of CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="The simple solutions of hw09 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/post/hw09-of-cs61a-of-ucb/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-03-01T21:13:22+08:00" />
+<meta property="article:modified_time" content="2022-03-01T21:13:22+08:00" />
+
+<meta itemprop="name" content="Hw09 of CS61A of UCB(2021-Fall)">
+<meta itemprop="description" content="The simple solutions of hw09 of CS61A of UCB"><meta itemprop="datePublished" content="2022-03-01T21:13:22+08:00" />
+<meta itemprop="dateModified" content="2022-03-01T21:13:22+08:00" />
+<meta itemprop="wordCount" content="846">
+<meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hw09 of CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="The simple solutions of hw09 of CS61A of UCB"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">MartinLwx</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">MartinLwx</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Hw09 of CS61A of UCB(2021-Fall)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-03-01 </span>
+        
+          <span class="more-meta"> 846 words </span>
+          <span class="more-meta"> 4 mins read </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#q2-roman-numerals">Q2: Roman Numerals</a></li>
+            <li><a href="#q3-cs-classes">Q3: CS Classes</a></li>
+            <li><a href="#q4-time-for-times">Q4: Time for Times</a></li>
+            <li><a href="#q5-most-common-area-code">Q5: Most Common Area Code</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="q2-roman-numerals">Q2: Roman Numerals</h3>
+<blockquote>
+<p>Write a regular expression that finds any string of letters that resemble a Roman numeral and aren&rsquo;t part of another word. A Roman numeral is made up of the letters I, V, X, L, C, D, M and is at least one letter long.</p>
+<blockquote>
+<p>For the purposes of this problem, don&rsquo;t worry about whether or not a Roman numeral is valid. For example, &ldquo;VIIIII&rdquo; is not a Roman numeral, but it is fine if your regex matches it.</p>
+</blockquote>
+</blockquote>
+<p>The details:</p>
+<ol>
+<li>The letters contain I, V, X, L, C, D, M. We can use <code>[]</code> to represent the logical OR</li>
+<li>The roman NUmerals is at least one letter long. We can use <code>+</code> to match 1 or more repetitions.</li>
+<li>The roman NUmerals can not be a part of another word. After checking the documentation, I found <code>\b</code> is quite useful, which means matching the empty string, but only at the beginning or end of a word. That&rsquo;s exactly what we want.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">roman_numerals</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Finds any string of letters that could be a Roman numeral
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (made up of the letters I, V, X, L, C, D, M).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b[IVXLCDM]+\b&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-cs-classes">Q3: CS Classes</h3>
+<blockquote>
+<p>On reddit.com, there is an /r/berkeley subreddit for discussions about everything UC Berkeley. However, there is such a large amount of CS-related posts that those posts are auto-tagged so that readers can choose to ignore them or read only them.</p>
+<p>Write a regular expression that finds strings that resemble a CS class- starting with &ldquo;CS&rdquo;, followed by a number, and then optionally followed by &ldquo;A&rdquo;, &ldquo;B&rdquo;, or &ldquo;C&rdquo;. Your search should be case insensitive, so both &ldquo;CS61A&rdquo; and &ldquo;cs61a&rdquo; would match.</p>
+</blockquote>
+<p>The details:</p>
+<ol>
+<li>Either the <code>CS</code> or the <code>ABC</code> is case insensitive. The former can be solved by <code>|</code>, and the latter can be solved by <code>[]</code></li>
+<li>The whitespace may exist between <code>CS</code> and the digits</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">cs_classes</span><span class="p">(</span><span class="n">post</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns strings that look like a Berkeley CS class,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    starting with &#34;CS&#34;, followed by a number, optionally ending with A, B, or C
+</span></span></span><span class="line"><span class="cl"><span class="s2">    and potentially with a space between &#34;CS&#34; and the number.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Case insensitive.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;cs|CS ?\d+[ABCabc]?&#39;</span><span class="p">,</span> <span class="n">post</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q4-time-for-times">Q4: Time for Times</h3>
+<blockquote>
+<p>You&rsquo;re given a body of text and told that within it are some times. Write a regular expression which, for a few examples, would match the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[&#39;05:24&#39;, &#39;7:23&#39;, &#39;23:59&#39;, &#39;12:22&#39;, &#39;00:00&#39;]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>but would not match these invalid &ldquo;times&rdquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[&#39;05:64&#39;, &#39;70:23&#39;]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>You may find <a href="https://www.regular-expressions.info/brackets.html#noncap">non-capturing groups</a> helpful to use for this question.</p>
+</blockquote>
+<p>The legal range of the time: <code>00:00 ~ 23:59</code></p>
+<p>The details:</p>
+<ol>
+<li>The first digit and the second digit: The leading <code>0</code> may exist. When the first digit is <code>2</code>, the second digit should be in the range of <code>0 ~ 3</code>. (<code>2?:??</code> ~ <code>23:59</code>)</li>
+<li>The third digit and the 4th digit: <code>00 ~ 59</code>. <code>[0-5][0-9]</code></li>
+</ol>
+<p>It is a little complicated for a new beginner like me :(</p>
+<p>The hint shows the <code>(?:)</code> may be helpful, so I have a look at this and suddenly know how to make the regex work 👍. It means matching but not capturing.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">match_time</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?:[01]?\d|2[0-3]):[0-5][0-9](?:AM)?&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-most-common-area-code">Q5: Most Common Area Code</h3>
+<blockquote>
+<p>Write a function which takes in a body of text and finds the most common area code. Area codes must be part of a valid phone number.</p>
+<p>To solve this problem, we will first write a regular expression which finds valid phone numbers and captures the area code. See the docstring of <code>area_codes</code> for specifics on what qualifies as a valid phone number.</p>
+</blockquote>
+<p>We know the area code may appear in the front of a phone number. The task is to find the most common area code. First, we need to implement a function called <code>area_codes</code> to parse a string to get all potential area codes and return. After that, we use <code>list.count</code> to find the most common one.</p>
+<p>The details.</p>
+<ol>
+<li>A valid phone number should be 10-digit.</li>
+<li>The length of the area code is 3. Sometimes, it may have parentheses around.</li>
+<li>The hyphens and spaces may appear after the third and sixth digits</li>
+</ol>
+<p>How to match a potential <code>()</code> ? By <code>(?:)?</code> 🤗</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">area_codes</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Finds all phone numbers in text and captures the area code. Phone numbers
+</span></span></span><span class="line"><span class="cl"><span class="s2">    have 10 digits total and may have parentheses around the area code, and
+</span></span></span><span class="line"><span class="cl"><span class="s2">    hyphens or spaces after the third and sixth digits.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?:\()?(\d</span><span class="si">{3}</span><span class="s1">)(?:\)?)(?: |-)?\d</span><span class="si">{3}</span><span class="s1">(?: |-)?\d</span><span class="si">{4}</span><span class="s1">\b&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">most_common_code</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Takes in an input string which contains at least one phone number (and
+</span></span></span><span class="line"><span class="cl"><span class="s2">    may contain more) and returns the most common area code among all phone
+</span></span></span><span class="line"><span class="cl"><span class="s2">    numbers in the input. If there are multiple area codes with the same
+</span></span></span><span class="line"><span class="cl"><span class="s2">    frequency, return the first one that appears in the input text.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">area_codes_list</span> <span class="o">=</span> <span class="n">area_codes</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cnts</span> <span class="o">=</span> <span class="p">[</span><span class="n">area_codes_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">area_codes_list</span><span class="p">]</span>          <span class="c1"># count every area_code</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_cnt_idx</span> <span class="o">=</span> <span class="n">cnts</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">cnts</span><span class="p">))</span>                                 <span class="c1"># get the index of the max value</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">area_codes_list</span><span class="p">[</span><span class="n">max_cnt_idx</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">MartinLwx</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2022-03-01
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/course/">Course</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/lab11-cs61a-of-ucb/">
+            <span class="next-text nav-default">Lab11 CS61A of UCB(2021-Fall)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+    <script src="https://utteranc.es/client.js"
+            repo="MartinLwx/martinlwx.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="martinlwx@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/MartinLwx" class="iconfont icon-github" title="github"></a>
+  <a href="https://martinlwx.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2021 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>MartinLwx</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>
+  <script><!-- NOTE: timeago.js uses the language code format like "zh_CN" (underscore and case sensitive) -->
+    var languageCode = "en".replace(/-/g, '_').replace(/_(.*)/, function ($0, $1) {return $0.replace($1, $1.toUpperCase());});
+    timeago().render(document.querySelectorAll('.timeago'), languageCode);
+    timeago.cancel();  
+  </script>
+
+
+
+<script type="text/javascript" src="/js/main.min.64437849d125a2d603b3e71d6de5225d641a32d17168a58106e0b61852079683.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js" integrity="sha256-HGLuEfFcsUJGhvB8cQ8nr0gai9EucOOaIxFw7qxmd+w=" crossorigin="anonymous"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-215831074-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
