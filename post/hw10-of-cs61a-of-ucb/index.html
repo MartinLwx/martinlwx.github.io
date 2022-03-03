@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.93.0 with theme even" />
+<meta name="generator" content="Hugo 0.93.1 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/hw10-of-cs61a-of-ucb/" />
@@ -49,7 +49,7 @@
 <meta itemprop="name" content="Hw10 of Cs61a of UCB(2021-Fall)">
 <meta itemprop="description" content="The simple solutions of hw10 of CS61A of UCB"><meta itemprop="datePublished" content="2022-03-02T13:36:13+08:00" />
 <meta itemprop="dateModified" content="2022-03-02T13:36:13+08:00" />
-<meta itemprop="wordCount" content="1179">
+<meta itemprop="wordCount" content="1087">
 <meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Hw10 of Cs61a of UCB(2021-Fall)"/>
 <meta name="twitter:description" content="The simple solutions of hw10 of CS61A of UCB"/>
@@ -145,7 +145,7 @@ if (!doNotTrack) {
       <div class="post-meta">
         <span class="post-time"> 2022-03-02 </span>
         
-          <span class="more-meta"> 1179 words </span>
+          <span class="more-meta"> 1087 words </span>
           <span class="more-meta"> 6 mins read </span>
         
       </div>
@@ -376,11 +376,11 @@ if (!doNotTrack) {
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE TABLE size_of_dogs AS
-</span></span><span class="line"><span class="cl">  SELECT d.name, s.size 
-</span></span><span class="line"><span class="cl">  FROM dogs as d, sizes as s
-</span></span><span class="line"><span class="cl">  where d.height &lt;= s.max and d.height &gt; s.min;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">size_of_dogs</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">sizes</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">max</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">min</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q5-by-parent-height">Q5: By Parent Height</h3>
 <blockquote>
@@ -397,13 +397,13 @@ if (!doNotTrack) {
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE TABLE siblings AS
-</span></span><span class="line"><span class="cl">  SELECT p1.child AS dogone, p2.child AS dogtwo, s1.size AS dogonesize, s2.size AS dogtwosize
-</span></span><span class="line"><span class="cl">  FROM parents AS p1, parents AS p2, size_of_dogs AS s1, size_of_dogs AS s2
-</span></span><span class="line"><span class="cl">  WHERE p1.parent = p2.parent AND p1.child &lt; p2.child AND p1.child = s1.name AND p2.child = s2.name;
-</span></span><span class="line"><span class="cl">-- Use `&lt;` to filter the result
-</span></span><span class="line"><span class="cl">-- `!=` is not enough, you will get `barack clinton` and `clinton barack` in the same time
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">siblings</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogone</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogtwo</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogonesize</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogtwosize</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">parents</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">parents</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p2</span><span class="p">,</span><span class="w"> </span><span class="n">size_of_dogs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">size_of_dogs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">parent</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s2</span><span class="p">.</span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- Use `&lt;` to filter the result
+</span></span></span><span class="line"><span class="cl"><span class="c1">-- `!=` is not enough, you will get `barack clinton` and `clinton barack` in the same time
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="q6-sentences">Q6: Sentences</h3>
 <blockquote>
@@ -422,11 +422,11 @@ if (!doNotTrack) {
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE TABLE sentences AS
-</span></span><span class="line"><span class="cl">    SELECT &#34;The two siblings, &#34; || dogone || &#34; plus &#34; || dogtwo || &#34; have the same size: &#34; || dogonesize
-</span></span><span class="line"><span class="cl">    FROM siblings
-</span></span><span class="line"><span class="cl">    WHERE dogonesize = dogtwosize AND dogone &lt; dogtwo;
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sentences</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="s2">&#34;The two siblings, &#34;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dogone</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&#34; plus &#34;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dogtwo</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&#34; have the same size: &#34;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dogonesize</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">siblings</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">dogonesize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dogtwosize</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">dogone</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dogtwo</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -454,7 +454,11 @@ if (!doNotTrack) {
           <a href="/tags/course/">Course</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/lab14-cs61a-of-ucb/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Lab14 Cs61a of UCB(2021-Fall)</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/lab12-ca61a-of-ucb/">
             <span class="next-text nav-default">Lab12 Ca61a of UCB(2021-Fall)</span>
             <span class="next-text nav-mobile">Next</span>
