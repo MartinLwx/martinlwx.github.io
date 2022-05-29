@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Proj3.Ants vs SomeBees of Cs61a of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
+  <title>Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.95.0 with theme even" />
+<meta name="generator" content="Hugo 0.99.1 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/proj3.ants-vs-somebees-of-cs61a-of-ucb/" />
@@ -39,19 +39,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Proj3.Ants vs SomeBees of Cs61a of UCB(2021-Fall)" />
+<meta property="og:title" content="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)" />
 <meta property="og:description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/post/proj3.ants-vs-somebees-of-cs61a-of-ucb/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-03-10T21:43:59+08:00" />
 <meta property="article:modified_time" content="2022-03-12T13:55:40+08:00" />
 
-<meta itemprop="name" content="Proj3.Ants vs SomeBees of Cs61a of UCB(2021-Fall)">
+<meta itemprop="name" content="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)">
 <meta itemprop="description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B"><meta itemprop="datePublished" content="2022-03-10T21:43:59+08:00" />
 <meta itemprop="dateModified" content="2022-03-12T13:55:40+08:00" />
-<meta itemprop="wordCount" content="5852">
+<meta itemprop="wordCount" content="5857">
 <meta itemprop="keywords" content="Course," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Proj3.Ants vs SomeBees of Cs61a of UCB(2021-Fall)"/>
+<meta name="twitter:title" content="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"/>
 <meta name="twitter:description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B"/>
 
 <!--[if lte IE 9]>
@@ -139,12 +139,12 @@ if (!doNotTrack) {
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Proj3.Ants vs SomeBees of Cs61a of UCB(2021-Fall)</h1>
+      <h1 class="post-title">Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2022-03-10 </span>
         
-          <span class="more-meta"> 5852 words </span>
+          <span class="more-meta"> 5857 words </span>
           <span class="more-meta"> 28 mins read </span>
         
       </div>
@@ -199,6 +199,11 @@ if (!doNotTrack) {
 </nav>
   </div>
 </div>
+  <div class="post-outdated">
+    <div class="hint">
+      <p>[NOTE] Updated <span class="timeago" datetime="2022-03-12T13:55:40" title="March 12, 2022">March 12, 2022</span>. This article may have outdated content or subject matter.</p>
+    </div>
+  </div>
     <div class="post-content">
       <h2 id="intro">Intro</h2>
 <hr>
@@ -1209,8 +1214,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">is_slow</span> <span class="o">=</span> <span class="kc">False</span>
 </span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">gamestate</span><span class="o">.</span><span class="n">time</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">destination</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="c1"># is_slow + is_scared, we need to cancel `self.scared_turns -= 1`  \</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_scared</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># is_slow + is_scared + gamestate.time is odd, we need to cancel `self.scared_turns -= 1`  \</span>
 </span></span><span class="line"><span class="cl">                <span class="c1"># if we didn&#39;t move</span>
 </span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">scared_turns</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
@@ -1467,7 +1472,7 @@ if (!doNotTrack) {
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/lab14-cs61a-of-ucb/">
-            <span class="next-text nav-default">Lab14 Cs61a of UCB(2021-Fall)</span>
+            <span class="next-text nav-default">Lab14 CS61A of UCB(2021-Fall)</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.95.0 with theme even" />
+<meta name="generator" content="Hugo 0.99.1 with theme even" />
 
 
 <link rel="canonical" href="https://martinlwx.github.io/post/f1score/" />
@@ -49,7 +49,7 @@
 <meta itemprop="name" content="从混淆矩阵到 F1 score">
 <meta itemprop="description" content="简单介绍 Precision 和 Recall 以及 F1 score 的计算方式"><meta itemprop="datePublished" content="2021-12-05T21:25:19+08:00" />
 <meta itemprop="dateModified" content="2021-12-05T21:25:19+08:00" />
-<meta itemprop="wordCount" content="1325">
+<meta itemprop="wordCount" content="1319">
 <meta itemprop="keywords" content="ML," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="从混淆矩阵到 F1 score"/>
 <meta name="twitter:description" content="简单介绍 Precision 和 Recall 以及 F1 score 的计算方式"/>
@@ -144,7 +144,7 @@ if (!doNotTrack) {
       <div class="post-meta">
         <span class="post-time"> 2021-12-05 </span>
         
-          <span class="more-meta"> 1325 words </span>
+          <span class="more-meta"> 1319 words </span>
           <span class="more-meta"> 3 mins read </span>
         
       </div>
@@ -266,13 +266,13 @@ if (!doNotTrack) {
 <p>📒<strong>我们常常要在 Precision 和 Recall 中进行 tradeoff，因为其中一个升高，另一个就会降低</strong></p>
 <h2 id="f1-score">F1 score</h2>
 <hr>
-<p>正是因为 Precision 和 Recall 的互斥特性，在衡量分类器好坏的时候会给我们带来困扰，特别是两者想差不多的情况下，于是就需要将这两个指标合并起来用另一个指标表示，也就是 F1 score</p>
+<p>正是因为 Precision 和 Recall 的互斥特性，在衡量分类器好坏的时候会给我们带来困扰，特别是两者相差不多的情况下，于是就需要将这两个指标合并起来用另一个指标表示，也就是 F1 score</p>
 <p>F1 score 的计算方式如下：</p>
 <p>$$F1\ score = \frac{2PR}{P+R}$$</p>
 <p>其中 Precision = $P$； Recall = $R$</p>
 <h3 id="f1-score-的不同计算方法">F1 score 的不同计算方法</h3>
 <ol>
-<li>Macro：分别计算每个类别的 $P$ 和 $R$，除以总类别数那么就得到了平均的 $P$ 和 $R$，再用这个计算 F1 score</li>
+<li>Macro：分别计算每个类别的 $P$ 和 $R$，再计算总的平均的 $P$ 和 $R$，最后用这个计算 F1 score</li>
 <li>Micro：合并多个类别的统计结果到一个表格里面，在分别算 $P$ 和 $R$ 和 F1 score</li>
 </ol>
 <p>配合后面的例子🌰食用</p>
@@ -285,7 +285,7 @@ if (!doNotTrack) {
 <li>情况二：比如 $P$ 和 $R$ 分别是 $50%$ 和 $70%$，可以看到他们和上一种情况的平均值是一样的，但是他们的 F1 score = $58.3%$</li>
 </ol>
 </li>
-<li>由 1. 可知：📒高 F1 score 不意味着分类器更好或更适合你的任务，有时候你可能更关注 Precision 或者 Recall 这两个中的一个</li>
+<li>由 1. 可知：📒 高 F1 score 不意味着分类器更好或更适合你的任务，有时候你可能更关注 Precision 或者 Recall 这两个中的一个</li>
 </ol>
 <h2 id="一个完整的例子">一个完整的例子🌰</h2>
 <hr>
