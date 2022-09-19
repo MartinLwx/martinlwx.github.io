@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>How to use the semantic actions to generate the symbol tables in ANTLR4 - MartinLwx&#39;s blog</title><meta name="Description" content="use the semantic actions to generate the symbol tables in ANTLR4"><meta property="og:title" content="How to use the semantic actions to generate the symbol tables in ANTLR4" />
+<meta property="og:description" content="use the semantic actions to generate the symbol tables in ANTLR4" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-28T21:09:05+08:00" />
+<meta property="article:modified_time" content="2022-05-28T21:09:05+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="How to use the semantic actions to generate the symbol tables in ANTLR4"/>
+<meta name="twitter:description" content="use the semantic actions to generate the symbol tables in ANTLR4"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/boyer-moore-majority-voting-algorithm-explained/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to use the semantic actions to generate the symbol tables in ANTLR4",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-use-antlr4-to-make-semantic-actions\/"
+        },"genre": "posts","keywords": "compiler, course","wordcount":  3015 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-use-antlr4-to-make-semantic-actions\/","datePublished": "2022-05-28T21:09:05+08:00","dateModified": "2022-05-28T21:09:05+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "use the semantic actions to generate the symbol tables in ANTLR4"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/how-to-use-antlr4-to-make-semantic-actions/">English</option><option value="/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/how-to-use-antlr4-to-make-semantic-actions/">English</option><option value="/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to use the semantic actions to generate the symbol tables in ANTLR4</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-05-28">2022-05-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3015 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是-semantic-actions">什么是 semantic actions</a></li>
+    <li><a href="#什么是-symbol-table">什么是 symbol table</a></li>
+    <li><a href="#如何在-antlr-的语法文件里面注入动作">如何在 ANTLR 的语法文件里面注入动作</a>
+      <ul>
+        <li><a href="#动作注入的位置和方法">动作注入的位置和方法</a>
+          <ul>
+            <li><a href="#header"><code>&lt;header&gt;</code></a></li>
+            <li><a href="#member"><code>&lt;member&gt;</code></a></li>
+            <li><a href="#action"><code>&lt;action&gt;</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#举个例子">举个例子</a>
+      <ul>
+        <li><a href="#数据结构的选取及对应的方法">数据结构的选取及对应的方法</a></li>
+        <li><a href="#注入动作到变量声明中">注入动作到变量声明中</a></li>
+        <li><a href="#关于变量作用域的处理">关于变量作用域的处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#扩展阅读">扩展阅读</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="什么是-semantic-actions">什么是 semantic actions</h2>
+<p>当 Parser 处理输入的代码的时候不仅要判断是否语法和句法都正确，还可以执行一些有用的操作，这些操作就叫做 Semantic actions。<strong>其实也就是一段代码</strong>，一般嵌入在在语法文件的规则里面。那么<strong>当 parser 应用这个规则</strong>的时候就会执行你设置的这段代码。换个角度理解，semantic actions 其实<strong>就是“触发器”</strong>，触发条件就是 parser 应用了对应的规则。</p>
+<p>今天这篇文章要探讨的就是一个关于 semantic actions 的应用——实现一个简单的 symbol table，用到的工具是 <a href="https://www.antlr.org/" target="_blank" rel="noopener noreffer ">ANTLR4</a>。</p>
+<h2 id="什么是-symbol-table">什么是 symbol table</h2>
+<p>编译器在处理我们的代码的时候会在内部维护一个 symbol table，用来存储程序里面<strong>所有关于变量的信息</strong>：变量名、数据类型、变量所属的作用域等。symbol table 可以是下面这种形式：</p>
+<center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Symbol name</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">bar</td>
+<td style="text-align:center">function, double</td>
+<td style="text-align:center">extern</td>
+</tr>
+<tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">function parameter</td>
+</tr>
+<tr>
+<td style="text-align:center">foo</td>
+<td style="text-align:center">function, double</td>
+<td style="text-align:center">global</td>
+</tr>
+<tr>
+<td style="text-align:center">count</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">function parameter</td>
+</tr>
+<tr>
+<td style="text-align:center">sum</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">block local</td>
+</tr>
+<tr>
+<td style="text-align:center">i</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">for-loop statement</td>
+</tr>
+</tbody>
+</table>
+</center>
+<h2 id="如何在-antlr-的语法文件里面注入动作">如何在 ANTLR 的语法文件里面注入动作</h2>
+<p>ANTLR4 是一个强大的 parse generator，我们只要编写好语法文件，就能让它帮我们自动生成 Parser，生成的 Parser 可以支持多种目标语言，比如我自己用的是 <a href="https://pypi.org/project/antlr4-python3-runtime/" target="_blank" rel="noopener noreffer ">Python</a>，那么最后生成的 Parser 就是 Python 文件。</p>
+<p>ANTLR4 也提供了方法让我们可以在语法文件里面插入动作，这些动作最后都会被 ANTLR4 注入到生成的 Parser 文件里面。<strong>因此，动作用什么语言写取决于你输出 Parser 的目标语言是什么</strong></p>
+<blockquote>
+<p><strong>⚠️这里假定你对如何编写 ANTLR4 的语法文件（<code>*.g4</code>）有基本了解，不会进行赘述，本文只集中介绍如何在语法文件里面插入动作</strong></p>
+</blockquote>
+<h3 id="动作注入的位置和方法">动作注入的位置和方法</h3>
+<p>下面是简化的生成的 Parser 文件的代码模板。总体上来看，我们能注入的位置如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">header</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">xxxParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>    
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">member</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rule</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">action</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面我对每个位置的不同语法进行说明：</p>
+<h4 id="header"><code>&lt;header&gt;</code></h4>
+<p>ANTLR4 本来就是用 Java 写的，所以如果你用的目标语言也是 Java 的话，这个会比较用得到。一般就是用来放 <code>import</code> 语句的。如果是 python 的话哪里都能 <code>import</code> 就比较没差。要往这个位置注入代码的格式如下（放在 <code>*.g4</code> 文件里面，下同）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="nl">@header</span><span class="p">{</span><span class="x">
+</span></span></span><span class="line"><span class="cl"><span class="x">    everything here will go to &lt;header&gt;
+</span></span></span><span class="line"><span class="cl"><span class="x"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="member"><code>&lt;member&gt;</code></h4>
+<p>这个放的就是类的成员，可以是字段也可以是方法。ANTLR4 支持往 Lexer 和 Parser 分别或者同时注入代码。要往这个位置注入代码的格式如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="nl">@members</span><span class="w"> </span><span class="p">{</span><span class="x">
+</span></span></span><span class="line"><span class="cl"><span class="x">    everything here will go to &lt;member&gt; in xxxLexer &amp;&amp; xxxParser
+</span></span></span><span class="line"><span class="cl"><span class="x"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">@Lexer</span><span class="p">::</span><span class="nl">members</span><span class="w"> </span><span class="p">{</span><span class="x">
+</span></span></span><span class="line"><span class="cl"><span class="x">    everything here will go to &lt;member&gt; in xxxLexer
+</span></span></span><span class="line"><span class="cl"><span class="x"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">@Parser</span><span class="p">::</span><span class="nl">members</span><span class="w"> </span><span class="p">{</span><span class="x">
+</span></span></span><span class="line"><span class="cl"><span class="x">    everything here will go to &lt;member&gt; in xxxParser
+</span></span></span><span class="line"><span class="cl"><span class="x"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>⚠️在我使用的 <code>antlr4-python3-runtime</code> 中（4.10），还无法在插入类的字段进行注释</p>
+</blockquote>
+<h4 id="action"><code>&lt;action&gt;</code></h4>
+<p>在 ANTLR4 中，动作是用<strong>花括号 <code>{&lt;specific-language-here&gt;}</code> 括起来的代码</strong>。正如前面提到的，看你最后输出的 Parser 想要是什么语言，你就用什么语言写动作。</p>
+<p>动作一般会放在一条规则的某个 symbol 之后，意思是说在 parser 应用这条规则的时候执行到这里就执行相应的动作。这里的 symbol 可以是 terminal 也可以是 nonterminal。</p>
+<p><strong>我们可以用 <code>$symbol.attr</code> 的方式访问到对应的属性</strong>，有下面这几个：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">text</span>           <span class="c1"># origin text</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">type</span>           <span class="c1"># an integer stands for type</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">attributes</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">line</span>           <span class="c1"># the line number</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">pos</span>            <span class="c1"># the position of the first char in the line，0-based</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">index</span>          
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">channel</span>        <span class="c1"># the channel of this terminal, won&#39;t discuss in this post</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">terminal</span><span class="o">.</span><span class="n">int</span>            <span class="c1"># return an interger if this terminal is an integer</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">nonterminal</span><span class="o">.</span><span class="n">text</span>            <span class="c1"># origin text</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">nonterminal</span><span class="o">.</span><span class="n">start</span>           <span class="c1"># 1st Token</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">nonterminal</span><span class="o">.</span><span class="n">stop</span>            <span class="c1"># last Token</span>
+</span></span><span class="line"><span class="cl"><span class="err">$</span><span class="n">nonterminal</span><span class="o">.</span><span class="n">ctx</span>             <span class="c1"># return context object</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="举个例子">举个例子</h2>
+<blockquote>
+<p><strong>⚠️下面都只会给出部分代码，完整的代码在我的 <a href="https://github.com/MartinLwx/ECE573-Fall-2015-Purdue/blob/main/Project03.Symbol_table/Micro.g4" target="_blank" rel="noopener noreffer ">Github 项目</a></strong></p>
+</blockquote>
+<blockquote>
+<p>⚠️因为这个项目要求把 warning 输出在其他输出前面，所以我用 <code>warning_list</code> 和 <code>output_list</code> 来存储，最后再一起输出</p>
+</blockquote>
+<p>下面以普渡大学 2015 年的开设的编译器课程的<a href="https://engineering.purdue.edu/~milind/ece573/2015fall/project/step3/step3.html" target="_blank" rel="noopener noreffer ">项目作业</a>为例，整个项目要实现一个 Micro 语言的编译器，关于 Micro 语言的语法，可以在<a href="https://engineering.purdue.edu/~milind/ece573/2015fall/project/grammar.txt" target="_blank" rel="noopener noreffer ">这里</a>看到。下面我会对步骤三的作业要求进行一个简单的介绍。</p>
+<p>在这个作业中我们要构建一个 symbol table，并在相应的时刻输出相关的信息：</p>
+<ul>
+<li>每当我们进入一个新的作用域之前（可以是函数，也可以是代码块），要进行相关的输出</li>
+<li>如果遇到变量声明，就输出变量名和变量类型，有值的话也要输出。</li>
+<li>如果声明的变量在<strong>外部作用域</strong>已经声明过的话要输出：<code>SHADOW WARNING &lt;var_name&gt;</code>，适用于有嵌套的作用域出现的情况</li>
+<li>如果在<strong>当前作用域</strong>已经有同名的变量，就要输出：<code>DECLARATION ERROR &lt;var_name&gt;</code>。如果出现了这种情况，那么最后程序只输出这个信息</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Symbol table &lt;scope_name&gt;
+</span></span><span class="line"><span class="cl">name &lt;var_name&gt; type &lt;type_name&gt;
+</span></span><span class="line"><span class="cl">name &lt;var_name&gt; type &lt;type_name&gt; value &lt;string_value&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="数据结构的选取及对应的方法">数据结构的选取及对应的方法</h3>
+<p>🤔先要解决的问题是，要用什么数据结构表示 symbol table？一个 symbol table 应该要满足下面的特点：</p>
+<ul>
+<li>要能够支持高效率地查询</li>
+<li>要能够支持高效率地插入，因为程序中可能包含大量的变量声明</li>
+<li>要能够记录变量的作用域</li>
+</ul>
+<p>不难想出，<strong>支持高效率查询和插入的数据结构就是「哈希表」</strong>。为了维护变量的作用域，<strong>可以把同个作用域下的变量放在同个哈希表里面，用一个列表来记住所有的变量作用域</strong>，也就是说是 <code>[{scope1}, {scope2},...]</code> 这样。同时维护一个 <code>self.current_scope</code> 来记住当前处于哪一个变量作用域里面。每当有一个新的作用域出现的时候，保存当前的作用域，往列表里插入一个新的作用域，再更新 <code>self.current_scope</code>。</p>
+<blockquote>
+<p>📒 这里的 list 其实就是用来模拟栈</p>
+</blockquote>
+<p>🤔我们要实现什么样的方法？起码要有下面这几个：</p>
+<ul>
+<li><code>lookup(identifier, value)</code>：插入变量到当前的 symbol table 里面。根据这个项目作业的要求，还应该查询是否变量已经被声明过</li>
+<li><code>enter_new_scope()</code>：保存当前的 symbol table，进入下一个变量作用域并初始化为空</li>
+<li><code>exit_scope()</code>：清空当前的 symbol table，找到上一个 symbol table</li>
+</ul>
+<p>所以对应 <code>@parser:members</code> 里面的代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@parser</span><span class="p">::</span><span class="n">members</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">current_scope</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">block_count</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">warning_list</span> <span class="o">=</span> <span class="p">[]</span>                    <span class="c1"># just for printing</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">output_list</span> <span class="o">=</span> <span class="p">[]</span>                      <span class="c1"># just for printing</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">declaration_error</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">enter_new_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_scopes&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_scopes&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># save the current_scope</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">copy</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_scope</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">current_scope</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">exit_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">current_scope</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># check all scopes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">scope</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scopes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#print(f&#34;the scope: {scope}&#34;)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">scope</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">found</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">warning_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;SHADOW WARNING </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># only record the 1st declaration error</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_scope</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">declaration_error</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">declaration_error</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;DECLARATION ERROR </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">current_scope</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="注入动作到变量声明中">注入动作到变量声明中</h3>
+<p>🧐接下来就是要在对应的语法规则里面注入动作。我们想要在定义变量的时候输出相关的信息，所以我们先要观察在 Micro 语言中变量声明的规则是怎么样的，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="err">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">var_decl</span><span class="w">    </span><span class="p">:</span><span class="w">   </span><span class="nv">var_type</span><span class="w"> </span><span class="nv">id_list</span><span class="w"> </span><span class="s">&#39;;&#39;</span><span class="w">  </span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">var_type</span><span class="w">    </span><span class="p">:</span><span class="w">   </span><span class="s">&#39;FLOAT&#39;</span><span class="w">              
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">|</span><span class="w">   </span><span class="s">&#39;INT&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">;</span><span class="w">          
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">any_type</span><span class="w">    </span><span class="p">:</span><span class="w">   </span><span class="nv">var_type</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">|</span><span class="w">   </span><span class="s">&#39;VOID&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">id_list</span><span class="w">     </span><span class="p">:</span><span class="w">   </span><span class="nv">id</span><span class="w"> </span><span class="nv">id_tail</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">id_tail</span><span class="w">     </span><span class="p">:</span><span class="w">   </span><span class="s">&#39;,&#39;</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="nv">id_tail</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">|</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，声明变量对应的是 <code>var_decl</code> 规则，一次可以声明一至多个变量，每一个变量之间用 <code>,</code> 隔开的，所以我们可以在这条规则的末尾最后注入如下的动作代码。</p>
+<blockquote>
+<p>⚠️要注意如果你也是使用 python 的话，这里所以缩进会有点怪，因为每一行都要从最左边开始，但最后生成的代码是没有问题的</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="err">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nl">var_decl</span><span class="w">    </span><span class="p">:</span><span class="w">   </span><span class="nv">var_type</span><span class="w"> </span><span class="nv">id_list</span><span class="w"> </span><span class="s">&#39;;&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">{</span><span class="x">
+</span></span></span><span class="line"><span class="cl"><span class="x"># NOTE: the indentation is correct, ANLTR4 will handle this for us :)
+</span></span></span><span class="line"><span class="cl"><span class="x"># for all variable declarations, we should output the name &amp;&amp; type
+</span></span></span><span class="line"><span class="cl"><span class="x"># in the same variable declaration, it means all of the variables have the same type
+</span></span></span><span class="line"><span class="cl"><span class="x">for variable in </span><span class="nv">$id</span><span class="x">_list.text.split(&#39;,&#39;):
+</span></span></span><span class="line"><span class="cl"><span class="x">    self.lookup(variable, None)
+</span></span></span><span class="line"><span class="cl"><span class="x">    self.output_list.append(f&#34;name {variable} type {$var_type.text}&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="x">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们用 <code>$id_list.text</code> 来获取本来的变量声明对应的文本，用 <code>$var_type.text</code> 来获取对应的变量类型</p>
+<h3 id="关于变量作用域的处理">关于变量作用域的处理</h3>
+<p>下面以 <code>program</code> 规则为例（函数和代码块的类似），<code>progarm</code> 规则是 Micro 语法的起始规则，规定了 Micro 程序应该要有的大框架，规则如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="nl">program</span><span class="w"> </span><span class="p">:</span><span class="w">   </span><span class="s">&#39;PROGRAM&#39;</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="s">&#39;BEGIN&#39;</span><span class="w"> </span><span class="nv">pgm_body</span><span class="w"> </span><span class="s">&#39;END&#39;</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们处理完 <code>PROGRAM</code> 这个 token 之后就可以初始化第一个作用域（全局作用域），最后要处理完程序再退出这个全局作用域，所以我们可以很快想到应该把动作注入在哪里</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="nl">program</span><span class="w"> </span><span class="p">:</span><span class="w">   </span><span class="s">&#39;PROGRAM&#39;</span><span class="w"> </span><span class="nv">id</span><span class="w"> </span><span class="s">&#39;BEGIN&#39;</span><span class="w"> </span><span class="nv">pgm_body</span><span class="w"> </span><span class="s">&#39;END&#39;</span><span class="w"> </span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="err">^</span><span class="w">                         </span><span class="err">^</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                     </span><span class="err">|</span><span class="w">                         </span><span class="err">2</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后插入相关的动作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="nl">program</span><span class="w"> </span><span class="p">:</span><span class="w">   </span><span class="s">&#39;PROGRAM&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">{</span><span class="x">
+</span></span></span><span class="line"><span class="cl"><span class="x">self.init()
+</span></span></span><span class="line"><span class="cl"><span class="x">self.output_list.append(&#34;Symbol table GLOBAL&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="x">self.enter_new_scope()
+</span></span></span><span class="line"><span class="cl"><span class="x">        </span><span class="p">}</span><span class="w">   </span><span class="nv">id</span><span class="w"> </span><span class="s">&#39;BEGIN&#39;</span><span class="w"> </span><span class="nv">pgm_body</span><span class="w"> </span><span class="s">&#39;END&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">{</span><span class="x">
+</span></span></span><span class="line"><span class="cl"><span class="x">self.exit_scope()
+</span></span></span><span class="line"><span class="cl"><span class="x"># output everything after we parsing this program
+</span></span></span><span class="line"><span class="cl"><span class="x">if self.declaration_error != &#39;&#39;:
+</span></span></span><span class="line"><span class="cl"><span class="x">    print(self.declaration_error)
+</span></span></span><span class="line"><span class="cl"><span class="x">else:
+</span></span></span><span class="line"><span class="cl"><span class="x">    if len(self.warning_list) &gt; 0:
+</span></span></span><span class="line"><span class="cl"><span class="x">        print(&#39;\n&#39;.join(self.warning_list))
+</span></span></span><span class="line"><span class="cl"><span class="x">    print(&#39;\n&#39;.join(self.output_list))
+</span></span></span><span class="line"><span class="cl"><span class="x">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="扩展阅读">扩展阅读</h2>
+<p>前面只涉及到简单的动作注入，ANTLR4 其实支持的功能还更多：</p>
+<ul>
+<li>比如我们可以让 nonterminal 返回值</li>
+<li>在同一条规则如果出现多个同名的 nonterminal 的话可以起名字</li>
+</ul>
+<p>下面是来自书中的一个例子，就很好地展示了上面两个用法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-antlr" data-lang="antlr"><span class="line"><span class="cl"><span class="nl">e</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">[</span><span class="x">int v</span><span class="p">]</span><span class="w">      
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">:</span><span class="w"> </span><span class="nv">a</span><span class="o">=</span><span class="nv">e</span><span class="w"> </span><span class="nv">op</span><span class="o">=(</span><span class="s">&#39;*&#39;</span><span class="o">|</span><span class="s">&#39;/&#39;</span><span class="o">)</span><span class="w"> </span><span class="nv">b</span><span class="o">=</span><span class="nv">e</span><span class="w">  </span><span class="p">{</span><span class="nv">$v</span><span class="x"> = self.eval(</span><span class="nv">$a</span><span class="p">.</span><span class="x">v, </span><span class="nv">$op</span><span class="x">, </span><span class="nv">$b</span><span class="p">.</span><span class="x">v)</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="nv">a</span><span class="o">=</span><span class="nv">e</span><span class="w"> </span><span class="nv">op</span><span class="o">=(</span><span class="s">&#39;+&#39;</span><span class="o">|</span><span class="s">&#39;-&#39;</span><span class="o">)</span><span class="w"> </span><span class="nv">b</span><span class="o">=</span><span class="nv">e</span><span class="w">  </span><span class="p">{</span><span class="nv">$v</span><span class="x"> = self.eval(</span><span class="nv">$a</span><span class="p">.</span><span class="x">v, </span><span class="nv">$op</span><span class="x">, </span><span class="nv">$b</span><span class="p">.</span><span class="x">v)</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="no">INT</span><span class="w">                   </span><span class="p">{</span><span class="nv">$v</span><span class="x"> = </span><span class="nv">$INT</span><span class="p">.</span><span class="x">int</span><span class="p">}</span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="no">ID</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结</h2>
+<p>从这个例子中我们可以学习到要如何在 ANTLR4 里面使用动作，生成 symbol table 只是其中一个运用。在代码里面注入动作是很符合直觉的做法，可以快速实现自己想要的功能。不过缺点也很明显，它是 language-dependent 的，也就是说你一旦换了 ANTLR 输出的目标语言，你注入的动作全部要改成新的目标语言。另外就是会让本来干净的语法文件一团糟。</p>
+<h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Symbol_table" target="_blank" rel="noopener noreffer ">Symbol table - wiki</a></li>
+<li>《ANTLR4 权威指南》</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-05-28</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/zh-cn/how-to-use-antlr4-to-make-semantic-actions/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" data-title="How to use the semantic actions to generate the symbol tables in ANTLR4" data-hashtags="compiler,course"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" data-hashtag="compiler"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" data-title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" data-title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" data-title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/compiler/">compiler</a>,&nbsp;<a href="/zh-cn/tags/course/">course</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/boyer-moore-majority-voting-algorithm-explained/" class="prev" rel="prev" title="Boyer-Moore Majority Voting Algorithm Explained"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Boyer-Moore Majority Voting Algorithm Explained</a>
+            <a href="/zh-cn/vim-macro-101/" class="next" rel="next" title="Vim Macro 101">Vim Macro 101<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.103.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

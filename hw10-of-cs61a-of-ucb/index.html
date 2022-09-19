@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Hw10 of CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="The simple solutions of hw10 of CS61A of UCB"><meta property="og:title" content="Hw10 of CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="The simple solutions of hw10 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/hw10-of-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-02T13:36:13+08:00" />
+<meta property="article:modified_time" content="2022-03-02T13:36:13+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Hw10 of CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="The simple solutions of hw10 of CS61A of UCB"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/hw10-of-cs61a-of-ucb/" /><link rel="prev" href="https://martinlwx.github.io/lab12-ca61a-of-ucb/" /><link rel="next" href="https://martinlwx.github.io/lab14-cs61a-of-ucb/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hw10 of CS61A of UCB(2021-Fall)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/hw10-of-cs61a-of-ucb\/"
+        },"genre": "posts","keywords": "Course, BNF, Mysql","wordcount":  1179 ,
+        "url": "https:\/\/martinlwx.github.io\/hw10-of-cs61a-of-ucb\/","datePublished": "2022-03-02T13:36:13+08:00","dateModified": "2022-03-02T13:36:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "The simple solutions of hw10 of CS61A of UCB"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/hw10-of-cs61a-of-ucb/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/hw10-of-cs61a-of-ucb/" selected>English</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hw10 of CS61A of UCB(2021-Fall)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/course/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Course</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1179 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#bnf">BNF</a>
+      <ul>
+        <li><a href="#q1-grouping-and-pipes">Q1: Grouping and Pipes</a></li>
+        <li><a href="#q2-classes">Q2: Classes</a></li>
+        <li><a href="#q3-quantifiers">Q3: Quantifiers</a></li>
+      </ul>
+    </li>
+    <li><a href="#sql">SQL</a>
+      <ul>
+        <li><a href="#q4-size-of-dogs">Q4: Size of Dogs</a></li>
+        <li><a href="#q5-by-parent-height">Q5: By Parent Height</a></li>
+        <li><a href="#q6-sentences">Q6: Sentences</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="bnf">BNF</h2>
+<hr>
+<h3 id="q1-grouping-and-pipes">Q1: Grouping and Pipes</h3>
+<blockquote>
+<p>In this question, you will add support for grouping and piping.</p>
+<p>Recall that grouping allows for an entire regular expression to be treated as a single unit, and piping allows for a pattern to match an expression on either side. Combined, these will let us create patterns which match multiple strings!</p>
+<p>Define the <code>group</code> and <code>pipe</code> expressions in your grammar.</p>
+<ol>
+<li>A <strong><code>group</code></strong> consists of any <code>regex</code> expression surrounded by parentheses (<code>()</code>).</li>
+<li>A <strong><code>pipe</code></strong> operator consists of a <code>regex</code> expression, followed by a pipe (<code>|</code>) character, and lastly followed by another <code>regex</code> expression.</li>
+</ol>
+<p>For example, <code>r&quot;apples&quot;</code> would match exactly the phrase &ldquo;apples&rdquo; in an input. If we wanted our pattern from before to match &ldquo;oranges&rdquo; as well, we could expand our <code>rstring</code> to do so using groupings and pipes: <code>r&quot;(apples)|(oranges)&quot;</code>.</p>
+<blockquote>
+<p>Hint: note that <code>group</code>s and <code>pipe</code>s are valid <code>regex</code> expressions on their own! You may need to update a previously defined expression.</p>
+</blockquote>
+</blockquote>
+<p>The description indicates the way to solve this problem. Remember that the <code>group</code> and the <code>pipe</code> are a part of <code>?regex</code>, so we should add them to <code>?regex</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?start: rstring
+</span></span><span class="line"><span class="cl">rstring: &#34;r\&#34;&#34; regex* &#34;\&#34;&#34;
+</span></span><span class="line"><span class="cl">?regex: character | word | group | pipe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">group: &#34;(&#34; regex* &#34;)&#34;
+</span></span><span class="line"><span class="cl">pipe: regex &#34;|&#34; regex
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">character: LETTER | NUMBER
+</span></span><span class="line"><span class="cl">word: WORD
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">%ignore /\s+/
+</span></span><span class="line"><span class="cl">%import common.LETTER
+</span></span><span class="line"><span class="cl">%import common.NUMBER
+</span></span><span class="line"><span class="cl">%import common.WORD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q2-classes">Q2: Classes</h3>
+<blockquote>
+<p>Now, we will add support for character classes.</p>
+<p>Recall that character classes allow for the pattern to match any singular <code>character</code> defined within the class. The class itself consists either of individual <code>character</code>s, or <code>range</code>s of <code>characters</code>.</p>
+<p>Specifically, we define the following:</p>
+<ol>
+<li>A <strong><code>range</code></strong> consists of either <code>NUMBER</code>s or <code>LETTER</code>s separated by a hyphen (<code>-</code>).</li>
+<li>A <strong><code>class</code></strong> expression consists of any number of <code>character</code>s or character <code>range</code>s surrounded by square brackets (<code>[]</code>).</li>
+</ol>
+<p>Note that for this question, a range may only consist of either <code>NUMBER</code>s or <code>LETTER</code>s; this means that while <code>[0-9]</code> and <code>[A-Z]</code> are valid ranges, <code>[0-Z]</code> would not be a valid range. In addition, the <code>character</code>s and <code>range</code>s in a <code>class</code> may appear in any order and any number of times. For example, <code>[ad-fc0-9]</code>, <code>[ad-f0-9c]</code>, <code>[a0-9d-fc]</code>, and <code>[0-9ad-fc]</code> are all valid classes.</p>
+</blockquote>
+<p>The details:</p>
+<ul>
+<li><code>range</code> : <code>character &quot;-&quot; character</code> is wrong ❌. For example, <code>[0-z]</code> is illegal.</li>
+<li>Because the order in which <code>range</code> and <code>character</code> appear in <code>[]</code> is arbitrary, we can use <code>*</code>, both of which may be at the beginning or end of <code>[]</code>
+<ul>
+<li><code>class</code> itself is also a valid regular expression, so it should be placed inside <code>?regex</code></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">?start: rstring
+</span></span><span class="line"><span class="cl">rstring: &#34;r\&#34;&#34; regex* &#34;\&#34;&#34;
+</span></span><span class="line"><span class="cl">?regex: character | word | group | pipe | class
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">group: &#34;(&#34; regex* &#34;)&#34;
+</span></span><span class="line"><span class="cl">pipe: regex &#34;|&#34; regex
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">range: NUMBER &#34;-&#34; NUMBER | LETTER &#34;-&#34; LETTER
+</span></span><span class="line"><span class="cl">class: &#34;[&#34; range* character* range* character* &#34;]&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">character: LETTER | NUMBER
+</span></span><span class="line"><span class="cl">word: WORD
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">%ignore /\s+/
+</span></span><span class="line"><span class="cl">%import common.LETTER
+</span></span><span class="line"><span class="cl">%import common.NUMBER
+</span></span><span class="line"><span class="cl">%import common.WORD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-quantifiers">Q3: Quantifiers</h3>
+<blockquote>
+<p>Lastly, we will add support for quantifiers.</p>
+<p>Recall that quantifiers allow for a pattern to match a specified number of a unit.</p>
+<p>Specifically, we define the following:</p>
+<ol>
+<li>A <strong><code>plus_quant</code></strong> expression consists of a <code>group</code>, a <code>character</code>, or a <code>class</code>, followed by a plus symbol (<code>+</code>).</li>
+<li>A <strong><code>star_quant</code></strong> expression consists of a <code>group</code>, a <code>character</code>, or a <code>class</code>, followed by a star symbol (<code>*</code>).</li>
+<li>A <strong><code>num_quant</code></strong> expression consists of either a <code>group</code>, a <code>character</code>, or a <code>class</code>, followed by one of the following:
+<ol>
+<li>a <code>NUMBER</code> enclosed in curly braces (<code>{}</code>);</li>
+<li>a range of <code>NUMBER</code>s (separated by a comma (<code>,</code>), which may potentially be open on only one side. For example, <code>{2,7}</code>, <code>{2,}</code>, and <code>{,7}</code> are valid numeric quantifiers. <code>{,}</code> is not valid.</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>Hint: these three quantifiers share many similarities. Consider defining additional expressions in this question!</p>
+</blockquote>
+</blockquote>
+<p>We can make a <code>?tmp: class | group | character</code> to represent the similarities. Also, we can define <code>?quants: plus_quant | star_quant | num_quant</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">rstring: &#34;r\&#34;&#34; regex* &#34;\&#34;&#34;
+</span></span><span class="line"><span class="cl">?regex: character | word | group | pipe | class | quants
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">group: &#34;(&#34; regex* &#34;)&#34;
+</span></span><span class="line"><span class="cl">pipe: regex &#34;|&#34; regex
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">range: NUMBER &#34;-&#34; NUMBER | LETTER &#34;-&#34; LETTER
+</span></span><span class="line"><span class="cl">class: &#34;[&#34; range* character* range* character* &#34;]&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">?tmp: class | group | character
+</span></span><span class="line"><span class="cl">plus_quant: tmp &#34;+&#34;
+</span></span><span class="line"><span class="cl">star_quant: tmp &#34;*&#34;
+</span></span><span class="line"><span class="cl">num_quant: tmp &#34;{&#34; ((NUMBER &#34;,&#34; NUMBER) | (NUMBER &#34;,&#34; NUMBER?) | (&#34;,&#34; NUMBER)) &#34;}&#34;
+</span></span><span class="line"><span class="cl">?quants: plus_quant | star_quant | num_quant
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">character: LETTER | NUMBER
+</span></span><span class="line"><span class="cl">word: WORD
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">%ignore /\s+/
+</span></span><span class="line"><span class="cl">%import common.LETTER
+</span></span><span class="line"><span class="cl">%import common.NUMBER
+</span></span><span class="line"><span class="cl">%import common.WORD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="sql">SQL</h2>
+<hr>
+<h3 id="q4-size-of-dogs">Q4: Size of Dogs</h3>
+<blockquote>
+<p>The Fédération Cynologique Internationale classifies a standard poodle as over 45 cm and up to 60 cm. The <code>sizes</code> table describes this and other such classifications, where a dog must be over the <code>min</code> and less than or equal to the <code>max</code> in <code>height</code> to qualify as a <code>size</code>.</p>
+<p>Create a <code>size_of_dogs</code> table with two columns, one for each dog&rsquo;s <code>name</code> and another for its <code>size</code>.</p>
+</blockquote>
+<p>We need to determine the <code>size</code> of the dogs, which can be described as <code>select ... from ... where</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">size_of_dogs</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">dogs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">sizes</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">max</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">min</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-by-parent-height">Q5: By Parent Height</h3>
+<blockquote>
+<p>Create a table <code>by_parent_height</code> that has a column of the names of all dogs that have a <code>parent</code>, ordered by the height of the parent from tallest parent to shortest parent.</p>
+</blockquote>
+<p>Sort results by height descending by using <code>DESC</code> keyword.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">siblings</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogone</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogtwo</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogonesize</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">dogtwosize</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">parents</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">parents</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p2</span><span class="p">,</span><span class="w"> </span><span class="n">size_of_dogs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">size_of_dogs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">parent</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">p1</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">p2</span><span class="p">.</span><span class="n">child</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s2</span><span class="p">.</span><span class="n">name</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- Use `&lt;` to filter the result
+</span></span></span><span class="line"><span class="cl"><span class="c1">-- `!=` is not enough, you will get `barack clinton` and `clinton barack` in the same time
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q6-sentences">Q6: Sentences</h3>
+<blockquote>
+<p>There are two pairs of siblings that have the same size. Create a table that contains a row with a string for each of these pairs. Each string should be a sentence describing the siblings by their size.</p>
+<p>Each sibling pair should appear only once in the output, and siblings should be listed in alphabetical order (e.g. <code>&quot;barack plus clinton...&quot;</code> instead of <code>&quot;clinton plus barack...&quot;</code>), as follows:</p>
+<p><em>Hint</em>: First, create a helper table containing each pair of siblings. This will make comparing the sizes of siblings when constructing the main table easier.</p>
+<p><strong>Hint</strong>: If you join a table with itself, use <code>AS</code> within the <code>FROM</code> clause to give each table an alias.</p>
+<p><strong>Hint</strong>: In order to concatenate two strings into one, use the <code>||</code> operator.</p>
+</blockquote>
+<p>After finishing Q5, this one should be much easier.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sentences</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="s2">&#34;The two siblings, &#34;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dogone</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&#34; plus &#34;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dogtwo</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">&#34; have the same size: &#34;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dogonesize</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">siblings</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">dogonesize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dogtwosize</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">dogone</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dogtwo</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-03-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/hw10-of-cs61a-of-ucb/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/hw10-of-cs61a-of-ucb/" data-title="Hw10 of CS61A of UCB(2021-Fall)" data-hashtags="Course,BNF,Mysql"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/hw10-of-cs61a-of-ucb/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/hw10-of-cs61a-of-ucb/" data-title="Hw10 of CS61A of UCB(2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/hw10-of-cs61a-of-ucb/" data-title="Hw10 of CS61A of UCB(2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/hw10-of-cs61a-of-ucb/" data-title="Hw10 of CS61A of UCB(2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/course/">Course</a>,&nbsp;<a href="/tags/bnf/">BNF</a>,&nbsp;<a href="/tags/mysql/">Mysql</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/lab12-ca61a-of-ucb/" class="prev" rel="prev" title="Lab12 CS61A of UCB(2021-Fall)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Lab12 CS61A of UCB(2021-Fall)</a>
+            <a href="/lab14-cs61a-of-ucb/" class="next" rel="next" title="Lab14 CS61A of UCB(2021-Fall)">Lab14 CS61A of UCB(2021-Fall)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.103.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

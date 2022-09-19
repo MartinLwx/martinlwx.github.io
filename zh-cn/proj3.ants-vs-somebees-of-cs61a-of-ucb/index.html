@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B"><meta property="og:title" content="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-10T21:43:59+08:00" />
+<meta property="article:modified_time" content="2022-03-12T13:55:40+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/how-to-manage-windows-using-hammerspoon/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/boyer-moore-majority-voting-algorithm-explained/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/proj3.ants-vs-somebees-of-cs61a-of-ucb\/"
+        },"genre": "posts","keywords": "Course","wordcount":  6893 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/proj3.ants-vs-somebees-of-cs61a-of-ucb\/","datePublished": "2022-03-10T21:43:59+08:00","dateModified": "2022-03-12T13:55:40+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "The simple solution of proj3.Ants vs. SomeBees of CS61B"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/proj3.ants-vs-somebees-of-cs61a-of-ucb/">English</option><option value="/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/proj3.ants-vs-somebees-of-cs61a-of-ucb/">English</option><option value="/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6893 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#phase-1-basic-gameplay">Phase 1: Basic gameplay</a>
+      <ul>
+        <li><a href="#problem-1-1-pt">Problem 1 (1 pt)</a></li>
+        <li><a href="#problem-2-1-pt">Problem 2 (1 pt)</a></li>
+        <li><a href="#problem-3-1-pt">Problem 3 (1 pt)</a></li>
+      </ul>
+    </li>
+    <li><a href="#phase-2-ants">Phase 2: Ants!</a>
+      <ul>
+        <li><a href="#problem-4-2-pt">Problem 4 (2 pt)</a></li>
+        <li><a href="#problem-5-3-pt">Problem 5 (3 pt)</a></li>
+      </ul>
+    </li>
+    <li><a href="#phase-3-more-ants">Phase 3: More Ants!</a>
+      <ul>
+        <li><a href="#problem-6-1-pt">Problem 6 (1 pt)</a></li>
+        <li><a href="#problem-7-3-pt">Problem 7 (3 pt)</a></li>
+        <li><a href="#problem-8-3-pt">Problem 8 (3 pt)</a></li>
+        <li><a href="#problem-9-1-pt">Problem 9 (1 pt)</a></li>
+      </ul>
+    </li>
+    <li><a href="#phase-4-water-and-might">Phase 4: Water and Might</a>
+      <ul>
+        <li><a href="#problem-10-1-pt">Problem 10 (1 pt)</a></li>
+        <li><a href="#problem-11-1-pt">Problem 11 (1 pt)</a></li>
+        <li><a href="#problem-12-3-pt">Problem 12 (3 pt)</a></li>
+        <li><a href="#extra-credit-2-pt">Extra Credit (2 pt)</a></li>
+      </ul>
+    </li>
+    <li><a href="#optional-problems">Optional Problems</a>
+      <ul>
+        <li><a href="#optional-problem-1">Optional Problem 1</a></li>
+        <li><a href="#optional-problem-2">Optional Problem 2</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro">Intro</h2>
+<hr>
+<p>前两个项目还算简单, 比较不复杂. 但是今天这个第三个项目难度确实是上升了(看游戏规则就知道这个有多复杂了). 感觉像是植物大战僵尸</p>
+<p>所以我打算为他写一篇博客来整理一下写代码时候的思路. 话不多说, 让我们进入正题吧 !</p>
+<h2 id="phase-1-basic-gameplay">Phase 1: Basic gameplay</h2>
+<hr>
+<h3 id="problem-1-1-pt">Problem 1 (1 pt)</h3>
+<blockquote>
+<p><strong>Part A</strong>: Currently, there is no cost for placing any type of <code>Ant</code>, and so there is no challenge to the game. The base class <code>Ant</code> has a <code>food_cost</code> of zero. Override this class attribute for <code>HarvesterAnt</code> and <code>ThrowerAnt</code> according to the &ldquo;Food Cost&rdquo; column in the table below.</p>
+<p><strong>Part B</strong>: Now that placing an <code>Ant</code> costs food, we need to be able to gather more food! To fix this issue, implement the <code>HarvesterAnt</code> class. A <code>HarvesterAnt</code> is a type of <code>Ant</code> that adds one food to the <code>gamestate.food</code> total as its <code>action</code>.</p>
+</blockquote>
+<p>根据题目的要求设置 <code>HarversterAnt</code> 和 <code>ThrowerAnt</code> 的属性, 同时实现 <code>HarvesterAnt</code> 的 <code>action</code> 方法, 让它可以在每次行动的时候给 <code>food</code> + 1</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">HarvesterAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;HarvesterAnt produces 1 additional food per turn for the colony.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Harvester&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Produce 1 additional food for the colony.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        
+</span></span></span><span class="line"><span class="cl"><span class="s2">        gamestate -- The GameState, used to access game state information.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gamestate</span><span class="o">.</span><span class="n">food</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ThrowerAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;ThrowerAnt throws a leaf each turn at the nearest Bee in its range.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Thrower&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-2-1-pt">Problem 2 (1 pt)</h3>
+<blockquote>
+<p>In this problem, you&rsquo;ll complete <code>Place.__init__</code> by adding code that tracks entrances. Right now, a <code>Place</code> keeps track only of its <code>exit</code>. We would like a <code>Place</code> to keep track of its entrance as well. A <code>Place</code> needs to track only one <code>entrance</code>. Tracking entrances will be useful when an <code>Ant</code> needs to see what <code>Bee</code>s are in front of it in the tunnel.</p>
+<p>However, simply passing an entrance to a <code>Place</code> constructor will be problematic; we would need to have both the exit and the entrance before creating a <code>Place</code>! (It&rsquo;s a <a href="https://en.wikipedia.org/wiki/Chicken_or_the_egg" target="_blank" rel="noopener noreffer ">chicken or the egg</a> problem.) To get around this problem, we will keep track of entrances in the following way instead. <code>Place.__init__</code> should use this logic:</p>
+<ul>
+<li>A newly created <code>Place</code> always starts with its <code>entrance</code> as <code>None</code>.</li>
+<li>If the <code>Place</code> has an <code>exit</code>, then the <code>exit</code>&rsquo;s <code>entrance</code> is set to that <code>Place</code>.</li>
+</ul>
+</blockquote>
+<p>其实这个赛道有点像数据结构中的双向链表的结构, 往左边用 <code>.exit</code>, 往右边用 <code>.entrance</code> 方法. 要求已经在上面给出, 没什么难度</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Place</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A Place holds insects and has an exit to another Place.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_hive</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">exit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Create a Place with the given NAME and EXIT.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        name -- A string; the name of this Place.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        exit -- The Place reached by exiting this Place (may be None).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">exit</span> <span class="o">=</span> <span class="n">exit</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">bees</span> <span class="o">=</span> <span class="p">[]</span>        <span class="c1"># A list of Bees</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ant</span> <span class="o">=</span> <span class="kc">None</span>       <span class="c1"># An Ant</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">entrance</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># A Place</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Phase 1: Add an entrance to the exit</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">exit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">exit</span><span class="o">.</span><span class="n">entrance</span> <span class="o">=</span> <span class="bp">self</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-3-1-pt">Problem 3 (1 pt)</h3>
+<blockquote>
+<p>In order for a <code>ThrowerAnt</code> to throw a leaf, it must know which bee to hit. The provided implementation of the <code>nearest_bee</code> method in the <code>ThrowerAnt</code> class only allows them to hit bees in the same <code>Place</code>. Your job is to fix it so that a <code>ThrowerAnt</code> will <code>throw_at</code> the nearest bee in front of it <strong>that is not still in the <code>Hive</code>.</strong> This includes bees that are in the same <code>Place</code> as a <code>ThrowerAnt</code></p>
+<blockquote>
+<p><em>Hint:</em> All <code>Place</code>s have an <code>is_hive</code> attribute which is <code>True</code> when that place is the <code>Hive</code>.</p>
+</blockquote>
+<p>Change <code>nearest_bee</code> so that it returns a random <code>Bee</code> from the nearest place that contains bees. Your implementation should follow this logic:</p>
+<ul>
+<li>Start from the current <code>Place</code> of the <code>ThrowerAnt</code>.</li>
+<li>For each place, return a random bee if there is any, and if not, inspect the place in front of it (stored as the current place&rsquo;s <code>entrance</code>).</li>
+<li>If there is no bee to attack, return <code>None</code>.</li>
+</ul>
+</blockquote>
+<p>现在我们要给 <code>ThrowerAnt</code> 加上功能, 这样才能让它攻击距离它最近的蜜蜂🐝. <strong>注意如果蜜蜂和他在同一个格子里, 也是可以攻击的</strong>.</p>
+<p>我们的工作要求是遍历每个格子(<strong>就跟你遍历链表一样</strong>)找到第一个有蜜蜂的格子, 随机返回一个蜜蜂</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">nearest_bee</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the nearest Bee in a Place that is not the HIVE, connected to
+</span></span></span><span class="line"><span class="cl"><span class="s2">    the ThrowerAnt&#39;s Place by following entrances.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This method returns None if there is no such Bee (or none in range).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">pos</span><span class="o">.</span><span class="n">entrance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">pos</span><span class="o">.</span><span class="n">is_hive</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">bees</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">random_bee</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">bees</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">entrance</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">None</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="phase-2-ants">Phase 2: Ants!</h2>
+<hr>
+<h3 id="problem-4-2-pt">Problem 4 (2 pt)</h3>
+<blockquote>
+<p>A <code>ThrowerAnt</code> is a powerful threat to the bees, but it has a high food cost. In this problem, you&rsquo;ll implement two subclasses of <code>ThrowerAnt</code> that are less costly but have constraints on the distance they can throw:</p>
+<ul>
+<li>The <code>LongThrower</code> can only <code>throw_at</code> a <code>Bee</code> that is found after following at least 5 <code>entrance</code> transitions. It cannot hit <code>Bee</code>s that are in the same <code>Place</code> as it or the first 4 <code>Place</code>s in front of it. If there are two <code>Bees</code>, one too close to the <code>LongThrower</code> and the other within its range, the <code>LongThrower</code> should only throw at the farther <code>Bee</code>, which is within its range, instead of trying to hit the closer <code>Bee</code>.</li>
+<li>The <code>ShortThrower</code> can only <code>throw_at</code> a <code>Bee</code> that is found after following at most 3 <code>entrance</code> transitions. It cannot throw at any bees further than 3 <code>Place</code>s in front of it.</li>
+</ul>
+<p>Neither of these specialized throwers can <code>throw_at</code> a <code>Bee</code> that is exactly 4 <code>Place</code>s away.</p>
+</blockquote>
+<p>现在我们要实现两个类, <code>LongThrower</code> 和 <code>ShortThrower</code>. 两个都是 <code>ThrowererAnt</code> 的子类, 其实从他们的名字可以看出来他们的区别在于<strong>攻击范围的不同</strong>.</p>
+<p>思路: 我们如何表示攻击范围这个概念呢 ? 其实很简单, 在 problem 3 中我们找到最近的蜜蜂的时候就是一个格子一个格子前进的, 我们可以同时计算步数, 那么我们就这道这个距离, 再配合 <code>min_range</code> 和 <code>max_range</code> 这两个参数(类变量, 表示这个类对应的蚂蚁的攻击范围, 只有落在这个区间的才行)</p>
+<p>同时要注意我们不能影响 problem 3 中的结果, 这也容易想到, 我们让 <code>min_range=-1</code>, <code>max_range=float('inf')</code>, 这样就相当于没有限制了 ~! 而且因为面向对象程序设计的优势, 我们省去了不少代码量.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># In problem 3</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ThrowerAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;ThrowerAnt throws a leaf each turn at the nearest Bee in its range.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Thrower&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">    <span class="n">min_range</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_range</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">nearest_bee</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return the nearest Bee in a Place that is not the HIVE, connected to
+</span></span></span><span class="line"><span class="cl"><span class="s2">        the ThrowerAnt&#39;s Place by following entrances.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        This method returns None if there is no such Bee (or none in range).
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">steps_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">pos</span><span class="o">.</span><span class="n">entrance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">steps_cnt</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_range</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="n">pos</span><span class="o">.</span><span class="n">is_hive</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">bees</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">steps_cnt</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_range</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="n">random_bee</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">bees</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">entrance</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ShortThrower</span><span class="p">(</span><span class="n">ThrowerAnt</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A ThrowerAnt that only throws leaves at Bees at most 3 places away.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Short&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># OVERRIDE CLASS ATTRIBUTES HERE</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Change to True to view in the GUI</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_range</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LongThrower</span><span class="p">(</span><span class="n">ThrowerAnt</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A ThrowerAnt that only throws leaves at Bees at least 5 places away.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Long&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># OVERRIDE CLASS ATTRIBUTES HERE</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Change to True to view in the GUI</span>
+</span></span><span class="line"><span class="cl">    <span class="n">min_range</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-5-3-pt">Problem 5 (3 pt)</h3>
+<blockquote>
+<p>Implement the <code>FireAnt</code>, which does damage when it receives damage. Specifically, if it is damaged by <code>amount</code> health units, it does a damage of <code>amount</code> to all bees in its place (this is called <em>reflected damage</em>). If it dies, it does an additional amount of damage, as specified by its <code>damage</code> attribute, which has a default value of <code>3</code> as defined in the <code>FireAnt</code> class.</p>
+<p>To implement this, override <code>FireAnt</code>&rsquo;s <code>reduce_health</code> method. Your overriden method should call the <code>reduce_health</code> method inherited from the superclass (<code>Ant</code>) to reduce the current <code>FireAnt</code> instance&rsquo;s health. Calling the <em>inherited</em> <code>reduce_health</code> method on a <code>FireAnt</code> instance reduces the insect&rsquo;s <code>health</code> by the given <code>amount</code> and removes the insect from its place if its <code>health</code> reaches zero or lower.</p>
+</blockquote>
+<p>这个 <code>FireAnt</code> 有点意思的, 当他收到伤害的时候会反弹自己受到的伤害到当前格子所有的蜜蜂上, 同时如果它因此死了还能对这些蜜蜂再一次造成伤害(这一次取决于自己的攻击力)</p>
+<p>这个比较 tricky 的地方是:</p>
+<ol>
+<li>当前格子的所有蜜蜂是一个 <code>list</code>, 也就是<strong>我们可能要在迭代访问 <code>list</code> 的时候这个这个 <code>list</code></strong>, ==这个我们遍历它的拷贝即可==</li>
+<li>我们不能做直接调用这个 <code>FireAnt</code> 的 <code>reduce_health</code> 方法, 不然万一它死了这个对象就不存在了, 我们还如何得知它的攻击力 ?</li>
+</ol>
+<p>最后代码如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FireAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;FireAnt cooks any Bee in its Place when it expires.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Fire&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Change to True to view in the GUI</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Create an Ant with a HEALTH quantity.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">reduce_health</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Reduce health by AMOUNT, and remove the FireAnt from its place if it
+</span></span></span><span class="line"><span class="cl"><span class="s2">        has no health remaining.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Make sure to reduce the health of each bee in the current place, and apply
+</span></span></span><span class="line"><span class="cl"><span class="s2">        the additional damage if the fire ant dies.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># FireAnt attack bees</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">bee</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">bees</span><span class="p">[:]:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bee</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># FireAnt will be dead</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">&lt;=</span> <span class="n">amount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">bee</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">bees</span><span class="p">[:]:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bee</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">damage</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="phase-3-more-ants">Phase 3: More Ants!</h2>
+<hr>
+<h3 id="problem-6-1-pt">Problem 6 (1 pt)</h3>
+<blockquote>
+<p>We are going to add some protection to our glorious home base by implementing the <code>WallAnt</code>, an ant that does nothing each turn. A <code>WallAnt</code> is useful because it has a large <code>health</code> value.</p>
+<p>Unlike with previous ants, we have not provided you with a class header. Implement the <code>WallAnt</code> class from scratch. Give it a class attribute <code>name</code> with the value <code>'Wall'</code> (so that the graphics work) and a class attribute<code>implemented</code> with the value <code>True</code> (so that you can use it in a game).</p>
+</blockquote>
+<p>从零实现一个 <code>WallAnt</code>, 这种蚂蚁生命值高, 其他倒是没什么</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">WallAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;WallAnt has a large health value&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Wall&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-7-3-pt">Problem 7 (3 pt)</h3>
+<blockquote>
+<p>Implement the <code>HungryAnt</code>, which will select a random <code>Bee</code> from its <code>place</code> and eat it whole. After eating a <code>Bee</code>, a <code>HungryAnt</code> must spend 3 turns chewing before eating again. If there is no bee available to eat, <code>HungryAnt</code> will do nothing.</p>
+<p>Give <code>HungryAnt</code> a <code>chew_duration</code> <strong>class</strong> attribute that stores the number of turns that it will take a <code>HungryAnt</code> to chew (set to 3). Also, give each <code>HungryAnt</code> an <strong>instance</strong> attribute <code>chew_countdown</code> that counts the number of turns it has left to chew (initialized to 0, since it hasn&rsquo;t eaten anything at the beginning. You can also think of <code>chew_countdown</code> as the number of turns until a <code>HungryAnt</code> can eat another <code>Bee</code>).</p>
+<p>Implement the <code>action</code> method of the <code>HungryAnt</code>: First, check if it is chewing; if so, decrement its <code>chew_countdown</code>. Otherwise, eat a random <code>Bee</code> in its <code>place</code> by reducing the <code>Bee</code>&rsquo;s health to 0. Make sure to set the <code>chew_countdown</code>when a Bee is eaten!</p>
+</blockquote>
+<p>从零实现一个 <code>HungryAnt</code>, 可以随机吞下一整只蜜蜂!!!!但是它要花费 <code>chew_duration</code> 来咀嚼才能进行下一次攻击. 这个不就是植物大战僵尸里面的食人花嘛!!!</p>
+<p>我们只要判断当前它是否处于咀嚼状态即可. 这里题目是有挖坑的, 测试样例里面可能在运行的时候会修改 <code>chew_duration</code> 的值, 注意别被坑了!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">HungryAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;HungryAnt will select a random bee from its place and eat it whole&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Hungry&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">chew_duration</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">chew_countdown</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># it is chewing</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">chew_countdown</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">chew_countdown</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># it is not chewing</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">bees</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># WARNING: the test cases may change the chew_duration variable in runtime</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">chew_countdown</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chew_duration</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bee</span> <span class="o">=</span> <span class="n">random_bee</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">bees</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bee</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="n">bee</span><span class="o">.</span><span class="n">health</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-8-3-pt">Problem 8 (3 pt)</h3>
+<blockquote>
+<p>A <code>BodyguardAnt</code> differs from a normal ant because it is a <code>ContainerAnt</code>; it can contain another ant and protect it, all in one <code>Place</code>. When a <code>Bee</code> stings the ant in a <code>Place</code> where one ant contains another, only the container is damaged. The ant inside the container can still perform its original action. If the container perishes, the contained ant still remains in the place (and can then be damaged).</p>
+<p>Each <code>ContainerAnt</code> has an instance attribute <code>ant_contained</code> that stores the ant it contains. This ant, <code>ant_contained</code>, initially starts off as <code>None</code> to indicate that there is no ant being stored yet. Implement the <code>store_ant</code> method so that it sets the <code>ContainerAnt</code>&rsquo;s <code>ant_contained</code> instance attribute to the passed in <code>ant</code>argument. Also implement the <code>ContainerAnt</code>&rsquo;s <code>action</code> method to perform its <code>ant_contained</code>&rsquo;s action if it is currently containing an ant.</p>
+</blockquote>
+<p>这里要实现的蚂蚁也很有意思, 它可以把其他蚂蚁保护起来. 甚至可以和被保护的蚂蚁一起呆在同一个格子里面.</p>
+<p>这里注意几个细节:</p>
+<ol>
+<li><code>BodyguardAnt</code> 不能保护 <code>BodyguardAnt</code> !(🈲️止套娃)</li>
+<li>当 <code>BodyguardAnt</code> 和被保护的蚂蚁在同一个格子的时候, 要让 <code>place.ant</code> 始终指向 <code>BodyguardAnt</code></li>
+</ol>
+<p>这里其实还涉及到挺多要改的地方的(可能会漏放某些代码, 完整的建议看我的<a href="https://github.com/MartinLwx/CS61A-Fall-2021-UCB/tree/main/Projects/ants" target="_blank" rel="noopener noreffer ">仓库</a>)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Ant</span><span class="p">(</span><span class="n">Insect</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;An Ant occupies a place and does work for the colony.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Only implemented Ant classes should be instantiated</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_container</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">add_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">place</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="o">=</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="p">(</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_contain</span><span class="p">(</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="ow">or</span> <span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">can_contain</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">),</span> <span class="s1">&#39;Two ants in </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">is_container</span> <span class="ow">and</span> <span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">can_contain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">store_ant</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_container</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_contain</span><span class="p">(</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">store_ant</span><span class="p">(</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># the place.ant should refer to the container ant</span>
+</span></span><span class="line"><span class="cl">                <span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="o">=</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">Insect</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">place</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ContainerAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ContainerAnt can share a space with other ants by containing them.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_container</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">can_contain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># we can&#39;t have two BodyguardAnt in the same place</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">other</span><span class="o">.</span><span class="n">is_container</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">store_ant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span> <span class="o">=</span> <span class="n">ant</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">remove_ant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">ant</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">{}</span><span class="s2"> does not contain </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ant</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">remove_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">place</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Special handling for container ants (this is optional)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># Container was removed. Contained ant should remain in the game</span>
+</span></span><span class="line"><span class="cl">            <span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="o">=</span> <span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">ant_contained</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Insect</span><span class="o">.</span><span class="n">remove_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">place</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># default to normal behavior</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Ant</span><span class="o">.</span><span class="n">remove_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">place</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">gamestate</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">BodyguardAnt</span><span class="p">(</span><span class="n">ContainerAnt</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;BodyguardAnt provides protection to other Ants.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Bodyguard&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Change to True to view in the GUI</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-9-1-pt">Problem 9 (1 pt)</h3>
+<blockquote>
+<p>The <code>BodyguardAnt</code> provides great defense, but they say the best defense is a good offense. The <code>TankAnt</code> is a container that protects an ant in its place and also deals 1 damage to all bees in its place each turn.</p>
+<p>We have not provided you with a class header. Implement the <code>TankAnt</code> class from scratch. Give it a class attribute <code>name</code> with the value <code>'Tank'</code> (so that the graphics work) and a class attribute <code>implemented</code> with the value <code>True</code> (so that you can use it in a game).</p>
+<p>You should not need to modify any code outside of the <code>TankAnt</code> class. If you find yourself needing to make changes elsewhere, look for a way to write your code for the previous question such that it applies not just to <code>BodyguardAnt</code> and <code>TankAnt</code> objects, but to container ants in general.</p>
+</blockquote>
+<p>根据题目的描述可以知道 <code>TankAnt</code> 是一种特殊的 <code>ContainerAnt</code>, 我们要从零实现它的功能, 它的攻击方式比较特殊, 是自己保护的蚂蚁的攻击方式 + 对当前格子的蜜蜂造成自己攻击力的伤害</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TankAnt</span><span class="p">(</span><span class="n">ContainerAnt</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Tank&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">ant_contained</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">gamestate</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 1 damage for all the bees</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">bee</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">bees</span><span class="p">[:]:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bee</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">damage</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="phase-4-water-and-might">Phase 4: Water and Might</h2>
+<hr>
+<h3 id="problem-10-1-pt">Problem 10 (1 pt)</h3>
+<blockquote>
+<p>Let&rsquo;s add water to the colony! Currently there are only two types of places, the <code>Hive</code> and a basic <code>Place</code>. To make things more interesting, we&rsquo;re going to create a new type of <code>Place</code> called <code>Water</code>.</p>
+<p>Only an insect that is waterproof can be placed in <code>Water</code>. In order to determine whether an <code>Insect</code> is waterproof, add a new class attribute to the <code>Insect</code> class named <code>is_waterproof</code> that is set to <code>False</code>. Since bees can fly, set their <code>is_waterproof</code> attribute to <code>True</code>, overriding the inherited value.</p>
+<p>Now, implement the <code>add_insect</code> method for <code>Water</code>. First, add the insect to the place regardless of whether it is waterproof. Then, if the insect is not waterproof, reduce the insect&rsquo;s health to 0. <em>Do not repeat code from elsewhere in the program.</em> Instead, use methods that have already been defined.</p>
+</blockquote>
+<p>为了让地形更有趣, 我们要增加一种地形 - <code>Water</code>, 只有能在水里的活动的生物才能被放在这种地形中(蜜蜂会飞当然都可以, 蚂蚁目前还没有)</p>
+<p>记得还要修改很多类, 增加类属性 <code>is_waterproof</code>, 下面我就放 <code>Water</code> 类的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Water</span><span class="p">(</span><span class="n">Place</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Water is a place that can only hold waterproof insects.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">add_insect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insect</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Add an Insect to this place. If the insect is not waterproof, reduce
+</span></span></span><span class="line"><span class="cl"><span class="s2">        its health to 0.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_insect</span><span class="p">(</span><span class="n">insect</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">insect</span><span class="o">.</span><span class="n">is_waterproof</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">insect</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="n">insect</span><span class="o">.</span><span class="n">health</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-11-1-pt">Problem 11 (1 pt)</h3>
+<blockquote>
+<p>Currently there are no ants that can be placed on <code>Water</code>. Implement the <code>ScubaThrower</code>, which is a subclass of <code>ThrowerAnt</code> that is more costly and waterproof, <em>but otherwise identical to its base class</em>. A <code>ScubaThrower</code> should not lose its health when placed in <code>Water</code>.</p>
+<p>We have not provided you with a class header. Implement the <code>ScubaThrower</code> class from scratch. Give it a class attribute <code>name</code> with the value <code>'Scuba'</code> (so that the graphics work) and remember to set the class attribute<code>implemented</code> with the value <code>True</code> (so that you can use it in a game).</p>
+</blockquote>
+<p>从零实现一个 <code>ScubaThrower</code>, 听名字可以看出来应该是一种特殊的 <code>ThrowerAnt</code>. 特殊在: 能放在 <code>Water</code> 里</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ScubaThrower</span><span class="p">(</span><span class="n">ThrowerAnt</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Scuba&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_waterproof</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-12-3-pt">Problem 12 (3 pt)</h3>
+<blockquote>
+<p>Finally, implement the <code>QueenAnt</code>. The queen is a waterproof <code>ScubaThrower</code> that inspires her fellow ants through her bravery. In addition to the standard <code>ScubaThrower</code> action, the <code>QueenAnt</code> doubles the damage of all the ants behind her each time she performs an action. Once an ant&rsquo;s damage has been doubled, it is <em>not</em> doubled again for subsequent turns.</p>
+<p>However, with great power comes great responsibility. The <code>QueenAnt</code> is governed by three special rules:</p>
+<ol>
+<li>If the queen ever has its health reduced to 0, the ants lose. You will need to override <code>Ant.reduce_health</code> in <code>QueenAnt</code> and call <code>ants_lose()</code> in that case in order to signal to the simulator that the game is over. (The ants also still lose if any bee reaches the end of a tunnel.)</li>
+<li>There can be only one queen. A second queen cannot be constructed. To check if an Ant can be constructed, we use the <code>Ant.construct()</code> class method to either construct an Ant if possible, or return <code>None</code> if not. You will need to override <code>Ant.construct</code> as a class method of <code>QueenAnt</code> in order to add this check. To keep track of whether a queen has already been created, you can use an instance variable added to the current <code>GameState</code>.</li>
+<li>The queen cannot be removed. Attempts to remove the queen should have no effect (but should not cause an error). You will need to override <code>Ant.remove_from</code> in <code>QueenAnt</code> to enforce this condition.</li>
+</ol>
+</blockquote>
+<p>终于来到了最后一题(除了额外的题目以外), 我们要实现一个女王蚁🐜. 它有以下几个特性:</p>
+<ol>
+<li>可以在水中行走
+<ul>
+<li>思路: 题目也说了它<strong>是一种</strong> <code>ScrubaThrower</code>, 根据这个描述其实就抽象概括出了它是 <code>ScrubaThrower</code> 的子类.</li>
+</ul>
+</li>
+<li>它在行动后会把在它后面的蚂蚁们的攻击力都翻倍, <strong>但是不可以多次翻倍</strong>
+<ul>
+<li>思路: 如何表示 “在后面” 这个关系 ? 根据前面的题目我们可以知道. 右边为正方向, 所以 “在后面” 实际上就是在左边, 我们可以通过访问 <code>Place</code> 的 <code>.exit</code> 方法不断获取到它左边(后面的)的</li>
+<li>思路: 如何表示不能多次翻倍 ? 很容易想到, 我们需要通过设置一个标记来表示当前的蚂蚁是否已经攻击力翻倍过, 所以我们直接在 <code>Ant</code> 类里加一个实例变量即可</li>
+<li>思路: 这里还要注意如何处理 GuardAnt, 因为<strong>实际上它守护的蚂蚁是可能被替换为新的蚂蚁</strong>, 此时我们就要让这个新的被守护的蚂蚁的攻击力翻倍. ==注意细细体会这里代码是怎么写的==</li>
+</ul>
+</li>
+<li>只能有一个女王蚁🐜
+<ul>
+<li>思路: 如何做到即使我们多次调用女王蚁🐜的构造函数也不会有多的女王蚁🐜 ? 这个依赖于一个游戏变量叫做 <code>gamestate</code>, 我们仍然是通过加标记的方式, 只不过这次我们是在 <code>GameState</code> 这个类里加一个 <code>has_queen</code> 表示当前是否已经有女王蚁🐜</li>
+</ul>
+</li>
+<li>女王蚁🐜不能被移除
+<ul>
+<li>思路: 这个简单, 我们什么都不做就行了</li>
+</ul>
+</li>
+</ol>
+<p>最后代码大概如下(结合上面的解释细细体会~~)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">QueenAnt</span><span class="p">(</span><span class="n">ScubaThrower</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;The Queen of the colony. The game is over if a bee enters her place.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Queen&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">7</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Change to True to view in the GUI</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@classmethod</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Returns a new instance of the Ant class if it is possible to construct, or
+</span></span></span><span class="line"><span class="cl"><span class="s2">        returns None otherwise. Remember to call the construct() method of the superclass!
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">food_cost</span> <span class="o">&gt;</span> <span class="n">gamestate</span><span class="o">.</span><span class="n">food</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Not enough food remains to place &#39;</span> <span class="o">+</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># I add a class variable to indict if we have created a QueenAnt()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">gamestate</span><span class="o">.</span><span class="n">has_queen</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gamestate</span><span class="o">.</span><span class="n">has_queen</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">construct</span><span class="p">(</span><span class="n">gamestate</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;A queen ant throws a leaf, but also doubles the damage of ants
+</span></span></span><span class="line"><span class="cl"><span class="s2">        in her tunnel.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">gamestate</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">exit</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">pos</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="ow">not</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">is_doubled</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">is_doubled</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">buff</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">is_container</span> <span class="ow">and</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">ant_contained</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1"># the pos.ant.ant_contained may change</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="ow">not</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">ant_contained</span><span class="o">.</span><span class="n">is_doubled</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">ant_contained</span><span class="o">.</span><span class="n">buff</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">ant_contained</span><span class="o">.</span><span class="n">is_doubled</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">exit</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">reduce_health</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Reduce health by AMOUNT, and if the QueenAnt has no health
+</span></span></span><span class="line"><span class="cl"><span class="s2">        remaining, signal the end of the game.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">&lt;=</span> <span class="n">amount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ants_lose</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">remove_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">place</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="extra-credit-2-pt">Extra Credit (2 pt)</h3>
+<blockquote>
+<p>Implement two final thrower ants that do zero damage, but instead apply a temporary &ldquo;status&rdquo; on the <code>action</code>method of a <code>Bee</code> instance that they <code>throw_at</code>. This &ldquo;status&rdquo; lasts for a certain number of turns, after which it ceases to take effect.</p>
+<p>We will be implementing two new ants that inherit from <code>ThrowerAnt</code>.</p>
+<ul>
+<li><code>SlowThrower</code> throws sticky syrup at a bee, slowing it for 3 turns. When a bee is slowed, it can only move on turns when <code>gamestate.time</code> is even, and can do nothing otherwise. If a bee is hit by syrup while it is already slowed, it is slowed for an additional 3 turns.</li>
+<li><code>ScaryThrower</code> intimidates a nearby bee, causing it to back away instead of advancing. (If the bee is already right next to the Hive and cannot go back further, it should not move. To check if a bee is next to the Hive, you might find the <code>is_hive</code> instance attribute of <code>Place</code>s useful). Bees remain scared until they have tried to back away twice. Bees cannot try to back away if they are slowed and <code>gamestate.time</code> is odd. <em>Once a bee has been scared once, it can&rsquo;t be scared ever again.</em></li>
+</ul>
+</blockquote>
+<p>实现两种特殊的蚂蚁类, 本身没有伤害, 但是能给蜜蜂加上 debuff.</p>
+<ul>
+<li><code>SlowThrower</code> 可以让蜜蜂减速, 让他们只能在当前时间为偶数的时候前进否则什么事情也干不了. 这个效果可以维持三个回合, 但是<strong>这个 debuff 可以无限叠加</strong></li>
+<li><code>ScaryThrower</code> 会让蜜蜂后退, 注意如果不能再后退的话, 就要保持不动. 该效果<strong>维持两回合</strong>. <strong>但是如果被减速就会继续保持不动</strong>, 这个 debuff 只能上一次</li>
+</ul>
+<p>这一题, 真的, 难度完全是上来了. 我调了挺久的 bug 才成功. 下面我来讲一下设计思路:</p>
+<p><code>SlowThrower</code></p>
+<ul>
+<li>设置 <code>is_slow</code> 变量表示当前的蜜蜂是否被减速, 同时设置 <code>slow_turns</code> 来记住剩余几回合可以解除这个状态</li>
+<li>每个回合, 如果当前的蜜蜂被减速了, 它只能看当前的游戏时间是否为偶数, 如果是的话就可以前进, 否则在原地不动, **但不论你动不动, <code>slow_turns -= 1</code> 永远都成立</li>
+</ul>
+<p><code>ScaryThrower</code></p>
+<ul>
+<li>
+<p>类似 <code>is_slow</code> 和 <code>slow_turns</code> 设置了 <code>is_scared</code> 和 <code>scared_turns</code></p>
+</li>
+<li>
+<p>我们暂时先不考虑当前蜜蜂是否被减速了(这样思考问题会比较简单). 显然, 我们每回合要做的事情是让 <code>scared_turns -= 1</code>, 然后<strong>是否为 scared 其实决定着蜜蜂的前进方向</strong>. 有了这个基础之后我们再来思考被减速带情况下又该如何, 显然我们前面这样是有问题的, 题目说了如果被减速会原地保持不动, 但是我们却让 <code>scared_turns -= 1</code>, 所以我们需要多加一个判断, 也就是<strong>被减速 + 被 scared 的情况下如果我们没有成功移动, 那么我们需要撤销我们对 <code>scared_turns</code> 的更改</strong></p>
+</li>
+</ul>
+<p>知道了上面的设计思路, 理解下面的代码就不难了(<strong>这里删去了无关的代码</strong>):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Bee</span><span class="p">(</span><span class="n">Insect</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A Bee moves from place to place, following exits and stinging ants.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Bee&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_waterproof</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 2 flags</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_slow</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_scared</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># turns remained</span>
+</span></span><span class="line"><span class="cl">    <span class="n">slow_turns</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">scared_turns</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we can&#39;t scare a bee twice</span>
+</span></span><span class="line"><span class="cl">    <span class="n">has_been_scared</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;A Bee&#39;s action stings the Ant that blocks its exit if it is blocked,
+</span></span></span><span class="line"><span class="cl"><span class="s2">        or moves to the exit of its current place otherwise.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        gamestate -- The GameState, used to access game state information.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_scared</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">destination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">entrance</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">scared_turns</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">destination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">exit</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_slow</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">slow_turns</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slow_turns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">is_slow</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">gamestate</span><span class="o">.</span><span class="n">time</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">destination</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># is_slow + is_scared, we need to cancel `self.scared_turns -= 1`  \</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># if we didn&#39;t move</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">scared_turns</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocked</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">sting</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">destination</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># we can&#39;t put this in side `if self.is_scared`, why?</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># because only when we run if self.is_slow we can know</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># should we cancel it or not</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scared_turns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">is_scared</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Extra credit: Special handling for bee direction</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">slow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Slow the bee for a further LENGTH turns.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">is_slow</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">slow_turns</span> <span class="o">+=</span> <span class="n">length</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">scare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If this Bee has not been scared before, cause it to attempt to
+</span></span></span><span class="line"><span class="cl"><span class="s2">        go backwards LENGTH times.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># a bee can&#39;t be scared twice</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_been_scared</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">is_scared</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">scared_turns</span> <span class="o">+=</span> <span class="n">length</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">has_been_scared</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="optional-problems">Optional Problems</h2>
+<hr>
+<h3 id="optional-problem-1">Optional Problem 1</h3>
+<blockquote>
+<p>Implement the <code>NinjaAnt</code>, which damages all <code>Bee</code>s that pass by, but can never be stung.</p>
+<p>A <code>NinjaAnt</code> does not block the path of a <code>Bee</code> that flies by. To implement this behavior, first modify the <code>Ant</code> class to include a new class attribute <code>blocks_path</code> that is set to <code>True</code>, then override the value of <code>blocks_path</code> to <code>False</code>in the <code>NinjaAnt</code> class.</p>
+<p>Second, modify the <code>Bee</code>&rsquo;s method <code>blocked</code> to return <code>False</code> if either there is no <code>Ant</code> in the <code>Bee</code>&rsquo;s <code>place</code> or if there is an <code>Ant</code>, but its <code>blocks_path</code> attribute is <code>False</code>. Now <code>Bee</code>s will just fly past <code>NinjaAnt</code>s.</p>
+<p>Finally, we want to make the <code>NinjaAnt</code> damage all <code>Bee</code>s that fly past. Implement the <code>action</code> method in <code>NinjaAnt</code>to reduce the health of all <code>Bee</code>s in the same <code>place</code> as the <code>NinjaAnt</code> by its <code>damage</code> attribute. Similar to the <code>FireAnt</code>, you must iterate over a potentially changing list of bees.</p>
+</blockquote>
+<p>忍者蚁🥷🐜哈哈哈哈, 注意几个细节:</p>
+<ol>
+<li>无法被蜜蜂攻击</li>
+<li>不会堵住蜜蜂的路, 但是会对经过的蜜蜂造成伤害</li>
+</ol>
+<p>这个问题比较简单, 解法也几乎都写在了问题描述里面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Bee</span><span class="p">(</span><span class="n">Insect</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A Bee moves from place to place, following exits and stinging ants.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">blocked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return True if this Bee cannot advance to the next Place.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">blocks_path</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">NinjaAnt</span><span class="p">(</span><span class="n">Ant</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;NinjaAnt does not block the path and damages all bees in its place.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This class is optional.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Ninja&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="n">blocks_path</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Change to True to view in the GUI</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">bee</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">bees</span><span class="p">[:]:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bee</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">damage</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="optional-problem-2">Optional Problem 2</h3>
+<blockquote>
+<p>The <code>LaserAnt</code> shoots out a powerful laser, damaging all that dare to stand in its path. Both <code>Bee</code>s and <code>Ant</code>s, of all types, are at risk of being damaged by <code>LaserAnt</code>. When a <code>LaserAnt</code> takes its action, it will damage all <code>Insect</code>s in its place (excluding itself, but including its container if it has one) and the <code>Place</code>s in front of it, excluding the <code>Hive</code>.</p>
+<p>If that were it, <code>LaserAnt</code> would be too powerful for us to contain. The <code>LaserAnt</code> has a base damage of <code>2</code>. But, <code>LaserAnt</code>&rsquo;s laser comes with some quirks. The laser is weakened by <code>0.25</code> each place it travels away from<code>LaserAnt</code>&rsquo;s place. Additionally, <code>LaserAnt</code> has limited battery. Each time <code>LaserAnt</code> actually damages an <code>Insect</code> its laser&rsquo;s total damage goes down by <code>0.0625</code> (1/16). If <code>LaserAnt</code>&rsquo;s damage becomes negative due to these restrictions, it simply does 0 damage instead.</p>
+</blockquote>
+<p>激光🐜, 注意几个特性:</p>
+<ol>
+<li>伤害自己格子所在的所有生物, 甚至包括整条路径上的所有生物</li>
+<li>但是每次对其他生物造成伤害的时候伤害会衰减, 每次减去 <code>0.0625</code></li>
+<li>激光的威力跟它离激光蚁🐜的距离也有关系, 距离每多一个格子, 就会减去 <code>0.25</code></li>
+</ol>
+<p>只要处理好两个函数即可</p>
+<ul>
+<li><code>calculate_damage</code> : 这个要注意的地方是, 如果算出来的伤害 &lt; 0, 那么你就需要返回 0</li>
+<li><code>insects_in_front</code> : 这个要返回一个 <code>dict</code> 表示每个生物距离激光🐜的距离. 我这了是分成当前格子和剩下的格子这样来处理, 一边遍历所有格子一边计算距离和把生物加到我们的 <code>dict</code>里.</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LaserAnt</span><span class="p">(</span><span class="n">ThrowerAnt</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Laser&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">food_cost</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">    <span class="n">implemented</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Change to True to view in the GUI</span>
+</span></span><span class="line"><span class="cl">    <span class="n">damage</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">health</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">insects_shot</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">current_damage</span> <span class="o">=</span> <span class="n">LaserAnt</span><span class="o">.</span><span class="n">damage</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">insects_in_front</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return a dict contains every Insect&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dis</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">bee</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">bees</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dis</span><span class="p">[</span><span class="n">bee</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># take care of the ContainerAnt</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">ant</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">entrance</span>
+</span></span><span class="line"><span class="cl">        <span class="n">distance</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">pos</span><span class="o">.</span><span class="n">entrance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="ow">not</span> <span class="n">pos</span><span class="o">.</span><span class="n">is_hive</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">bee</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">bees</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dis</span><span class="p">[</span><span class="n">bee</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dis</span><span class="p">[</span><span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1"># take care of the ContainerAnt</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">is_container</span> <span class="ow">and</span> <span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">ant_contained</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">dis</span><span class="p">[</span><span class="n">pos</span><span class="o">.</span><span class="n">ant</span><span class="o">.</span><span class="n">ant_contained</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+</span></span><span class="line"><span class="cl">            <span class="n">distance</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">entrance</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">dis</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">calculate_damage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">damage_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">damage</span> <span class="o">-</span> <span class="mf">0.0625</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">insects_shot</span> <span class="o">-</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">distance</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">damage_result</span> <span class="k">if</span> <span class="n">damage_result</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamestate</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">insects_and_distances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">insects_in_front</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">insect</span><span class="p">,</span> <span class="n">distance</span> <span class="ow">in</span> <span class="n">insects_and_distances</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">damage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_damage</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">insect</span><span class="o">.</span><span class="n">reduce_health</span><span class="p">(</span><span class="n">damage</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">damage</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">insects_shot</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-03-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)" data-hashtags="Course"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/course/">course</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/how-to-manage-windows-using-hammerspoon/" class="prev" rel="prev" title="How to Manage Windows Using Hammerspoon"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to Manage Windows Using Hammerspoon</a>
+            <a href="/zh-cn/boyer-moore-majority-voting-algorithm-explained/" class="next" rel="next" title="Boyer-Moore Majority Voting Algorithm Explained">Boyer-Moore Majority Voting Algorithm Explained<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.103.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

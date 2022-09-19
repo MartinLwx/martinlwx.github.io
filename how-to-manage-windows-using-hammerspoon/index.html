@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>How to Manage Windows Using Hammerspoon - MartinLwx&#39;s blog</title><meta name="Description" content="Explain how to use hammerspoon to manage windows"><meta property="og:title" content="How to Manage Windows Using Hammerspoon" />
+<meta property="og:description" content="Explain how to use hammerspoon to manage windows" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/how-to-manage-windows-using-hammerspoon/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-21T21:45:21+08:00" />
+<meta property="article:modified_time" content="2022-01-21T21:45:21+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="How to Manage Windows Using Hammerspoon"/>
+<meta name="twitter:description" content="Explain how to use hammerspoon to manage windows"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/how-to-manage-windows-using-hammerspoon/" /><link rel="prev" href="https://martinlwx.github.io/hw02-of-cs61a-of-ucb/" /><link rel="next" href="https://martinlwx.github.io/hw03-of-cs61a-of-ucb/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to Manage Windows Using Hammerspoon",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/how-to-manage-windows-using-hammerspoon\/"
+        },"genre": "posts","keywords": "Tool","wordcount":  509 ,
+        "url": "https:\/\/martinlwx.github.io\/how-to-manage-windows-using-hammerspoon\/","datePublished": "2022-01-21T21:45:21+08:00","dateModified": "2022-01-21T21:45:21+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "Explain how to use hammerspoon to manage windows"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> Home </a><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/how-to-manage-windows-using-hammerspoon/" selected>English</option><option value="/zh-cn/how-to-manage-windows-using-hammerspoon/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/" title="">Home</a><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/how-to-manage-windows-using-hammerspoon/" selected>English</option><option value="/zh-cn/how-to-manage-windows-using-hammerspoon/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to Manage Windows Using Hammerspoon</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/tool/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Tool</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-01-21">2022-01-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;509 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#what-is-hammerspoon-">What is hammerspoon ?</a></li>
+    <li><a href="#how-to-manage-windows-">How to manage windows ?</a></li>
+    <li><a href="#code-explained">Code Explained</a></li>
+    <li><a href="#ref">Ref</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro">Intro</h2>
+<hr>
+<p>I found that the windows management built in macOS is difficult to use. As a result, I always using my mouse to move and resize my window, which is less efficient. We should keep our hands on the keyboard as much as possible. After finishing the MIT-Missing-Semester, I came across the <a href="https://www.hammerspoon.org" target="_blank" rel="noopener noreffer ">hammerspoon</a> tool. I really like this one :)</p>
+<h2 id="what-is-hammerspoon-">What is hammerspoon ?</h2>
+<hr>
+<p>According to the official site&rsquo;s introduction, <em>hammerspoon is a tool for powerful automation of OS X, which is just a bridge between the operating system and a Lua scripting engine</em>. The windows management is kind of automation.</p>
+<p>To be honest, I once heard the <code>Lua</code> language but I don&rsquo;t know anything about it. I follow <a href="https://learnxinyminutes.com/docs/lua/" target="_blank" rel="noopener noreffer ">Learn Lua in Y minutes</a> to have a basic understanding of this language.</p>
+<h2 id="how-to-manage-windows-">How to manage windows ?</h2>
+<hr>
+<p>I would like to have the following features:</p>
+<ol>
+<li>Move and resize my window to the left/right of screen.</li>
+<li>The full screen mode</li>
+<li>Move and resize my window to the top-left/top-right/bottom-left/bottom-right of screen</li>
+<li>Move current window to the center of screen</li>
+</ol>
+<p>My solution consists of 3 <code>*.lua</code> file(I have put this in my <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreffer ">dotfiles</a>)</p>
+<p>👉<strong>config.lua</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">MACBOOK_MONITOR</span> <span class="o">=</span> <span class="s1">&#39;Built-in Retina Display&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- disable animations, default value = 0.2</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.window</span><span class="p">.</span><span class="n">animationDuration</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>👉<strong>init.lua</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;window&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>👉<strong>window.lua</strong></p>
+<p>This is the main part of windows management.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- half of screen</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- {frame.x, frame.y, window.w, window.h}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- First two elements: we decide the position of frame</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- Last two elements: we decide the size of frame</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;down&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- quarter of screen</span>
+</span></span><span class="line"><span class="cl"><span class="cm">--[[
+</span></span></span><span class="line"><span class="cl"><span class="cm">    u i
+</span></span></span><span class="line"><span class="cl"><span class="cm">    j k
+</span></span></span><span class="line"><span class="cl"><span class="cm">--]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- full screen</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">moveToUnit</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span> <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- center screen</span>
+</span></span><span class="line"><span class="cl"><span class="n">hs.hotkey</span><span class="p">.</span><span class="n">bind</span><span class="p">({</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="p">},</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">hs.window</span><span class="p">.</span><span class="n">focusedWindow</span><span class="p">():</span><span class="n">centerOnScreen</span><span class="p">()</span> <span class="kr">end</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>You shoule put these files in <code>~/.hammerspoon/</code> and then click on <code>Reload config</code> 🤗</p>
+<h2 id="code-explained">Code Explained</h2>
+<hr>
+<ul>
+<li><code>hs.hotkey.bind(mods, key, pressedfn)</code>
+<ul>
+<li>This is a simple function to create a new hotkey and bind it to <code>pressedfn</code>.</li>
+<li>We press and hold <code>mods</code> and use <code>key</code> to enable <code>pressedfn</code>. For example, If we want to make a window full screen. We first press and hold <code>alt</code>(option) and <code>cmd</code>, then we press <code>f</code>.</li>
+</ul>
+</li>
+<li><code>pressedfn</code>
+<ul>
+<li>This is an anonymous function in <code>Lua</code>.</li>
+<li>The key of this function is <code>hs.window.focusedWindow():moveToUnit({...})</code>. Its job is get the <em>focused</em> window and make some changes of position and size. The parameters are a <em>table</em> in Lua. You may combine the previous comments in <strong>window.lua</strong> and the image below to understand this.</li>
+</ul>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/movetounit.png"
+        data-srcset="/img/movetounit.png, /img/movetounit.png 1.5x, /img/movetounit.png 2x"
+        data-sizes="auto"
+        alt="/img/movetounit.png"
+        title="/img/movetounit.png" /></p>
+<h2 id="ref">Ref</h2>
+<hr>
+<ol>
+<li><a href="https://github.com/anishathalye/dotfiles-local/tree/mac/hammerspoon" target="_blank" rel="noopener noreffer ">Anish’s Hammerspoon config</a></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-01-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/how-to-manage-windows-using-hammerspoon/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/how-to-manage-windows-using-hammerspoon/" data-title="How to Manage Windows Using Hammerspoon" data-hashtags="Tool"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/how-to-manage-windows-using-hammerspoon/" data-hashtag="Tool"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/how-to-manage-windows-using-hammerspoon/" data-title="How to Manage Windows Using Hammerspoon"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/how-to-manage-windows-using-hammerspoon/" data-title="How to Manage Windows Using Hammerspoon"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/how-to-manage-windows-using-hammerspoon/" data-title="How to Manage Windows Using Hammerspoon"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/tool/">Tool</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/hw02-of-cs61a-of-ucb/" class="prev" rel="prev" title="Hw02 of CS61A of UCB(2021-Fall)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hw02 of CS61A of UCB(2021-Fall)</a>
+            <a href="/hw03-of-cs61a-of-ucb/" class="next" rel="next" title="Hw03 of CS61A of UCB(2021-Fall)">Hw03 of CS61A of UCB(2021-Fall)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.103.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

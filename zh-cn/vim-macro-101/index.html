@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Vim Macro 101 - MartinLwx&#39;s blog</title><meta name="Description" content="How to use vim&#39;s macro system"><meta property="og:title" content="Vim Macro 101" />
+<meta property="og:description" content="How to use vim&#39;s macro system" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-02T10:40:38+08:00" />
+<meta property="article:modified_time" content="2022-07-02T10:40:38+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Vim Macro 101"/>
+<meta name="twitter:description" content="How to use vim&#39;s macro system"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vim Macro 101",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/vim-macro-101\/"
+        },"genre": "posts","keywords": "vim","wordcount":  2126 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/vim-macro-101\/","datePublished": "2022-07-02T10:40:38+08:00","dateModified": "2022-07-02T10:40:38+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "How to use vim's macro system"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/vim-macro-101/">English</option><option value="/zh-cn/vim-macro-101/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/vim-macro-101/">English</option><option value="/zh-cn/vim-macro-101/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vim Macro 101</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-02">2022-07-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2126 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#什么是-vim-里面的宏">什么是 <code>vim</code> 里面的宏</a></li>
+    <li><a href="#基本指南">基本指南</a></li>
+    <li><a href="#-怎么录制一个宏">### 怎么录制一个宏</a>
+      <ul>
+        <li><a href="#怎么查看宏的内容">怎么查看宏的内容</a></li>
+        <li><a href="#怎么执行宏">怎么执行宏</a>
+          <ul>
+            <li><a href="#在一个文件里面执行">在一个文件里面执行</a></li>
+            <li><a href="#在多个文件里面执行">在多个文件里面执行</a></li>
+          </ul>
+        </li>
+        <li><a href="#怎么修改已经录制好的宏">怎么修改已经录制好的宏</a>
+          <ul>
+            <li><a href="#简单情况">简单情况</a></li>
+            <li><a href="#复杂情况">复杂情况</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#和其他工具协同工作">和其他工具协同工作</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言">引言</h2>
+<p>在我学习 <code>vim</code>  的过程中，最具有启发意义的一句话是：</p>
+<blockquote>
+<p><strong><code>vim</code> 其实是一门编程语言</strong></p>
+</blockquote>
+<p>很早之前我就接触过 <code>vim</code>，但是当时 <code>vim</code> 的按键组合和按键的逻辑对我来说很难记忆，再加上 <code>vim</code> 的界面实在太过于复古，于是我就转向了比较现代的文本编辑器。但当我学完 <em><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreffer ">Missing semester</a></em> 的时候，我对 <code>vim</code>的看法完全改观：它远远不止是一个文本编辑器</p>
+<p>这似乎和这篇博客要讨论的主题没有关系。但其实不是这样的，认识到 <code>vim</code> 是一门编程语言是一件重要的事情。程序员经常经常通过编程来完成很多枯燥重复的工作，不同人对编程语言的偏好各不相同。<code>vim</code> 也可以完成这样的任务，今天要讨论的宏就是。我希望看完这一篇之后 <code>vim</code> 也会被你们用来解决一些问题🚀</p>
+<h2 id="什么是-vim-里面的宏">什么是 <code>vim</code> 里面的宏</h2>
+<blockquote>
+<p>下面假定你对 <code>vim</code> 有一定的了解 : )</p>
+</blockquote>
+<p>在 <code>vim</code> 里面，我们可以用 <code>.</code> 重复上一次的“更改”，这里的“更改”一般指的是比较简单的操作，<em>比如删除一个单词等</em>。</p>
+<p>但其实，<code>vim</code> 也提供了宏让我们可以重复执行一些比较复杂的操作，它会把我们的操作记录下来，存放到指定的寄存器里面。那么我们可以只录制宏一次而执行它很多次</p>
+<h2 id="基本指南">基本指南</h2>
+<h2 id="-怎么录制一个宏">### 怎么录制一个宏</h2>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li>
+<p>在 Normal 模式下，按<code>q&lt;register&gt;</code>.</p>
+<ol>
+<li>
+<p>这里的意思是说先按<code>q</code> 然后选择一个寄存器 <code>register</code> 来存放待会录制的宏</p>
+</li>
+<li>
+<p>可以选用的寄存器 <code>regitser</code> 包括: <code>0-9</code>, <code>a-z</code>, 和 <code>&quot;</code>。关于这里为什么没有大写字母我会在后面解释</p>
+</li>
+</ol>
+</li>
+<li>
+<p>开始录制宏，如果上一步正确执行的话，此时你应该会看到左下角显示 <code>recording @&lt;register&gt;</code>。从此刻起，你所有的操作都会被录制下来</p>
+</li>
+<li>
+<p>再次按下 <code>q</code> 退出录制</p>
+</li>
+</ol>
+<blockquote>
+<p>📒 要让自己录制的宏鲁棒性强一点，关键在于你在录制的时候要想想：<strong>不同的 文件可能会有哪些情况要处理，要保证自己的每一步都可以在各种不同的情况里面复现出来</strong></p>
+</blockquote>
+<h3 id="怎么查看宏的内容">怎么查看宏的内容</h3>
+<p>前面提到，<code>vim</code> 会把我们录制的宏存放在指定的寄存器里面，所以查看宏的内容很简单，用一个简单的 <code>:reg</code> 命令就行，<em>比如</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">:reg &lt;register&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>里面你会看到一些奇怪的字符，<em>比如</em>：</p>
+<ul>
+<li>
+<p><code>^[</code> 是 <code>&lt;ESC&gt;</code> 键</p>
+</li>
+<li>
+<p><code>&lt;80&gt;kb</code> 是 <code>BAKESPACE</code> 键</p>
+</li>
+</ul>
+<h3 id="怎么执行宏">怎么执行宏</h3>
+<h4 id="在一个文件里面执行">在一个文件里面执行</h4>
+<ul>
+<li>
+<p><code>@&lt;register&gt;</code>: 执行存放在 <code>&lt;register&gt;</code> 这个寄存器里面的宏</p>
+</li>
+<li>
+<p><code>@@</code>: 执行我们上一次调用过的宏</p>
+</li>
+<li>
+<p>如果想要多次执行的话，在命令的前面先输入 <code>[COUNT]</code> 表示要执行多少次。</p>
+<ul>
+<li>e.g. <code>100@@</code> 的意思是：执行上一次调用的宏 100 次</li>
+<li>有时候我们想要在这个文件里面重复执行直到整个文件都修改完，但是我们没有必要自己手动计算这个次数 <code>[COUNT]</code> 应该是多少，可以设置一个很大的值，超过的部分会被 <code>vim</code> 忽略</li>
+</ul>
+</li>
+</ul>
+<h4 id="在多个文件里面执行">在多个文件里面执行</h4>
+<p>当然，如果只能在一个文件里面重复执行宏的话，能用它来解决的问题还比较局限。我们总不可能每次都要打开一个文件然后手动输入 <code>@@</code> 执行宏。好在 <code>vim</code> 提供了方法让我们可以批量处理多文件</p>
+<p><em>比如说现在我们想要编辑当前目录下的所有 <code>txt</code> 文件</em>，只要在命令行输入 <code>vim *.txt</code> 就可以打开所有文件（每个文件对应一个 buffer，整体可以看成是一个列表）。在这个模式下我们可以一次编辑一个文件，编辑完毕之后按 <code>:wn</code> 保存当前文件的更改并跳转到下一个文件。但我们也能一次性对这个文件列表里的所有文件进行更改</p>
+<ol>
+<li>此时我们位于文件列表的第一个文件，第一件要做的事情是以第一个文件文样本录制宏
+<ol>
+<li>注意录制完毕之后，需要使用 <code>:edit!</code> 命令撤销在录制宏对过程中对第一个文件的更改。因为我们之后会对文件列表中所有对文件应用我们对宏，如果没有这个撤销操作的话，第一个文件就会被更改两次</li>
+<li>虽然界面看起来像是在编辑一个文件，但如果你要直接按 <code>:x</code> 保存退出的话就会弹出警告</li>
+</ol>
+</li>
+<li>输入命令： <code>:bufdo execute &quot;normal @&lt;register&gt; | update</code>.
+<ol>
+<li>关于 <code>bufdo</code> 的说明可以在 <code>vim</code> 里面输入 <code>:h bufdo</code> 查看。可以理解为对所有的 buffer 执行操作</li>
+<li>这里的 <code>normal @&lt;register&gt;</code> 的意思就是在 Normal 模式下执行 <code>@&lt;register&gt;</code> 里面的宏</li>
+</ol>
+</li>
+</ol>
+<p>更多的细节可以看<a href="https://vim.fandom.com/wiki/Run_a_command_in_multiple_buffers" target="_blank" rel="noopener noreffer ">这里</a></p>
+<h3 id="怎么修改已经录制好的宏">怎么修改已经录制好的宏</h3>
+<h4 id="简单情况">简单情况</h4>
+<p>这里说的简单情况是，你只是想要在你本来录制好的宏后面追加一些操作。还记得之前我刻意跳过了把 <code>A-Z</code> 当作寄存器的这个情况吗？事实上，当你用大写字母的寄存器的时候，你录制的东西会追加在对应的小写寄存器的内容后面</p>
+<h4 id="复杂情况">复杂情况</h4>
+<p>此时你要编辑宏，但是要编辑的位置是在宏的中间，这也是可以实现的吗？当然，我们没有必要从头录制，宏其实本质上只是存储在寄存器里面的字符序列，<code>vim</code> 可以解读这些内容重复执行。我们要做的事情只是修改寄存器里面的内容而已。</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>按下 <code>G</code> 跳转到当前文件的最后一行（其实别的行也可以，只是跳转到最后一行我们编辑宏的时候比较不会受到干扰），然后输入 <code>:put &lt;register&gt;</code> 命令，对应寄存器里面的内容就会被粘贴在下一行</li>
+<li>然后我们开始编辑就行</li>
+<li>编辑完成之后（确保还在这一行），按下 <code>:d &lt;register&gt;</code> 就可以把当前行的内容存回去</li>
+</ol>
+<p>下面是我录制的一个简单的例子，我们来录制了一个宏放在寄存器 <code>y</code> 里面，功能是在当前行的末尾追加 <code> world</code>，现在我想要修改在当前行追加 <code> hello world</code></p>
+<h2 id="和其他工具协同工作">和其他工具协同工作</h2>
+<p>在 Linux 中，我们可以将一些命令行工具和 <code>vim</code> 结合使用。一个使用场景比如：我们想要批量编辑一些文件，但是这个文件散落在不同的地方。那我们就可以使用 <code>find</code> 命令和 <code>vim</code> 做到这件事情。可以参考<a href="https://stackoverflow.com/questions/4867679/redirecting-output-of-find-command-to-vim" target="_blank" rel="noopener noreffer ">这个</a>.</p>
+<ol>
+<li>使用 <code>find &lt;pattern&gt; -exec vim {} +</code> 打开所有对应的文件</li>
+<li>使用之前提到过的 <code>bufdo</code> 命令批量操作</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>这只是一个简单的关于 <code>vim</code> 里面宏的应用，这只是 <code>vim</code> 强大功能的冰山一角，当你掌握其他 <code>vim</code> 相关的功能的时候（比如搜索与替换，快速定位到某个位置），才能发挥出 <code>vim</code> 的最大效力。如果这篇博客可以让你对 <code>vim</code> 产生兴趣那就再好不过。别忘了一句著名的话：一开始我们挑选了我们喜欢的工具，后来工具会反过来塑造我们，它甚至影响着我们的思维😉</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-07-02</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/zh-cn/vim-macro-101/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101" data-hashtags="vim"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-hashtag="vim"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/vim/">vim</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" class="prev" rel="prev" title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to use the semantic actions to generate the symbol tables in ANTLR4</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.103.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
