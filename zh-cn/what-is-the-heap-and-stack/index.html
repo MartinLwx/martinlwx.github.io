@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>什么是堆和栈 - MartinLwx&#39;s blog</title><meta name="Description" content="Welcome to my blog :)"><meta property="og:title" content="什么是堆和栈" />
+<meta property="og:description" content="引言 如果你一直都是是用动态语言，比如 Python、Javascript 这种，你很可能并不会注意到栈和堆的区别。因为这些语言有垃圾收集器（Ga" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-19T19:01:04+08:00" />
+<meta property="article:modified_time" content="2022-09-19T19:01:04+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="什么是堆和栈"/>
+<meta name="twitter:description" content="引言 如果你一直都是是用动态语言，比如 Python、Javascript 这种，你很可能并不会注意到栈和堆的区别。因为这些语言有垃圾收集器（Ga"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "什么是堆和栈",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/what-is-the-heap-and-stack\/"
+        },"genre": "posts","keywords": "System-programming","wordcount":  3850 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/what-is-the-heap-and-stack\/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/what-is-the-heap-and-stack/">English</option><option value="/zh-cn/what-is-the-heap-and-stack/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/what-is-the-heap-and-stack/">English</option><option value="/zh-cn/what-is-the-heap-and-stack/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">什么是堆和栈</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/system-programming/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>System-Programming</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3850 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#程序在内存上的布局">程序在内存上的布局</a></li>
+    <li><a href="#栈">栈</a>
+      <ul>
+        <li><a href="#术语">术语</a></li>
+        <li><a href="#栈上的内存管理是如何进行的">栈上的内存管理是如何进行的</a></li>
+        <li><a href="#以斐波那契数列的递归函数看栈的变化">以斐波那契数列的递归函数看栈的变化</a></li>
+        <li><a href="#栈上存放的是什么数据">栈上存放的是什么数据</a></li>
+      </ul>
+    </li>
+    <li><a href="#堆">堆</a>
+      <ul>
+        <li><a href="#堆上的内存管理是如何进行的">堆上的内存管理是如何进行的</a></li>
+        <li><a href="#堆上存放的是什么数据">堆上存放的是什么数据</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言">引言</h2>
+<p>如果你一直都是是用动态语言，比如 Python、Javascript 这种，你很可能并不会注意到栈和堆的区别。因为这些语言有垃圾收集器（Garbage collector，GC）存在，会自动帮你做好内存管理，你只要集中注意力编程即可。坏消息是 GC 并不是没有成本的事情，实际上设计再好的 GC 算法，也会降低代码的性能。如果你接触编程的时间足够久，那么想必你可能会听到过什么“递归层数太深栈爆炸了”这种话，此时你可能会点开搜索引擎稍微了解一下栈和堆的区别，有可能你就刚好点进了这一篇文章 :)</p>
+<blockquote>
+<p>📒 虽然 GC 会降低代码性能，但是免去了开发人员手动管理内存的心智负担，可以大大加速软件开发的速度，这是牺牲性能换取开发速度。但到了软件后期出现性能瓶颈的时候，就不得不研究如何重构甚至重写关键部分的代码提高性能了。</p>
+</blockquote>
+<p>这里的栈和堆并不是数据结构里面的堆和栈，而是指内存管理的两种机制。了解栈和堆的细节差异有助于我们理解一些比较接近底层的编程语言，这里说的编程语言<em>比如 Rust、C 和 C++ 等</em>。在 Rust 中，最为重要的概念就是所有权的问题，Rust 的很多设计都是围绕它展开，掌握了所有权就能在学习 Rust 的时候如鱼得水😄。</p>
+<h2 id="程序在内存上的布局">程序在内存上的布局</h2>
+<p>我们知道，要运行一个程序必须将程序加载到内存里面，在程序运行的过程中，数据也是需要读取到内存上的，那么你有没有想过这一切在内存上是如何分布的呢？下面我会给出一个比较简单的示意图<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>：如下所示：</p>
+<hr>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/program_layout_in_memory.png"
+        data-srcset="/img/program_layout_in_memory.png, /img/program_layout_in_memory.png 1.5x, /img/program_layout_in_memory.png 2x"
+        data-sizes="auto"
+        alt="/img/program_layout_in_memory.png"
+        title="/img/program_layout_in_memory.png" /></p>
+<hr>
+<p>在上图中，不同部分存放的东西分别是：</p>
+<ul>
+<li>text：存放代码</li>
+<li>data：存放初始化过的静态变量（Initialized static variables），<em>比如全局变量、静态变量</em></li>
+<li>bss：存放未经初始化的静态变量（Uninitialized static data），<em>比如 C 语言的 <code>static int i</code></em></li>
+<li>heap</li>
+<li>stack</li>
+</ul>
+<p>关于栈和堆会在后面进行单独说明</p>
+<blockquote>
+<p>📒 这里要记住的就是：栈和堆是在向彼此靠近的，栈是从<strong>高地址 -&gt; 低地址</strong>增长，而堆是<strong>低地址 -&gt; 高地址</strong>增长。这样你在看汇编代码的时候看到<strong>入栈时 sp 指针是做减法</strong>你就能理解了。</p>
+</blockquote>
+<blockquote>
+<p>📒 虽然看起来，随着我们申请内存越来越多，栈和堆可能会冲突（因为他们在彼此靠近），但是实际上并不需要担心这个问题，因为：1）这个布局是发生在虚拟内存上的，现在的处理器一般是 64 位的，容量非常大。2）在它们冲突之前，很有可能你的物理内存早就耗尽了，还是先担心这个</p>
+</blockquote>
+<h2 id="栈">栈</h2>
+<h3 id="术语">术语</h3>
+<ul>
+<li><strong>Stack pointer(SP)</strong>：实际上是一个寄存器，里面存放栈顶的地址</li>
+<li><strong>Stack frame</strong>：可以理解为它包含了函数调用的相关数据。<em>比如函数的参数、函数的返回地址、函数的局部变量等</em>。一连串的 Stack frame 就构成了调用栈（Call stack）</li>
+<li><strong>入栈</strong>：在栈上申请空间</li>
+<li><strong>出栈</strong>：在栈上释放空间</li>
+</ul>
+<h3 id="栈上的内存管理是如何进行的">栈上的内存管理是如何进行的</h3>
+<p>栈最大的特点就是先进后出（Last in first out, LIFO），这是我们在栈上申请空间和释放空间的时候的遵循的模式，这也是它叫做栈的原因。在内存上申请空间其实并不神秘，就是要标记哪些范围的地址是这个程序要用的。对栈来说，<strong>只要修改 stack pointer 的值即可</strong>，自然的，从栈底（下图中的 <code>A</code>）到栈顶（<code>sp</code> 指向的位置）就是我们栈上申请了的空间</p>
+<p>下面的图<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>就展现了这个简单的逻辑：</p>
+<hr>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/stack_and_sp.png"
+        data-srcset="/img/stack_and_sp.png, /img/stack_and_sp.png 1.5x, /img/stack_and_sp.png 2x"
+        data-sizes="auto"
+        alt="/img/stack_and_sp.png"
+        title="/img/stack_and_sp.png" /></p>
+<hr>
+<p>这里仍要再次强调，栈是从<strong>高地址 -&gt; 低地址</strong>增长，所以上图从左到右是高地址 -&gt; 低地址，所以在栈上申请空间（入栈）的时候实际上 <strong><code>sp</code> 是做减法</strong>.</p>
+<p>函数调用也是用栈完成的:</p>
+<ul>
+<li>调用函数的时候：修改 <code>sp</code> 指针 -&gt; 构造被调用的函数的 stack frame，其中包括函数参数和其他一些必要的数据，将其入栈</li>
+<li>函数退出的时候：弹出 Stack frame，释放空间，修改 <code>sp</code> 指针的值</li>
+</ul>
+<blockquote>
+<p>📒 在栈上申请内存空间的时候需要担心的问题是：不要申请太多导致栈爆了（也就是大名鼎鼎的 Stack Overflow）。这一点在写递归函数的时候要特别注意。你可以选择改成迭代的算法，也可以考虑增加栈的大小限制。<em>比如在 Python 里面可以用 <code>sys.getrecursionlimit()</code> 来修改栈的大小限制</em>。有的编程语言还会对尾递归进行优化，此时也可以选择将普通的递归函数改写为尾递归的形式。</p>
+</blockquote>
+<h3 id="以斐波那契数列的递归函数看栈的变化">以斐波那契数列的递归函数看栈的变化</h3>
+<p>CS 课程中讲解递归的时候一般都会讲到斐波那契数列，现在我们用 <code>F(n)</code> 表示斐波那契数列的第 <code>n</code> 个值，那么有：</p>
+<ul>
+<li><code>F(0) = 0</code></li>
+<li><code>F(1) = 1</code></li>
+<li><code>F(n) = F(n - 1) + F(n - 2)</code></li>
+</ul>
+<p><em>以 <code>F(4)</code> 为例，递归计算的方式如下：</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">F(4) = F(3) + F(2)
+</span></span><span class="line"><span class="cl">     = F(2) + F(1) + F(1) + F(0)
+</span></span><span class="line"><span class="cl">     = F(1) + F(0) + F(1) + F(1) + F(0)
+</span></span><span class="line"><span class="cl">     = 3 * F(1) + 2 * F(0)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em>如果我们忽略一些细节，感受函数调用的过程中栈的变化情况，那么大概如下所示：</em></p>
+<p>注： 下面的 <code>F(n)</code> 表示每个函数自己的 stack frame</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                  <span class="c1"># F(4): enter F(3)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>           <span class="c1"># F(3): enter F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># F(2): enter F(1), F(1) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>           <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>    <span class="c1"># F(2): enter F(0), F(0) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>           <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># F(3): enter F(1), F(1) is the base case, ready to exit function call </span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                  <span class="c1"># Function return, return to the body of F(3)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                         <span class="c1"># Function return, return to the body of F(4)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                  <span class="c1"># F(4): enter F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># F(2): enter F(1), F(1) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                  <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>           <span class="c1"># F(2): enter F(0), F(0) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                  <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                         <span class="c1"># Function return, return to the body of F(4)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="栈上存放的是什么数据">栈上存放的是什么数据</h3>
+<p><strong>栈上的内存空间管理是通过修改 <code>sp</code> 指针的值实现的</strong>，很容易知道下面几点：</p>
+<ol>
+<li>栈上的内存申请和释放都十分高效，为 <code>O(1)</code>，只要修改 <code>sp</code> 的值即可</li>
+<li>栈的这种 LIFO 的逻辑比较简单，编译器其实就能帮我们处理好，作为开发者我们不需要干预这个过程</li>
+<li>修改 <code>sp</code> 指针决定要申请多大的空间，意味着我们必须知道要申请的数据有多大，所以<strong>栈适合存放的数据是固定已知大小的</strong>。而大小不固定的数据是用堆来解决的</li>
+</ol>
+<h2 id="堆">堆</h2>
+<p>栈的不足之处是：<strong>无法处理大小可变的数据</strong>，我们无法知道此时 <code>sp</code> 的值要修改为多少。</p>
+<p>如何在大小可变的数据和栈之间搭建起桥梁呢？这就需要用到指针了。虽然<strong>实际存储的数据大小未知</strong>，但是指针的大小是固定已知的（只要保证寻址范围能覆盖到整个内存就行，一般跟机器字长相等），所以我们<strong>可以在栈上存储一个固定大小的指针</strong>，让这个它指向堆上存储的真正数据。</p>
+<h3 id="堆上的内存管理是如何进行的">堆上的内存管理是如何进行的</h3>
+<p>正如前面提到的，在堆上申请内存其实就是在堆上找到一个足够大的空间，并返回这个位置的指针，而后指针入栈。</p>
+<p>后面我们想要访问这个数据的时候，就对指针解引用即可。C 语言或者 Rust 里面的 <code>*</code> 操作符就是用来干这个的。不知道看到这里，以前难懂的指针是不是稍微能理解一点了 :)</p>
+<p>不同于栈里面简单修改 <code>sp</code> 指针即可，堆上的内存管理复杂得多。包括下面几点：</p>
+<ol>
+<li>堆上可以分配的内存的位置是任意的、大小也是任意的（不超过物理内存大小即可），而栈只要遵循先进后出就行。为了管理堆上已分配和待分配堆空间，我们需要设计相应的算法和数据结构，这就给堆上的内存管理带来很大的困难</li>
+<li>在堆上申请空间的效率也比较低。最基本的，我们起码要找到一个足够大小的空间，这个找的过程肯定是比直接修改 <code>sp</code> 的值耗时的。</li>
+<li>还要处理好「碎片化」的问题。因为堆上申请空间是这边分配一块那边分配一块，在重复的申请空间和释放空间的过程中，会在内存里面留下很多碎片。极端的情况是：碎片加起来的可分配大小满足你的要求，但是因为他们散落在内存各个地方无法利用从而导致了内存不足</li>
+</ol>
+<blockquote>
+<p>📒 堆上可以分配的内存比较大，但是需要更良好的管理机制来处理这种比较复杂的情况。<strong>对开发人员来说，也造成了一定的负担，我们无法依赖编译器自动帮我们处理，而是要自己手动管理内存</strong>，<em>比如在 C 语言中你进行了 <code>malloc()</code> 函数申请空间之后要是忘记用 <code>free()</code> 释放，那么你的程序就会存在内存泄露的问题</em>。更别谈还有其他的诸如悬垂指针等问题。</p>
+</blockquote>
+<h3 id="堆上存放的是什么数据">堆上存放的是什么数据</h3>
+<p>对堆上内存空间的分配有一定了解之后，我们不难得出下面的几个结论：</p>
+<ol>
+<li>堆上存放的是容量可变的数据。更灵活的同时，代价是牺牲了一点性能</li>
+<li>有时候也可以是固定大小的数据，但是你不想放在栈上。为什么会有这种情况？比如，在 Rust 里面，栈上的数据是默认生成拷贝，有时候出于性能的考量，你可能想要把很大的数据放在堆上，避免多次拷贝带来的开销。不知道看到这里你们有没有想到我们常常说函数参数传递引用比传递值效率更高这个优化呢？</li>
+</ol>
+<h2 id="总结">总结</h2>
+<ol>
+<li>栈和堆都是内存管理里面的概念，他们跟数据结构里的栈和堆的概念不一样。栈和堆的名字来源于他们内存申请和释放的时候遵循的模式</li>
+<li>通常来说，在栈上申请和释放内存空间是比较高效的。为此，Rust 里面默认都是在栈上操作</li>
+<li>栈上一般放「固定大小」的数据，堆上一般放「大小可变」的数据。但是有时候出于性能的考量，也会在堆上存放固定大小的数据</li>
+</ol>
+<p>在 CS 这门学科里面，经常可以看到分层的设计，比如计算机网络的 OSI 模型。包括编程语言本身也可以分为高级语言和低级语言。6.172 性能工程的老师说的一句话分享给你们—— “<strong>很多时候你要学好这一层的东西是必须了解下面一层的东西，你不一定要会用下一层的东西，但是知道下一层的细节会帮助你学这一层</strong>”。至少对我来说，知道了栈和堆的区别之后，下面的几个问题在我看来有了很合理的解释：</p>
+<ol>
+<li>C/C++ 语言的指针是用来干什么的？他们为什么存在？</li>
+<li>为什么尾递归优化会存在？为什么在写递归函数的时候都要考虑递归层数太深的问题？</li>
+<li>为什么 Rust 默认数据放在栈上？</li>
+<li>为什么以前会看到 C/C++ 传递函数参数的时候要用引用这种说法，说这样会比较快？</li>
+</ol>
+<blockquote>
+<p>📒 在 CS 里面，我认为最重要的概念就是封装。逐层封装，对上一层隐藏细节的这种设计实在很不错。</p>
+</blockquote>
+<p>选择带有 GC 好上手但效率较低的语言还是选择自己手动管理内存让代码效率更高呢？这点其实取决于你手头的工作。如果要开发速度当然是前者了，如果注重性能那就是后者。当然，夹在中间的是没有 GC + 基本不用自己手动管理内存 + 效率高的 Rust 语言🚀，要不学点 Rust😉</p>
+<blockquote>
+<p>⚠️ 本文在组织的时候可以忽略了一些细节，我只讲了我认为比较重要的几点。如果想要了解更多，值得一看的材料包括<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>和<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
+</blockquote>
+<h2 id="参考资料">参考资料</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer ">6.172. Performance engineering of software systems - Lecture 11 &amp;&amp; Lecture 12</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.youtube.com/watch?v=TfPJUoO-edk" target="_blank" rel="noopener noreffer ">CS110L. System programming - Memory Safety</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-09-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈" data-hashtags="System-programming"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-hashtag="System-programming"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/system-programming/">System-programming</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/vim-macro-101/" class="prev" rel="prev" title="Vim Macro 101"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vim Macro 101</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.103.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
