@@ -30,7 +30,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/what-is-the-heap-and-stack\/"
-        },"genre": "posts","keywords": "System-programming","wordcount":  3850 ,
+        },"genre": "posts","keywords": "System-programming","wordcount":  3911 ,
         "url": "https:\/\/martinlwx.github.io\/zh-cn\/what-is-the-heap-and-stack\/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -110,7 +110,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">什么是堆和栈</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/system-programming/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>System-Programming</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3850 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3911 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -176,7 +176,7 @@
 <h3 id="术语">术语</h3>
 <ul>
 <li><strong>Stack pointer(SP)</strong>：实际上是一个寄存器，里面存放栈顶的地址</li>
-<li><strong>Stack frame</strong>：可以理解为它包含了函数调用的相关数据。<em>比如函数的参数、函数的返回地址、函数的局部变量等</em>。一连串的 Stack frame 就构成了调用栈（Call stack）</li>
+<li><strong>Stack frame</strong>：当发生函数调用的时候就会创建 Stack frame。可以理解为它包含了函数调用的相关数据。<em>比如函数的参数、函数的返回地址、函数的局部变量（除了分配在堆上的）等</em>。一连串的 Stack frame 就构成了调用栈（Call stack）</li>
 <li><strong>入栈</strong>：在栈上申请空间</li>
 <li><strong>出栈</strong>：在栈上释放空间</li>
 </ul>
@@ -196,8 +196,8 @@
 <p>这里仍要再次强调，栈是从<strong>高地址 -&gt; 低地址</strong>增长，所以上图从左到右是高地址 -&gt; 低地址，所以在栈上申请空间（入栈）的时候实际上 <strong><code>sp</code> 是做减法</strong>.</p>
 <p>函数调用也是用栈完成的:</p>
 <ul>
-<li>调用函数的时候：修改 <code>sp</code> 指针 -&gt; 构造被调用的函数的 stack frame，其中包括函数参数和其他一些必要的数据，将其入栈</li>
-<li>函数退出的时候：弹出 Stack frame，释放空间，修改 <code>sp</code> 指针的值</li>
+<li>调用函数的时候：修改 <code>sp</code> 指针 -&gt; 构造被调用的函数的 stack frame，其中包括函数参数和其他一些必要的数据，将其入栈 -&gt; 进入 Callee</li>
+<li>函数退出的时候：上面的过程反过来就行</li>
 </ul>
 <blockquote>
 <p>📒 在栈上申请内存空间的时候需要担心的问题是：不要申请太多导致栈爆了（也就是大名鼎鼎的 Stack Overflow）。这一点在写递归函数的时候要特别注意。你可以选择改成迭代的算法，也可以考虑增加栈的大小限制。<em>比如在 Python 里面可以用 <code>sys.getrecursionlimit()</code> 来修改栈的大小限制</em>。有的编程语言还会对尾递归进行优化，此时也可以选择将普通的递归函数改写为尾递归的形式。</p>
@@ -269,7 +269,7 @@
 <ol>
 <li>栈上的内存申请和释放都十分高效，为 <code>O(1)</code>，只要修改 <code>sp</code> 的值即可</li>
 <li>栈的这种 LIFO 的逻辑比较简单，编译器其实就能帮我们处理好，作为开发者我们不需要干预这个过程</li>
-<li>修改 <code>sp</code> 指针决定要申请多大的空间，意味着我们必须知道要申请的数据有多大，所以<strong>栈适合存放的数据是固定已知大小的</strong>。而大小不固定的数据是用堆来解决的</li>
+<li>修改 <code>sp</code> 指针决定要申请多大的空间，意味着我们必须知道要申请的数据有多大（编译时要能确定），所以<strong>栈适合存放的数据是固定已知大小的</strong>。而大小不固定的数据是用堆来解决的</li>
 </ol>
 <h2 id="堆">堆</h2>
 <p>栈的不足之处是：<strong>无法处理大小可变的数据</strong>，我们无法知道此时 <code>sp</code> 的值要修改为多少。</p>
@@ -294,7 +294,7 @@
 </ol>
 <h2 id="总结">总结</h2>
 <ol>
-<li>栈和堆都是内存管理里面的概念，他们跟数据结构里的栈和堆的概念不一样。栈和堆的名字来源于他们内存申请和释放的时候遵循的模式</li>
+<li>栈和堆都是内存管理里面的概念，他们跟数据结构里的栈和堆的概念不一样。栈之所以叫做栈是因为我们在进行内存申请和分配的时候都遵循 LIFO 模式，而堆这个名字则是体现了堆上面的数据毫无组织。</li>
 <li>通常来说，在栈上申请和释放内存空间是比较高效的。为此，Rust 里面默认都是在栈上操作</li>
 <li>栈上一般放「固定大小」的数据，堆上一般放「大小可变」的数据。但是有时候出于性能的考量，也会在堆上存放固定大小的数据</li>
 </ol>
@@ -349,7 +349,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.103.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.104.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
@@ -359,5 +359,8 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
 </html>

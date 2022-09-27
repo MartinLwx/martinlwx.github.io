@@ -38,7 +38,7 @@ What is stored on the heap and stack will be discussed later.
 ### Terms
 
 - **Stack pointer(SP)**: the value of a specific register, which stores the address of the *top* of the stack
-- **Stack frame**: a frame of data(for one function call) that gets pushed onto the stack.
+- **Stack frame**: created as function calls are made, it is a frame of data(for one function call) that gets pushed onto the stack.
 - **push**: allocating space on the stack
 - **pop**: free space on the stack
 
@@ -60,8 +60,8 @@ It should be emphasized again here that the stack grows from **high address -> l
 
 How does the function call work?
 
-- Function call: subtract the value of `sp`  -> construct the stack frame for the called function, push them to the stack
-- Function exit: pop stack frame from the stack
+- Function call: subtract the value of `sp`  -> construct the stack frame for the called function, push them to the stack -> enter the callee
+- Function exit: just reverse the above process
 
 > 📒 The problem to be worried about when allocating space on the stack is: do not keep allocating which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. *For example, in Python, you can use `sys.getrecursionlimit()` to modify the size limit of the stack*. In some programming languages, we can also change the recursive function to the tail recursion version, which can benefit from the optimizations.
 
@@ -112,7 +112,7 @@ stack: F(4)                         # Function return, return to the body of F(4
 
 1. It is very efficient when allocating or freeing the space on the stack. We can think of it as `O(1)` complexity.
 2. The logic of this LIFO of the stack is relatively simple. The compiler can shandle it for us. As developers, we do not need to intervene in this process.
-2. To modify the `sp` pointer, we need to know how much space will be used, so the data on the stack should be a fixed and known size. As for data of variable size, this is the problem to be solved by the heap.
+2. To modify the `sp` pointer, we need to know how much space will be used, so the data on the stack should be a fixed and known size(at compile time). As for data of variable size, this is the problem to be solved by the heap.
 
 ## Heap
 
@@ -143,7 +143,7 @@ After having a certain understanding of the allocation of memory space on the he
 
 ## Wrap up
 
-1. Stack and heap are concepts in memory management, they are different from the concept of stack and heap in the data structure. The stack and heap names are derived from the pattern they follow when allocating and freeing memory
+1. Stack and heap are concepts in memory management, they are different from the concept of stack and heap in the data structure. The reason why the stack is called the stack is because we follow the classical LIFO pattern when we manage the memory on the stack, and the name of the heap implies disorganization.
 2. Generally speaking, it is more efficient to allocate and free memory space on the stack. For this reason, Rust operates on the stack by default.
 3. Data of "fixed size" is generally placed on the stack, and data of "variable size" is generally placed on the heap. However, sometimes for performance considerations, fixed-size data can also be stored on the heap.
 
