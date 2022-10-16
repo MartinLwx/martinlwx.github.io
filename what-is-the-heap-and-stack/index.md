@@ -58,10 +58,12 @@ The following figure[^1] shows the simple logic behind:
 It should be emphasized again here that the stack grows from **high address -> low address**, so from left to right in the above figure is **high address -> low address**.
 
 
-How does the function call work?
+How does the function call work(simplified version)?
 
 - Function call: subtract the value of `sp`  -> construct the stack frame for the called function, push them to the stack -> enter the callee
 - Function exit: just reverse the above process
+
+> The full procedure of function call can be found on [^3]
 
 > 📒 The problem to be worried about when allocating space on the stack is: do not keep allocating which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. *For example, in Python, you can use `sys.getrecursionlimit()` to modify the size limit of the stack*. In some programming languages, we can also change the recursive function to the tail recursion version, which can benefit from the optimizations.
 
@@ -159,11 +161,12 @@ In the subject of CS, you can often see the layered design. For example, OSI mod
 Should you choose a language with GC that is easy to use but less efficient, or choose to manually manage memory yourself to make your code more efficient? It depends on the job at hand. If you want to develop speed, of course, it is the former, and if you focus on performance, it is the latter. Of course, in the middle is no GC + basically no need to manually manage memory by yourself + efficient = Rust language 🚀. Why not learn some Rust 😉
 
 
-> ⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check [^1] and [^2].
+> ⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check the refs.
 
 ## Refs
 
 [^1]: [6.172. Performance engineering of software systems - Lecture 11 && Lecture 12](https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/)
 [^2]: [CS110L. System programming - Memory Safety](https://www.youtube.com/watch?v=TfPJUoO-edk)
+[^3]: [Stack frame](https://people.cs.rutgers.edu/~pxk/419/notes/frames.html)
 
 

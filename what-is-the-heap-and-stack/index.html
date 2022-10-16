@@ -19,7 +19,7 @@
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/vim-macro-101/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/vim-macro-101/" /><link rel="next" href="https://martinlwx.github.io/pattern-matching-in-python/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -30,7 +30,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/what-is-the-heap-and-stack\/"
-        },"genre": "posts","keywords": "System-programming","wordcount":  2295 ,
+        },"genre": "posts","keywords": "System-programming","wordcount":  2302 ,
         "url": "https:\/\/martinlwx.github.io\/what-is-the-heap-and-stack\/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -110,7 +110,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">What is stack and heap</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/system-programming/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>System-Programming</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2295 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2302 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -194,11 +194,14 @@
         title="/img/stack_and_sp.png" /></p>
 <hr>
 <p>It should be emphasized again here that the stack grows from <strong>high address -&gt; low address</strong>, so from left to right in the above figure is <strong>high address -&gt; low address</strong>.</p>
-<p>How does the function call work?</p>
+<p>How does the function call work(simplified version)?</p>
 <ul>
 <li>Function call: subtract the value of <code>sp</code>  -&gt; construct the stack frame for the called function, push them to the stack -&gt; enter the callee</li>
 <li>Function exit: just reverse the above process</li>
 </ul>
+<blockquote>
+<p>The full procedure of function call can be found on <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+</blockquote>
 <blockquote>
 <p>📒 The problem to be worried about when allocating space on the stack is: do not keep allocating which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. <em>For example, in Python, you can use <code>sys.getrecursionlimit()</code> to modify the size limit of the stack</em>. In some programming languages, we can also change the recursive function to the tail recursion version, which can benefit from the optimizations.</p>
 </blockquote>
@@ -310,17 +313,17 @@
 </blockquote>
 <p>Should you choose a language with GC that is easy to use but less efficient, or choose to manually manage memory yourself to make your code more efficient? It depends on the job at hand. If you want to develop speed, of course, it is the former, and if you focus on performance, it is the latter. Of course, in the middle is no GC + basically no need to manually manage memory by yourself + efficient = Rust language 🚀. Why not learn some Rust 😉</p>
 <blockquote>
-<p>⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check <sup id="fnref3:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> and <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<p>⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check the refs.</p>
 </blockquote>
 <h2 id="refs">Refs</h2>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer ">6.172. Performance engineering of software systems - Lecture 11 &amp;&amp; Lecture 12</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref3:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer ">6.172. Performance engineering of software systems - Lecture 11 &amp;&amp; Lecture 12</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://www.youtube.com/watch?v=TfPJUoO-edk" target="_blank" rel="noopener noreffer ">CS110L. System programming - Memory Safety</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://people.cs.rutgers.edu/~pxk/419/notes/frames.html" target="_blank" rel="noopener noreffer ">Stack frame</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -345,11 +348,12 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/vim-macro-101/" class="prev" rel="prev" title="Vim Macro 101"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vim Macro 101</a></div>
+    <div class="post-nav"><a href="/vim-macro-101/" class="prev" rel="prev" title="Vim Macro 101"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vim Macro 101</a>
+            <a href="/pattern-matching-in-python/" class="next" rel="next" title="Pattern Matching in Python">Pattern Matching in Python<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.104.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.104.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
