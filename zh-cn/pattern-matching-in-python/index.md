@@ -1,4 +1,4 @@
-# Python 3.10 的 pattern matching 的简明教程
+# 模式匹配简明教程（Python 3.10）
 
 
 > 这一篇博客一开始是写在 jupyter notebook 里面而后转成 markdown 的。如果想要访问和运行本来的 notebook，请查阅这个[仓库](https://github.com/MartinLwx/oh_my_python)
