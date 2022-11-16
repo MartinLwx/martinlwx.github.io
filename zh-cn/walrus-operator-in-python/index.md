@@ -244,5 +244,5 @@ while val:
 
 ## 参考
 
-[^1]: [PEP 572. Assignment Expressions]
+[^1]: [PEP 572. Assignment Expressions](https://peps.python.org/pep-0572/)
 

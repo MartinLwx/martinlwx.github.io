@@ -1,4 +1,4 @@
-# Walrus Operator in Python3.8
+# Walrus Operator in Python 3.8
 
 
 > This post is originally written in jupyter notebook and then convert to markdown. To get the original notebook files. Please check the [repo](https://github.com/MartinLwx/oh_my_python)
@@ -243,8 +243,8 @@ A few differences worth mentioning:
 
 In my opinion, the walrus operator is quite useful in the aforementioned scenarios (Recommended 👍), and the readability is much improved 🚀. But some examples in [^1] just make me more confused
 
-## 参考
+## Refs
 
-[^1]: [PEP 572. Assignment Expressions]
+[^1]: [PEP 572. Assignment Expressions](https://peps.python.org/pep-0572/)
 
 

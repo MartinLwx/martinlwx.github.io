@@ -1,4 +1,4 @@
-# Pattern Matching in Python
+# Pattern Matching in Python 3.10
 
 
 > This post is originally written in jupyter notebook and then convert to markdown. To get the original notebook files. Please check the [repo](https://github.com/MartinLwx/oh_my_python)
@@ -557,7 +557,7 @@ I would prefer pattern matching to the `if...elif...elif...else` for several rea
 
 The above is a brief introduction to pattern matching introduced in Python 3.10 🚀
 
-## 参考
+## Refs
 
 [^1]: [What's new in Python 3.10](https://docs.python.org/3/whatsnew/3.10.html)
 
