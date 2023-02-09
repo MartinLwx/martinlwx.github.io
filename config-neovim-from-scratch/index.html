@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Make your Neovim(Nvim) as IDE from scratch - MartinLwx&#39;s blog</title><meta name="Description" content="Configure your neovim from scratch, including LSP support"><meta property="og:title" content="Make your Neovim(Nvim) as IDE from scratch" />
+        <title>Transform Your Neovim into a IDE: A Step-by-Step Guide - MartinLwx&#39;s blog</title><meta name="Description" content="Configure your neovim from scratch, including LSP support"><meta property="og:title" content="Transform Your Neovim into a IDE: A Step-by-Step Guide" />
 <meta property="og:description" content="Configure your neovim from scratch, including LSP support" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/config-neovim-from-scratch/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
 
-<meta name="twitter:title" content="Make your Neovim(Nvim) as IDE from scratch"/>
+<meta name="twitter:title" content="Transform Your Neovim into a IDE: A Step-by-Step Guide"/>
 <meta name="twitter:description" content="Configure your neovim from scratch, including LSP support"/>
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -24,12 +24,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Make your Neovim(Nvim) as IDE from scratch",
+        "headline": "Transform Your Neovim into a IDE: A Step-by-Step Guide",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/config-neovim-from-scratch\/"
-        },"genre": "posts","keywords": "Nvim","wordcount":  3318 ,
+        },"genre": "posts","keywords": "Nvim","wordcount":  3363 ,
         "url": "https:\/\/martinlwx.github.io\/config-neovim-from-scratch\/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-09T13:38:42+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -107,9 +107,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Make your Neovim(Nvim) as IDE from scratch</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Transform Your Neovim into a IDE: A Step-by-Step Guide</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/vim/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Vim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3318 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3363 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -740,57 +740,65 @@
 </span><span class="lnt">77
 </span><span class="lnt">78
 </span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&#34;cmp&#34;</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">has_words_before</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">unpack</span> <span class="o">=</span> <span class="n">unpack</span> <span class="ow">or</span> <span class="n">table.unpack</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">line</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="n">vim.api</span><span class="p">.</span><span class="n">nvim_win_get_cursor</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">col</span> <span class="o">~=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">vim.api</span><span class="p">.</span><span class="n">nvim_buf_get_lines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="kc">true</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span><span class="n">sub</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span><span class="n">match</span><span class="p">(</span><span class="s2">&#34;%s&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">luasnip</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&#34;luasnip&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&#34;cmp&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">cmp.setup</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">  <span class="n">snippet</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">-- REQUIRED - you must specify a snippet engine</span>
-</span></span><span class="line"><span class="cl">    <span class="n">expand</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">require</span><span class="p">(</span><span class="s1">&#39;luasnip&#39;</span><span class="p">).</span><span class="n">lsp_expand</span><span class="p">(</span><span class="n">args.body</span><span class="p">)</span> <span class="c1">-- For `luasnip` users.</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">end</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="n">mapping</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">preset.insert</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">-- Use &lt;C-b/f&gt; to scroll the docs</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;&lt;C-b&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">scroll_docs</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;&lt;C-f&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">scroll_docs</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">-- Use &lt;C-k/j&gt; to switch in items</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;&lt;C-k&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">select_prev_item</span><span class="p">(),</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;&lt;C-j&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">select_next_item</span><span class="p">(),</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">-- Use &lt;Esc&gt; to stop completion</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;&lt;Esc&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">abort</span><span class="p">(),</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">-- Use &lt;CR&gt;(Enter) to confirm selection</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">-- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;&lt;CR&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">confirm</span><span class="p">({</span> <span class="n">select</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">}),</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">snippet</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- REQUIRED - you must specify a snippet engine</span>
+</span></span><span class="line"><span class="cl">        <span class="n">expand</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">require</span><span class="p">(</span><span class="s1">&#39;luasnip&#39;</span><span class="p">).</span><span class="n">lsp_expand</span><span class="p">(</span><span class="n">args.body</span><span class="p">)</span> <span class="c1">-- For `luasnip` users.</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">end</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mapping</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">preset.insert</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- Use &lt;C-b/f&gt; to scroll the docs</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-b&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">scroll_docs</span><span class="p">(</span> <span class="o">-</span><span class="mi">4</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-f&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">scroll_docs</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- Use &lt;C-k/j&gt; to switch in items</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-k&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">select_prev_item</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-j&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">select_next_item</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- Use &lt;CR&gt;(Enter) to confirm selection</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;CR&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">confirm</span><span class="p">({</span> <span class="n">select</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">}),</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">-- A super tab</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">-- source: https://github.com/LunarVim/LunarVim/blob/277079ff453fcd951447110fbc745e2241e0490f/lua/lvim/core/cmp.lua</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s2">&#34;&lt;Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">fallback</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Hint: if the completion menu is visible select next one</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">if</span> <span class="n">cmp.visible</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">          <span class="n">cmp.select_next_item</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">elseif</span> <span class="n">luasnip.expand_or_locally_jumpable</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">          <span class="n">luasnip.expand_or_jump</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">elseif</span> <span class="n">jumpable</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">          <span class="n">luasnip.jump</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">elseif</span> <span class="n">has_words_before</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">          <span class="c1">-- cmp.complete()</span>
-</span></span><span class="line"><span class="cl">          <span class="n">fallback</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">else</span>
-</span></span><span class="line"><span class="cl">          <span class="n">fallback</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">end</span>
-</span></span><span class="line"><span class="cl">      <span class="kr">end</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;s&#34;</span> <span class="p">}),</span>  <span class="c1">-- i - insert mode; s - selction mode</span>
-</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s2">&#34;&lt;S-Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">fallback</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">if</span> <span class="n">cmp.visible</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">          <span class="n">cmp.select_prev_item</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">elseif</span> <span class="n">luasnip.jumpable</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">          <span class="n">luasnip.jump</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">else</span>
-</span></span><span class="line"><span class="cl">          <span class="n">fallback</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">end</span>
-</span></span><span class="line"><span class="cl">      <span class="kr">end</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;s&#34;</span> <span class="p">}),</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- A super tab</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- sourc: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;&lt;Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">fallback</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- Hint: if the completion menu is visible select next one</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">if</span> <span class="n">cmp.visible</span><span class="p">()</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">                <span class="n">cmp.select_next_item</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">elseif</span> <span class="n">luasnip.expand_or_locally_jump</span><span class="p">()</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- they way you will only jump inside the snippet region</span>
+</span></span><span class="line"><span class="cl">                <span class="n">luasnip.expand_or_jump</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">elseif</span> <span class="n">has_words_before</span><span class="p">()</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">                <span class="n">cmp.complete</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">else</span>
+</span></span><span class="line"><span class="cl">                <span class="n">fallback</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">end</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">end</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;s&#34;</span> <span class="p">}),</span> <span class="c1">-- i - insert mode; s - select mode</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;&lt;S-Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">fallback</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">if</span> <span class="n">cmp.visible</span><span class="p">()</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">                <span class="n">cmp.select_prev_item</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">elseif</span> <span class="n">luasnip.jumpable</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">                <span class="n">luasnip.jump</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">else</span>
+</span></span><span class="line"><span class="cl">                <span class="n">fallback</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">end</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">end</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;s&#34;</span> <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}),</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1">-- Let&#39;s configure the item&#39;s appearance</span>
 </span></span><span class="line"><span class="cl">  <span class="c1">-- source: https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance</span>
@@ -815,10 +823,10 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="c1">-- Set source precedence</span>
 </span></span><span class="line"><span class="cl">  <span class="n">sources</span> <span class="o">=</span> <span class="n">cmp.config</span><span class="p">.</span><span class="n">sources</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;nvim_lsp&#39;</span> <span class="p">},</span>    <span class="c1">-- For nvim-lsp</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;luasnip&#39;</span> <span class="p">},</span>     <span class="c1">-- For luasnip user</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;buffer&#39;</span> <span class="p">},</span>      <span class="c1">-- For buffer word completion</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;path&#39;</span> <span class="p">},</span>        <span class="c1">-- For path completion</span>
+</span></span><span class="line"><span class="cl">      <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;nvim_lsp&#39;</span> <span class="p">},</span>    <span class="c1">-- For nvim-lsp</span>
+</span></span><span class="line"><span class="cl">      <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;luasnip&#39;</span> <span class="p">},</span>     <span class="c1">-- For luasnip user</span>
+</span></span><span class="line"><span class="cl">      <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;buffer&#39;</span> <span class="p">},</span>      <span class="c1">-- For buffer word completion</span>
+</span></span><span class="line"><span class="cl">      <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;path&#39;</span> <span class="p">},</span>        <span class="c1">-- For path completion</span>
 </span></span><span class="line"><span class="cl">  <span class="p">})</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
@@ -1018,7 +1026,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;wa&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.add_workspace_folder</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;wr&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.remove_workspace_folder</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;wl&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">      <span class="n">print</span><span class="p">(</span><span class="n">vim.inspect</span><span class="p">(</span><span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.list_workspace_folders</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">print</span><span class="p">(</span><span class="n">vim.inspect</span><span class="p">(</span><span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.list_workspace_folders</span><span class="p">()))</span>
 </span></span><span class="line"><span class="cl">    <span class="kr">end</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;D&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.type_definition</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;rn&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.rename</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
@@ -1077,7 +1085,7 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Make your Neovim(Nvim) as IDE from scratch" data-hashtags="Nvim"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-hashtag="Nvim"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Make your Neovim(Nvim) as IDE from scratch"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Make your Neovim(Nvim) as IDE from scratch"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Make your Neovim(Nvim) as IDE from scratch"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Transform Your Neovim into a IDE: A Step-by-Step Guide" data-hashtags="Nvim"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-hashtag="Nvim"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Transform Your Neovim into a IDE: A Step-by-Step Guide"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Transform Your Neovim into a IDE: A Step-by-Step Guide"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/config-neovim-from-scratch/" data-title="Transform Your Neovim into a IDE: A Step-by-Step Guide"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>

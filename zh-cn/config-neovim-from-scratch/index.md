@@ -119,30 +119,30 @@ $ touch ~/.config/nvim/lua/init.lua
 
 ```lua
 -- Hint: use `:h <option>` to figure out the meaning if needed
-vim.opt.clipboard = 'unnamedplus'   -- use system clipboard 
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
-vim.opt.mouse = 'a'                 -- allow the mouse to be used in Nvim
+vim.opt.clipboard = 'unnamedplus' -- use system clipboard
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.mouse = 'a' -- allow the mouse to be used in Nvim
 
 -- Tab
-vim.opt.tabstop = 4                 -- number of visual spaces per TAB
-vim.opt.softtabstop = 4             -- number of spacesin tab when editing
-vim.opt.shiftwidth = 4              -- insert 4 spaces on a tab
-vim.opt.expandtab = true            -- tabs are spaces, mainly because of python
+vim.opt.tabstop = 4 -- number of visual spaces per TAB
+vim.opt.softtabstop = 4 -- number of spacesin tab when editing
+vim.opt.shiftwidth = 4 -- insert 4 spaces on a tab
+vim.opt.expandtab = true -- tabs are spaces, mainly because of python
 
 -- UI config
-vim.opt.number = true               -- show absolute number
-vim.opt.relativenumber = true       -- add numbers to each line on the left side
-vim.opt.cursorline = true           -- highlight cursor line underneath the cursor horizontally
-vim.opt.splitbelow = true           -- open new vertical split bottom
-vim.opt.splitright = true           -- open new horizontal splits right
+vim.opt.number = true -- show absolute number
+vim.opt.relativenumber = true -- add numbers to each line on the left side
+vim.opt.cursorline = true -- highlight cursor line underneath the cursor horizontally
+vim.opt.splitbelow = true -- open new vertical split bottom
+vim.opt.splitright = true -- open new horizontal splits right
 -- vim.opt.termguicolors = true        -- enabl 24-bit RGB color in the TUI
-vim.opt.showmode = false            -- we are experienced, wo don't need the "-- INSERT --" mode hint
+vim.opt.showmode = false -- we are experienced, wo don't need the "-- INSERT --" mode hint
 
 -- Searching
-vim.opt.incsearch = true            -- search as characters are entered
-vim.opt.hlsearch = false            -- do not highlight matches
-vim.opt.ignorecase = true           -- ignore case in searches by default
-vim.opt.smartcase = true            -- but make it case sensitive if an uppercase is entered
+vim.opt.incsearch = true -- search as characters are entered
+vim.opt.hlsearch = false -- do not highlight matches
+vim.opt.ignorecase = true -- ignore case in searches by default
+vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entered
 ```
 
 然后打开 `init.lua`，用 `require` 导入刚才写的 `options.lua` 文件
@@ -224,9 +224,9 @@ require('keymaps')
 -- Hint: string concatenation is done by `..`
 local ensure_packer = function()
     local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
         vim.cmd [[packadd packer.nvim]]
         return true
     end
@@ -250,23 +250,23 @@ vim.cmd([[
 -- Packer.nvim hints
 --     after = string or list,           -- Specifies plugins to load before this plugin. See "sequencing" below
 --     config = string or function,      -- Specifies code to run after this plugin is loaded
---     requires = string or list,        -- Specifies plugin dependencies. See "dependencies". 
+--     requires = string or list,        -- Specifies plugin dependencies. See "dependencies".
 --     ft = string or list,              -- Specifies filetypes which load this plugin.
 --     run = string, function, or table, -- Specify operations to be run after successful installs/updates of a plugin
 return require('packer').startup(function(use)
-    -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+        -- Packer can manage itself
+        use 'wbthomason/packer.nvim'
 
-    ---------------------------------------
-    -- NOTE: PUT YOUR THIRD PLUGIN HERE --
-    ---------------------------------------
-  
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
+        ---------------------------------------
+        -- NOTE: PUT YOUR THIRD PLUGIN HERE --
+        ---------------------------------------
+
+        -- Automatically set up your configuration after cloning packer.nvim
+        -- Put this at the end after all plugins
+        if packer_bootstrap then
+            require('packer').sync()
+        end
+    end)
 ```
 
 然后在 `init.lua` 文件里面再次加上一行导入这个文件
@@ -321,55 +321,59 @@ require('colorscheme')
 > 💡 这里首先选择写 `nvim-cmp` 的配置文件然后再在 `plugins.lua` 文件里面用 `use` 添加插件。这样可以保证 Packer.nvim 安装 nvim-cmp 的相关插件读取 `nvim-cmp.lua` 配置文件的时候不会报错。**下面的配置文件暂时看不懂也没有关系，我会对其进行解释**
 
 ```lua
+local has_words_before = function()
+    unpack = unpack or table.unpack
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local luasnip = require("luasnip")
 local cmp = require("cmp")
 
 cmp.setup({
-  snippet = {
-    -- REQUIRED - you must specify a snippet engine
-    expand = function(args)
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    -- Use <C-b/f> to scroll the docs
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    -- Use <C-k/j> to switch in items
-    ['<C-k>'] = cmp.mapping.select_prev_item(),
-    ['<C-j>'] = cmp.mapping.select_next_item(),
-    -- Use <Esc> to stop completion
-    ['<Esc>'] = cmp.mapping.abort(),
-    -- Use <CR>(Enter) to confirm selection
-    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), 
+    snippet = {
+        -- REQUIRED - you must specify a snippet engine
+        expand = function(args)
+            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        -- Use <C-b/f> to scroll the docs
+        ['<C-b>'] = cmp.mapping.scroll_docs( -4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        -- Use <C-k/j> to switch in items
+        ['<C-k>'] = cmp.mapping.select_prev_item(),
+        ['<C-j>'] = cmp.mapping.select_next_item(),
+        -- Use <CR>(Enter) to confirm selection
+        -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
-    -- A super tab
-    -- source: https://github.com/LunarVim/LunarVim/blob/277079ff453fcd951447110fbc745e2241e0490f/lua/lvim/core/cmp.lua
-    ["<Tab>"] = cmp.mapping(function(fallback)
-        -- Hint: if the completion menu is visible select next one
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_locally_jumpable() then
-          luasnip.expand_or_jump()
-        elseif jumpable(1) then
-          luasnip.jump(1)
-        elseif has_words_before() then
-          -- cmp.complete()
-          fallback()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),  -- i - insert mode; s - selction mode
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-  }),
+        -- A super tab
+        -- sourc: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            -- Hint: if the completion menu is visible select next one
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_locally_jump() then
+                -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+                -- they way you will only jump inside the snippet region
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, { "i", "s" }), -- i - insert mode; s - select mode
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable( -1) then
+                luasnip.jump( -1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+    }),
 
   -- Let's configure the item's appearance
   -- source: https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
@@ -407,11 +411,11 @@ cmp.setup({
 ```lua
 ...
 use { 'neovim/nvim-lspconfig' }
-use { 'hrsh7th/nvim-cmp', config = [[require('config.nvim-cmp')]] }    
-use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' } 
-use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }        -- buffer auto-completion
-use { 'hrsh7th/cmp-path', after = 'nvim-cmp' }          -- path auto-completion
-use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }       -- cmdline auto-completion
+use { 'hrsh7th/nvim-cmp', config = [[require('config.nvim-cmp')]] }
+use { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-cmp' }
+use { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' } -- buffer auto-completion
+use { 'hrsh7th/cmp-path', after = 'nvim-cmp' } -- path auto-completion
+use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' } -- cmdline auto-completion
 use 'L3MON4D3/LuaSnip'
 use 'saadparwaiz1/cmp_luasnip'
 ...
@@ -515,7 +519,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
     vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, bufopts)
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
