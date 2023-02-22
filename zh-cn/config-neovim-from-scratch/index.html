@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-02-08T15:01:42+08:00" />
-<meta property="article:modified_time" content="2023-02-09T13:38:42+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta property="article:modified_time" content="2023-02-15T13:38:42+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
 
@@ -30,7 +30,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/config-neovim-from-scratch\/"
         },"genre": "posts","keywords": "Nvim","wordcount":  5055 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/config-neovim-from-scratch\/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-09T13:38:42+08:00","publisher": {
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/config-neovim-from-scratch\/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -61,7 +61,7 @@
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
                 </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
                     <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/config-neovim-from-scratch/">English</option><option value="/zh-cn/config-neovim-from-scratch/" selected>简体中文</option></select>
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/config-neovim-from-scratch/">English</option><option value="/zh-cn/config-neovim-from-scratch/" selected>简体中文</option></select>
                 </a></div>
         </div>
     </div>
@@ -95,7 +95,7 @@
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
                     <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/config-neovim-from-scratch/">English</option><option value="/zh-cn/config-neovim-from-scratch/" selected>简体中文</option></select>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/config-neovim-from-scratch/">English</option><option value="/zh-cn/config-neovim-from-scratch/" selected>简体中文</option></select>
                 </a></div>
     </div>
 </header><div class="search-dropdown desktop">
@@ -934,12 +934,12 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;mason-lspconfig&#39;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">-- A list of servers to automatically install if they&#39;re not already installed</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ensure_installed</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;pylsp&#39;</span><span class="p">,</span> <span class="s1">&#39;gopls&#39;</span><span class="p">,</span> <span class="s1">&#39;sumneko_lua&#39;</span><span class="p">,</span> <span class="s1">&#39;rust_analyzer&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ensure_installed</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;pylsp&#39;</span><span class="p">,</span> <span class="s1">&#39;gopls&#39;</span><span class="p">,</span> <span class="s1">&#39;lua_ls&#39;</span><span class="p">,</span> <span class="s1">&#39;rust_analyzer&#39;</span> <span class="p">},</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>💡 <strong>我们想要用什么语言的 LSP 就在 <code>ensure_installed</code> 里面加上</strong>，完整的列表可以看 <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreffer ">server_configurations</a>。<em>我个人常用的就 <code>python/go/rust</code> 这三个编程语言，而因为我们都用 Lua 语言来配置 <code>Nvim</code>，所以也加上了 <code>sumneko_lua</code></em></p>
+<p>💡 <strong>我们想要用什么语言的 LSP 就在 <code>ensure_installed</code> 里面加上</strong>，完整的列表可以看 <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreffer ">server_configurations</a>。<em>我个人常用的就 <code>python/go/rust</code> 这三个编程语言，而因为我们都用 Lua 语言来配置 <code>Nvim</code>，所以也加上了 <code>lua_ls</code></em></p>
 </blockquote>
 <p>重启 <code>Nvim</code> 之后你应该可以在下面的状态栏看到 Mason 正在下载安装上面我们指定的 LSP（<strong>注意此时不能关闭 <code>Nvim</code></strong>），可以输入 <code>:Mason</code> 查看安装进度</p>
 <p>在成功安装 LSP 之后，我们就可以用 <code>nvim-lspconfig</code> 插件进行配置（因为配置的代码比较长，下面只展示了 <code>pylsp</code> 的配置，其他语言的配置大同小异），编辑 <code>~/.config/nvim/lua/lsp.lua</code> 文件新增如下内容</p>
@@ -1078,7 +1078,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2023-02-09</span>
+                <span>更新于 2023-02-15</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>

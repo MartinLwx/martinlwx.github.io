@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Hw06 of CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="The simple solutions of hw06 of CS61A of UCB"><meta property="og:title" content="Hw06 of CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="The simple solutions of hw06 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/hw06-of-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-27T13:17:39+08:00" />
+<meta property="article:modified_time" content="2022-02-27T13:17:39+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Hw06 of CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="The simple solutions of hw06 of CS61A of UCB"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/hw06-of-cs61a-of-ucb/" /><link rel="prev" href="https://martinlwx.github.io/en/lab10-cs61a-of-ucb/" /><link rel="next" href="https://martinlwx.github.io/en/hw07-of-cs61a-of-ucb/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hw06 of CS61A of UCB(2021-Fall)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/hw06-of-cs61a-of-ucb\/"
+        },"genre": "posts","keywords": "Course, Python","wordcount":  1662 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/hw06-of-cs61a-of-ucb\/","datePublished": "2022-02-27T13:17:39+08:00","dateModified": "2022-02-27T13:17:39+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "The simple solutions of hw06 of CS61A of UCB"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/hw06-of-cs61a-of-ucb/" selected>English</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/hw06-of-cs61a-of-ucb/" selected>English</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hw06 of CS61A of UCB(2021-Fall)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/course/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Course</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-02-27">2022-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1662 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#oop">OOP</a>
+      <ul>
+        <li><a href="#q1-vending-machine">Q1: Vending Machine</a></li>
+        <li><a href="#q2-mint">Q2: Mint</a></li>
+      </ul>
+    </li>
+    <li><a href="#linked-lists">Linked Lists</a>
+      <ul>
+        <li><a href="#q3-store-digits">Q3: Store Digits</a></li>
+        <li><a href="#q4-mutable-mapping">Q4: Mutable Mapping</a></li>
+        <li><a href="#q5-two-list">Q5: Two List</a></li>
+      </ul>
+    </li>
+    <li><a href="#extra-questions">Extra Questions</a>
+      <ul>
+        <li><a href="#q6-next-virahanka-fibonacci-object">Q6: Next Virahanka Fibonacci Object</a></li>
+        <li><a href="#q7-is-bst">Q7: Is BST</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="oop">OOP</h2>
+<hr>
+<h3 id="q1-vending-machine">Q1: Vending Machine</h3>
+<blockquote>
+<p>In this question you&rsquo;ll create a <a href="https://en.wikipedia.org/wiki/Vending_machine" target="_blank" rel="noopener noreffer ">vending machine</a> that only outputs a single product and provides change when needed.</p>
+<p>Create a class called <code>VendingMachine</code> that represents a vending machine for some product. A <code>Vending Machine</code>object returns strings describing its interactions. Remember to match <strong>exactly</strong> the strings in the doctests &ndash; including punctuation and spacing!</p>
+<p>Fill in the <code>VendingMachine</code> class, adding attributes and methods as appropriate, such that its behavior matches the following doctests:</p>
+</blockquote>
+<p>According to the wiki, a vending machine is an automated machine that provides items to consumers after cash, or other forms of payment are inserted into the machine or otherwise made. To make this problem easier, the description indicates that the vending machine only has one product. Take care of the details:</p>
+<ol>
+<li><code>restock</code>. The simplest function in Q1.</li>
+<li><code>add_funds</code>
+<ol>
+<li>Memorize the fund you add if it has stocks.</li>
+<li>Refund if there are no stocks at all</li>
+</ol>
+</li>
+<li><code>vend</code>
+<ol>
+<li>Stocks available
+<ol>
+<li>You can buy it if you have enough 💰</li>
+<li>It asks you to add more funds if your funds is not enough</li>
+<li>Don&rsquo;t forget to decrease the stocks after you get the product.</li>
+</ol>
+</li>
+<li>No stocks
+<ol>
+<li>Restocks!</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">VendingMachine</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A vending machine that vends some product for some price.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">product</span> <span class="o">=</span> <span class="n">product</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">restock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Restock num items to our vending machine&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">+=</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Current </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2"> stock: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stocks</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">add_funds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fund</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Add funds to balance, return funds if no stocks&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">fund</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Current balance: $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Nothing left to vend. Please restock. Here is your $</span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2">.&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">vend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Vend a product&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s1">&#39;Nothing left to vend. Please restock.&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;You must add $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2"> more funds.&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">change</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">self</span><span class="o">.</span><span class="n">stocks</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">change</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Here is your </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2">.&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Here is your </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="si">}</span><span class="s2"> and $</span><span class="si">{</span><span class="n">change</span><span class="si">}</span><span class="s2"> change.&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q2-mint">Q2: Mint</h3>
+<blockquote>
+<p>A mint is a place where coins are made. In this question, you&rsquo;ll implement a <code>Mint</code> class that can output a <code>Coin</code> with the correct year and worth.</p>
+<ul>
+<li>Each <code>Mint</code> instance has a <code>year</code> stamp. The <code>update</code> method sets the <code>year</code> stamp to the <code>present_year</code> class attribute of the <code>Mint</code> class.</li>
+<li>The <code>create</code> method takes a subclass of <code>Coin</code> and returns an instance of that class stamped with the <code>mint</code>&rsquo;s year (which may be different from <code>Mint.present_year</code> if it has not been updated.)</li>
+<li>A <code>Coin</code>&rsquo;s <code>worth</code> method returns the <code>cents</code> value of the coin plus one extra cent for each year of age beyond 50. A coin&rsquo;s age can be determined by subtracting the coin&rsquo;s year from the <code>present_year</code> class attribute of the <code>Mint</code> class.</li>
+</ul>
+</blockquote>
+<p>:)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Mint</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A mint creates coins by stamping on years.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">present_year</span> <span class="o">=</span> <span class="mi">2021</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kind</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">kind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">Mint</span><span class="o">.</span><span class="n">present_year</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Coin</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">worth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">age</span> <span class="o">=</span> <span class="n">Mint</span><span class="o">.</span><span class="n">present_year</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">year</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cents</span> <span class="o">+</span> <span class="p">(</span><span class="n">age</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cents</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="linked-lists">Linked Lists</h2>
+<hr>
+<h3 id="q3-store-digits">Q3: Store Digits</h3>
+<blockquote>
+<p>Write a function <code>store_digits</code> that takes in an integer <code>n</code> and returns a linked list where each element of the list is a digit of <code>n</code>.</p>
+<p><strong>Important</strong>: Do not use any string manipulation functions like <code>str</code> and <code>reversed</code></p>
+</blockquote>
+<p>We can solve this problem iteratively. By calculating <code>n % 10</code>, we can get the last digit of the number, then we make a new node and insert it to the front of the linked list.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">store_digits</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Stores the digits of a positive number n in a linked list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sentinel</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">all_but_last</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># every time we insert node in the front of the linklist</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_node</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">new_node</span>
+</span></span><span class="line"><span class="cl">        <span class="n">n</span> <span class="o">=</span> <span class="n">all_but_last</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q4-mutable-mapping">Q4: Mutable Mapping</h3>
+<blockquote>
+<p>Implement <code>deep_map_mut(fn, link)</code>, which applies a function <code>fn</code> onto all elements in the given linked list <code>link</code>. If an element is itself a linked list, apply <code>fn</code> to each of its elements, and so on.</p>
+<p>Your implementation should mutate the original linked list. Do not create any new linked lists.</p>
+<blockquote>
+<p><strong>Hint</strong>: The built-in <code>isinstance</code> function may be useful.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;&gt;&gt; s = Link(1, Link(2, Link(3, Link(4))))
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; isinstance(s, Link)
+</span></span><span class="line"><span class="cl">True
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; isinstance(s, int)
+</span></span><span class="line"><span class="cl">False
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+</blockquote>
+<p>It is a recursive problem that needs to be solved recursively 🤗. Check the comments below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Mutates a deep link by replacing each item found with the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    result of calling fn on the item.  Does NOT create new Links (so
+</span></span></span><span class="line"><span class="cl"><span class="s2">    no use of Link&#39;s constructor)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 1. do thing if it is empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">link</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> 
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 2. if it is an integer</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">link</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">link</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deep_map_mut</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-two-list">Q5: Two List</h3>
+<blockquote>
+<p>Implement a function <code>two_list</code> that takes in two lists and returns a linked list. The first list contains the values that we want to put in the linked list, and the second list contains the number of each corresponding value. Assume both lists are the same size and have a length of 1 or greater. Assume all elements in the second list are greater than 0.</p>
+</blockquote>
+<p>Unlike the previous problem(Q3), we insert the new node after the last node of the linked list.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">two_list</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">amounts</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns a linked list according to the two lists that were passed in. Assume
+</span></span></span><span class="line"><span class="cl"><span class="s2">    vals and amounts are the same size. Elements in vals represent the value, and the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    corresponding element in amounts represents the number of this value desired in the
+</span></span></span><span class="line"><span class="cl"><span class="s2">    final linked list. Assume all elements in amounts are greater than 0. Assume both
+</span></span></span><span class="line"><span class="cl"><span class="s2">    lists have at least one element.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sentinel</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="n">sentinel</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val</span><span class="p">,</span> <span class="n">amount</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">amounts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">new_node</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">new_node</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">rest</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="extra-questions">Extra Questions</h2>
+<hr>
+<h3 id="q6-next-virahanka-fibonacci-object">Q6: Next Virahanka Fibonacci Object</h3>
+<blockquote>
+<p>Implement the <code>next</code> method of the <code>VirFib</code> class. For this class, the <code>value</code> attribute is a Fibonacci number. The <code>next</code> method returns a <code>VirFib</code> instance whose <code>value</code> is the next Fibonacci number. The <code>next</code> method should take only constant time.</p>
+<p>Note that in the doctests, nothing is being printed out. Rather, each call to <code>.next()</code> returns a <code>VirFib</code> instance. The way each <code>VirFib</code> instance is displayed is determined by the return value of its <code>__repr__</code> method.</p>
+<blockquote>
+<p><em>Hint</em>: Keep track of the previous number by setting a new instance attribute inside <code>next</code>. You can create new instance attributes for objects at any point, even outside the <code>__init__</code> method.</p>
+</blockquote>
+</blockquote>
+<p>:)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">VirFib</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A Virahanka Fibonacci number.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_fin</span> <span class="o">=</span> <span class="n">VirFib</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_fin</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">next_fin</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;VirFib object, value &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q7-is-bst">Q7: Is BST</h3>
+<blockquote>
+<p>Write a function <code>is_bst</code>, which takes a Tree <code>t</code> and returns <code>True</code> if, and only if, <code>t</code> is a valid binary search tree, which means that:</p>
+<ul>
+<li>Each node has at most two children (a leaf is automatically a valid binary search tree)</li>
+<li>The children are valid binary search trees</li>
+<li>For every node, the entries in that node&rsquo;s left child are less than or equal to the label of the node</li>
+<li>For every node, the entries in that node&rsquo;s right child are greater than the label of the node</li>
+</ul>
+<p>An example of a BST is:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://miro.medium.com/max/1424/1*F8MmBnUQyOA8-Rajg69nSQ.png"
+        data-srcset="https://miro.medium.com/max/1424/1*F8MmBnUQyOA8-Rajg69nSQ.png, https://miro.medium.com/max/1424/1*F8MmBnUQyOA8-Rajg69nSQ.png 1.5x, https://miro.medium.com/max/1424/1*F8MmBnUQyOA8-Rajg69nSQ.png 2x"
+        data-sizes="auto"
+        alt="https://miro.medium.com/max/1424/1*F8MmBnUQyOA8-Rajg69nSQ.png"
+        title="bst" /></p>
+<p>Note that, if a node has only one child, that child could be considered either the left or right child. You should take this into consideration.</p>
+<p><em>Hint:</em> It may be helpful to write helper functions <code>bst_min</code> and <code>bst_max</code> that return the minimum and maximum, respectively, of a Tree if it is a valid binary search tree.</p>
+</blockquote>
+<p>Notable details:</p>
+<ol>
+<li>the minimal value of the left child should be &lt;= the value of the current node rather than &lt;.</li>
+<li>If a node has only one child, it can be considered either the left or right child.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">is_bst</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Returns True if the Tree t has the structure of a valid BST.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">bst_min</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return the min value of the tree t&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sub_branch_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">bst_min</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">sub_branch_min</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">bst_max</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Return the max value of the tree t&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sub_branch_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">bst_max</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">sub_branch_max</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 1. a leaf node is a BST</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 2. each node has at most 2 children</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 3. a node with a single child</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># it can be considered either the left or the right</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">(</span><span class="n">bst_max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="ow">or</span> <span class="n">bst_min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span> \
+</span></span><span class="line"><span class="cl">                <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">left_max</span> <span class="o">=</span> <span class="n">bst_max</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">right_min</span> <span class="o">=</span> <span class="n">bst_min</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">left_max</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">.</span><span class="n">label</span> <span class="o">&lt;</span> <span class="n">right_min</span> <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">is_bst</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-02-27</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/hw06-of-cs61a-of-ucb/" data-title="Hw06 of CS61A of UCB(2021-Fall)" data-hashtags="Course,Python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/hw06-of-cs61a-of-ucb/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/hw06-of-cs61a-of-ucb/" data-title="Hw06 of CS61A of UCB(2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/hw06-of-cs61a-of-ucb/" data-title="Hw06 of CS61A of UCB(2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/hw06-of-cs61a-of-ucb/" data-title="Hw06 of CS61A of UCB(2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/course/">Course</a>,&nbsp;<a href="/en/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/lab10-cs61a-of-ucb/" class="prev" rel="prev" title="Lab10 CS61A of UCB(2021-Fall)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Lab10 CS61A of UCB(2021-Fall)</a>
+            <a href="/en/hw07-of-cs61a-of-ucb/" class="next" rel="next" title="Hw07 of CS61A of UCB(2021-Fall)">Hw07 of CS61A of UCB(2021-Fall)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.110.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

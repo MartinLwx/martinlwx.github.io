@@ -476,11 +476,11 @@ require('mason').setup({
 
 require('mason-lspconfig').setup({
     -- A list of servers to automatically install if they're not already installed
-    ensure_installed = { 'pylsp', 'gopls', 'sumneko_lua', 'rust_analyzer' },
+    ensure_installed = { 'pylsp', 'gopls', 'lua_ls', 'rust_analyzer' },
 })
 ```
 
-> 💡 **我们想要用什么语言的 LSP 就在 `ensure_installed` 里面加上**，完整的列表可以看 [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md)。*我个人常用的就 `python/go/rust` 这三个编程语言，而因为我们都用 Lua 语言来配置 `Nvim`，所以也加上了 `sumneko_lua`*
+> 💡 **我们想要用什么语言的 LSP 就在 `ensure_installed` 里面加上**，完整的列表可以看 [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md)。*我个人常用的就 `python/go/rust` 这三个编程语言，而因为我们都用 Lua 语言来配置 `Nvim`，所以也加上了 `lua_ls`*
 
 重启 `Nvim` 之后你应该可以在下面的状态栏看到 Mason 正在下载安装上面我们指定的 LSP（**注意此时不能关闭 `Nvim`**），可以输入 `:Mason` 查看安装进度
 

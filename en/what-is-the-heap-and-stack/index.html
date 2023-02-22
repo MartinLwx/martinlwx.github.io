@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>What is stack and heap - MartinLwx&#39;s blog</title><meta name="Description" content="the differences between the stack and the heap"><meta property="og:title" content="What is stack and heap" />
+<meta property="og:description" content="the differences between the stack and the heap" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-19T19:01:04+08:00" />
+<meta property="article:modified_time" content="2022-09-19T19:01:04+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="What is stack and heap"/>
+<meta name="twitter:description" content="the differences between the stack and the heap"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/en/vim-macro-101/" /><link rel="next" href="https://martinlwx.github.io/en/pattern-matching-in-python/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "What is stack and heap",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/what-is-the-heap-and-stack\/"
+        },"genre": "posts","keywords": "System-programming","wordcount":  2302 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/what-is-the-heap-and-stack\/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "the differences between the stack and the heap"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/what-is-the-heap-and-stack/" selected>English</option><option value="/zh-cn/what-is-the-heap-and-stack/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/what-is-the-heap-and-stack/" selected>English</option><option value="/zh-cn/what-is-the-heap-and-stack/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">What is stack and heap</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/system-programming/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>System-Programming</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2302 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#the-layout-of-a-program-in-memory">The layout of a program in memory</a></li>
+    <li><a href="#stack">Stack</a>
+      <ul>
+        <li><a href="#terms">Terms</a></li>
+        <li><a href="#stack-allocation">stack allocation</a></li>
+        <li><a href="#an-example-fibonacci-sequence">An example: fibonacci sequence</a></li>
+        <li><a href="#the-data-on-the-stack">The data on the stack</a></li>
+      </ul>
+    </li>
+    <li><a href="#heap">Heap</a>
+      <ul>
+        <li><a href="#heap-allocation">Heap allocation</a></li>
+        <li><a href="#the-data-on-the-heap">The data on the heap</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro">Intro</h2>
+<p>If you&rsquo;ve been using dynamic languages like Python, Javascript, etc., you probably won&rsquo;t notice the difference between stack and heap. Because these languages have garbage collectors (GCs) that will automatically manage memory for you, you just need to program at a high level without considering the details. The bad news is that GC is not a cost-free design. No matter how well designed a GC algorithm is, the performance of the code will be degraded to some extent. If you have been in programming for a long time, you may have heard something like &ldquo;the recursion explodes the stack&rdquo;. You may or may not click on the search engine to understand the difference between stack and heap. Chances are you just clicked into this article :)</p>
+<blockquote>
+<p>📒 Although GC will degrade the performance, it removes the mental burden of manually managing memory for developers, which can greatly speed up software development. This is sacrificing performance for development speed. However, when the performance bottleneck occurs in the later stage of the software, it is necessary to study how to refactor or even rewrite the key parts of code to improve performance.</p>
+</blockquote>
+<p>The stack and heap I mentioned here <strong>are not the heap and stack in the data structure</strong>, but the two mechanisms of memory management. Understanding the detailed differences between stack and heap helps us understand some programming languages that are closer to the low-level, <em>such as Rust, C, C++, etc</em>. In Rust, the most important concept is ownership. Mastering the ownership can make you feel easier when you are learning other designs in rust😄.</p>
+<h2 id="the-layout-of-a-program-in-memory">The layout of a program in memory</h2>
+<p>To run a program, it must be loaded into the memory. During the process of the program running, the data also needs to be read into the memory, so have you ever wondered how all this is distributed in the memory? I will give you a rough illustration below<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<hr>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/program_layout_in_memory.png"
+        data-srcset="/img/program_layout_in_memory.png, /img/program_layout_in_memory.png 1.5x, /img/program_layout_in_memory.png 2x"
+        data-sizes="auto"
+        alt="/img/program_layout_in_memory.png"
+        title="/img/program_layout_in_memory.png" /></p>
+<hr>
+<p>In the image above, the meanings of different parts:</p>
+<ul>
+<li>text: store code</li>
+<li>data: store the initialized static variables. <em>such as global variable, static variable</em></li>
+<li>bss: store the uninitialized static data, <em>such as the declaration <code>static int i</code> in C</em></li>
+<li>heap</li>
+<li>stack</li>
+</ul>
+<p>What is stored on the heap and stack will be discussed later.</p>
+<blockquote>
+<p>📒 The thing to remember here is that the stack and the heap are moving closer to each other as they are growing. The stack grows from <strong>high address -&gt; low address</strong>, and the heap grows from <strong>low address -&gt; high address</strong>. After understanding this, you will get a better understanding when you see that the <code>sp</code> pointer is got subtracted in the assembly code.</p>
+</blockquote>
+<blockquote>
+<p>📒 It seems that as we allocate more and more memory, the stack and heap may collide (because they are getting closer to each other). However, there is no need to worry about this problem, because: 1) This layout is happening in virtual memory. Today&rsquo;s processors are generally 64-bit, and the capacity is very large. 2) Before the conflict, it is very likely that your physical memory has been exhausted long ago, this should be your first concern.</p>
+</blockquote>
+<h2 id="stack">Stack</h2>
+<h3 id="terms">Terms</h3>
+<ul>
+<li><strong>Stack pointer(SP)</strong>: the value of a specific register, which stores the address of the <em>top</em> of the stack</li>
+<li><strong>Stack frame</strong>: created as function calls are made, it is a frame of data(for one function call) that gets pushed onto the stack.</li>
+<li><strong>push</strong>: allocating space on the stack</li>
+<li><strong>pop</strong>: free space on the stack</li>
+</ul>
+<h3 id="stack-allocation">stack allocation</h3>
+<p>The biggest feature of the stack is the last in first out (LIFO), which is also the pattern we follow when allocating and freeing space on the stack. Allocating space on the stack is quite simple, we just need to modify the value of the stack pointer. Naturally, from the bottom of the stack (<code>A</code> in the figure below) to the top of the stack (the position pointed to by <code>sp</code>) is the space we have allocated.</p>
+<p>The following figure<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> shows the simple logic behind:</p>
+<hr>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/img/stack_and_sp.png"
+        data-srcset="/img/stack_and_sp.png, /img/stack_and_sp.png 1.5x, /img/stack_and_sp.png 2x"
+        data-sizes="auto"
+        alt="/img/stack_and_sp.png"
+        title="/img/stack_and_sp.png" /></p>
+<hr>
+<p>It should be emphasized again here that the stack grows from <strong>high address -&gt; low address</strong>, so from left to right in the above figure is <strong>high address -&gt; low address</strong>.</p>
+<p>How does the function call work(simplified version)?</p>
+<ul>
+<li>Function call: subtract the value of <code>sp</code>  -&gt; construct the stack frame for the called function, push them to the stack -&gt; enter the callee</li>
+<li>Function exit: just reverse the above process</li>
+</ul>
+<blockquote>
+<p>The full procedure of function call can be found on <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+</blockquote>
+<blockquote>
+<p>📒 The problem to be worried about when allocating space on the stack is: do not keep allocating which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. <em>For example, in Python, you can use <code>sys.getrecursionlimit()</code> to modify the size limit of the stack</em>. In some programming languages, we can also change the recursive function to the tail recursion version, which can benefit from the optimizations.</p>
+</blockquote>
+<h3 id="an-example-fibonacci-sequence">An example: fibonacci sequence</h3>
+<p>When explaining recursion in CS courses, we usually use the Fibonacci sequence as an example. Now we use <code>F(n)</code> to represent the <code>n</code>th value of the Fibonacci sequence, then the formulas are:</p>
+<ul>
+<li><code>F(0) = 0</code></li>
+<li><code>F(1) = 1</code></li>
+<li><code>F(n) = F(n - 1) + F(n - 2)</code></li>
+</ul>
+<p><em>Take <code>F(4)</code> as the example, the process of the recursive function call is as follows:</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">F(4) = F(3) + F(2)
+</span></span><span class="line"><span class="cl">     = F(2) + F(1) + F(1) + F(0)
+</span></span><span class="line"><span class="cl">     = F(1) + F(0) + F(1) + F(1) + F(0)
+</span></span><span class="line"><span class="cl">     = 3 * F(1) + 2 * F(0)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em>If we ignore some details and illustrate the changes in the stack, it will look like this:</em></p>
+<p>ps: the <code>F(n)</code> is a stack frame</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                  <span class="c1"># F(4): enter F(3)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>           <span class="c1"># F(3): enter F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># F(2): enter F(1), F(1) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>           <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>    <span class="c1"># F(2): enter F(0), F(0) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>           <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># F(3): enter F(1), F(1) is the base case, ready to exit function call </span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                  <span class="c1"># Function return, return to the body of F(3)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                         <span class="c1"># Function return, return to the body of F(4)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                  <span class="c1"># F(4): enter F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># F(2): enter F(1), F(1) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                  <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>           <span class="c1"># F(2): enter F(0), F(0) is the base case, ready to exit function call</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span> <span class="n">F</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                  <span class="c1"># Function return, return to the body of F(2)</span>
+</span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                         <span class="c1"># Function return, return to the body of F(4)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="the-data-on-the-stack">The data on the stack</h3>
+<p><strong>Memory space management on the stack is achieved by modifying the value of the <code>sp</code> pointer</strong>, so we can conclude that:</p>
+<ol>
+<li>It is very efficient when allocating or freeing the space on the stack. We can think of it as <code>O(1)</code> complexity.</li>
+<li>The logic of this LIFO of the stack is relatively simple. The compiler can shandle it for us. As developers, we do not need to intervene in this process.</li>
+<li>To modify the <code>sp</code> pointer, we need to know how much space will be used, so the data on the stack should be a fixed and known size(at compile time). As for data of variable size, this is the problem to be solved by the heap.</li>
+</ol>
+<h2 id="heap">Heap</h2>
+<p>The disadvantage of the stack allocation is: <strong>it can not handle variable size data</strong>, and we can&rsquo;t know how much the value of <code>sp</code> needs to be modified at this time.</p>
+<p>How do you bridge the gap between variable-sized data and stack? This requires the use of pointers. Although the size of the actual data stored is unknown, the size of the pointer is fixed (usually, it is equal to the word size of the underlying machine), so we can <strong>store a fixed-size pointer on the stack</strong>, let it point to <strong>the real data stored on the heap</strong>.</p>
+<h3 id="heap-allocation">Heap allocation</h3>
+<p>As mentioned earlier, allocating memory on the heap is finding a large enough space on the heap, returning a pointer to this location, and then pushing the pointer onto the stack.</p>
+<p>Later, when we want to access this data, we can dereference the pointer. The <code>*</code> operator in C or Rust is used for this purpose. Hopefully understanding this will make it easier for you to learn pointers. :)</p>
+<p>Unlike simply modifying the <code>sp</code> value on stack allocation, memory management on the heap is much more complicated. Including the following points:</p>
+<ol>
+<li>The location and size of the memory that can be allocated on the heap are arbitrary (within the physical memory size limit), we need to invent some algorithm and data structure to trace the usage. This brings great difficulties to memory management on the heap.</li>
+<li>The efficiency of allocating space on the heap is also relatively low. We need to find a space of sufficient size. This process of finding is more time-consuming than directly modifying the value of <code>sp</code>.</li>
+<li>We must also deal with the problem of &ldquo;fragmentation&rdquo;. Because the allocated space on the heap is scattered everywhere, a lot of fragments will be left in the memory in the process of heap allocation. The extreme case is: the total size of the fragments meets your requirements, but because they are scattered all over the memory and cannot be used together, the program throws an out-of-memory warning.</li>
+</ol>
+<blockquote>
+<p>📒 The memory that can be allocated on the heap is way larger than the stack, but better management mechanisms are needed to handle this more complex situation. <strong>For developers, it also causes a certain burden. We can&rsquo;t rely on the compiler to automatically handle it for us, we have to manage the memory manually</strong>. If you forget to call <code>free()</code> after allocating space, then your program will have a <strong>memory leak problem</strong>. Not to mention other issues such as dangling pointers and double-free.</p>
+</blockquote>
+<h3 id="the-data-on-the-heap">The data on the heap</h3>
+<p>After having a certain understanding of the allocation of memory space on the heap, it is not difficult for us to draw the following conclusions:</p>
+<ol>
+<li>Variable-size data is stored on the heap. More flexibility at the expense of a little performance</li>
+<li>Sometimes it can be fixed-size data, but you don&rsquo;t want to put it on the stack. Why is this the case? For example, in Rust, data on the stack is copied by default. Sometimes for performance considerations, you may want to put large data on the heap to avoid the overhead of multiple copies. I don&rsquo;t know if this reminds you of the optimization that we often did. i.e. passing function parameter by reference rather than value.</li>
+</ol>
+<h2 id="wrap-up">Wrap up</h2>
+<ol>
+<li>Stack and heap are concepts in memory management, they are different from the concept of stack and heap in the data structure. The reason why the stack is called the stack is because we follow the classical LIFO pattern when we manage the memory on the stack, and the name of the heap implies disorganization.</li>
+<li>Generally speaking, it is more efficient to allocate and free memory space on the stack. For this reason, Rust operates on the stack by default.</li>
+<li>Data of &ldquo;fixed size&rdquo; is generally placed on the stack, and data of &ldquo;variable size&rdquo; is generally placed on the heap. However, sometimes for performance considerations, fixed-size data can also be stored on the heap.</li>
+</ol>
+<p>In the subject of CS, you can often see the layered design. For example, OSI model in the computer network. Programming languages themselves can also be divided into high-level languages and low-level languages. I would like to share with you a sentence from a performance engineering teacher<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> - &ldquo;<strong>Many times, if you want to learn this level well, you must understand the underlying level. You don&rsquo;t have to work at that level, but after knowing the details of that level. It will help you learn this level quite well</strong>&rdquo;. At least for me, after knowing the difference between stack and heap, the following questions seem to me to have a very reasonable explanation:</p>
+<ol>
+<li>What are pointers in C/C++ language used for? Why do they exist?</li>
+<li>Why does tail recursion optimization exist? Why do we have to consider the problem of deep recursion when writing recursive functions?</li>
+<li>Why does Rust put data on the stack by default?</li>
+<li>Why did I see someone recommend passing references when implementing a function?</li>
+</ol>
+<blockquote>
+<p>📒 Personal speaking, the abstraction layer design is the most important concept in CS.</p>
+</blockquote>
+<p>Should you choose a language with GC that is easy to use but less efficient, or choose to manually manage memory yourself to make your code more efficient? It depends on the job at hand. If you want to develop speed, of course, it is the former, and if you focus on performance, it is the latter. Of course, in the middle is no GC + basically no need to manually manage memory by yourself + efficient = Rust language 🚀. Why not learn some Rust 😉</p>
+<blockquote>
+<p>⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check the refs.</p>
+</blockquote>
+<h2 id="refs">Refs</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer ">6.172. Performance engineering of software systems - Lecture 11 &amp;&amp; Lecture 12</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://people.cs.rutgers.edu/~pxk/419/notes/frames.html" target="_blank" rel="noopener noreffer ">Stack frame</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-09-19</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap" data-hashtags="System-programming"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-hashtag="System-programming"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/system-programming/">System-programming</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/vim-macro-101/" class="prev" rel="prev" title="Vim Macro 101"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Vim Macro 101</a>
+            <a href="/en/pattern-matching-in-python/" class="next" rel="next" title="Pattern Matching in Python 3.10">Pattern Matching in Python 3.10<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.110.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

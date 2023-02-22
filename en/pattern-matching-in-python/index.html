@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Pattern Matching in Python 3.10 - MartinLwx&#39;s blog</title><meta name="Description" content="The tutorial about the pattern matching in Python 3.10"><meta property="og:title" content="Pattern Matching in Python 3.10" />
+<meta property="og:description" content="The tutorial about the pattern matching in Python 3.10" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/pattern-matching-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-16T15:14:57+08:00" />
+<meta property="article:modified_time" content="2022-10-16T15:14:57+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Pattern Matching in Python 3.10"/>
+<meta name="twitter:description" content="The tutorial about the pattern matching in Python 3.10"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/pattern-matching-in-python/" /><link rel="prev" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="next" href="https://martinlwx.github.io/en/walrus-operator-in-python/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Pattern Matching in Python 3.10",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/pattern-matching-in-python\/"
+        },"genre": "posts","keywords": "Python","wordcount":  2988 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/pattern-matching-in-python\/","datePublished": "2022-10-16T15:14:57+08:00","dateModified": "2022-10-16T15:14:57+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "The tutorial about the pattern matching in Python 3.10"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/pattern-matching-in-python/" selected>English</option><option value="/zh-cn/pattern-matching-in-python/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/pattern-matching-in-python/" selected>English</option><option value="/zh-cn/pattern-matching-in-python/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Pattern Matching in Python 3.10</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2988 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;15 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#syntax-rules">Syntax rules</a></li>
+    <li><a href="#patterns">Patterns</a>
+      <ul>
+        <li><a href="#capture-pattern">Capture pattern</a></li>
+        <li><a href="#literal-pattern">Literal pattern</a></li>
+        <li><a href="#wildcard-pattern">Wildcard pattern</a></li>
+        <li><a href="#or-pattern">Or pattern</a></li>
+        <li><a href="#as-pattern">As pattern</a></li>
+        <li><a href="#class-pattern">Class pattern</a></li>
+        <li><a href="#mapping-pattern">Mapping pattern</a></li>
+        <li><a href="#value-pattern">Value pattern</a></li>
+      </ul>
+    </li>
+    <li><a href="#use-pattern-matching-on-a-class">Use pattern matching on a class</a></li>
+    <li><a href="#guard">Guard</a></li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>This post is originally written in jupyter notebook and then convert to markdown. To get the original notebook files. Please check the <a href="https://github.com/MartinLwx/oh_my_python" target="_blank" rel="noopener noreffer ">repo</a></p>
+</blockquote>
+<h2 id="intro">Intro</h2>
+<p>Today I want to talk about the new feature bring in Python 3.10 &ndash; Pattern matching 🎉</p>
+<p>Those who have learned C language must be familiar with the following <code>switch</code> statement:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">switch</span> <span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="nl">constant_1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// statements
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="nl">constant_2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// statements
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">    <span class="c1">// Fall through
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// the value of the expression can be either constant_3 or constant_4 :)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">case</span> <span class="nl">constant_3</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">case</span> <span class="nl">constant_4</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="c1">// statements
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// default statements
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To recap, the syntax rules of the <code>switch</code> statement:</p>
+<ol>
+<li><code>expression</code> should be the <code>int</code> or <code>char</code> type. <code>constant</code> should be the <code>int</code> or <code>char</code> constant</li>
+<li>The execution process of the <code>switch</code> statement: Calculate the value of <code>expression</code>, and compare this value with each <code>constant</code> <strong>from top to bottom</strong>. If they are equal, the statements <strong>inside the specific <code>case</code> and all the <code>case</code> after the matched <code>case</code></strong> will be executed, unless it finds a <code>break</code> statement. This feature is called <em>Fall through</em>, and we can use this feature to stack multiple <code>case</code> statements together to represent a logical &ldquo;or&rdquo; relationship</li>
+<li>The <code>default</code> branch will be executed when all the previous <code>case</code> branches fail to match</li>
+</ol>
+<p>Python does not provide a <code>switch</code> statement, but we can use <code>if...elif..elif..else</code> to achieve the same effect, <em>for example, suppose we want to perform different operations depending on the length of the <code>list</code>, We can write this</em>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># do something when the length is 1</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># or more pythonic way: elif len(some_list) in [3, 5]:</span>
+</span></span><span class="line"><span class="cl"><span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">    <span class="c1"># do something when the length is 3 or 5</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The above series of <code>if...elif..elif..else</code> is actually slightly less readable, and it also violates the DRY(Don&rsquo;t repeat yourself) principle, we write <code>len(some_list)</code> many times.</p>
+<p>Of course, we can choose to use a variable <code>length</code> to remember the length of <code>some_list</code> first, so that we can type less code. However, if the situation is more complicated, this trick is not applicable.</p>
+<p>A more elegant way to handle this situation is what this article is about: <strong>Pattern matching</strong> ⬇️</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">match</span> <span class="nb">len</span><span class="p">(</span><span class="n">some_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># do something when the length is 1</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="mi">3</span> <span class="o">|</span> <span class="mi">5</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># do something when the length is 3 or 5</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="n">_</span><span class="p">:</span> <span class="c1"># equal to the `default:`</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="syntax-rules">Syntax rules</h2>
+<p>The syntax of the pattern matching is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">match</span> <span class="n">subject</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="o">&lt;</span><span class="n">pattern_1</span><span class="o">&gt;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">action_1</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="o">&lt;</span><span class="n">pattern_2</span><span class="o">&gt;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">action_2</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="o">&lt;</span><span class="n">pattern_3</span><span class="o">&gt;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">action_3</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># [Optional] wildcard to cover all situations</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="n">_</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">action_wildcard</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Syntactically, it is similar to the aforementioned <code>switch</code> statement in C. The differences are:</p>
+<ol>
+<li>There is no <em>fall through</em> in pattern matching. <strong>Only the code inside the matched <code>case</code> branch</strong> will be executed. So we don&rsquo;t need to add a <code>break</code> statement at the end of each <code>case</code> block</li>
+<li>No <code>default</code> available. But we can use <code>case _</code> to capture all cases, which is called the <em>Wildcard pattern</em> that will be discussed later</li>
+<li>The <code>subject</code> and <code>pattern</code> here are much more powerful than the C language, <strong>not only the integer and char types</strong>, but <code>pattern</code> can also be <strong>combined and nested</strong> with each other. It will be explained in detail later</li>
+</ol>
+<h2 id="patterns">Patterns</h2>
+<p>In pattern matching, a pattern basically does two things:</p>
+<ol>
+<li>Structure constraints: we can add constraints to the <code>subject</code> in various ways. <em>For example the length, the specific value in a specific position, etc</em></li>
+<li>Bind variables: we can bind some names in the pattern to component elements of the subject. See the <em>Capture pattern</em> below.</li>
+</ol>
+<p>Below I discuss different patterns :)</p>
+<p>To avoid confusion, it&rsquo;s worth explaining in advance that both <code>()</code> and <code>[]</code> are optional when pattern matching matches a sequence. <em>For example, <code>case foo, bar</code> and <code>case (foo, bar)</code> and <code>case [foo, bar]</code> are equivalent</em>. They have the same meaning.</p>
+<h3 id="capture-pattern">Capture pattern</h3>
+<p><em>Capture pattern</em> means that when we check whether a <code>pattern</code> matches, we can use <strong>variable names to bind to any part of it</strong>, and we can <strong>use these variables later</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="s2">&#34;bar&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we want to match a seq which has length = 2</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , we also use `first` and `second` to capture \</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># the 1st and 2nd elements here.</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># we can access first, second now</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;the 1st element: </span><span class="si">{</span><span class="n">first</span><span class="si">}</span><span class="s1">, 2nd element: </span><span class="si">{</span><span class="n">second</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>the 1st element: foo, 2nd element: bar
+</code></pre>
+<p>People who often deal with sequences must be familiar with the following code:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">*</span><span class="n">before</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>              
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">last</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;Error&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">first</span><span class="p">,</span> <span class="o">*</span><span class="n">middle</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">first</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&#34;Error&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">first</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">assert</span> <span class="n">first</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;Error&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Similarly, we can do this in pattern matching:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="s2">&#34;another_foo&#34;</span><span class="p">,</span> <span class="s2">&#34;another_bar&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we want to match a seq</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , we also use `*rest` to capture the remaining elements</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="n">first</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;the 1st element: </span><span class="si">{</span><span class="n">first</span><span class="si">}</span><span class="s1">, 2nd element: </span><span class="si">{</span><span class="n">rest</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>the 1st element: foo, 2nd element: ['bar', 'another_foo', 'another_bar']
+</code></pre>
+<h3 id="literal-pattern">Literal pattern</h3>
+<p><em>Literal pattern</em> means that we can <strong>specify literal values in specific positions</strong>. The literals here can be number literals, string literals, <code>True</code>, <code>False</code>, and <code>None</code></p>
+<blockquote>
+<p>📒 Note: For number literals and string literals, python will use <code>==</code> for comparison, and for <code>True/False/None</code> these three will use <code>is</code>.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="s2">&#34;bar&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we want to match a seq which has length = 2</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , the 1st element should be equal to &#34;foo&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , and we use `second` to capture the 2nd element</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="n">second</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;the 2nd element: </span><span class="si">{</span><span class="n">second</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>the 2nd element: bar
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Matched, 1 == True&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Matched, 1 == True
+</code></pre>
+<h3 id="wildcard-pattern">Wildcard pattern</h3>
+<p>It is a common practice in python that: use <code>_</code> to indicate that we don&rsquo;t care about the value. Similarly, <code>_</code> can be used here, and it <strong>will not bind any variables</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="s2">&#34;bar&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we want to match a seq which has length = 2</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , the 1st element should be equal to &#34;foo&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , and we use `_` to ignore the 2nd value</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="n">_</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;the 2nd value: </span><span class="si">{</span><span class="n">_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>   
+</span></span><span class="line"><span class="cl">        <span class="c1"># you should see empty output because we aren&#39;t binding value here</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>the 2nd value: 
+</code></pre>
+<p>Another common usage is the <code>case _</code> that appeared before. The <code>_</code> will match everything, so <code>case _</code> is often put at the end to indicate the default case</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="s2">&#34;bar&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># this case branch will not be matched</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="s2">&#34;bar&#34;</span><span class="p">,</span> <span class="n">_</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Match successfully&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="n">_</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Default case&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Default case
+</code></pre>
+<h3 id="or-pattern">Or pattern</h3>
+<p>Just like in the <code>if</code> statement we can use <code>or</code>, in pattern matching we also have a similar syntax. Like most other languages, Python chooses to use <code>|</code> to express an &ldquo;or&rdquo; logical relationship. We can declare the alternatives conveniently</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list1</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_list2</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;bar&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we want to match a seq which has length = 1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , the 1st element can be &#34;foo&#34; or &#34;bar&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span> <span class="o">|</span> <span class="s2">&#34;bar&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[First match]  Match foo or bar&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span> <span class="o">|</span> <span class="s2">&#34;bar&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[Second match] Match foo or bar&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[First match]  Match foo or bar
+[Second match] Match foo or bar
+</code></pre>
+<p>The disadvantage of the Or pattern above is that we have no way of knowing which one we matched exactly</p>
+<h3 id="as-pattern">As pattern</h3>
+<p>In the previous example, we may match any of the alternatives, so how do we know which one we match? Because we <strong>may need to decide what to do based on which one is matched</strong>. In pattern matching, we can use <code>as</code> to bind a value</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we want to match a seq which has length = 1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , the 1st element can be &#34;foo&#34; or &#34;bar&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># we bind matched string literal with `matched_element`</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">(</span><span class="s2">&#34;foo&#34;</span> <span class="o">|</span> <span class="s2">&#34;bar&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">matched_element</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Match </span><span class="si">{</span><span class="n">matched_element</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="class-pattern">Class pattern</h3>
+<p>Python is a dynamically typed language, and sometimes we need to <strong>decide whether to match based on the type</strong>. The intuitive way is using <code>isinstance()</code> to check if it is qualified, but there is a better way. Next, I will show you how to add type constraints step by step:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># match without type constraints</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Match </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">v1</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">v2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Match foo - 1 - 3.14
+</code></pre>
+<p>The intuitive way: we use the <em>Capture pattern</em> to bind values, and use <code>isinstance</code> to check the type in the code block</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># match with type constraints</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="nb">str</span><span class="p">()</span> <span class="k">as</span> <span class="n">s</span><span class="p">,</span> <span class="nb">int</span><span class="p">()</span> <span class="k">as</span> <span class="n">v1</span><span class="p">,</span> <span class="nb">float</span><span class="p">()</span> <span class="k">as</span> <span class="n">v2</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Match </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">v1</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">v2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Match foo - 1 - 3.14
+</code></pre>
+<p>The syntax here is quite similar to the previous <em>Literal pattern</em> + <em>As pattern</em>. i.e. We declare the type we want to match in the corresponding position. At the same time, we use the <code>as</code> keyword to bind the value.</p>
+<p>Less typing but still less elegant :(. Fortunately, python provides us with syntactic sugar 🍬</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;foo&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># match with type constraints</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">v2</span><span class="p">)]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Match </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">v1</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">v2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Match foo - 1 - 3.14
+</code></pre>
+<h3 id="mapping-pattern">Mapping pattern</h3>
+<p>The previous ones are all matching against a sequence, here we are matching against the <code>dict</code>. I believe that after reading the previous examples, it is not difficult to understand the following example. But there are a few things to keep in mind:</p>
+<ol>
+<li>we match <code>dict</code> based on its present keys. The keys here must be a literal value or a value of enum type (for performance considerations), values do not have this restriction</li>
+<li>we can use <code>**&lt;name&gt;</code> to capture the key-value pair we didn&rsquo;t write in <code>pattern</code>. Otherwise <strong>the undeclared key-value pairs will be ignored</strong></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;second_name&#39;</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_dict</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="n">first_name</span><span class="p">}:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[First match]  The first_name: </span><span class="si">{</span><span class="n">first_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_dict</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="n">first_name</span><span class="p">,</span> <span class="o">**</span><span class="n">rest</span><span class="p">}:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[Second match] The rest: </span><span class="si">{</span><span class="n">rest</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[First match]  The first_name: foo
+[Second match] The rest: {'second_name': 'bar'}
+</code></pre>
+<h3 id="value-pattern">Value pattern</h3>
+<p>It&rsquo;s good practice to use &ldquo;named variables&rdquo; as parameter values or to clarify the meaning of specific values. <em>e.g. <code>case (HttpStatus.OK, body)</code> is better than <code>case (200, body)</code></em></p>
+<p>The challenge of implementing the <em>Value pattern</em> in Python is to distinguish it from the previous <em>Capture pattern</em>. A discussion of this can be found at <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>The final solution provided by python is a restricted <em>Value pattern</em> that only supports <em>Value pattern</em> of the form <code>foo.bar</code>. Common usage will be combined with the enum type, see the following example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">HttpStatusCode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CONTINUE</span> <span class="o">=</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">    <span class="n">OK</span> <span class="o">=</span> <span class="mi">200</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">HttpStatusCode</span><span class="p">[</span><span class="s2">&#34;OK&#34;</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="n">HttpStatusCode</span><span class="o">.</span><span class="n">OK</span> <span class="k">as</span> <span class="n">status_code</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Receive </span><span class="si">{</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Receive HttpStatusCode.OK
+</code></pre>
+<h2 id="use-pattern-matching-on-a-class">Use pattern matching on a class</h2>
+<p>If we can only use pattern matching on built-in types, it doesn&rsquo;t seem to be that useful. But in fact, Python also allows us to use pattern matching on objects of our own custom classes.</p>
+<p>Considering the application scenario, when we use pattern matching on an object, we often want to check whether the object is a certain class type. We may also care about some of its fields and want to extract the values.</p>
+<p>But in Python, this is difficult to implement<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, mainly because the class has a lot of fields, most of which are special methods like <code>__repr__</code>, and these <strong>fields are unordered</strong>. Because it is unordered, we <strong>can&rsquo;t directly bind variables by position</strong> in <code>pattern</code>, see the following example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; A simple class represents a Point in a 2D&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">some_point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># the intuitive way, we want to match a Point type</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , and we want to bind the `x` and `y` and their two fields respectively</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The x: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The y: </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>---------------------------------------------------------------------------
+
+TypeError                                 Traceback (most recent call last)
+
+Input In [17], in &lt;cell line: 7&gt;()
+      4         self.x = x
+      5         self.y = y
+----&gt; 7 some_point = Point(1, 2)
+      9 match some_point:
+     10     # the intuitive way, we want to match a Point type
+     11     # , and we want to bind the `x` and `y` and their two fields respectively
+     12     case Point(x, y):
+     13         print(f&quot;The x: {x}&quot;)
+     14         print(f&quot;The y: {y}&quot;)
+
+
+TypeError: Point.__init__() takes 2 positional arguments but 3 were given
+</code></pre>
+<p>Python provides two solutions, which are syntactically very similar to calling a function: we can choose to pass arguments by position, or we can choose to use the form <code>foo=bar</code></p>
+<p>Let&rsquo;s talk about the simple one first: add constraints by using <code>foo=bar</code>, which means that the object should have a field called <code>foo</code> and we want to bind <code>bar</code> to it.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; A simple class represents a Point in a 2D&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">some_point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># the intuitive way, we want to match a Point type</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , and we want to bind the `x` and `y` and their two fields respectively</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The x: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The y: </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>The x: 1
+The y: 2
+</code></pre>
+<p>Another solution is to modify the <code>__match_args__</code> attribute of the class, which <strong>specifies the order of the fields</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; A simple class represents a Point in a 2D&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># we tell python that the order is first &#34;x&#34; and then &#34;y&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">__match_args__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="s2">&#34;y&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">some_point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># the intuitive way, we want to match a Point type</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , and we want to bind the `x` and `y` and their two fields respectively</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The x: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The y: </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>The x: 1
+The y: 2
+</code></pre>
+<p>if you are familiar with <code>@dataclass</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, you can do this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@dataclass</span><span class="p">(</span><span class="n">match_args</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; A simple class represents a Point in a 2D&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y</span><span class="p">:</span> <span class="nb">int</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The order is </span><span class="si">{</span><span class="n">Point</span><span class="o">.</span><span class="n">__match_args__</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">some_point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_point</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># the intuitive way, we want to match a Point type</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># , and we want to bind the `x` and `y` and their two fields respectively</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The x: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The y: </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>The order is ('x', 'y')
+The x: 1
+The y: 2
+</code></pre>
+<h2 id="guard">Guard</h2>
+<p>Sometimes we not only care about whether the pattern matches, but we also want to impose certain restrictions.</p>
+<p>Consider such a situation where we want to match a sequence containing two <code>int</code> values, but we require the first element shoudld be larger than the second. How would you write it? Combined with the previous <em>Class pattern</em>, it is not difficult for us to write the following code:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">first</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">second</span><span class="p">)]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">first</span> <span class="o">&gt;</span> <span class="n">second</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Expect first &gt; second. Match failed&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Expect first &gt; second. Match failed
+</code></pre>
+<p>The above solution is fine, we definitely can use the <code>if</code> statement in the code block to add constraints. But just like type constraints, Python has taken this requirement into account, so it provides a <strong>Guard 💂‍♀️ mechanism</strong>, which allows us to move the <code>if</code> statement to the end of the <code>pattern</code> for readability.</p>
+<p>The syntax rules to follow:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">match</span> <span class="n">subject</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span> <span class="k">if</span> <span class="o">&lt;</span><span class="n">expression</span><span class="o">&gt;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>&lt;pattern&gt;</code> followed by an <code>if</code> statement</li>
+<li>Note how python evaluates this here:
+<ol>
+<li>Check if <code>&lt;pattern&gt;</code> matches</li>
+<li>If it matches, bind values if we declared</li>
+<li>Check if the <code>if &lt;expression&gt;</code> statement returns <code>True</code>. The <code>&lt;expression&gt;</code> here can use the previously bound variable in step 2</li>
+</ol>
+</li>
+<li>The code inside the code block will be executed if and only if <code>&lt;pattern&gt;</code> matches + <code>if</code> statement returns <code>True</code>. Otherwise, it will fail and try to match the next <code>&lt;pattern&gt;</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">some_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">match</span> <span class="n">some_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">case</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">first</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">second</span><span class="p">)]</span> <span class="k">if</span> <span class="n">first</span> <span class="o">&gt;</span> <span class="n">second</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Match successfully!&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="wrap-up">Wrap up</h2>
+<p>I would prefer pattern matching to the <code>if...elif...elif...else</code> for several reasons:</p>
+<ol>
+<li>We can easily bind values for subsequent processing when matching</li>
+<li>For better readabilityg</li>
+<li>The various patterns of pattern matching can actually be nested and combined, that&rsquo;s what makes pattern matching a shining point.</li>
+</ol>
+<p>The above is a brief introduction to pattern matching introduced in Python 3.10 🚀</p>
+<h2 id="refs">Refs</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://peps.python.org/pep-0635/" target="_blank" rel="noopener noreffer ">PEP 635 – Structural Pattern Matching: Motivation and Rationale</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass" target="_blank" rel="noopener noreffer ">dataclasses - documentation</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10" data-hashtags="Python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-hashtag="Python"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/what-is-the-heap-and-stack/" class="prev" rel="prev" title="What is stack and heap"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>What is stack and heap</a>
+            <a href="/en/walrus-operator-in-python/" class="next" rel="next" title="Walrus Operator in Python 3.8">Walrus Operator in Python 3.8<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.110.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
