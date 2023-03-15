@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Linear Regression Model Guide - theory part - MartinLwx&#39;s blog</title><meta name="Description" content="The simple guide of theory part of linear regression model in machine learning"><meta property="og:title" content="Linear Regression Model Guide - theory part" />
+<meta property="og:description" content="The simple guide of theory part of linear regression model in machine learning" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-15T12:37:52+08:00" />
+<meta property="article:modified_time" content="2023-03-15T12:37:52+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Linear Regression Model Guide - theory part"/>
+<meta name="twitter:description" content="The simple guide of theory part of linear regression model in machine learning"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><link rel="prev" href="https://martinlwx.github.io/en/config-neovim-from-scratch/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Linear Regression Model Guide - theory part",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/linear-regression-model-guide-theory\/"
+        },"genre": "posts","keywords": "Machine-Learning","wordcount":  2559 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/linear-regression-model-guide-theory\/","datePublished": "2023-03-15T12:37:52+08:00","dateModified": "2023-03-15T12:37:52+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "The simple guide of theory part of linear regression model in machine learning"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/" selected>English</option><option value="/zh-cn/linear-regression-model-guide-theory/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/" selected>English</option><option value="/zh-cn/linear-regression-model-guide-theory/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Linear Regression Model Guide - theory part</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/ml-dl/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-15">2023-03-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2559 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#linear-regression-model">Linear regression model</a></li>
+    <li><a href="#categories">Categories</a>
+      <ul>
+        <li><a href="#univariate-linear-regression-model">Univariate linear regression model</a></li>
+        <li><a href="#multiple-linear-regression-model">Multiple linear regression model</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-train-this-model">How to train this model</a>
+      <ul>
+        <li><a href="#cost-function">Cost function</a></li>
+        <li><a href="#training-use-gradient-descent">Training use gradient descent</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="introduction">Introduction</h2>
+<p>Recently, I review the machine learning course of Andrew ng in Coursera. Surprisingly, I can still learn a lot, so I decided to write some posts👍.</p>
+<p>To talk about linear regression, we must first have a basic understanding of what is machine learning. What is machine learning? abstractly speaking, <strong>machine learning is learning a function</strong>:
+$$
+f(input) = output
+$$
+where $f$ refers to the specific machine learning model. <strong>Machine learning is a methodology for automatically mining the relationship between input and output</strong>. Sometimes we find it hard to define a specific algorithm to solve some problems, and this is where machine learning shines, we can let it learn and summarize some patterns from data and make predictions. This is also where it differs from traditional algorithms (binary search, recursive, etc.). One has to admit that machine learning is fascinating by definition, and it <em>seems</em> to provide a viable framework for solving all intractable problems. It just so happens that many real-life problems are so hard that solving them with traditional algorithms is impossible.</p>
+<blockquote>
+<p>📒 That&rsquo;s why I always feel that <strong>every programmer should know some machine learning/deep learning</strong>, it is a great tool for us to solve problems💪</p>
+</blockquote>
+<p>Linear regression is one of the classic machine learning models. In my opinion, it can be regarded as the counterpart of <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreffer ">&ldquo;Hello world&rdquo;</a> in the machine learning world.</p>
+<p>In the previous formula, $input$ is the so-called <strong>feature</strong> in machine learning, which is often represented by the symbol $x$. And $output$ can be roughly divided into two categories: class/category (Classification problem) and number (Regression problem).</p>
+<blockquote>
+<p>📒 How to understand features? The so-called <strong>features are characteristics that are highly correlated with the target to be predicted</strong>. <em>Take predicting housing prices as an example. The housing price is obviously related to the house area, distance to the downtown, etc. The house area here is a feature</em>. In machine learning, we can analyze the importance of different features to see which ones are highly correlated with the output, or use our domain knowledge (Domain knowledge) to choose good features wisely. But in general, <strong>machine learning still requires us to spend a lot of time spotting good features</strong>. This is the drawback of machine learning, and this shortcoming is greatly alleviated in deep learning. Of course, that is not the topic today.</p>
+</blockquote>
+<blockquote>
+<p>📒 Machine learning <strong>cannot magically understand</strong> the various formats of $input$ you provide, <em>such as images, text, videos, etc.</em>. In machine learning, <strong>$input$ is often processed as numbers</strong>, so that they can be learned by various machine learning algorithms. Some features are numbers themselves, <em>such as the house area we previously talked about</em>. When the input is not transformered into numbers, we needed to invent some procedure to do so, <em>such as using a word embedding vector model to represent text, etc.</em>, and I will not go into details here. <strong>Let&rsquo;s assume that the input has been processed into numbers below</strong>.</p>
+</blockquote>
+<p>The topic of this post, the linear regression model, belongs to the regression model in the <strong>supervised learning domain</strong>. It is a simple model, but it can explain a lot of machine learning ideas, which makes it a perfect choice to get started. Without further ado, let&rsquo;s get started :)</p>
+<blockquote>
+<p>📒 This article assumes that you have a basic understanding of matrix/vector calculus, <em>for example, you need to know the definition of matrix multiplication, how to calculate derivatives, etc</em>.</p>
+</blockquote>
+<h2 id="linear-regression-model">Linear regression model</h2>
+<p>As the name suggests, it consists of two parts:</p>
+<ul>
+<li>Linear. <em>Taking a two-dimensional plane as an example, $y=kx+b$ is linear, for it is a straight line when drawn, but $y=x^2$ is not, because it is drawn as a curve</em></li>
+<li>Regression because it fits the definition of a regression problem in <strong>machine learning</strong> - predicting a value of <strong>unlimited range</strong></li>
+</ul>
+<h2 id="categories">Categories</h2>
+<blockquote>
+<p>📒 To reduce the visual noise, the following notation $f(x)$ omits the subscripts $w,b$ for simplicity. I.e. $f(x)=f_{w,b}(x)$</p>
+</blockquote>
+<blockquote>
+<p>📒 Sometimes you may see some books or blogs use $h_\theta$ to represent the model(h means hypothesis), I think $f(x)$ as it is more concise and intuitive.</p>
+</blockquote>
+<p>The linear regression model can be divided into the following categories:</p>
+<h3 id="univariate-linear-regression-model">Univariate linear regression model</h3>
+<p>Univariate means that your model only accepts a single feature:
+$$
+f(x)=wx+b
+$$
+In machine learning world, we call $w$ and $b$ as weight and bias</p>
+<blockquote>
+<p>📒 Note: $\theta$ is a column vector, logically it should be represented by $\vec \theta$, but for the sake of brevity, I have omitted the arrow.</p>
+</blockquote>
+<blockquote>
+<p>📒 The equation above can also be written in the form of vector multiplication. Let $\theta=[b, w]$ represent the parameters of the model, and rewrite x as $\vec x=[1, x]^T$. According to the knowledge of vector multiplication, we can infer that $\theta^T\vec x=wx+b$</p>
+</blockquote>
+<h3 id="multiple-linear-regression-model">Multiple linear regression model</h3>
+<p>Multiple means that your model accepts multiple features:
+$$
+f(x)=w_1x_1+w_1x_2+&hellip;w_nx_n+b
+$$
+Where $x_i$ is the ith feature, there are $n$ features in total, for this, we need to learn a weight $w_i$ for each feature</p>
+<blockquote>
+<p>📒 Similarly, we can choose to write in the form of vector multiplication. Let $\theta=[b, w_1, w_2, &hellip;, w_n]$ and $\vec x=[1, x_1, x_2, &hellip;, x_n]^T$. You will be surprised to find that <strong>univariate linear regression and multivariate linear regression have a unified form - $f(\vec x)=\theta^T\vec x$</strong>. This will bring great convenience when calculating the gradient later.</p>
+</blockquote>
+<h2 id="how-to-train-this-model">How to train this model</h2>
+<h3 id="cost-function">Cost function</h3>
+<p>After defining the linear regression model, we need to measure its prediction quality. Obviously, we wish to minimize the &ldquo;distance&rdquo; between the predicted value and the actual value. In machine learning, we will specify a cost function to measure the &ldquo;distance&rdquo;. <strong>The lower the cost, the better</strong>. When the cost of the model on the validation set is minimized to a small value and no longer changes significantly, we think that the model has converged, and the best model is obtained at this time</p>
+<blockquote>
+<p>📒 In machine learning, the data is usually divided into training/validation/test set, the model learns on the training set, verifies and adjusts parameters on the validation set, and performs generalization verification on the test set finally (<strong>The test set contains unseen data</strong>). It is incorrect to directly adjust parameters on the test set by only using the division method of training/test set. The test set is used <strong>if and only if</strong> after you finish training and tuning your model</p>
+</blockquote>
+<p>The most commonly used cost function of the linear regression model is the mean square error function(MSE). Its formula is as follows:</p>
+<p>$$
+MSE=\frac{1}{2m}\sum^m_{i=1}(\hat y^{(i)} - y^{(i)})^2
+$$</p>
+<p>where</p>
+<ul>
+<li>$m$ represents the number of samples</li>
+<li>The superscript ${(i)}$ is different from exponent marks. ${(i)}$ indicates the predicted/true value of the $i$th sample</li>
+<li>$\hat y$ represents the prediction of the linear regression model, and $y$ represents the original true value</li>
+</ul>
+<blockquote>
+<p>📒 I use notations that conforms to machine learning conventions~</p>
+</blockquote>
+<blockquote>
+<p>📒 Linear regression model <strong>does not have to use MSE though</strong>, you can also use the absolute value error(MAE). Use MAE when there are many outliers in the training set, which can reduce the sensitivity to them.</p>
+</blockquote>
+<h3 id="training-use-gradient-descent">Training use gradient descent</h3>
+<p>As aforementioned, when the cost of the model on the validation set is minimized and does not change significantly, we get the best model. But how to make the model continuously improve the prediction and reduce the cost? 🤔 The Gradient descent algorithm is a general practice</p>
+<p>Don&rsquo;t be fooled by the name, the gradient descent algorithm is not that mysterious. Let&rsquo;s recap what we have learned so far:</p>
+<ul>
+<li>The prediction $\hat y$ of the model is related to its parameters, <em>if it is a univariate linear regression model, it is related to $w$ and $b$</em></li>
+<li>The cost function is related to the prediction of the model because we cannot change the real value of the data</li>
+</ul>
+<p>So <strong>The cost function is a function about the model parameters</strong>. In machine learning, it is usually denoted by $J$.</p>
+<p>Consider first simple univariate linear regression when it uses MSE as the cost function:</p>
+<p>$$
+J(w, b) = \frac{1}{2m}\sum^m_{i=1}(f(x^{(i)})-y^{(i)})^2 = \frac{1}{2m}\sum^m_{i=1}(wx^{(i)} + b - y^{(i)})^2
+$$</p>
+<p><strong>By changing the values of $w$ and $b$, the cost $J(w,b)$ will change accordingly</strong>, so <strong>improving the linear regression model is adjusting these two parameters so that $J(w, b)$ reaches its minimum</strong>. In the language of mathematics, solving the optimal model is solving the minimum point of the function $J(w,b)$</p>
+<blockquote>
+<p>📒 Recall that $m$ is the number of samples in the training set. More strictly speaking, the above gradient descent formula is batch gradient descent, that is, <strong>every calculation of the gradient uses samples from the entire training set</strong>. When the training set is very large, this method cannot scale well. At this time, we need to use stochastic gradient descent.</p>
+</blockquote>
+<blockquote>
+<p>📒 If you are good at mathematics, it is not difficult for you to find the minimum value of the above formula. But <strong>this is because the linear regression model is relatively simple</strong>, when the model becomes more complicated, it will be more difficult to solve it with mathematical methods. <strong>In practice, we use the gradient descent algorithms all the time in the machine learning world</strong> (reinforcement learning is an exception, for the goal of reinforcement learning optimization is generally not a differentiable function)</p>
+</blockquote>
+<p>Let us <strong>forget $b$ temporarily and only consider $w$</strong>, then $J$ is a function about $w$ at this time. We can take $w$ as the horizontal axis, and $J(w)$ as the vertical axis, which gives us the following plot</p>
+<figure><img src="/img/linear_regression_tagent.png" width="70%"/>
+</figure>
+
+<blockquote>
+<p>📒 Note that the above diagram does not strictly follow the definition of $J(w)$. For convenience, I directly draw $y=\frac{1}{2}x^2$ here. But <strong>the shape should be similar</strong>, which can be used to understand the gradient descent algorithm.</p>
+</blockquote>
+<p>It is trivial to find out from the figure that $J(w)$ reaches its minimum when $w=0$. Assuming that the model&rsquo;s current parameter $w$ is $5$, we can calculate the cost as $J(5)=12.5$. How do we update $w$ to minimize the cost? <strong>The solution is to let $w$ update along the <strong>opposite direction</strong> of the gradient (the red line in the figure is the tangent at the point $w=5$)</strong>, it is not difficult to compute the gradient/derivative at this point, which is $5$, $w$ should be reduced, so it should minus this gradient (that&rsquo;s why we say opposite direction). We also introduce <strong>learning rate $\alpha$ to control the step size</strong>, which give us the update formula $w \leftarrow w - \alpha \cdot 5$</p>
+<blockquote>
+<p>📒 Intuition: Imagine yourself standing at the point of $w=5$ and want to reach the minimum. If the learning rate $\alpha$ is too large, your new position $w$ may be less than $0$. You will find that you suddenly crossed the minimum. Although you can try to update again through gradient descent, at this time you will often find that the loss of your model has been changing and cannot converge. <strong>The learning rate and the gradient jointly control the magnitude of each parameter update</strong></p>
+</blockquote>
+<blockquote>
+<p>📒 We concluded how to update when only considering $w$ - <strong>along the opposite direction of the gradient</strong>. <strong>This conclusion still holds when considering more parameters</strong>, but that involves the knowledge of solving partial derivatives and even vector derivatives, which also makes visualizing the $J$ more difficult, so I won’t go into details here. <strong>Just remember that the update of the model always moves in the opposite direction of the gradient</strong>👻</p>
+</blockquote>
+<p>In the univariate linear regression model, the gradient update formula is as follows:
+$$
+w \leftarrow w - \alpha \cdot \frac{\partial}{\partial w}J(w,b)
+$$</p>
+<p>Don&rsquo;t forget the $b$, which should also be updated:
+$$
+b \leftarrow b - \alpha \cdot \frac{\partial}{\partial b}J(w,b)
+$$</p>
+<p>Let&rsquo;s calculate the gradients:
+$$
+\begin{aligned}
+\frac{\partial}{\partial w}J(w,b)&amp;=\frac{\partial}{\partial w}\frac{1}{2m}\sum_{i=1}^m(f(x^{(i)})-y^{(i)})^2 \\\
+&amp;= \frac{\partial}{\partial w}\frac{1}{2m}(wx^{(i)}+b-y^{(i)})^2 \\\
+&amp;= \frac{\partial}{\partial w}\frac{1}{m}\sum_{i=1}^m(f(x^{(i)})-y^{(i)})x^{(i)}
+\end{aligned}
+$$
+$$
+\begin{aligned}
+\frac{\partial}{\partial b}J(w,b)&amp;=\frac{\partial}{\partial w}\frac{1}{2m}\sum_{i=1}^m(f(x^{(i)})-y^{(i)})^2 \\\
+&amp;= \frac{\partial}{\partial b}\frac{1}{2m}(wx^{(i)}+b-y^{(i)})^2 \\\
+&amp;= \frac{\partial}{\partial b}\frac{1}{m}\sum_{i=1}^m(f(x^{(i)})-y^{(i)})
+\end{aligned}
+$$</p>
+<p>If it is a multiple linear regression, we need to solve each $\frac{\partial }{w_i}J(w_1,w_2, &hellip;,b)$. It is very inconvenient. <strong>So, let&rsquo;s derive the gradient in vector form</strong></p>
+<p>In vector form, the cost function MSE is written as:</p>
+<p>$$
+J(\theta) = \frac{1}{2m}(X\theta - \vec{y})^T(X\theta - \vec{y})
+$$</p>
+<p>where</p>
+<ul>
+<li>$X$ is the input matrix. <strong>The uppercase letters are commonly used to represent the matrix</strong>. Each of its rows is the values of features of each sample - $(x^{(i)})^T$, and the dimension of $X$ is $(m, n +1)$
+<ul>
+<li>As aforementioned, we got $n$ features, but we also add an intercept term so we got $n+1$ rather than $n$.</li>
+<li>$x^{(i)}$ needs to be transposed because it is originally a column vector</li>
+<li>$\theta^T\vec x$ for a single sample, matrix multiplication $X\theta$ for $m$ samples :)</li>
+</ul>
+</li>
+<li>$\theta$ as we said before is $[b, w_1, w_2, &hellip;, w_n]$, with length $n + 1$</li>
+<li>So $X\theta$ is the predicted value of the model, according to the knowledge of matrix multiplication, we will get a vector of length $m$, representing the predictions for each sample</li>
+<li>$X\theta - \vec y$ is the error of each prediction</li>
+<li>By the way, assuming $\vec a$ is a column vector, <strong>$\vec a^T\vec a$ always gets a scalar sum of squares</strong> of each element. If you define $\vec a=X\theta -\vec y$ you roughly get the right handside of the equation.</li>
+</ul>
+<p>Next, let&rsquo;s try to derive the gradient of this formula, <strong>this requires you to have a certain knowledge of vector/matrix calculus, you can choose to skip it🔮 now</strong>. <del>But I highly recommend you to take a look, because there are quite a lot of matrix calculus in machine learning</del></p>
+<p>$$
+\begin{aligned}
+\frac{\partial}{\partial \theta}\ J(w,b)
+&amp;= \frac{\partial}{\partial \theta}\ \frac{1}{2m}(X\theta - \vec{y})^T(X\theta - \vec{y}) \\\
+&amp;= \frac{1}{2m}\frac{\partial}{\partial \theta}\ (\theta^TX^T - \vec{y}^T)(X\theta - \vec{y}) \\\
+&amp;= \frac{1}{2m}\frac{\partial}{\partial \theta}\ (\theta^TX^TX\theta - \theta^TX^T\vec y - \vec y^TX\theta + \vec y^T\vec y) \\\
+&amp;= \frac{1}{2m}\frac{\partial}{\partial \theta}\ (\theta^TX^TX\theta - \theta^T(X^T\vec y) - (X^T\vec y)^T\theta + \vec y^T\vec y) \\\
+&amp;= \frac{1}{2m}\frac{\partial}{\partial \theta}\ (\theta^TX^TX\theta - 2\theta^T(X^T\vec y) + \vec y^T\vec y) \\\
+&amp;= \frac{1}{2m}(\frac{\partial}{\partial \theta}\ (\theta^TX^TX\theta) - 2\frac{\partial}{\partial \theta}(\theta^TX^T\vec y))) \\\
+&amp;= \frac{1}{2m}(2X^TX\theta - 2X^T\vec y)) \\\
+&amp;= \frac{1}{m}(X^TX\theta - X^T\vec y)) \\\
+&amp;= \frac{1}{m}X^T(X\theta-\vec y)
+\end{aligned}
+$$</p>
+<p>Explanations:</p>
+<ul>
+<li>The shape of $X^T$ is $(n+1, m)$, and the shape of $\vec y$ is $(m, 1)$, so $X^T\vec y$ will give us a column vector with $(n +1, 1)$. <strong>Note that in linear algebra, when $\vec a$ and $\vec b$ are both column vectors, $\vec a^T\vec b=\vec b^T\vec a$ holds</strong>. So $\theta^T(X^T\vec y) = (X^T\vec y)^T\theta$ is satisfied.</li>
+<li>For the derivation in several other places, I recommend reading the <a href="http://www.gatsby.ucl.ac.uk/teaching/courses/sntn/sntn-2017/resources/Matrix_derivatives_cribsheet.pdf" target="_blank" rel="noopener noreffer ">Cheatsheet</a>. Of course, if you are interested in this aspect, it is recommended to try to prove them by yourself
+<ul>
+<li>For example, to compute the $\frac{\partial}{\partial \theta}(\theta^TX^T\vec y))$, we can let $\vec b=X^T\vec y$, which just corresponds to $\frac{\partial }{\partial \theta}\theta^T\vec b=\vec b$ in cheatsheet</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📒 The vector form also brings great convenience when implementing this model. We can use the mature <a href="https://numpy.org/" target="_blank" rel="noopener noreffer ">Numpy</a> for calculations instead of writing a for loop by computing one by one.</p>
+</blockquote>
+<h2 id="wrap-up">Wrap up</h2>
+<p>We have finished the theoretical part of the linear regression model. This post introduces univariate linear regression and multivariate linear regression. The former can be regarded as a special case of the latter. Finally, we unified the equations in vector form, and derive the gradient when MSE is used as the cost function.</p>
+<p>I originally wanted to put the code here, but I found out that this blog is already very long. It will be a better choice to put the implementation part in another post🙌</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-15</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part" data-hashtags="Machine-Learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-hashtag="Machine-Learning"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/machine-learning/">Machine-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/config-neovim-from-scratch/" class="prev" rel="prev" title="Transform Your Neovim into a IDE: A Step-by-Step Guide"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Transform Your Neovim into a IDE: A Step-by-Step Guide</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
