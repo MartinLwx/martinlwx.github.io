@@ -165,7 +165,7 @@ stack: F(4)                         # Function return, return to the body of F(4
 
 > ⚠️ 本文在组织的时候可以忽略了一些细节，我只讲了我认为比较重要的几点。如果想要了解更多，值得一看的材料参考下面的资料引用
 
-## 参考资料
+## 参考
 
 [^1]: [6.172. Performance engineering of software systems - Lecture 11 && Lecture 12](https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/)
 [^2]: [CS110L. System programming - Memory Safety](https://www.youtube.com/watch?v=TfPJUoO-edk)

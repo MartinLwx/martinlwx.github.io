@@ -43,7 +43,7 @@ What is stored on the heap and stack will be discussed later.
 - **pop**: free space on the stack
 
 
-### stack allocation
+### Stack allocation
 
 The biggest feature of the stack is the last in first out (LIFO), which is also the pattern we follow when allocating and freeing space on the stack. Allocating space on the stack is quite simple, we just need to modify the value of the stack pointer. Naturally, from the bottom of the stack (`A` in the figure below) to the top of the stack (the position pointed to by `sp`) is the space we have allocated.
 
@@ -156,7 +156,7 @@ In the subject of CS, you can often see the layered design. For example, OSI mod
 3. Why does Rust put data on the stack by default?
 4. Why did I see someone recommend passing references when implementing a function?
 
-> 📒 Personal speaking, the abstraction layer design is the most important concept in CS.
+> 📒 In my humble opinion, the abstraction layer design is the most important concept in CS.
 
 Should you choose a language with GC that is easy to use but less efficient, or choose to manually manage memory yourself to make your code more efficient? It depends on the job at hand. If you want to develop speed, of course, it is the former, and if you focus on performance, it is the latter. Of course, in the middle is no GC + basically no need to manually manage memory by yourself + efficient = Rust language 🚀. Why not learn some Rust 😉
 

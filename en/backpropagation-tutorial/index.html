@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>How to understand the backpropagation algorithm - MartinLwx&#39;s blog</title><meta name="Description" content="A simple tutorial about the backpropagation algorithm in deep learning"><meta property="og:title" content="How to understand the backpropagation algorithm" />
+<meta property="og:description" content="A simple tutorial about the backpropagation algorithm in deep learning" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/backpropagation-tutorial/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-04T13:45:48+08:00" />
+<meta property="article:modified_time" content="2023-04-04T19:54:48+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="How to understand the backpropagation algorithm"/>
+<meta name="twitter:description" content="A simple tutorial about the backpropagation algorithm in deep learning"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/backpropagation-tutorial/" /><link rel="prev" href="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to understand the backpropagation algorithm",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/backpropagation-tutorial\/"
+        },"genre": "posts","keywords": "Deep-Learning","wordcount":  1409 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/backpropagation-tutorial\/","datePublished": "2023-04-04T13:45:48+08:00","dateModified": "2023-04-04T19:54:48+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "A simple tutorial about the backpropagation algorithm in deep learning"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/" selected>English</option><option value="/zh-cn/backpropagation-tutorial/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/" selected>English</option><option value="/zh-cn/backpropagation-tutorial/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to understand the backpropagation algorithm</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/ml-dl/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-04">2023-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1409 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#define-a-model">Define a model</a></li>
+    <li><a href="#the-intuition-of-backpropagation">The intuition of backpropagation</a></li>
+    <li><a href="#the-four-formulas-of-the-backpropagation">The four formulas of the backpropagation</a>
+      <ul>
+        <li><a href="#formula-1">Formula 1</a></li>
+        <li><a href="#formula-2">Formula 2</a></li>
+        <li><a href="#formula-3">Formula 3</a></li>
+        <li><a href="#formula-4">Formula 4</a></li>
+        <li><a href="#backpropagation-algorithm-procedure">Backpropagation algorithm procedure</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro">Intro</h2>
+<p>In the field of deep learning, optimizing the network involves a crucial process of continuously updating the weights and bias items. This is achieved by implementing the gradient descent method, which progressively minimizes the loss function. At the heart of this process lies the backpropagation algorithm, which facilitates efficient computation of gradients across the network</p>
+<p>To better understand this concept, let us recall the formula for gradient descent. In this formula, we utilize the symbol $\theta$ to represent all the learnable parameters of the model, $J$ to represent the cost or loss function, and $\alpha$ to denote the learning rate. Thus, we can express the updating process as:</p>
+<p>$$
+\theta \leftarrow \theta - \alpha * \frac{\partial J}{\partial \theta}
+$$</p>
+<p>To optimize the model continuously, it&rsquo;s crucial to calculate the gradient $\frac{\partial J}{\partial \theta}$ accurately and efficiently through backpropagation. This process involves computing the partial derivatives of the loss function with respect to the model&rsquo;s parameters, which are also referred to as weights and biases.</p>
+<blockquote>
+<p>📒 Throughout the post, the terms &ldquo;parameters&rdquo; and &ldquo;weights and biases&rdquo; will be used interchangeably as they both represent the learnable elements of the model</p>
+</blockquote>
+<blockquote>
+<p>📒 It is assumed that the reader has a basic understanding of the chain rule of derivation in mathematics to follow the explanations provided🫡</p>
+</blockquote>
+<h2 id="define-a-model">Define a model</h2>
+<p>Before we proceed, we need to define a model for subsequent derivation. For this purpose, let&rsquo;s consider a simple yet classical three-layer fully connected neural network:</p>
+<figure><img src="/img/3_layer.png" width="70%"/>
+</figure>
+
+<blockquote>
+<p>📒 Note: <strong>Uppercase letters represent matrices, and lowercase letters represent vectors (without subscripts) or scalars (with subscripts)</strong></p>
+</blockquote>
+<p>where:</p>
+<ul>
+<li>The network consists of an input layer with $n$ neurons, a hidden layer with $h$ neurons, and an output layer with $k$ neurons</li>
+<li>$x^1_j$ represents the $j$-th feature value of the input vector. <strong>Note that we start counting from 1, the output layer is the 1st layer</strong></li>
+<li>$y_j$ represents the true value of the $j$-th output of the corresponding output layer</li>
+<li>$w^l_{jk}$ represents the weight corresponding to the link between the $k$-th neuron of the $l-1$ layer and the $j$-th neuron of the $l$ layer, <strong>Note the order of subscripts</strong>. Based on this, we can deduce that the dimensionality of $W^2$ and $W^3$ are as follows:
+<ul>
+<li>$W^2\in \mathcal{R}^{h\times n}$</li>
+<li>$W^3\in \mathcal{R}^{k\times h}$</li>
+</ul>
+</li>
+<li>$b_j^l$ represents the bias term of the $j$-th neuron of the layer $l$</li>
+<li>$z_j^l$ represents the weighted output of the $j$ neuron of the layer $l$</li>
+<li>$a_j^l$ represents the output after the activation function of the $j$-th neuron in the layer $l$</li>
+</ul>
+<p>With these terms defined, we can formulate the process of forward propagation in a neural network as follows:</p>
+<p>$$
+z_j^2 = \sum_kw_{jk}^2x^1_k+b_j^2
+$$</p>
+<p>$$
+a_j^2=\sigma(z_j^2)
+$$</p>
+<p>$$
+z_j^3 = \sum_kw_{jk}^3a_k^2+b_j^3
+$$</p>
+<p>$$
+a_j^3=\sigma(z_j^3)
+$$</p>
+<p><strong>Let&rsquo;s generalize $z_j^l$ and $a_j^l$</strong>:</p>
+<p>$$
+z_j^l=\sum_kw_{jk}^la^{l-1}_k+b_j^l
+$$</p>
+<p>$$
+a_j^l=\sigma(z_j^l)
+$$</p>
+<p><strong>The above two formulas are very important, they will be very useful in the derivation of the four formulas of backpropagation</strong></p>
+<p>Here we consider using the mean squared error (MSE) as the cost or loss function $J$ and the $sigmoid$ function as the activation function. Of course, the derivation process is similar if we use different cost/loss function and activation function</p>
+<p>$$
+J = \frac{1}{2k}\sum_{j=1}^k(a_j^L-y_j)^2
+$$</p>
+<h2 id="the-intuition-of-backpropagation">The intuition of backpropagation</h2>
+<p><strong>Understanding a concept at a high level before delving into its details is always beneficial.</strong> In the context of deep learning, the goal of the training process is to minimize the error between the predicted value $a^L_j$ and the actual label $y_j$ for each sample. By calculating this error, we can determine whether to increase or decrease $a^L_j$ to improve the model&rsquo;s predictions. However, we can only adjust $a^L_j$ by modifying the weights $w^L_{jk}$ between the $L-1$ layer and the output layer, the bias term $b_j^L$, or the output value $a^{L-1}_k$ after the activation function in the $L-1$ layer. It&rsquo;s worth mentioning that we can&rsquo;t directly modify $a_k^{L-1}$, which is determined by the values of the previous weight and bias items. <strong>When we decide how to modify each weight and bias of the model backwardly based on the prediction error, we are doing backpropagation</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>The above process describes how $a_j^L$ <em>wants</em> to adjust the weights and biases of the entire model. However, we need to consider the <em>opinions</em> of all neurons in the output layer, as each neuron may has a different idea of how the weights and biases should change. Ultimately, we need to update the model&rsquo;s weights and biases by incorporating the <em>opinions</em> of all neurons in the output layer.</p>
+<h2 id="the-four-formulas-of-the-backpropagation">The four formulas of the backpropagation</h2>
+<p>The core of the backpropagation algorithm contains 4 formulas</p>
+<h3 id="formula-1">Formula 1</h3>
+<p>$$
+\delta_j^L=\frac{\partial J}{\partial a_j^L}\sigma&rsquo;(z_j^L)
+$$</p>
+<p>Where $L$ is the number of layers of the model($L=3$ in this example), $\delta_j^L$ represents the gradient of the $j$-th neuron in the $L$ layer</p>
+<p>By the way, the above formula can be rewritten as $\delta^L=\nabla J\odot \sigma&rsquo;(z^L)$ in vectorized form. The $\odot$ represents the element-wise multiplication</p>
+<blockquote>
+<p>📒 Formula 1 calculates the gradient of each neuron in the output layer</p>
+</blockquote>
+<p><strong>How to derive this</strong>⬇️
+$$
+\begin{aligned}
+\delta_j^L&amp;=\frac{\partial J}{\partial z_j^L} \\\
+&amp;=\sum_k\frac{\partial J}{\partial a_k^L}\frac{\partial a_k^L}{\partial z_j^L} \\\
+&amp;=\frac{\partial J}{\partial a_j^L}\frac{\partial a_j^L}{\partial z_j^L}\ (only\ \frac{\partial a_j^L}{\partial z_j^L}\ne 0) \\\
+&amp;=\frac{\partial J}{\partial a_j^L}\frac{\partial \sigma(z_j^L)}{\partial z_j^L}\  \\\
+&amp;=\frac{\partial J}{\partial a_j^L}\sigma&rsquo;(z_j^L)
+\end{aligned}
+$$</p>
+<h3 id="formula-2">Formula 2</h3>
+<p>$$
+\delta^l=((w^{l+1})^T\delta^{l+1})\odot \sigma&rsquo;(z^l)
+$$</p>
+<blockquote>
+<p>📒 Formula 2 calculates the gradient vector of any layer $l$. It is worth noting how this formula links the gradient of layer $l$ with that of layer $l+1$. This allows us to compute the gradient of a previous layer using the gradients of subsequent layers</p>
+</blockquote>
+<p><strong>How to derive this</strong>⬇️
+$$
+\begin{aligned}
+\delta_j^l&amp;=\frac{\partial J}{\partial z_j^l} \\\
+&amp;=\sum_k\frac{\partial J}{\partial z_k^{l+1}}\frac{\partial z_k^{l+1}}{\partial z_j^l} \\\
+&amp;=\sum_k\delta_k^{l+1}\frac{\partial }{\partial z_j^l}z_k^{l+1}
+\end{aligned}
+$$</p>
+<p>Note that $\frac{\partial }{\partial z_j^l}z_k^{l+1} = \frac{\partial }{\partial z_j^l}\ \sum_pw^{l+1}_{kp}\sigma(z_p^l)+b^{l+1}_k$</p>
+<p>The derivative only exists when $p=j$, so the solution to the above formula is $w^{l+1}_{kj}\sigma&rsquo;(z_j^l)$.</p>
+<p>That is, we have shown that $\delta_j^l=\sum_k\delta_k^{l+1}\ w^{l+1}_{kj}\sigma&rsquo;(z_j^l)$</p>
+<p>$\sum_k\delta_k^{l+1}w^{l+1}_{kj}$ is actually calculating the inner product of 2 vectors, so it can be rewritten as a vectorized form -  $\delta^l=((w^{l+1})^T\delta^{l+1})\odot \sigma&rsquo;(z^l)$</p>
+<h3 id="formula-3">Formula 3</h3>
+<p>$$
+\frac{\partial J}{\partial b^l_j}=\delta_j^l
+$$</p>
+<blockquote>
+<p>📒 Formula 3 can be used to calculate the gradient of any bias term in the model</p>
+</blockquote>
+<p><strong>How to derive this</strong>⬇️
+$$
+\begin{aligned}
+\frac{\partial J}{\partial b^l_j}&amp;= \frac{\partial J}{\partial z^l_j}\frac{\partial z^l_j}{\partial b^l_j} \\\
+&amp;= \delta_j^l \frac{\partial}{\partial b^l_j}\sum_kw^l_{jk}a^{l-1}_j+b^l_j\\\
+&amp;= \delta_j^l
+\end{aligned}
+$$</p>
+<p>Note that the first equal sign above is similar to the derivation of formula 1. I skipped the process of removing $\sum_k$</p>
+<h3 id="formula-4">Formula 4</h3>
+<p>$$
+\frac{\partial J}{\partial w_{jk}^l}=a_k^{l-1}\delta_j^l
+$$</p>
+<blockquote>
+<p>📒 Formula 4 can be used to calculate the gradient of any weight term in the model</p>
+</blockquote>
+<p><strong>How to derive this</strong>⬇️
+$$
+\begin{aligned}
+\frac{\partial J}{\partial w_{jk}^l}&amp;=\frac{\partial J}{\partial z^l_j}\frac{\partial z^l_j}{\partial w_{jk}^l} \\\
+&amp;=\frac{\partial J}{\partial z^l_j}\frac{\partial }{\partial w_{jk}^l}\sum_pw_{jp}^la_p^{l-1}+b_j^l \\\
+&amp;=\delta_j^l\frac{\partial }{\partial w_{jk}^l}\sum_kw_{jk}^la_k^{l-1}+b_j^l \\\
+&amp;=\delta_j^la_k^{l-1}
+\end{aligned}
+$$</p>
+<h3 id="backpropagation-algorithm-procedure">Backpropagation algorithm procedure</h3>
+<p>Based on the aforementioned formulas, we can know the whole process of backpropagation will be:</p>
+<ol>
+<li>Forward propagation, compute $z_j^l$，$a_j^l$ for each neuron in each layer</li>
+<li>Compute $\delta^L$ in the output layer based on the formula 1</li>
+<li>Repeat the following process backwardly
+<ol>
+<li>Calculate the gradient vector $\delta^l$ for each layer based on formula2. Note that we can always compute $\delta^l$ using $\delta^{l+1}$ :)</li>
+<li>Calculate the gradient of each bias term $b^l_j$ based on formula 3, which is equal to $\delta^l_j$</li>
+<li>Calculate the gradient of each weight $w^l_{jk}$ based on formula 4, which is equal to $a_k^{l-1}\delta_j^l$</li>
+</ol>
+</li>
+</ol>
+<p>The above process also answers the question of <strong>why backpropagation is an efficient algorithm</strong>:</p>
+<ul>
+<li>👍 When calculating the gradient vector $\delta^l$ for the $l$-th layer based on formula 2, $\delta^{l+1}$ has already been computed and there is no need to start from scratch at the output layer.</li>
+<li>👍 By directly calculating the gradient of the loss function with respect to the current layer&rsquo;s weights and bias terms using formulas 3 and 4, we avoid computing intermediate gradient results.</li>
+</ul>
+<h2 id="wrap-up">Wrap up</h2>
+<p>The above is the entire process of the backpropagation algorithm. Although it involves a lot of formulas and notation, it is still relatively easy to understand. When reviewing the backpropagation algorithm, I found some points that may help readers understand it:</p>
+<ul>
+<li><strong>Backpropagation is an algorithm for a single sample</strong>, so when you derive the formulas, you only need to consider one sample as the input of the model</li>
+<li>When deriving the formulas, <strong>start from the scalar form and then generalize it into vectorized form</strong>. Don&rsquo;t start with vectorized form or you may get stuck easily. <del>Of course, if you&rsquo;ve solid basics of math, ignore what I just said</del></li>
+</ul>
+<p>That&rsquo;s all, thanks for reading👋</p>
+<h2 id="refs">Refs</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://youtu.be/Ilg3gGewQ5U" target="_blank" rel="noopener noreffer ">What is backpropagation really doing? - 3Blue1Brown</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-04-04</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm" data-hashtags="Deep-Learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-hashtag="Deep-Learning"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/deep-learning/">Deep-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/linear-regression-model-guide-theory/" class="prev" rel="prev" title="Linear Regression Model Guide - theory part"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Linear Regression Model Guide - theory part</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

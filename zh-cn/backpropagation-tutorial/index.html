@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>反向传播公式推导和理解 - MartinLwx&#39;s blog</title><meta name="Description" content="推导了深度学习中的反向传播算法的公式，并讨论了如何理解"><meta property="og:title" content="反向传播公式推导和理解" />
+<meta property="og:description" content="推导了深度学习中的反向传播算法的公式，并讨论了如何理解" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-04T13:45:48+08:00" />
+<meta property="article:modified_time" content="2023-04-04T19:54:48+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="反向传播公式推导和理解"/>
+<meta name="twitter:description" content="推导了深度学习中的反向传播算法的公式，并讨论了如何理解"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "反向传播公式推导和理解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/backpropagation-tutorial\/"
+        },"genre": "posts","keywords": "Deep-Learning","wordcount":  2237 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/backpropagation-tutorial\/","datePublished": "2023-04-04T13:45:48+08:00","dateModified": "2023-04-04T19:54:48+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "推导了深度学习中的反向传播算法的公式，并讨论了如何理解"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/">English</option><option value="/zh-cn/backpropagation-tutorial/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/">English</option><option value="/zh-cn/backpropagation-tutorial/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">反向传播公式推导和理解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/ml-dl/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-04">2023-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2237 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#模型假设">模型假设</a></li>
+    <li><a href="#反向传播的直觉理解">反向传播的直觉理解</a></li>
+    <li><a href="#反向传播的四个公式">反向传播的四个公式</a>
+      <ul>
+        <li><a href="#公式一">公式一</a></li>
+        <li><a href="#公式二">公式二</a></li>
+        <li><a href="#公式三">公式三</a></li>
+        <li><a href="#公式四">公式四</a></li>
+        <li><a href="#反向传播算法">反向传播算法</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言">引言</h2>
+<p>在深度学习中，模型的优化是通过采用梯度下降法不断更新权重和偏置项，让损失越来越小。其中的核心就是反向传播算法。回忆梯度下降的公式，用 $\theta$ 表示模型所有可学习的参数，$J$ 表示损失函数，$\alpha$ 表示学习率，那么有</p>
+<p>$$
+\theta \leftarrow \theta - \alpha * \frac{\partial J}{\partial \theta}
+$$</p>
+<p><strong>反向传播要求解的就是上面式子中 $\frac{\partial J}{\partial \theta}$ 这一项</strong>。只有<strong>正确高效</strong>计算出梯度，模型才可以沿着梯度的负方向更新不断优化。</p>
+<blockquote>
+<p>📒 本文会交叉使用「参数」和「权重和偏置项」这两个术语，他们是同一个意思，都表示了模型可以学习的参数</p>
+</blockquote>
+<blockquote>
+<p>📒 本文假定你对数学上的求导链式法则等有所了解🫡</p>
+</blockquote>
+<h2 id="模型假设">模型假设</h2>
+<p>本文要讲解反向传播，那么当然要定义一个模型用于之后的推导，考虑一个简单然而很经典的三层全连接层，如下所示:</p>
+<figure><img src="/img/3_layer.png" width="70%"/>
+</figure>
+
+<blockquote>
+<p>📒 为了记号方便，<strong>大写字母表示矩阵，小写字母表示向量（无下标）或者标量（有下标）</strong></p>
+</blockquote>
+<p>并规定如下记号：</p>
+<ul>
+<li>不同层的神经元个数：输入层有 $n$ 个神经元，隐藏层有 $h$ 个神经元，输出层有 $k$ 个神经元</li>
+<li>$x^1_j$ 表示输入的第 $j$ 个特征。<strong>记输入层第 $1$ 层</strong></li>
+<li>$y_j$ 表示对应输出层的第 $j$ 个输出的真实值</li>
+<li>$w^l_{jk}$ 表示第 $l-1$ 层的第 $k$ 个神经元和第 $l$ 层的第 $j$ 个神经元这个链接对应的权重，<strong>注意这里的下角标是从后面指向前面</strong>。根据前面的隐藏层大小，可以算出权重矩阵的大小为：
+<ul>
+<li>$W^2\in \mathcal{R}^{h\times n}$</li>
+<li>$W^3\in \mathcal{R}^{k\times h}$</li>
+</ul>
+</li>
+<li>$b_j^l$ 表示第 $l$ 层的第 $j$ 个神经元的偏置项</li>
+<li>$z_j^l$ 表示第 $l$ 层的第 $j$ 个神经元计算的加权和</li>
+<li>$a_j^l$ 表示第 $l$ 层的第 $j$ 个神经元的激活函数输出值</li>
+</ul>
+<p>根据上面的记号，模型的前向传播的公式如下：</p>
+<p>$$
+z_j^2 = \sum_kw_{jk}^2x^1_k+b_j^2
+$$</p>
+<p>$$
+a_j^2=\sigma(z_j^2)
+$$</p>
+<p>$$
+z_j^3 = \sum_kw_{jk}^3a_k^2+b_j^3
+$$</p>
+<p>$$
+a_j^3=\sigma(z_j^3)
+$$</p>
+<p><strong>更一般的，可以对上面的公式进行概括</strong>。$z_j^l$ 和 $a_j^l$ 的计算方式如下：
+$$
+z_j^l=\sum_kw_{jk}^la^{l-1}_k+b_j^l
+$$</p>
+<p>$$
+a_j^l=\sigma(z_j^l)
+$$</p>
+<p><strong>上面这两个公式很重要，特别要弄清楚式子的下标和上标的关系，他们在之后的反向传播的公式推导中会很有用</strong></p>
+<p>这里考虑用均值平方误差即 MSE 作为损失函数 $J$，$sigmoid$ 函数作为激活函数，当然这两个换成别的函数的话推导过程也是类似的</p>
+<p>$$
+J = \frac{1}{2k}\sum_{j=1}^k(a_j^L-y_j)^2
+$$</p>
+<h2 id="反向传播的直觉理解">反向传播的直觉理解</h2>
+<p>我发现，在深入了解细节之前，从高层次的角度理解一个概念总是能带来帮助。我们知道，深度学习模型的训练过程就是要让模型的预测 $a^L_j$ 越接近真实值 $y_j$ 越好。那么 $a^L_j$ 跟什么有关呢？根据样本的真实值 $y_j$，可以计算 $a^L_j$ 和 $y_j$ 的误差，<strong>计算出误差之后，我们肯定知道要增大还是减小 $a^L_j$ 才能让模型的预测更好</strong>。而我们能够改变的量只有：第 $L - 1$ 层和第 $L$ 层之间的每个权重 $w^L_{jk}$，偏置项 $b_j^L$，或者是第 $L-1$ 层的激活函数的输出值 $a^{L-1}_k$，但是 $a_k^{L-1}$ 并无法直接改变，它是由更前面的权重和偏置项的值决定的。<strong>当我们从后往前根据预测的误差，考虑要如何修改每一层的权重和偏置项的时候，就是在做反向传播</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。</p>
+<p>上述过程解释了 $a_j^L$ <em>想要如何</em>调整模型的权重和偏置项。当然，我们还需要考虑输出层中除了$a_j^L$ 以外的神经元的“意见”。他们各自对如何改变模型的权重和偏置项的“意见”并不一定相同。最后，我们需要考虑输出层中所有神经元的<em>意见</em>来更新模型的权重和偏差</p>
+<h2 id="反向传播的四个公式">反向传播的四个公式</h2>
+<p>反向传播的核心就是下面四个公式</p>
+<h3 id="公式一">公式一</h3>
+<p>$$
+\delta_j^L=\frac{\partial J}{\partial a_j^L}\sigma&rsquo;(z_j^L)
+$$</p>
+<p>其中 $L$ 为模型的层数，在我们前面定义的模型中 $L=3$，$\delta_j^L$ 表示第 $L$ 层即输出层的第 $j$ 个神经元的梯度信息</p>
+<p>顺带一提，用矩阵和向量的角度可以把上面的公式改写为$\delta^L=\nabla J\odot \sigma&rsquo;(z^L)$。其中 $\odot$ 表示按元素（element-wise）乘</p>
+<blockquote>
+<p>📒 公式一计算的是输出层的每个神经元的梯度</p>
+</blockquote>
+<p><strong>推导过程</strong>⬇️
+$$
+\begin{aligned}
+\delta_j^L&amp;=\frac{\partial J}{\partial z_j^L} \\\
+&amp;=\sum_k\frac{\partial J}{\partial a_k^L}\frac{\partial a_k^L}{\partial z_j^L} \\\
+&amp;=\frac{\partial J}{\partial a_j^L}\frac{\partial a_j^L}{\partial z_j^L}\ (only\ \frac{\partial a_j^L}{\partial z_j^L}\ne 0) \\\
+&amp;=\frac{\partial J}{\partial a_j^L}\frac{\partial \sigma(z_j^L)}{\partial z_j^L}\  \\\
+&amp;=\frac{\partial J}{\partial a_j^L}\sigma&rsquo;(z_j^L)
+\end{aligned}
+$$</p>
+<h3 id="公式二">公式二</h3>
+<p>$$
+\delta^l=((w^{l+1})^T\delta^{l+1})\odot \sigma&rsquo;(z^l)
+$$</p>
+<blockquote>
+<p>📒 公式二计算的是任意层 $l$ 的梯度向量，注意这个公式如何将第 $l$ 层的梯度向量和第 $l+1$ 的梯度向量联系起来。它<strong>让我们可以用后面的层的梯度向量计算前面的层的梯度向量</strong></p>
+</blockquote>
+<p><strong>推导过程</strong>⬇️
+$$
+\begin{aligned}
+\delta_j^l&amp;=\frac{\partial J}{\partial z_j^l} \\\
+&amp;=\sum_k\frac{\partial J}{\partial z_k^{l+1}}\frac{\partial z_k^{l+1}}{\partial z_j^l} \\\
+&amp;=\sum_k\delta_k^{l+1}\frac{\partial }{\partial z_j^l}z_k^{l+1}
+\end{aligned}
+$$</p>
+<p>注意其中 $\frac{\partial }{\partial z_j^l}z_k^{l+1} = \frac{\partial }{\partial z_j^l}\ \sum_pw^{l+1}_{kp}\sigma(z_p^l)+b^{l+1}_k$</p>
+<p>只有当 $p=j$ 的时候才可导，因此上面公式的解是 $w^{l+1}_{kj}\sigma&rsquo;(z_j^l)$</p>
+<p>即，我们证明了$\delta_j^l=\sum_k\delta_k^{l+1}\ w^{l+1}_{kj}\sigma&rsquo;(z_j^l)$</p>
+<p>$\sum_k\delta_k^{l+1}w^{l+1}_{kj}$ 其实就是计算 2 个向量的内积，因此可以将其改写为向量形式 -  $\delta^l=((w^{l+1})^T\delta^{l+1})\odot \sigma&rsquo;(z^l)$</p>
+<h3 id="公式三">公式三</h3>
+<p>$$
+\frac{\partial J}{\partial b^l_j}=\delta_j^l
+$$</p>
+<blockquote>
+<p>📒 公式三可以用来计算模型中任意一个权重的梯度</p>
+</blockquote>
+<p><strong>推导过程</strong>⬇️
+$$
+\begin{aligned}
+\frac{\partial J}{\partial b^l_j}&amp;= \frac{\partial J}{\partial z^l_j}\frac{\partial z^l_j}{\partial b^l_j} \\\
+&amp;= \delta_j^l \frac{\partial}{\partial b^l_j}\sum_kw^l_{jk}a^{l-1}_j+b^l_j\\\
+&amp;= \delta_j^l
+\end{aligned}
+$$</p>
+<p>注意上面的第一个等号和公式一的推导类似，我直接跳过了去掉 $\sum_k$ 的过程</p>
+<h3 id="公式四">公式四</h3>
+<p>$$
+\frac{\partial J}{\partial w_{jk}^l}=a_k^{l-1}\delta_j^l
+$$</p>
+<blockquote>
+<p>📒 公式四可以用来计算模型中任意一个偏置项的梯度</p>
+</blockquote>
+<p><strong>推导过程</strong>⬇️
+$$
+\begin{aligned}
+\frac{\partial J}{\partial w_{jk}^l}&amp;=\frac{\partial J}{\partial z^l_j}\frac{\partial z^l_j}{\partial w_{jk}^l} \\\
+&amp;=\frac{\partial J}{\partial z^l_j}\frac{\partial }{\partial w_{jk}^l}\sum_pw_{jp}^la_p^{l-1}+b_j^l \\\
+&amp;=\delta_j^l\frac{\partial }{\partial w_{jk}^l}\sum_kw_{jk}^la_k^{l-1}+b_j^l \\\
+&amp;=\delta_j^la_k^{l-1}
+\end{aligned}
+$$</p>
+<h3 id="反向传播算法">反向传播算法</h3>
+<p>基于前面讨论的公式，可以知道反向传播算法的工作流程</p>
+<ol>
+<li>前向传播，计算每个 $z_j^l$，$a_j^l$</li>
+<li>根据公式一计算输出层的梯度向量  $\delta^L$</li>
+<li>从后往前
+<ol>
+<li>根据公式二计算每一层的梯度向量 $\delta^l$，注意我们总是可以根据 $\delta^{l+1}$ 计算出 $\delta^l$</li>
+<li>根据公式三可以计算出每个偏置项 $b^l_j$ 的梯度，它等于 $\delta^l_j$</li>
+<li>根据公式四可以计算出每个权重 $w^l_{jk}$ 的梯度，它等于 $a_k^{l-1}\delta_j^l$</li>
+</ol>
+</li>
+</ol>
+<p>上面这个过程也回答了——为什么反向传播是一个高效的算法这个问题</p>
+<ul>
+<li>👍 根据公式二，计算第 $l$ 层的梯度向量 $\delta^l$ 的时候 $\delta^{l+1}$ 已经算好了，不用从头从输出层开始推导</li>
+<li>👍 根据公式三和公式四，直接算出了损失函数对当前层权重和偏置项的梯度，而不是其他什么中间的梯度结果</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>上面就是反向传播算法的整个流程，公式和记号还是颇多的～但还是比较好理解的，在复习反向传播算法的时候发现了一些<strong>可能帮助读者</strong>理解反向传播的点：</p>
+<ul>
+<li>反向传播是针对<strong>单个样本</strong>的算法，所以推导的时候考虑一个样本作为模型的输入就行了</li>
+<li>推导公式的时候<strong>从某个神经元的角度</strong>思考，<strong>然后归纳为向量形式</strong>。而不是一上来就从向量形式入手，<del>当然实力好的当我没说</del></li>
+</ul>
+<p>收工，感谢阅读👋</p>
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://youtu.be/Ilg3gGewQ5U" target="_blank" rel="noopener noreffer ">What is backpropagation really doing? - 3Blue1Brown</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-04-04</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" data-title="反向传播公式推导和理解" data-hashtags="Deep-Learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" data-hashtag="Deep-Learning"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" data-title="反向传播公式推导和理解"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" data-title="反向传播公式推导和理解"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" data-title="反向传播公式推导和理解"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/deep-learning/">Deep-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/linear-regression-model-guide-theory/" class="prev" rel="prev" title="线性回归模型指南 - 理论部分"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>线性回归模型指南 - 理论部分</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
