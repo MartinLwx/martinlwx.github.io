@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>用 SRTBOT 框架分析动态规划问题 - MartinLwx&#39;s blog</title><meta name="Description" content="介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题"><meta property="og:title" content="用 SRTBOT 框架分析动态规划问题" />
+<meta property="og:description" content="介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-09T12:30:31+08:00" />
+<meta property="article:modified_time" content="2023-04-09T12:30:31+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="用 SRTBOT 框架分析动态规划问题"/>
+<meta name="twitter:description" content="介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "用 SRTBOT 框架分析动态规划问题",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/solving-dynamic-programming-problems-using-srtbot\/"
+        },"genre": "posts","keywords": "Algorithm","wordcount":  3021 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/solving-dynamic-programming-problems-using-srtbot\/","datePublished": "2023-04-09T12:30:31+08:00","dateModified": "2023-04-09T12:30:31+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/solving-dynamic-programming-problems-using-srtbot/">English</option><option value="/zh-cn/solving-dynamic-programming-problems-using-srtbot/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/solving-dynamic-programming-problems-using-srtbot/">English</option><option value="/zh-cn/solving-dynamic-programming-problems-using-srtbot/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">用 SRTBOT 框架分析动态规划问题</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/algorithm/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Algorithm</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-09">2023-04-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3021 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#什么是动态规划问题">什么是动态规划问题</a></li>
+    <li><a href="#srtbot-框架">SRTBOT 框架</a>
+      <ul>
+        <li><a href="#定义子问题subproblems-definition">定义子问题（Subproblems definition）</a></li>
+        <li><a href="#递归式关联子问题relate-subproblem-solutions-recursively">递归式关联子问题（Relate subproblem solutions recursively）</a></li>
+        <li><a href="#根据拓扑排序确定解决子问题的顺序topological-order-to-argue-relation-is-acyclic-and-subproblems-form-a-dag">根据拓扑排序确定解决子问题的顺序（Topological order to argue relation is acyclic and subproblems form a DAG）</a></li>
+        <li><a href="#边界情况base-cases">边界情况（Base cases）</a></li>
+        <li><a href="#原始问题original-problem">原始问题（Original problem）</a></li>
+        <li><a href="#时间复杂度分析time-analysis">时间复杂度分析（Time analysis）</a></li>
+      </ul>
+    </li>
+    <li><a href="#应用">应用</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言">引言</h2>
+<p>在做算法题的时候，让我头疼的经常是动态规划问题，它属于那种自己琢磨半天想不出来，但是看了答案之后会恍然大悟，下次再做的话很有可能又忘记了的一类问题。我也曾经看了很多人的题解，试图消化、吸收、应用他们的思路，但我<strong>一直</strong>找不到一个归纳得特别好的框架，似乎每个人都有自己解决动态规划的思路，将他们的思路应用在没有见过的动态规划问题的时候我总是遇到困难，而他们的方法轮<em>似乎</em>也无法让我处理所有的动态规划问题。这种寻寻觅觅对动态规划似懂非懂的状态，终于在我看完 <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" target="_blank" rel="noopener noreffer ">MIT6.006</a> 的课程之后发生了改变，课上老师提出了解决动态规划问题的 6 个步骤——被称为 <strong>SRTBOT 框架</strong>，我发现它是<strong>如此地好用</strong>，因此我决定写下这篇博客来与大家分享🙌</p>
+<blockquote>
+<p>👉 总的来说，这篇博客更适合已经对动态规划有了初步了解但是还没有找到系统方法论人的阅读</p>
+</blockquote>
+<h2 id="什么是动态规划问题">什么是动态规划问题</h2>
+<p>动态规划问题的两大特征：<strong>重叠子问题</strong>和<strong>最优子结构</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<ul>
+<li><strong>重叠子问题</strong>：解决一个动态规划问题往往是将它分解为若干个<strong>重叠的子问题</strong></li>
+<li><strong>最优子结构</strong>：即<strong>大问题</strong>的解可以通过组合<strong>小问题</strong>的<strong>最优解</strong>计算出来</li>
+</ul>
+<p>前面的定义要特别注意的是「重叠」以及「子问题」，强调重叠是因为动态规划的厉害之处就在于它会记住解决过的子问题的答案，那么<strong>重叠的子问题越多，动态规划的优势更加明显</strong></p>
+<blockquote>
+<p>🤔️ 如果子问题并不重叠，那么就应该用分治法解决</p>
+</blockquote>
+<p>上面是从定义的角度来谈动态规划问题的，从编程题目的角度来看，<strong>下面两大类问题一般都是要用动态规划算法</strong>：</p>
+<ul>
+<li>最优化问题：<strong>求最值 + 重叠子问题</strong></li>
+<li>组合问题：<strong>求解所有可能的解法的数量</strong></li>
+</ul>
+<blockquote>
+<p>📒 或者，根据我的个人刷题经验来说：动态规划问题一般是可以暴力解决的递归问题，但是存在大量重叠子问题因此可以对其进行优化</p>
+</blockquote>
+<h2 id="srtbot-框架">SRTBOT 框架</h2>
+<p>SRTBOT 是 6 个步骤的首字母缩写，分别是<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>：</p>
+<ul>
+<li><strong>S</strong>ubproblems definition</li>
+<li><strong>R</strong>elate subproblem solutions recursively</li>
+<li><strong>T</strong>opological order to argue relation is acyclic and subproblems form a DAG</li>
+<li><strong>B</strong>ase cases</li>
+<li><strong>O</strong>riginal problem</li>
+<li><strong>T</strong>ime analysis</li>
+</ul>
+<p>下面我来分别讲讲上面每一个步骤需要做些什么✈️</p>
+<h3 id="定义子问题subproblems-definition">定义子问题（Subproblems definition）</h3>
+<p><strong>包含下面几个步骤</strong></p>
+<ol>
+<li>定义子问题并用文字描述其含义，这里定义的子问题会包含参数。<strong>具体定义子问题的技巧会在后面提到</strong></li>
+<li>子问题的参数一般<strong>包含输入的子集</strong>，不同的动态规划问题可能有不同的输入格式：二叉树、单序列、数字等</li>
+</ol>
+<p>在设计子问题的时候可以参考下面几种：</p>
+<ul>
+<li>如果输入是<strong>单个序列 <code>A</code></strong>
+<ul>
+<li>前缀形式（Prefix form）：定义 <code>dp[i]</code> 表示输入为 <code>A[:i+1]</code> 的子问题的解，注意这里的区间表示是基于 Python 的，左闭右开</li>
+<li>后缀形式（Suffix form）：定义 <code>dp[i]</code> 表示输入为 <code>A[i:]</code> 的子问题的解</li>
+<li>子串形式（Contiguous substrings of a sequence）：定义 <code>dp[i:j]</code> 表示输入为 <code>A[i:j+1]</code> 的子问题的解</li>
+</ul>
+</li>
+<li>如果输入是<strong>两个序列 <code>A</code> 和 <code>B</code></strong>
+<ul>
+<li>为之前 3 种可能的笛卡尔乘积，一共有 $3\times 3=9$ 种，视具体情况而定</li>
+<li><em>比如最长公共子序列的问题，可以用 <code>dp[i][j]</code> 表示输入为 <code>A[:i+1]</code> 和 <code>B[:i+1]</code> 的最长公共子序列</em></li>
+</ul>
+</li>
+<li>如果输入是<strong>一个数字 <code>k</code></strong>
+<ul>
+<li>定义 <code>dp[k]</code> 为输入为 <code>k</code> 的子问题的解</li>
+</ul>
+</li>
+<li>如果输入是<strong>一棵二叉树</strong>
+<ul>
+<li>定义 <code>dp[r]</code> 为输入为以 <code>r</code> 为根节点的子树的这个子问题的解。<strong>在树形 DP 中要注意「子问题」和「子树」这个对应的关系</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📒 进阶：掌握了上面的一般思路之后，其实已经能够解决很多动态规划问题，但你有时候会发现你定义的子问题<strong>不够精确</strong>，导致难以无法关联子问题，<strong>当你在关联子问题有困难的时候总是可以尝试给你定义的子问题加上约束，或者是对子问题进行扩展</strong>。在 MIT 6.006 中称为 Subproblem Constraints and Expansion</p>
+</blockquote>
+<p>对子问题进行扩展会更为常见一些，一般此时就是将定义的 <code>dp[i]</code> 变成 <code>dp[i][j]</code> 这样的形式，<strong>同时修改你的子问题定义</strong>。<em>举例来说，在 <a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener noreffer ">198. 打家劫舍</a> 中可以考虑额外引入一个状态记住是否偷了房屋 <code>i</code></em></p>
+<p>也稍微提一下对子问题的定义加上限制是什么意思，<em>比如我们定义 <code>dp[i]</code> 是输入为 <code>A[:i+1]</code> 的解，假设每个 <code>A[i]</code> 存在选中与不选中两个状态，那么可以考虑将 <code>dp[i]</code> 定义为 输入为 <code>A[:i+1]</code> <strong>而且 <code>A[i]</code> 一定是选中状态</strong>的时候的解</em>（这么说可能有点抽象，待我之后找到可以这样处理的问题后贴个链接在这）</p>
+<blockquote>
+<p>📒 你会发现，<strong>定义子问题的时候我们根本不会去思考要如何计算出来</strong>，千万不要在定义子问题的时候就开始想要怎么计算出这个值，当你使用 SRTBOT 框架分析到最后，你就自然而然知道怎么计算了~</p>
+</blockquote>
+<h3 id="递归式关联子问题relate-subproblem-solutions-recursively">递归式关联子问题（Relate subproblem solutions recursively）</h3>
+<p>从题目中归纳出允许的决策（假设有 $K$ 个），递归关联子问题的含义是：试想你要如何通过更小的子问题的解组合出更大的子问题 <code>dp[i]</code> 的解</p>
+<p>可能用数学公式表述会更明显一点：</p>
+<p>$$
+dp[i] = f(choice_1,choice_2, &hellip;, choice_K)
+$$</p>
+<p>其中 $f$ 是一个抽象的操作，在计算组合数的动态规划问题中，一般就是求和；在求解最值的问题中，一般就是 <code>max/min</code>，这里每个 $choice_j$ 都对应了一个更小的问题</p>
+<p><em>举例来说，在 <a href="https://leetcode.cn/problems/climbing-stairs/" target="_blank" rel="noopener noreffer ">70. 爬楼梯</a> 问题中，每次只能爬一个台阶或者两个台阶（$K=2$），那么爬到第 <code>i</code> 个台阶一定是从第 <code>i - 1</code> 个台阶和第 <code>i - 2</code> 个台阶过来的，又因为求解的是所有可能的走法，因此 <code>dp[i] = dp[i - 1] + dp[i - 2]</code></em></p>
+<h3 id="根据拓扑排序确定解决子问题的顺序topological-order-to-argue-relation-is-acyclic-and-subproblems-form-a-dag">根据拓扑排序确定解决子问题的顺序（Topological order to argue relation is acyclic and subproblems form a DAG）</h3>
+<p>你可能在别的地方看到过动态规划问题的另外一个名字——“表格法”。因为当我们采用“自底向上”的解法解决动态规划问题的时候可以看成是在填表格。但在我看来，<strong>将动态规划看成一张有向无环图会更有助于对动态规划的理解</strong>——将子问题看成是图上的顶点，用<strong>有向边连接「小的子问题」-&gt; 「大的子问题」</strong>，这个图会构成一个有向无环图（DAG），<strong>动态规划算法其实就是遍历 DAG 的拓扑排序的过程</strong></p>
+<blockquote>
+<p>🤔️ 为什么是有向无环图？首先，有向边<strong>表示了子问题之间的依赖关系</strong>也表示了<strong>我们求解子问题的顺序</strong>：要解决一个子问题，需要先求解出更小的子问题；其次，它必须是无环的，因为动态规划会记住求解过的子问题，我们<strong>不可能多次求解同一个子问题</strong>，因此它必须是无环的。</p>
+</blockquote>
+<p>意识到动态规划的子问题求解顺序是 DAG 的拓扑排序有什么用呢？这在<strong>很大程度上帮我理解了树形 DP 问题</strong>：动态规划要先求解子问题 &ndash; 在树形 DP 中，显然“子树”和“子问题”的概念是对应的，因此要先解决子问题其实意味着计算 <code>dp[r]</code> 的时候应该先计算 <code>dp[r.left]</code> 和 <code>dp[r.right]</code>，而这恰恰遵循了二叉树的后序遍历顺序，<strong>因此树形 DP 问题往往是通过后序遍历实现的</strong>。如果把树看成图的话（注意边由孩子结点指向父节点），那么拓扑排序也是和后序遍历的顺序对应的</p>
+<blockquote>
+<p>🤔️ 实际写代码的时候，你可能对如何用正确的顺序更新子问题有疑问，只要记住<strong>永远都是先解决小问题，然后才到大问题</strong>，再看一眼前面定义的关系式，你就知道更新顺序是什么了</p>
+</blockquote>
+<h3 id="边界情况base-cases">边界情况（Base cases）</h3>
+<p>类似递归算法中的 base case，表示<strong>独立的</strong>最小子问题的解，是关系式推导的起点，<strong>这种信息一般可以通过看题目看出来</strong></p>
+<h3 id="原始问题original-problem">原始问题（Original problem）</h3>
+<p>通常来说，原问题一般都对应 <code>dp[n]</code> 或者 <code>dp[0]</code>，<strong>但是不要死记硬背</strong>，还是要结合题意、你定义的子问题形式。但不必担心，<strong>因为这一步通常不是求解动态规划问题的难点</strong></p>
+<h3 id="时间复杂度分析time-analysis">时间复杂度分析（Time analysis）</h3>
+<p>动态规划算法就是求解所有需要求解的子问题，然后计算原始问题，假设一共有 $n$ 个子问题要求解，那么动态规划的时间复杂度可以用下面这个公式解决：</p>
+<p>$$
+n * O(each\ subproblem) + O(original\ problem)
+$$</p>
+<h2 id="应用">应用</h2>
+<p>光是谈理论总是一知半解，只有真正开始把 SRTBOT 框架应用于动态规划问题才能够体会它的强大之处，下面是我整理的部分动态规划问题的题解，在题解里面我会谈到如何用 SRTBOT 分析动态规划问题。<strong>后序会不断把做的动态规划的题目搬运到这里来，或者也可以直接看 Leetcode 账号查看题解👻</strong></p>
+<blockquote>
+<p>📒 注：我的解法并不一定是最优的解法，<em>比如有时候可以用「状态压缩」的技巧减少空间复杂度等，我可能并不会这么做</em>，我<strong>只是将 SRTBOT 框架应用于这些动态规划问题</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Difficulty</th>
+<th>Solution</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.cn/problems/climbing-stairs/" target="_blank" rel="noopener noreffer ">70. 爬楼梯</a></td>
+<td>简单</td>
+<td><a href="https://leetcode.cn/problems/climbing-stairs/solution/srtbot-kuang-jia-jie-jue-dong-tai-gui-hu-1vo5/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td>数</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener noreffer ">198. 打家劫舍</a></td>
+<td>中等</td>
+<td><a href="https://leetcode.cn/problems/house-robber/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-cdib/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td>单序列 + 扩展子问题</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.cn/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener noreffer ">746. 使用最小花费爬楼梯</a></td>
+<td>简单</td>
+<td><a href="https://leetcode.cn/problems/min-cost-climbing-stairs/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-imb0/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td>单序列</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://en.wikipedia.org/wiki/Dynamic_programming" target="_blank" rel="noopener noreffer ">Dynamic programming - Wiki</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer ">Lecture 15 ~ 18 of MIT 6.006</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-04-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题" data-hashtags="Algorithm"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-hashtag="Algorithm"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/algorithm/">Algorithm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/backpropagation-tutorial/" class="prev" rel="prev" title="反向传播公式推导和理解"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>反向传播公式推导和理解</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

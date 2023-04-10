@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Solving DP problems by SRTBOT Framework - MartinLwx&#39;s blog</title><meta name="Description" content="Intoduce the SRTBOT Framework which can be utilized to solving DP problems"><meta property="og:title" content="Solving DP problems by SRTBOT Framework" />
+<meta property="og:description" content="Intoduce the SRTBOT Framework which can be utilized to solving DP problems" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-09T12:30:31+08:00" />
+<meta property="article:modified_time" content="2023-04-09T12:30:31+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Solving DP problems by SRTBOT Framework"/>
+<meta name="twitter:description" content="Intoduce the SRTBOT Framework which can be utilized to solving DP problems"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" /><link rel="prev" href="https://martinlwx.github.io/en/backpropagation-tutorial/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Solving DP problems by SRTBOT Framework",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/solving-dynamic-programming-problems-using-srtbot\/"
+        },"genre": "posts","keywords": "Algorithm","wordcount":  1710 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/solving-dynamic-programming-problems-using-srtbot\/","datePublished": "2023-04-09T12:30:31+08:00","dateModified": "2023-04-09T12:30:31+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "Intoduce the SRTBOT Framework which can be utilized to solving DP problems"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/solving-dynamic-programming-problems-using-srtbot/" selected>English</option><option value="/zh-cn/solving-dynamic-programming-problems-using-srtbot/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/solving-dynamic-programming-problems-using-srtbot/" selected>English</option><option value="/zh-cn/solving-dynamic-programming-problems-using-srtbot/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Solving DP problems by SRTBOT Framework</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/algorithm/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Algorithm</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-09">2023-04-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1710 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;9 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#whats-the-dp-problem">What&rsquo;s the DP problem?</a></li>
+    <li><a href="#srtbot-framework">SRTBOT Framework</a>
+      <ul>
+        <li><a href="#subproblems-definition">Subproblems definition</a></li>
+        <li><a href="#relate-subproblem-solutions-recursively">Relate subproblem solutions recursively</a></li>
+        <li><a href="#topological-order-to-argue-relation-is-acyclic-and-subproblems-form-a-dag">Topological order to argue relation is acyclic and subproblems form a DAG</a></li>
+        <li><a href="#base-cases">Base cases</a></li>
+        <li><a href="#original-problem">Original problem</a></li>
+        <li><a href="#time-analysis">Time analysis</a></li>
+      </ul>
+    </li>
+    <li><a href="#get-some-practice">Get some practice</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro">Intro</h2>
+<p>When solving algorithm problems, what often gives me a headache are dynamic programming problems(DP problems). They are the type of problems that I can&rsquo;t figure out on my own after thinking for a long time, but after seeing the answer, it suddenly becomes clear and reasonable. However, the next time I encounter a similar problem, I may forget how to solve it. I have also read many people&rsquo;s solutions and tried to digest and apply their ideas, but <strong>I have been unable to find a particularly good framework that works for all dynamic programming problems</strong>. It seems that everyone has their way of solving dynamic programming problems, and when I try to apply their methods to new problems, I always encounter difficulties. <strong>Things start to change after I learned <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" target="_blank" rel="noopener noreffer ">MIT6.006</a></strong>. The teacher presented 6 steps to solve dynamic programming problems, which is called the SRTBOT framework. I found it to be <strong>so useful and practical</strong> that I decided to write this blog post to share it with everyone 🙌</p>
+<blockquote>
+<p>👉 Overall, this blog post is more suitable for those who already have a basic understanding of dynamic programming but have not yet found a systematic approach</p>
+</blockquote>
+<h2 id="whats-the-dp-problem">What&rsquo;s the DP problem?</h2>
+<p>The two main features of dynamic programming problems are &ldquo;overlapping subproblems&rdquo; and &ldquo;optimal substructure&rdquo; <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<ul>
+<li><strong>Overlapping subproblems</strong>: Solving a dynamic programming problem often involves breaking it down into several overlapping subproblems.</li>
+<li><strong>Optimal substructure</strong>: The solution to a large problem can be calculated by combining the optimal solutions of smaller subproblems.</li>
+</ul>
+<p>It is important to note the terms &ldquo;overlapping&rdquo; and &ldquo;subproblems&rdquo; in the above definitions. Emphasis is placed on overlapping because the power of dynamic programming lies in its ability to remember the answers(by memorization) to solve subproblems. Therefore, the more overlapping subproblems there are, the more pronounced the advantage of dynamic programming.</p>
+<blockquote>
+<p>🤔️ If the subproblems are not overlapping, then we may use another algorithm - Divide and conquer.</p>
+</blockquote>
+<p>From the perspective of programming problems, the following two types of problems usually require dynamic programming algorithms:</p>
+<ul>
+<li>Optimization problems: <strong>finding the optimal solution + overlapping subproblems</strong></li>
+<li>Combination problems: <strong>finding the number of possible solutions</strong></li>
+</ul>
+<blockquote>
+<p>📒 Alternatively, based on my personal experience, dynamic programming problems are generally recursive problems that can be solved by brute force, but they have a large number of overlapping subproblems, so they can be optimized using dynamic programming.</p>
+</blockquote>
+<h2 id="srtbot-framework">SRTBOT Framework</h2>
+<p>SRTBOT is an acronym for 6 steps, which are <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>:</p>
+<ul>
+<li><strong>S</strong>ubproblems definition</li>
+<li><strong>R</strong>elate subproblem solutions recursively</li>
+<li><strong>T</strong>opological order to argue relation is acyclic and subproblems form a DAG</li>
+<li><strong>B</strong>ase cases</li>
+<li><strong>O</strong>riginal problem</li>
+<li><strong>T</strong>ime analysis</li>
+</ul>
+<p>Now let&rsquo;s talk about each step</p>
+<h3 id="subproblems-definition">Subproblems definition</h3>
+<p><strong>Steps</strong></p>
+<ol>
+<li>Define subproblems and describe their meaning <strong>in words</strong>. The subproblems defined here will <strong>include parameters</strong>. Specific techniques for defining subproblems will be mentioned later</li>
+<li>The parameters of subproblems generally include <strong>subsets of inputs</strong>. Different DP problems may have different input formats: binary trees, single sequences, numbers, etc</li>
+</ol>
+<p>Some tricks for defining subproblems:</p>
+<ul>
+<li>If the input is <strong>a single sequence <code>A</code></strong>
+<ul>
+<li>Prefix form: Define <code>dp[i]</code> as the solution to the subproblem with input <code>A[:i+1]</code>, note that the interval representation here is based on Python and is left-closed and right-open</li>
+<li>Suffix form: Define <code>dp[i]</code> as the solution to the subproblem with input <code>A[i:]</code></li>
+<li>Contiguous substrings of a sequence：Define <code>dp[i:j]</code> as the solution to the subproblem with input <code>A[i:j+1]</code></li>
+</ul>
+</li>
+<li>If the input is <strong>double sequences <code>A</code> 和 <code>B</code></strong>
+<ul>
+<li>There are a total of $3 \times 3 = 9$ possible Cartesian products for the previous 3 types, depending on the specific situation</li>
+<li>*For example, in the problem of finding the longest common subsequence(LCS), <code>dp[i][j]</code> can be used to represent the LCS of inputs <code>A[:i+1]</code> and <code>B[:j+1]</code></li>
+</ul>
+</li>
+<li>If the input is <strong>number <code>k</code></strong>
+<ul>
+<li>Define <code>dp[k]</code> as the solution to the subproblem with input <code>K</code>.</li>
+</ul>
+</li>
+<li>If the input is <strong>a binary tree <code>r</code></strong>
+<ul>
+<li>Define <code>dp[r]</code> as the solution to the subproblem with input being the subtree with <code>r</code> as the root node. <strong>In tree DP, pay attention to the relevance between &ldquo;subproblem&rdquo; and &ldquo;subtree&rdquo;</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📒 Advanced: Once you have mastered the general approach above, you can solve many dynamic programming problems. However, you may find it difficult to relate subproblems with your <em>loose</em> definition. When you have difficulties in associating subproblems, you can always try to <strong>add constraints</strong> to the subproblems you define or <strong>expand the subproblems</strong>. In MIT 6.006, this is called Subproblem Constraints and Expansion</p>
+</blockquote>
+<p>Expanding subproblems is more common. Generally, this involves changing the form of <code>dp[i]</code> to <code>dp[i][j]</code>, which will also change the definition of your subproblems. *For example, in <a href="https://leetcode.com/problems/house-robber/" target="_blank" rel="noopener noreffer ">198. House Robber</a>, an additional state can be introduced to remember whether house <code>i</code> was robbed or not</p>
+<p>I will also mention briefly what it means to add constraints to the definition of subproblems. *For example, if we define <code>dp[i]</code> as the solution with input <code>A[:i+1]</code>, assuming that each <code>A[i]</code> has two states of being selected or not, we can consider defining <code>dp[i]</code> as the solution with input <code>A[:i+1]</code> and <strong><code>A[i]</code> must be in the selected state</strong> (this may be a bit abstract. I will provide a link to a problem that can be handled in this way later).</p>
+<blockquote>
+<p>📒 You will find that <strong>when defining subproblems, we don&rsquo;t think about how to calculate the value</strong>. Don&rsquo;t start thinking about how to calculate the value when defining subproblems. When you use the SRTBOT framework to analyze, you will naturally know how to calculate it~</p>
+</blockquote>
+<h3 id="relate-subproblem-solutions-recursively">Relate subproblem solutions recursively</h3>
+<p>First, read the problem description and find out the allowable decisions(assuming there are $K$ of them), then try to imagine how to combine solutions from smaller subproblems to obtain the solution of bigger subproblem <code>dp[i]</code>.</p>
+<p>This can be expressed more clearly with mathematical formulas:</p>
+<p>$$
+dp[i] = f(choice_1,choice_2, &hellip;, choice_K)
+$$</p>
+<p>Where $f$ is an abstract operation. In dynamic programming problems that involve calculating combinations, $f$ is generally summation; in problems that involve finding the maximum or minimum value, $f$ is generally <code>max/min</code>. Here, each $choice_j$ corresponds to a smaller problem.</p>
+<p><em>For example, in the problem of <a href="https://leetcode.com/problems/climbing-stairs/" target="_blank" rel="noopener noreffer ">70. Climbing stairs</a> on LeetCode, where each time one can climb one or two steps ($K=2$), reaching the <code>i</code>-th step must have come from either the <code>i-1</code>-th step or the <code>i-2</code>-th step. Since we are looking for all possible ways to climb the stairs, <code>dp[i] = dp[i-1] + dp[i-2]</code></em></p>
+<h3 id="topological-order-to-argue-relation-is-acyclic-and-subproblems-form-a-dag">Topological order to argue relation is acyclic and subproblems form a DAG</h3>
+<p>You may have seen another name for dynamic programming problems elsewhere - &ldquo;tabulation method&rdquo;. This is because when we use the bottom-up approach to solve dynamic programming problems, it can be seen as filling in a table. However, in my opinion, it is more helpful to understand dynamic programming by viewing it as a directed acyclic graph (DAG) - viewing subproblems as vertices on the graph and connecting &ldquo;smaller subproblems&rdquo; -&gt; &ldquo;larger subproblems&rdquo; with directed edges. This graph will form a directed acyclic graph (DAG), and the dynamic programming algorithm is the process of traversing the topological order of the DAG</p>
+<blockquote>
+<p>🤔️ Why is it a directed acyclic graph? Firstly, <strong>directed edges represent the dependency between subproblems</strong> and also <strong>indicate the order in which we solve the subproblems</strong>: to solve a subproblem, we need to <strong>solve smaller subproblems first</strong>. Secondly, it must be acyclic because dynamic programming remembers the subproblems that have been solved, and we cannot solve the same subproblem multiple times, so it must be acyclic</p>
+</blockquote>
+<p>Understanding that order of solving subproblems in dynamic programming is the topological sorting of a DAG is very helpful in understanding tree DP problems. To solve a DP problem, we need to solve subproblems first. In the context of tree DP, the concepts of &ldquo;subtree&rdquo; and &ldquo;subproblem&rdquo; are equivalent. Therefore, solving subproblems first means calculating <code>dp[r.left]</code> and <code>dp[r.right]</code> before calculating <code>dp[r]</code>, which follows the post-order traversal order of a binary tree. Therefore, tree DP problems are often implemented through post-order traversal. If the tree is viewed as a graph (with directed edges pointing from child nodes to parent nodes), then the topological sorting is also in correspondence with the post-order traversal order</p>
+<blockquote>
+<p>🤔️ When writing code, you may be unsure of how to update subproblems in the correct order. Just remember to <strong>always solve smaller problems first</strong> and then move to larger problems. Combined with the relationship equation among subproblems defined earlier, you will know what the update order is</p>
+</blockquote>
+<h3 id="base-cases">Base cases</h3>
+<p>Similar to the base case in recursive algorithms, it represents the solution to the independent smallest subproblems and is the starting point for deriving the relationship formula. This information can usually be determined by examining the problem description</p>
+<h3 id="original-problem">Original problem</h3>
+<p>Usually, the original problem corresponds to <code>dp[n]</code> or <code>dp[0]</code>, <strong>but don&rsquo;t just memorize this</strong>. You still need to combine the problem description with the form of the subproblems you defined to represent the original problem. However, don&rsquo;t worry about this because **this step is usually not the hard part of solving dynamic programming problems</p>
+<h3 id="time-analysis">Time analysis</h3>
+<p>The dynamic programming algorithm is to solve all the subproblems that need to be solved and then calculates the original problem. Assuming there are a total of $n$ subproblems to be solved, the time complexity of dynamic programming can be solved using this formula:</p>
+<p>$$
+n * O(each\ subproblem) + O(original\ problem)
+$$</p>
+<h2 id="get-some-practice">Get some practice</h2>
+<p>The only way to master this technique is <em>to get your hands dirty</em>. Only by applying the SRTBOT framework to dynamic programming problems can you appreciate its power. Below are some of the solutions to dynamic programming problems that I have written. In the solutions, I will talk about how to analyze dynamic programming problems using the SRTBOT framework. <strong>I will continue to add the dynamic programming problems I have solved here, or you can also directly view the solutions on my Leetcode account👻</strong></p>
+<blockquote>
+<p>📒 Note: My solution is not necessarily the optimal solution, <em>for example, sometimes we can use the technique of &ldquo;state compression&rdquo; to reduce space complexity, but I may not do this</em>, I <strong>just apply the SRTBOT framework to these dynamic programming problems</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Difficulty</th>
+<th>Solution</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.com/problems/climbing-stairs/" target="_blank" rel="noopener noreffer ">70. Climbing stairs</a></td>
+<td>Easy</td>
+<td><a href="https://leetcode.com/problems/climbing-stairs/solutions/3399398/solving-this-dp-problem-using-srtbot/" target="_blank" rel="noopener noreffer ">Solution</a></td>
+<td>Number</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/house-robber/" target="_blank" rel="noopener noreffer ">198. House Robber</a></td>
+<td>Medium</td>
+<td><a href="https://leetcode.com/problems/house-robber/solutions/3401028/solving-dp-problems-using-srtbot/" target="_blank" rel="noopener noreffer ">Solution</a></td>
+<td>Single sequence + Subproblem expansion</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener noreffer ">746. Min Cost Climbing Stairs</a></td>
+<td>Easy</td>
+<td><a href="https://leetcode.com/problems/min-cost-climbing-stairs/solutions/3400428/solving-dp-problem-using-srtbot/" target="_blank" rel="noopener noreffer ">Solution</a></td>
+<td>Single sequence</td>
+</tr>
+</tbody>
+</table>
+<h2 id="refs">Refs</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://en.wikipedia.org/wiki/Dynamic_programming" target="_blank" rel="noopener noreffer ">Dynamic programming - Wiki</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer ">Lecture 15 ~ 18 of MIT 6.006</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-04-09</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" data-title="Solving DP problems by SRTBOT Framework" data-hashtags="Algorithm"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" data-hashtag="Algorithm"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" data-title="Solving DP problems by SRTBOT Framework"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" data-title="Solving DP problems by SRTBOT Framework"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" data-title="Solving DP problems by SRTBOT Framework"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/algorithm/">Algorithm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/backpropagation-tutorial/" class="prev" rel="prev" title="How to understand the backpropagation algorithm"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to understand the backpropagation algorithm</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
