@@ -49,7 +49,7 @@ Some tricks for defining subproblems:
 - If the input is **a single sequence `A`**
 	- Prefix form: Define `dp[i]` as the solution to the subproblem with input `A[:i+1]`, note that the interval representation here is based on Python and is left-closed and right-open
 	- Suffix form: Define `dp[i]` as the solution to the subproblem with input `A[i:]`
-	- Contiguous substrings of a sequence：Define `dp[i:j]` as the solution to the subproblem with input `A[i:j+1]`
+	- Contiguous substrings of a sequence：Define `dp[i][j]` as the solution to the subproblem with input `A[i:j+1]`
 - If the input is **double sequences `A` 和 `B`**
     - There are a total of $3 \times 3 = 9$ possible Cartesian products for the previous 3 types, depending on the specific situation
     - *For example, in the problem of finding the longest common subsequence(LCS), `dp[i][j]` can be used to represent the LCS of inputs `A[:i+1]` and `B[:j+1]`
@@ -121,13 +121,12 @@ The only way to master this technique is *to get your hands dirty*. Only by appl
 
 > 📒 Note: My solution is not necessarily the optimal solution, *for example, sometimes we can use the technique of "state compression" to reduce space complexity, but I may not do this*, I **just apply the SRTBOT framework to these dynamic programming problems**
 
-| Problem                                                                                  | Difficulty | Solution                                                                                                              | Note                                   |
-| ---------------------------------------------------------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| [70. Climbing stairs](https://leetcode.com/problems/climbing-stairs/)                    | Easy       | [Solution](https://leetcode.com/problems/climbing-stairs/solutions/3399398/solving-this-dp-problem-using-srtbot/)     | Number                                 |
-| [198. House Robber](https://leetcode.com/problems/house-robber/)                         | Medium     | [Solution](https://leetcode.com/problems/house-robber/solutions/3401028/solving-dp-problems-using-srtbot/)            | Single sequence + Subproblem expansion |
-| [746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/) | Easy       | [Solution](https://leetcode.com/problems/min-cost-climbing-stairs/solutions/3400428/solving-dp-problem-using-srtbot/) | Single sequence                        |
-
-
+| Problem                                                                                  | Solution                                                                                                              | Note                                   |
+| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| [70. Climbing stairs](https://leetcode.com/problems/climbing-stairs/)                    | [Solution](https://leetcode.com/problems/climbing-stairs/solutions/3399398/solving-this-dp-problem-using-srtbot/)     | Number                                 |
+| [746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/) | [Solution](https://leetcode.com/problems/min-cost-climbing-stairs/solutions/3400428/solving-dp-problem-using-srtbot/) | Single sequence                        |
+| [198. House Robber](https://leetcode.com/problems/house-robber/)                         | [Solution](https://leetcode.com/problems/house-robber/solutions/3401028/solving-dp-problems-using-srtbot/)            | Single sequence + Subproblem expansion |
+| [322. Coin changes](https://leetcode.com/problems/palindromic-substrings/)               | [Solution](https://leetcode.com/problems/coin-change/solutions/3404403/solving-dp-problem-using-srtbot/)              | Number + non-$O(1)$ subproblem         |
 
 
 ## Refs

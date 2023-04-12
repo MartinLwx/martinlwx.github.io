@@ -44,7 +44,7 @@ SRTBOT 是 6 个步骤的首字母缩写，分别是[^2]：
 - 如果输入是**单个序列 `A`**
 	- 前缀形式（Prefix form）：定义 `dp[i]` 表示输入为 `A[:i+1]` 的子问题的解，注意这里的区间表示是基于 Python 的，左闭右开
 	- 后缀形式（Suffix form）：定义 `dp[i]` 表示输入为 `A[i:]` 的子问题的解
-	- 子串形式（Contiguous substrings of a sequence）：定义 `dp[i:j]` 表示输入为 `A[i:j+1]` 的子问题的解
+	- 子串形式（Contiguous substrings of a sequence）：定义 `dp[i][j]` 表示输入为 `A[i:j+1]` 的子问题的解
 - 如果输入是**两个序列 `A` 和 `B`**
 	- 为之前 3 种可能的笛卡尔乘积，一共有 $3\times 3=9$ 种，视具体情况而定
     - *比如最长公共子序列的问题，可以用 `dp[i][j]` 表示输入为 `A[:i+1]` 和 `B[:i+1]` 的最长公共子序列*
@@ -110,12 +110,12 @@ $$
 
 > 📒 注：我的解法并不一定是最优的解法，*比如有时候可以用「状态压缩」的技巧减少空间复杂度等，我可能并不会这么做*，我**只是将 SRTBOT 框架应用于这些动态规划问题**
 
-| Problem                                                                           | Difficulty | Solution                                                                                                              | Note                |
-| --------------------------------------------------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)                       | 简单       | [题解](https://leetcode.cn/problems/climbing-stairs/solution/srtbot-kuang-jia-jie-jue-dong-tai-gui-hu-1vo5/)          | 数                  |
-| [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)                       | 中等       | [题解](https://leetcode.cn/problems/house-robber/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-cdib/)             | 单序列 + 扩展子问题 |
-| [746. 使用最小花费爬楼梯](https://leetcode.cn/problems/min-cost-climbing-stairs/) | 简单       | [题解](https://leetcode.cn/problems/min-cost-climbing-stairs/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-imb0/) | 单序列              |
-
+| Problem                                                                                                           | Solution                                                                                                              | Note                 |
+| ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)                                                       | [题解](https://leetcode.cn/problems/climbing-stairs/solution/srtbot-kuang-jia-jie-jue-dong-tai-gui-hu-1vo5/)          | 数                   |
+| [746. 使用最小花费爬楼梯](https://leetcode.cn/problems/min-cost-climbing-stairs/)                                 | [题解](https://leetcode.cn/problems/min-cost-climbing-stairs/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-imb0/) | 单序列               |
+| [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)                                                       | [题解](https://leetcode.cn/problems/house-robber/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-cdib/)             | 单序列 + 扩展子问题  |
+| [322. 零钱兑换](https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/) | [题解](https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/)              | 数 + 非$O(1)$ 子问题 |
 
 
 ## 参考
