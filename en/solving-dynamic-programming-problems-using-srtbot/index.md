@@ -1,6 +1,9 @@
 # Solving DP problems by SRTBOT Framework
 
 
+**Changelog**:
+- [Update dependency graphs]({{< ref "#relate-subproblems"  >}}) @2023.04.13
+
 ## Intro
 
 When solving algorithm problems, what often gives me a headache are dynamic programming problems(DP problems). They are the type of problems that I can't figure out on my own after thinking for a long time, but after seeing the answer, it suddenly becomes clear and reasonable. However, the next time I encounter a similar problem, I may forget how to solve it. I have also read many people's solutions and tried to digest and apply their ideas, but **I have been unable to find a particularly good framework that works for all dynamic programming problems**. It seems that everyone has their way of solving dynamic programming problems, and when I try to apply their methods to new problems, I always encounter difficulties. **Things start to change after I learned [MIT6.006](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/)**. The teacher presented 6 steps to solve dynamic programming problems, which is called the SRTBOT framework. I found it to be **so useful and practical** that I decided to write this blog post to share it with everyone 🙌
@@ -67,21 +70,45 @@ I will also mention briefly what it means to add constraints to the definition o
 > 📒 You will find that **when defining subproblems, we don't think about how to calculate the value**. Don't start thinking about how to calculate the value when defining subproblems. When you use the SRTBOT framework to analyze, you will naturally know how to calculate it~
 
 
-### Relate subproblem solutions recursively
+### Relate subproblem solutions recursively {#relate-subproblems}
 
-First, read the problem description and find out the allowable decisions(assuming there are $K$ of them), then try to imagine how to combine solutions from smaller subproblems to obtain the solution of bigger subproblem `dp[i]`.
-
-
-This can be expressed more clearly with mathematical formulas:
+"Identify a question about a subproblem solution that, if you knew the answer to, reduces the subproblem to smaller subproblem(s)"[^2]. If we try to write the formula, it will be likes this:
 
 $$
-dp[i] = f(choice_1,choice_2, ..., choice_K)
+dp[i] = f(dp[j_1],dp[j_2], ..., dp[j_k])\ where\ j_k <i
 $$
 
-Where $f$ is an abstract operation. In dynamic programming problems that involve calculating combinations, $f$ is generally summation; in problems that involve finding the maximum or minimum value, $f$ is generally `max/min`. Here, each $choice_j$ corresponds to a smaller problem.
+Where $f$ is an abstract operation. It's the way how we relate different subproblem(s).
+
+**The way to relate subproblem(s) is by making "decisions". Here comes the question, what decisions we get? Read the problem description and you will find the answer. **Then try to "locally brute-force" all possible answers to the question** :)
+
+> 👻 It's fine that you find difficulties in finding the relationship at first. However, after getting enough practice, you will become comfortable.
+
+> 🤔️ I found that when trying to recursively relate subproblem(s), it is always helpful to draw a dependency graph (nodes are subproblem and edges are "decisions"). The dependency graph not only clearly shows the relationship between subproblem(s) but also verify that there are overlapping subproblems
+```python
+                      dp[i] (apply f to aggregate results)
+                     /  |   \
+                 (?)/   |(?) \(?)
+                   /    |     \
+             dp[j_1] dp[j_2]   ...
+                /   \  / \     / \
+              ...   ...  ... ... ...
+```
 
 
 *For example, in the problem of [70. Climbing stairs](https://leetcode.com/problems/climbing-stairs/) on LeetCode, where each time one can climb one or two steps ($K=2$), reaching the `i`-th step must have come from either the `i-1`-th step or the `i-2`-th step. Since we are looking for all possible ways to climb the stairs, `dp[i] = dp[i-1] + dp[i-2]`*
+
+```python
+                    dp[i] (sum)
+                     / \
+    (climb one step)/   \(climb two steps)
+                   /     \
+             dp[i - 1]  dp[i - 2]
+                /   \    /  \
+              ...   ......  ...
+```
+
+> 🤔️ You can use this example to understand the meaning of "local" in "local brute-force": we only **use one decision one-time**. *For example, you may want to climb one step at a time and finally climb `n` steps and try to find a relationship betweena `dp[i]` and `dp[i - n]`*. That's not local!
 
 
 ### Topological order to argue relation is acyclic and subproblems form a DAG
@@ -121,13 +148,13 @@ The only way to master this technique is *to get your hands dirty*. Only by appl
 
 > 📒 Note: My solution is not necessarily the optimal solution, *for example, sometimes we can use the technique of "state compression" to reduce space complexity, but I may not do this*, I **just apply the SRTBOT framework to these dynamic programming problems**
 
-| Problem                                                                                  | Solution                                                                                                              | Note                                   |
-| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| [70. Climbing stairs](https://leetcode.com/problems/climbing-stairs/)                    | [Solution](https://leetcode.com/problems/climbing-stairs/solutions/3399398/solving-this-dp-problem-using-srtbot/)     | Number                                 |
-| [746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/) | [Solution](https://leetcode.com/problems/min-cost-climbing-stairs/solutions/3400428/solving-dp-problem-using-srtbot/) | Single sequence                        |
-| [198. House Robber](https://leetcode.com/problems/house-robber/)                         | [Solution](https://leetcode.com/problems/house-robber/solutions/3401028/solving-dp-problems-using-srtbot/)            | Single sequence + Subproblem expansion |
-| [322. Coin changes](https://leetcode.com/problems/palindromic-substrings/)               | [Solution](https://leetcode.com/problems/coin-change/solutions/3404403/solving-dp-problem-using-srtbot/)              | Number + non-$O(1)$ subproblem         |
-
+| Problem                                                                                              | Solution                                                                                                                    | Note                                     |
+| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| [70. Climbing stairs](https://leetcode.com/problems/climbing-stairs/)                                | [Solution](https://leetcode.com/problems/climbing-stairs/solutions/3399398/solving-this-dp-problem-using-srtbot/)           | Number                                   |
+| [746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)             | [Solution](https://leetcode.com/problems/min-cost-climbing-stairs/solutions/3400428/solving-dp-problem-using-srtbot/)       | Single sequence                          |
+| [198. House Robber](https://leetcode.com/problems/house-robber/)                                     | [Solution](https://leetcode.com/problems/house-robber/solutions/3401028/solving-dp-problems-using-srtbot/)                  | Single sequence + Subproblem expansion   |
+| [322. Coin changes](https://leetcode.com/problems/palindromic-substrings/)                           | [Solution](https://leetcode.com/problems/coin-change/solutions/3404403/solving-dp-problem-using-srtbot/)                    | Number + non-$O(1)$ subproblem           |
+| [300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/) | [Solution](https://leetcode.com/problems/longest-increasing-subsequence/solutions/3409425/solving-dp-problem-using-srtbot/) | Single sequence + subproblem restriction |
 
 ## Refs
 

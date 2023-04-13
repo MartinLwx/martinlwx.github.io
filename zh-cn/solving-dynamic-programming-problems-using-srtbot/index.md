@@ -1,6 +1,9 @@
 # 用 SRTBOT 框架分析动态规划问题
 
 
+**Changelog**:
+- [更新依赖图]({{< ref "#relate-subproblems"  >}}) @2023.04.13
+
 ## 引言
 
 在做算法题的时候，让我头疼的经常是动态规划问题，它属于那种自己琢磨半天想不出来，但是看了答案之后会恍然大悟，下次再做的话很有可能又忘记了的一类问题。我也曾经看了很多人的题解，试图消化、吸收、应用他们的思路，但我**一直**找不到一个归纳得特别好的框架，似乎每个人都有自己解决动态规划的思路，将他们的思路应用在没有见过的动态规划问题的时候我总是遇到困难，而他们的方法轮*似乎*也无法让我处理所有的动态规划问题。这种寻寻觅觅对动态规划似懂非懂的状态，终于在我看完 [MIT6.006](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/) 的课程之后发生了改变，课上老师提出了解决动态规划问题的 6 个步骤——被称为 **SRTBOT 框架**，我发现它是**如此地好用**，因此我决定写下这篇博客来与大家分享🙌
@@ -62,24 +65,47 @@ SRTBOT 是 6 个步骤的首字母缩写，分别是[^2]：
 > 📒 你会发现，**定义子问题的时候我们根本不会去思考要如何计算出来**，千万不要在定义子问题的时候就开始想要怎么计算出这个值，当你使用 SRTBOT 框架分析到最后，你就自然而然知道怎么计算了~
 
 
-### 递归式关联子问题（Relate subproblem solutions recursively）
+### 递归式关联子问题（Relate subproblem solutions recursively） {#relate-subproblems}
 
-从题目中归纳出允许的决策（假设有 $K$ 个），递归关联子问题的含义是：试想你要如何通过更小的子问题的解组合出更大的子问题 `dp[i]` 的解
-
-可能用数学公式表述会更明显一点：
+试着提出一个问题——如果你知道这个问题的答案，你就能够将这个大问题分解为更小的子问题。可能用数学公式表述会更明显一点：
 
 $$
-dp[i] = f(choice_1,choice_2, ..., choice_K)
+dp[i] = f(dp[j_1],dp[j_2], ..., dp[j_k])\ where\ j_k <i
 $$
+其中 $f$ 是一个抽象的操作，即「大问题」和「小问题」的关联方式
 
-其中 $f$ 是一个抽象的操作，在计算组合数的动态规划问题中，一般就是求和；在求解最值的问题中，一般就是 `max/min`，这里每个 $choice_j$ 都对应了一个更小的问题
+**上面提出的问题的答案一般就是“局部暴力枚举”**，这也是我们关联不同子问题的主要手段。方法是：看问题描述，从中归纳出允许的“决策”，**“决策”会导致我们从一个子问题转移到另外一个子问题**。思考的时候注意力放在 `nums[i]`、更小的子问题 `dp[j_k]` 和可行的决策这三者上
 
-*举例来说，在 [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/) 问题中，每次只能爬一个台阶或者两个台阶（$K=2$），那么爬到第 `i` 个台阶一定是从第 `i - 1` 个台阶和第 `i - 2` 个台阶过来的，又因为求解的是所有可能的走法，因此 `dp[i] = dp[i - 1] + dp[i - 2]`*
+> 👻 如果一开始做动态规划想不出来也没关系，这东西熟练了之后就比较容易想到不同子问题如何通过不同的决策关联起来
+
+> 🤔️ 我发现，在想办法递归关联子问题的时候，画出依赖图总是能给我很大帮助（结点为子问题，边为“决策”），依赖图不仅清晰展示了子问题之间的关联方式，还可以验证有重叠子问题出现
+```python
+                      dp[i] (apply f to aggregate results)
+                     /  |   \
+                 (?)/   |(?) \(?)
+                   /    |     \
+             dp[j_1] dp[j_2]   ...
+                /   \  / \     / \
+              ...   ...  ... ... ...
+```
+
+*举例来说，在 [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/) 问题中，每次只能爬一个台阶或者两个台阶（$K=2$），那么爬到第 `i` 个台阶一定是从第 `i - 1` 个台阶和第 `i - 2` 个台阶过来的，又因为求解的是所有可能的走法，因此 `dp[i] = dp[i - 1] + dp[i - 2]`，画出依赖图如下*
+```python
+                    dp[i] (sum)
+                     / \
+    (climb one step)/   \(climb two steps)
+                   /     \
+             dp[i - 1]  dp[i - 2]
+                /   \    /  \
+              ...   ......  ...
+```
+
+> 🤔️ 可以通过这个例子理解“局部暴力枚举”中的“局部”的含义：我们只考虑做一次决策，*比如上面爬楼梯，每次爬一个台阶最后连续爬 `n` 个台阶 关联 `dp[i]` 和 `dp[i - n]` 这种方式就不是局部*
 
 
 ### 根据拓扑排序确定解决子问题的顺序（Topological order to argue relation is acyclic and subproblems form a DAG）
 
-你可能在别的地方看到过动态规划问题的另外一个名字——“表格法”。因为当我们采用“自底向上”的解法解决动态规划问题的时候可以看成是在填表格。但在我看来，**将动态规划看成一张有向无环图会更有助于对动态规划的理解**——将子问题看成是图上的顶点，用**有向边连接「小的子问题」-> 「大的子问题」**，这个图会构成一个有向无环图（DAG），**动态规划算法其实就是遍历 DAG 的拓扑排序的过程**
+你可能在别的地方看到过动态规划问题的另外一个名字——“表格法”。因为当我们采用“自底向上”的解法解决动态规划问题的时候可以看成是在填表格。但在我看来，**将动态规划看成一张有向无环图会更有助于对动态规划的理解**——将子问题看成是图上的顶点，用**有向边连接「小的子问题」-> 「大的子问题」**，这个图会构成一个有向无环图（DAG），**动态规划算法其实就是 DAG 的拓扑排序过程**。即「DAG 拓扑排序」=「自底向上方法」=「表格法」。上面的依赖图“自底向上”就是在做拓扑排序
 
 > 🤔️ 为什么是有向无环图？首先，有向边**表示了子问题之间的依赖关系**也表示了**我们求解子问题的顺序**：要解决一个子问题，需要先求解出更小的子问题；其次，它必须是无环的，因为动态规划会记住求解过的子问题，我们**不可能多次求解同一个子问题**，因此它必须是无环的。
 
@@ -116,6 +142,8 @@ $$
 | [746. 使用最小花费爬楼梯](https://leetcode.cn/problems/min-cost-climbing-stairs/)                                 | [题解](https://leetcode.cn/problems/min-cost-climbing-stairs/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-imb0/) | 单序列               |
 | [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)                                                       | [题解](https://leetcode.cn/problems/house-robber/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-cdib/)             | 单序列 + 扩展子问题  |
 | [322. 零钱兑换](https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/) | [题解](https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/)              | 数 + 非$O(1)$ 子问题 |
+| [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)                               | [题解](https://leetcode.cn/problems/longest-increasing-subsequence/solution/srtbot-dp-by-martinlwx-d73e/)             | 单序列 + 限制子问题  |
+
 
 
 ## 参考
