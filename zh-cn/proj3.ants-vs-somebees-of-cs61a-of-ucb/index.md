@@ -1,4 +1,4 @@
-# Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)
+# CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)
 
 
 ## Intro
@@ -203,10 +203,7 @@ class LongThrower(ThrowerAnt):
 
 
 
-这个比较 tricky 的地方是:
-
-1.   当前格子的所有蜜蜂是一个 `list`, 也就是**我们可能要在迭代访问 `list` 的时候这个这个 `list`**, ==这个我们遍历它的拷贝即可==
-2.   我们不能做直接调用这个 `FireAnt` 的 `reduce_health` 方法, 不然万一它死了这个对象就不存在了, 我们还如何得知它的攻击力 ?
+这个比较 tricky 的地方是：当前格子的所有蜜蜂是一个 `list`, 也就是**我们可能要在迭代访问 `list` 的时候修改这个 `list`**, ==这个我们遍历它的拷贝即可==
 
 
 

@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B"><meta property="og:title" content="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)" />
-<meta property="og:description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B" />
+        <title>CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)"><meta property="og:title" content="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)" />
+<meta property="og:description" content="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-10T21:43:59+08:00" />
@@ -13,8 +13,8 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
 
-<meta name="twitter:title" content="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"/>
-<meta name="twitter:description" content="The simple solution of proj3.Ants vs. SomeBees of CS61B"/>
+<meta name="twitter:title" content="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)"/>
+<meta name="twitter:description" content="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)"/>
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -24,18 +24,18 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)",
+        "headline": "CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/proj3.ants-vs-somebees-of-cs61a-of-ucb\/"
-        },"genre": "posts","keywords": "Course, Python","wordcount":  6893 ,
+        },"genre": "posts","keywords": "Course, Python","wordcount":  6846 ,
         "url": "https:\/\/martinlwx.github.io\/zh-cn\/proj3.ants-vs-somebees-of-cs61a-of-ucb\/","datePublished": "2022-03-10T21:43:59+08:00","dateModified": "2022-03-12T13:55:40+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
-            },"description": "The simple solution of proj3.Ants vs. SomeBees of CS61B"
+            },"description": "CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)"
     }
     </script></head>
     <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -107,9 +107,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/course/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Course</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6893 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6846 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 14 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -437,11 +437,7 @@
 <p>To implement this, override <code>FireAnt</code>&rsquo;s <code>reduce_health</code> method. Your overriden method should call the <code>reduce_health</code> method inherited from the superclass (<code>Ant</code>) to reduce the current <code>FireAnt</code> instance&rsquo;s health. Calling the <em>inherited</em> <code>reduce_health</code> method on a <code>FireAnt</code> instance reduces the insect&rsquo;s <code>health</code> by the given <code>amount</code> and removes the insect from its place if its <code>health</code> reaches zero or lower.</p>
 </blockquote>
 <p>这个 <code>FireAnt</code> 有点意思的, 当他收到伤害的时候会反弹自己受到的伤害到当前格子所有的蜜蜂上, 同时如果它因此死了还能对这些蜜蜂再一次造成伤害(这一次取决于自己的攻击力)</p>
-<p>这个比较 tricky 的地方是:</p>
-<ol>
-<li>当前格子的所有蜜蜂是一个 <code>list</code>, 也就是<strong>我们可能要在迭代访问 <code>list</code> 的时候这个这个 <code>list</code></strong>, ==这个我们遍历它的拷贝即可==</li>
-<li>我们不能做直接调用这个 <code>FireAnt</code> 的 <code>reduce_health</code> 方法, 不然万一它死了这个对象就不存在了, 我们还如何得知它的攻击力 ?</li>
-</ol>
+<p>这个比较 tricky 的地方是：当前格子的所有蜜蜂是一个 <code>list</code>, 也就是<strong>我们可能要在迭代访问 <code>list</code> 的时候修改这个 <code>list</code></strong>, ==这个我们遍历它的拷贝即可==</p>
 <p>最后代码如下:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1390,7 +1386,7 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)" data-hashtags="Course,Python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)" data-hashtags="Course,Python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/proj3.ants-vs-somebees-of-cs61a-of-ucb/" data-title="CS61A 的项目三之 Ants vs SomeBees 实现 (2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>

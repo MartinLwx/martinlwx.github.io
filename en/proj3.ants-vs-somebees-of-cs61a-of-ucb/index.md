@@ -1,4 +1,4 @@
-# Proj3.Ants vs SomeBees of CS61A of UCB(2021-Fall)
+# Solution of Proj3.Ants vs SomeBees of CS61A (2021-Fall)
 
 
 ## Intro
@@ -202,12 +202,7 @@ class LongThrower(ThrowerAnt):
 When the `FireAnt` receives damage, it will reflect the damage it has received to all bees in the current place, and if it dies because of the bee's attack, it can also deal its damage to these bees again (depending on the damage of the `FireAnt`)
 
 
-
-Details:
-
-1. All the bees in the current place are stored as a `list`. As a result,  **we may mutate the `list` while we are iterating it, so we need to traverse its copy(slice)
-2. We can't directly call the `reduce_health` method of this `FireAnt`, otherwise, if it dies, the object will not exist.
-
+Details: All the bees in the current place are stored as a `list`. As a result,  **we may mutate the `list` while we are iterating it, so we need to traverse its copy(slice)
 
 
 The final code is as follows:

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="The solution of proj4. Scheme Interpreter"><meta property="og:title" content="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)" />
+<meta property="og:description" content="The solution of proj4. Scheme Interpreter" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-21T10:18:16+08:00" />
+<meta property="article:modified_time" content="2023-04-21T10:18:16+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"/>
+<meta name="twitter:description" content="The solution of proj4. Scheme Interpreter"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" /><link rel="prev" href="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21\/"
+        },"genre": "posts","keywords": "Course, Python, Scheme","wordcount":  2086 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21\/","datePublished": "2023-04-21T10:18:16+08:00","dateModified": "2023-04-21T10:18:16+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "The solution of proj4. Scheme Interpreter"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" selected>English</option><option value="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" selected>English</option><option value="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/course/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Course</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-21">2023-04-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2086 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#part-1-the-evaluator">Part 1. The Evaluator</a>
+      <ul>
+        <li><a href="#problem-1">Problem 1</a></li>
+        <li><a href="#problem-2">Problem 2</a></li>
+        <li><a href="#problem-3">Problem 3</a></li>
+        <li><a href="#problem-4">Problem 4</a></li>
+        <li><a href="#problem-5">Problem 5</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-2-procedures">Part 2. Procedures</a>
+      <ul>
+        <li><a href="#problem-6">Problem 6</a></li>
+        <li><a href="#problem-7">Problem 7</a></li>
+        <li><a href="#problem-8">Problem 8</a></li>
+        <li><a href="#problem-9">Problem 9</a></li>
+        <li><a href="#problem-10">Problem 10</a></li>
+        <li><a href="#problem-11">Problem 11</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-3-special-forms">Part 3. Special Forms</a>
+      <ul>
+        <li><a href="#problem-12">Problem 12</a></li>
+        <li><a href="#problem-13">Problem 13</a></li>
+        <li><a href="#problem-14">Problem 14</a></li>
+        <li><a href="#problem-15">Problem 15</a></li>
+        <li><a href="#problem-16">Problem 16</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro">Intro</h2>
+<p>Recently, I am reading a book called <a href="https://craftinginterpreters.com/" target="_blank" rel="noopener noreffer "><em>Crafting interpreters</em></a> written by Robert Nystrom. In the original book, a Tree-walker interpreter jlox was implemented in Java. And I am trying to rewrite in Python - <a href="https://github.com/MartinLwx/pylox" target="_blank" rel="noopener noreffer ">pylox</a>. I highly recommend it👍. At this moment, I suddenly remembered that there were a few small issues with the Scheme interpreter for CS61A that I had not resolved after finishing it a year ago, which kept it in an unfinished state. So today I opened the project and intended to run through it from beginning to end and talk about the ideas.</p>
+<blockquote>
+<p>Note: I only quote <strong>part</strong> of the original problem description. To make the post more compact, I also omit the irrelevant code :)</p>
+</blockquote>
+<h2 id="part-1-the-evaluator">Part 1. The Evaluator</h2>
+<h3 id="problem-1">Problem 1</h3>
+<blockquote>
+<p>Implement the <code>define</code> and <code>lookup</code> methods of the Frame class&hellip;<code>bindings</code> is a dictionary representing the bindings in the frame&hellip;<code>parent</code> is the parent Frame instance&hellip;The <em>environment</em> for a <code>Frame</code> instance consists of that frame, its parent frame, and all its ancestor frames, including the Global Frame.</p>
+</blockquote>
+<p>Problem 1 is trivial in my opinion. To implement the <code>define</code> function, you just need to save the <code>{ symbol: value }</code> in <code>self.bindings</code>. As for the <code>lookup</code> function, we can write a iterative solution or recursive one. The iterative solution is more intuitive though.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">define</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Define Scheme SYMBOL to have VALUE.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">bindings</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return the value bound to SYMBOL. Errors if SYMBOL is not found.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Case 1. we check if the symbol is in the current frame</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindings</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindings</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Case 2. we check the parent of the current frame repreatly</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">bindings</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">pos</span><span class="o">.</span><span class="n">bindings</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">parent</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Case 3. we can&#39;t find the symbol</span>
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="n">SchemeError</span><span class="p">(</span><span class="s2">&#34;unknown identifier: </span><span class="si">{0}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-2">Problem 2</h3>
+<blockquote>
+<p>To be able to call built-in procedures, such as <code>+</code>, you need to complete the <code>BuiltinProcedure</code> case within the <code>scheme_apply</code> function in <code>scheme_eval_apply.py</code>. Built-in procedures are applied by calling a corresponding Python function that implements the procedure.</p>
+</blockquote>
+<p>The full problem description elaborates on the procedure of implementing <code>scheme_apply</code> function. Notice that you should distinguish <code>nil</code> and <code>None</code>. This subtle bug may cause you other correct solutions fail to pass the test suite.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scheme_apply</span><span class="p">(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">BuiltinProcedure</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Convert the Scheme list to a Python list of arguments</span>
+</span></span><span class="line"><span class="cl">        <span class="n">args_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="n">args</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">first</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">args_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">args_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Add the current environment if procedure.expect_env == True</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">procedure</span><span class="o">.</span><span class="n">expect_env</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">args_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Call procedure.py_func on all arguments</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">procedure</span><span class="o">.</span><span class="n">py_func</span><span class="p">(</span><span class="o">*</span><span class="n">args_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="n">SchemeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;incorrect number of arguments, </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-3">Problem 3</h3>
+<blockquote>
+<p>Implement the missing part of <code>scheme_eval</code>, which evaluates a call expression&hellip;You&rsquo;ll have to recursively call <code>scheme_eval</code> in the first two steps&hellip;The <code>map</code> method of <code>Pair</code> returns a new Scheme list constructed by applying a <em>one-argument function</em> to every item in a Scheme list&hellip;Important: do not mutate the passed-in <code>expr</code>. That would change a program as it&rsquo;s being evaluated, creating strange and incorrect effects.</p>
+</blockquote>
+<p>Is&rsquo; quite straightforward to implement <code>scheme_eval</code>. The main obstacle in the way may comes from the requirement that we need to pass one-argument function to <code>rest.map</code>. However, the <code>scheme_eval</code> has two arguments(let&rsquo;s ignore the optional part). To make the <code>scheme_eval</code> a one-argument function, we may write a simple <code>lambda</code> to wrapper it, or we can use the <code>partial</code> function in <code>functools</code> packages to <em>fix</em> arguments for a specefic function. I choose to use the latter solution.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scheme_eval</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">_</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  <span class="c1"># Optional third argument is ignored</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Evaluate the operator(first argument)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">operator</span> <span class="o">=</span> <span class="n">scheme_eval</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">validate_procedure</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Evaluate all of the operands(other arguments)</span>
+</span></span><span class="line"><span class="cl">        <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+</span></span><span class="line"><span class="cl">        <span class="n">operands</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">scheme_eval</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">scheme_apply</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">operands</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-4">Problem 4</h3>
+<blockquote>
+<p>The type of the first operand tells us what is being defined&hellip;implement just the first part, which evaluates the second operand to obtain a value and binds the first operand, a symbol, to that value. Then, <code>do_define_form</code> returns the symbol that was bound.</p>
+</blockquote>
+<p>In problem 1, we have implemented the <code>define</code> method, which can bind value to a symbol. All we need to do is pass the correct arguments to this method. To access the <code>some_val</code> part in <code>(define a some_val)</code>, we can use the <code>.rest.first</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_define_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">scheme_symbolp</span><span class="p">(</span><span class="n">signature</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># assigning a name to a value e.g. (define x (+ 1 2))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">validate_form</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">expressions</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>  <span class="c1"># Checks that expressions is a list of length exactly 2</span>
+</span></span><span class="line"><span class="cl">        <span class="n">env</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">scheme_eval</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">signature</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-5">Problem 5</h3>
+<blockquote>
+<p>Implement the <code>do_quote_form</code> function in <code>scheme_forms.py</code> so that it simply returns the unevaluated operand of the <code>(quote ...)</code> expression.</p>
+</blockquote>
+<p><code>validate_form(expressions, 1, 1)</code> ensures that the <code>expressions</code> is <code>'...</code>. And we just need to return it.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_quote_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">expressions</span><span class="o">.</span><span class="n">first</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="part-2-procedures">Part 2. Procedures</h2>
+<h3 id="problem-6">Problem 6</h3>
+<blockquote>
+<p>Change the <code>eval_all</code> function in <code>scheme_eval_apply.py</code> (which is called from <code>do_begin_form</code> in <code>scheme_forms.py</code>) to complete the implementation of the <code>begin</code> special form (spec). A <code>begin</code> expression is evaluated by evaluating all sub-expressions in order. The value of the <code>begin</code> expression is the value of the final sub-expression.</p>
+</blockquote>
+<p>Let&rsquo;s write the recursive solution:</p>
+<ol>
+<li>Check if <code>expressions</code> is <code>nil</code>, and return <code>None</code> if it holds</li>
+<li>Check f <code>expressions.rest</code> is <code>nil</code>, return the evaluation result of <code>expressions.first</code> if it holds, or recursively call <code>eval_all</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">eval_all</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">expressions</span> <span class="ow">is</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="n">scheme_eval</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span> <span class="ow">is</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">res</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">eval_all</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-7">Problem 7</h3>
+<blockquote>
+<p>Implement the <code>do_lambda_form</code> function (spec), which creates and returns a <code>LambdaProcedure</code> instance</p>
+</blockquote>
+<p>By reading the problem description of Problem 6, we know how to construct a <code>LambdaProcedure</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_lambda_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">formals</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">first</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate_formals</span><span class="p">(</span><span class="n">formals</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">LambdaProcedure</span><span class="p">(</span><span class="n">formals</span><span class="p">,</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-8">Problem 8</h3>
+<blockquote>
+<p>This method takes in two arguments: <code>formals</code>, which is a Scheme list of symbols, and <code>vals</code>, which is a Scheme list of values. It should return a new child frame, binding the formal parameters to the values.</p>
+</blockquote>
+<p>The full problem description is well written and this problem us trivial.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">make_child_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formals</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">formals</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="n">SchemeError</span><span class="p">(</span><span class="s2">&#34;Incorrect number of arguments to function call&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sub_frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># iterate</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span> <span class="o">=</span> <span class="n">formals</span><span class="p">,</span> <span class="n">vals</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">pos1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">pos1</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">pos2</span><span class="o">.</span><span class="n">first</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sub_frame</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span> <span class="o">=</span> <span class="n">pos1</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">pos2</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">sub_frame</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-9">Problem 9</h3>
+<blockquote>
+<p>You should first create a new <code>Frame</code> instance using the <code>make_child_frame</code> method of the appropriate parent frame, binding formal parameters to argument values. Then, evaluate each of the expressions of the body of the procedure using <code>eval_all</code> within this new frame.</p>
+</blockquote>
+<p>In this problem, we can use the <code>make_child_frame</code> implemented in Problem 8.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scheme_apply</span><span class="p">(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">LambdaProcedure</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">child_frame</span> <span class="o">=</span> <span class="n">procedure</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">make_child_frame</span><span class="p">(</span><span class="n">procedure</span><span class="o">.</span><span class="n">formals</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">eval_all</span><span class="p">(</span><span class="n">procedure</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="n">child_frame</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-10">Problem 10</h3>
+<blockquote>
+<p>Modify the <code>do_define_form</code> function in <code>scheme_forms.py</code> so that it correctly handles <code>define (...) ...)</code> expressions</p>
+</blockquote>
+<p>Use <code>do_lambda_form</code> or just call the constructer of <code>LambdaProcedure</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_define_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">Pair</span><span class="p">)</span> <span class="ow">and</span> <span class="n">scheme_symbolp</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">first</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># defining a named procedure e.g. (define (f x y) (+ x y))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># the signature is (f x y)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">formals</span> <span class="o">=</span> <span class="n">signature</span><span class="o">.</span><span class="n">rest</span>  <span class="c1"># (x y)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">validate_formals</span><span class="p">(</span><span class="n">formals</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># now we need to parse (+ x y)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">env</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="n">signature</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">LambdaProcedure</span><span class="p">(</span><span class="n">formals</span><span class="p">,</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">signature</span><span class="o">.</span><span class="n">first</span>  <span class="c1"># f</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-11">Problem 11</h3>
+<blockquote>
+<p>Implement <code>do_mu_form</code> in <code>scheme_forms.py</code> to evaluate the <code>mu</code> special form. A <code>mu</code> expression evaluates to a <code>MuProcedure</code>. Most of the <code>MuProcedure</code> class (defined in <code>scheme_classes.py</code>) has been provided for you.</p>
+</blockquote>
+<p>The key to this problem is understanding dynamic scoping. We can make a child frame and evaluate the <code>MuProcedure</code> and it should work as expected.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scheme_apply</span><span class="p">(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">procedure</span><span class="p">,</span> <span class="n">MuProcedure</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">child_frame</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">make_child_frame</span><span class="p">(</span><span class="n">procedure</span><span class="o">.</span><span class="n">formals</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">eval_all</span><span class="p">(</span><span class="n">procedure</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="n">child_frame</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_mu_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">formals</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">first</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate_formals</span><span class="p">(</span><span class="n">formals</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">MuProcedure</span><span class="p">(</span><span class="n">formals</span><span class="p">,</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="part-3-special-forms">Part 3. Special Forms</h2>
+<h3 id="problem-12">Problem 12</h3>
+<blockquote>
+<p>Implement <code>do_and_form</code> and <code>do_or_form</code> so that <code>and</code> and <code>or</code> expressions are evaluated correctly. The logical forms <code>and</code> and <code>or</code> are <em>short-circuiting</em></p>
+</blockquote>
+<p>I write <code>do_and_form</code> and <code>do_or_form</code> recursively:</p>
+<ul>
+<li><code>do_and_form</code>: the base case is <code>nil</code> and we should return <code>True</code>. Otherwise, we check each one and return immediately if we found <em>False</em></li>
+<li><code>do_or_form</code>: the base case is <code>nil</code> and we should return <code>False</code>. Otherwise, we check each one and return immediately if we found <em>True</em></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_and_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case: (and)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">expressions</span> <span class="ow">is</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">front</span> <span class="o">=</span> <span class="n">scheme_eval</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">is_scheme_true</span><span class="p">(</span><span class="n">front</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span> <span class="ow">is</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">front</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">do_and_form</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">front</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_or_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case: (or)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">expressions</span> <span class="ow">is</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="n">front</span> <span class="o">=</span> <span class="n">scheme_eval</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">is_scheme_false</span><span class="p">(</span><span class="n">front</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span> <span class="ow">is</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">front</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">do_or_form</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">front</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-13">Problem 13</h3>
+<blockquote>
+<p>Fill in the missing parts of <code>do_cond_form</code> so that it correctly implements <code>cond</code>, returning the value of the first result sub-expression corresponding to a true predicate, or the result sub-expression corresponding to <code>else</code>.</p>
+</blockquote>
+<p>Just do as the problem description says.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_cond_form</span><span class="p">(</span><span class="n">expressions</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">is_scheme_true</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># no sub-expression</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">clause</span><span class="o">.</span><span class="n">rest</span> <span class="ow">is</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">test</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">eval_all</span><span class="p">(</span><span class="n">clause</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-14">Problem 14</h3>
+<blockquote>
+<p>Implement <code>make_let_frame</code> in <code>scheme_forms.py</code>, which returns a child frame of <code>env</code> that binds the symbol in each element of <code>bindings</code> to the value of its corresponding expression. The <code>bindings</code> Scheme list contains pairs that each contain a symbol and a corresponding expression.</p>
+</blockquote>
+<p>Check each <code>binding</code> and use the <code>Pair</code> to collection the <code>names</code> and <code>values</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">make_let_frame</span><span class="p">(</span><span class="n">bindings</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">scheme_listp</span><span class="p">(</span><span class="n">bindings</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="n">SchemeError</span><span class="p">(</span><span class="s2">&#34;bad bindings list in let form&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">names</span> <span class="o">=</span> <span class="n">values</span> <span class="o">=</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># bingding: (&lt;name&gt; &lt;expression&gt;)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># bingdings: ( (&lt;name1&gt; &lt;expression1&gt;) (&lt;name2&gt; &lt;expression2&gt;) ...)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="n">bindings</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">nil</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">front</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">first</span>  <span class="c1"># i.e the first binding</span>
+</span></span><span class="line"><span class="cl">        <span class="n">validate_form</span><span class="p">(</span><span class="n">front</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># verify the structure is (&lt;name&gt; &lt;expression&gt;)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">names</span> <span class="o">=</span> <span class="n">Pair</span><span class="p">(</span><span class="n">front</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">values</span> <span class="o">=</span> <span class="n">Pair</span><span class="p">(</span><span class="n">eval_all</span><span class="p">(</span><span class="n">front</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">),</span> <span class="n">values</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate_formals</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">make_child_frame</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-15">Problem 15</h3>
+<blockquote>
+<p>Implement the <code>enumerate</code> procedure, which takes in a list of values and returns a list of two-element lists, where the first element is the index of the value, and the second element is the value itself.</p>
+</blockquote>
+<p>We can implement the <code>enumerate</code> procedure recursively by writing a helper function called <code>helper</code>:</p>
+<ul>
+<li>base case: the <code>input</code> is <code>nil</code> and we just return <code>'()</code></li>
+<li>other cases: recursively call the <code>helper</code> function. Notice that how the arguments change: <code>input -&gt; (cdr input)</code> and <code>index -&gt; (+ index 1)</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">enumerate</span> <span class="nv">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nf">begin</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">;; a helper funtion</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">helper</span> <span class="nv">input</span> <span class="nv">index</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">null? </span><span class="nv">input</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">())</span>             <span class="c1">;; base case: return () if it is nil</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="k">else </span><span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">cons </span><span class="nv">index</span> <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">input</span><span class="p">)</span> <span class="nv">nil</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                          <span class="p">(</span><span class="nf">helper</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">input</span><span class="p">)</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">index</span> <span class="mi">1</span><span class="p">))))))</span>   <span class="c1">;; recursive call</span>
+</span></span><span class="line"><span class="cl">      <span class="p">(</span><span class="nf">helper</span> <span class="nv">s</span> <span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="problem-16">Problem 16</h3>
+<blockquote>
+<p>Implement the <code>merge</code> procedure, which takes in a comparator function <code>inorder?</code> and two lists that are sorted, and combines the two lists into a single sorted list. A comparator defines an ordering by comparing two values and returning a true value if and only if the two values are ordered. Here, sorted means sorted according to the comparator</p>
+</blockquote>
+<p>A classic interview problem: merge two sorted lists. We just need to compare the <em>head</em> of each list and recursively call <code>merge</code> in the right arguments form</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-scheme" data-lang="scheme"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">merge</span> <span class="nv">inorder?</span> <span class="nv">list1</span> <span class="nv">list2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond </span><span class="p">((</span><span class="nb">null? </span><span class="nv">list1</span><span class="p">)</span> <span class="nv">list2</span><span class="p">)</span>           <span class="c1">;; base case: list1 is empty</span>
+</span></span><span class="line"><span class="cl">        <span class="p">((</span><span class="nb">null? </span><span class="nv">list2</span><span class="p">)</span> <span class="nv">list1</span><span class="p">)</span>           <span class="c1">;; base case: list2 is empty</span>
+</span></span><span class="line"><span class="cl">        <span class="p">((</span><span class="nf">inorder?</span> <span class="p">(</span><span class="nb">car </span><span class="nv">list1</span><span class="p">)</span> <span class="p">(</span><span class="nb">car </span><span class="nv">list2</span><span class="p">))</span>           
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">list1</span><span class="p">)</span> <span class="p">(</span><span class="nf">merge</span> <span class="nv">inorder?</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">list1</span><span class="p">)</span> <span class="nv">list2</span><span class="p">)))</span>      <span class="c1">;; consume list1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nf">else</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">cons </span><span class="p">(</span><span class="nb">car </span><span class="nv">list2</span><span class="p">)</span> <span class="p">(</span><span class="nf">merge</span> <span class="nv">inorder?</span> <span class="nv">list1</span> <span class="p">(</span><span class="nb">cdr </span><span class="nv">list2</span><span class="p">)))))</span>     <span class="c1">;; consume list2</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-04-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)" data-hashtags="Course,Python,Scheme"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/course/">Course</a>,&nbsp;<a href="/en/tags/python/">Python</a>,&nbsp;<a href="/en/tags/scheme/">Scheme</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/solving-dynamic-programming-problems-using-srtbot/" class="prev" rel="prev" title="Solving DP problems by SRTBOT Framework"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Solving DP problems by SRTBOT Framework</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
