@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/en\/config-neovim-from-scratch\/"
-        },"genre": "posts","keywords": "Nvim","wordcount":  3363 ,
+        },"genre": "posts","keywords": "Nvim","wordcount":  3318 ,
         "url": "https:\/\/martinlwx.github.io\/en\/config-neovim-from-scratch\/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Transform Your Neovim into a IDE: A Step-by-Step Guide</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/vim/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Vim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3363 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3318 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -740,10 +740,6 @@
 </span><span class="lnt">77
 </span><span class="lnt">78
 </span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
-</span><span class="lnt">82
-</span><span class="lnt">83
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">has_words_before</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
@@ -779,10 +775,6 @@
 </span></span><span class="line"><span class="cl">            <span class="c1">-- Hint: if the completion menu is visible select next one</span>
 </span></span><span class="line"><span class="cl">            <span class="kr">if</span> <span class="n">cmp.visible</span><span class="p">()</span> <span class="kr">then</span>
 </span></span><span class="line"><span class="cl">                <span class="n">cmp.select_next_item</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">elseif</span> <span class="n">luasnip.expand_or_locally_jumpable</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">                <span class="c1">-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()</span>
-</span></span><span class="line"><span class="cl">                <span class="c1">-- they way you will only jump inside the snippet region</span>
-</span></span><span class="line"><span class="cl">                <span class="n">luasnip.expand_or_jump</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="kr">elseif</span> <span class="n">has_words_before</span><span class="p">()</span> <span class="kr">then</span>
 </span></span><span class="line"><span class="cl">                <span class="n">cmp.complete</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="kr">else</span>
@@ -869,10 +861,9 @@
 <p>Use <code>mapping = ...</code>. The syntax is <code>['&lt;key-binding&gt;'] = cmp.mapping.xxx,</code>. Different <code>cmp.mapping.xxx</code> options can be found in the manual. <strong>If you want to set a different key-binding, just change the <code>[...]</code></strong></p>
 <p>My key mappings:</p>
 <ol>
-<li>Use <code>&lt;C-k/j&gt;</code> to move among completion items</li>
+<li>Use <code>&lt;C-k/j&gt;</code> or &ldquo;<Tab>/<Shift-Tab>&rdquo; to move among completion items</li>
 <li>Use <code>&lt;C-b/f&gt;</code> to scroll among the doc of completion item</li>
 <li>Use <code>&lt;CR&gt;</code> to confirm completion</li>
-<li>&ldquo;A super tab&rdquo;, we can press <code>Tab</code> and move among the completion items or placeholders in a code snippet</li>
 </ol>
 <h4 id="completion-menu-in-nvim-cmp">Completion menu in nvim-cmp</h4>
 <p>Use <code>formatting = ...</code>:</p>

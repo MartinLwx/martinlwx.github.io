@@ -354,10 +354,6 @@ cmp.setup({
             -- Hint: if the completion menu is visible select next one
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jump() then
-                -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-                -- they way you will only jump inside the snippet region
-                luasnip.expand_or_jumpable()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -431,10 +427,9 @@ use 'saadparwaiz1/cmp_luasnip'
 按键映射用的是 `mapping = ...` ，每个按键绑定的格式是 `['<key-binding>'] = cmp.mapping.xxx,`，不同的 `cmp.mapping.xxx` 的含义可以用 `:h` 查看。**如果你想要用其他的按键，只要修改 `[...]` 里面的按键即可**
 
 按照我的个人习惯，设置了
-1. `<C-k/j>` 在各种候选项里面移动
+1. `<C-k/j>` 或者 `<Tab>/<Shift-Tab>` 在各种候选项里面移动
 2. `<C-b/f>` 在候选项的文档里面移动
 3. `<CR>` 也就是回车键确定补全
-4. "超级 Tab 键"，允许我们按下 `Tab` 的时候在候选项之间、代码片段的占位符位置之间里面跳跃
 
 
 #### nvim-cmp 里面的补全菜单

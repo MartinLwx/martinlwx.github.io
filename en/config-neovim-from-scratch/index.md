@@ -362,10 +362,6 @@ cmp.setup({
             -- Hint: if the completion menu is visible select next one
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-                -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-                -- they way you will only jump inside the snippet region
-                luasnip.expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
             else
@@ -440,10 +436,9 @@ use 'saadparwaiz1/cmp_luasnip'
 Use `mapping = ...`. The syntax is `['<key-binding>'] = cmp.mapping.xxx,`. Different `cmp.mapping.xxx` options can be found in the manual. **If you want to set a different key-binding, just change the `[...]`**
 
 My key mappings:
-1. Use `<C-k/j>` to move among completion items
+1. Use `<C-k/j>` or "<Tab>/<Shift-Tab>" to move among completion items
 2. Use `<C-b/f>` to scroll among the doc of completion item
 3. Use `<CR>` to confirm completion
-4. "A super tab", we can press `Tab` and move among the completion items or placeholders in a code snippet
 
 
 #### Completion menu in nvim-cmp
