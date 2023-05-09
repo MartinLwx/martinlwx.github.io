@@ -284,7 +284,7 @@ def make_let_frame(bindings, env):
     # bingdings: ( (<name1> <expression1>) (<name2> <expression2>) ...)
     pos = bindings
     while pos is not nil:
-        front = pos.first  # i.e the first binding
+        front = pos.first  # i.e. the first binding
         validate_form(front, 2, 2)  # verify the structure is (<name> <expression>)
         names = Pair(front.first, names)
         values = Pair(eval_all(front.rest, env), values)
