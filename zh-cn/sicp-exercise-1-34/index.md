@@ -47,5 +47,9 @@ Then we have
 application: not a procedure;
 expected a procedure that can be applied to arguments
 given: 2
+
 ```
+---
+
+🚧 完整 SICP 练习题解仍在[施工中](https://github.com/MartinLwx/SICP-Exercise-in-Racket)
 

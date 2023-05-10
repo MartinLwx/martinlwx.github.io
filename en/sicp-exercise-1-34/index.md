@@ -49,4 +49,7 @@ application: not a procedure;
 expected a procedure that can be applied to arguments
 given: 2
 ```
+---
+
+🚧 The complete SICP exercise solution is still a work in progress. Please refers to [here](https://github.com/MartinLwx/SICP-Exercise-in-Racket)
 
