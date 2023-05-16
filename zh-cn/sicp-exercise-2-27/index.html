@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>SICP 练习 2.27 - MartinLwx&#39;s blog</title><meta name="Description" content="SICP 练习 2.27 答案"><meta property="og:title" content="SICP 练习 2.27" />
+<meta property="og:description" content="SICP 练习 2.27 答案" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-16T12:41:20+08:00" />
+<meta property="article:modified_time" content="2023-05-16T12:41:20+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="SICP 练习 2.27"/>
+<meta name="twitter:description" content="SICP 练习 2.27 答案"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/sicp-exercise-1-46/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "SICP 练习 2.27",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/sicp-exercise-2-27\/"
+        },"genre": "posts","keywords": "SICP, Racket","wordcount":  486 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/sicp-exercise-2-27\/","datePublished": "2023-05-16T12:41:20+08:00","dateModified": "2023-05-16T12:41:20+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "SICP 练习 2.27 答案"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/sicp-exercise-2-27/">English</option><option value="/zh-cn/sicp-exercise-2-27/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/sicp-exercise-2-27/">English</option><option value="/zh-cn/sicp-exercise-2-27/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">SICP 练习 2.27</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/exercise/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Exercise</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-16">2023-05-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 486 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#题目">题目</a></li>
+    <li><a href="#答案">答案</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="题目">题目</h2>
+<blockquote>
+<p>Modify your <code>reverse</code> procedure of exercise 2.18 to produce a <code>deep-reverse</code> procedure that taks a list as argument and returns as its value the list with its elements reversed and with all sublists deep-reversed as well.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-racket" data-lang="racket"><span class="line"><span class="cl"><span class="p">(</span><span class="k">define</span> <span class="n">x</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="c1">;; x - ((1 2) (3 4))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">deep-reverse</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">;; the output should be ((4 3) (2 1))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="答案">答案</h2>
+<p>在前面的练习 2.18 中实现的 <code>reverse</code> 忽略了列表中的元素可能仍然是列表的情况。这里要求的实现的 <code>deep-reverse</code> 则要求我们<strong>递归式</strong>翻转整个列表。</p>
+<p>我认为这题很好体现了如何设计一个递归程序的思想，基本上弄明白下面几点函数就不会出错</p>
+<ul>
+<li>递归的 base case 是什么？对于列表来说，空列表很自然就是 base case，此时返回 <code>'()</code> 即可</li>
+<li>接下来如何细分情况来递归调用？
+<ul>
+<li>在细分情况之前，应该记住 <code>car</code> 和 <code>cdr</code> 的特点，<strong><code>(cdr l)</code> 总是返回列表，<code>(car l)</code> 总是返回第一个元素（但不保证是否为原子项，即第一个元素也可能为列表）</strong></li>
+<li><code>deep-reverse</code> 有什么不变量（invariants）？根据题目所说，<strong>它的参数总是为列表</strong></li>
+<li>根据前面两点，我们已经不难得出细分情况的标准——即<strong>检查列表的第一个元素是否为原子项</strong></li>
+</ul>
+</li>
+</ul>
+<p>代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Racket" data-lang="Racket"><span class="line"><span class="cl"><span class="c1">;; invariants: the argument of deep-reverse are always a list</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="n">deep-reverse</span> <span class="n">l</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">cond</span> <span class="p">((</span><span class="nb">null?</span> <span class="n">l</span><span class="p">)</span> <span class="o">&#39;</span><span class="p">())</span>     <span class="c1">;; base case</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="k">else</span> <span class="p">(</span><span class="k">let</span> <span class="p">([</span><span class="n">remains</span> <span class="p">(</span><span class="n">deep-reverse</span> <span class="p">(</span><span class="nb">cdr</span> <span class="n">l</span><span class="p">))])</span>
+</span></span><span class="line"><span class="cl">                <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">pair?</span> <span class="p">(</span><span class="nb">car</span> <span class="n">l</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">;; the arguments of append procedure should be lists too</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">(</span><span class="nb">append</span> <span class="n">remains</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="n">deep-reverse</span> <span class="p">(</span><span class="nb">car</span> <span class="n">l</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">(</span><span class="nb">append</span> <span class="n">remains</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">car</span> <span class="n">l</span><span class="p">))))))))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>顺便附上一些测试用例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Racket" data-lang="Racket"><span class="line"><span class="cl"><span class="p">(</span><span class="n">deep-reverse</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">deep-reverse</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">deep-reverse</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">deep-reverse</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">5</span> <span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">deep-reverse</span> <span class="o">&#39;</span><span class="p">((</span><span class="mi">4</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">deep-reverse</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">5</span> <span class="p">(</span><span class="mi">2</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="mi">5</span> <span class="mi">2</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>🚧 完整 SICP 练习题解仍在<a href="https://github.com/MartinLwx/SICP-Exercise-in-Racket" target="_blank" rel="noopener noreffer ">施工中</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-05-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" data-title="SICP 练习 2.27" data-hashtags="SICP,Racket"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" data-hashtag="SICP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" data-title="SICP 练习 2.27"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" data-title="SICP 练习 2.27"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" data-title="SICP 练习 2.27"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/sicp/">SICP</a>,&nbsp;<a href="/zh-cn/tags/racket/">Racket</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/sicp-exercise-1-46/" class="prev" rel="prev" title="SICP 练习 1.46"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>SICP 练习 1.46</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

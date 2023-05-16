@@ -183,7 +183,7 @@ $$
 $$
 
 几个解释：
-- $X^T$ 的大小是 $(n+1, m)$，$\vec y$ 是 $(m, 1)$，因此 $X^T\vec y$ 其实是一个维度为 $(n+1, 1)$ 的列向量，**注意在线性代数中，当 $\vec a$ 和 $\vec b$ 都为列向量的时候，有 $\vec a^T\vec b=\vec b^T\vec a$ 成立**。所以 $\theta^T(X^T\vec y) = (X^T\vec y)^T\theta $
+- $X^T$ 的大小是 $(n+1, m)$，$\vec y$ 是 $(m, 1)$，因此 $X^T\vec y$ 其实是一个维度为 $(n+1, 1)$ 的列向量，**注意在线性代数中，当 $\vec a$ 和 $\vec b$ 都为列向量的时候，有 $\vec a^T\vec b=\vec b^T\vec a$ 成立**。所以 $\theta^T(X^T\vec y) = (X^T\vec y)^T\theta$
 - 其他几个地方的推导我推荐直接代向量/矩阵求导公式，可以参考这个 [Cheatsheet](http://www.gatsby.ucl.ac.uk/teaching/courses/sntn/sntn-2017/resources/Matrix_derivatives_cribsheet.pdf)。当然如果对这方面很感兴趣更推荐直接去看原理证明
     - 比如上面的 $\frac{\partial}{\partial \theta}(\theta^TX^T\vec y))$，其实就是换元法，令 $\vec b=X^T\vec y$，刚好对应 Cheatsheet 里面的 $\frac{\partial }{\partial \theta}\theta^T\vec b=\vec b$
 
