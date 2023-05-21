@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>用 MPNN 框架解读 GAT - MartinLwx&#39;s blog</title><meta name="Description" content="用 MPNN 框架解读图神经网络中的 GAT"><meta property="og:title" content="用 MPNN 框架解读 GAT" />
+<meta property="og:description" content="用 MPNN 框架解读图神经网络中的 GAT" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-21T15:20:50+08:00" />
+<meta property="article:modified_time" content="2023-05-21T15:20:50+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="用 MPNN 框架解读 GAT"/>
+<meta name="twitter:description" content="用 MPNN 框架解读图神经网络中的 GAT"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "用 MPNN 框架解读 GAT",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/understanding-graph-attention-network-through-mpnn\/"
+        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  2054 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/understanding-graph-attention-network-through-mpnn\/","datePublished": "2023-05-21T15:20:50+08:00","dateModified": "2023-05-21T15:20:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "用 MPNN 框架解读图神经网络中的 GAT"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/">English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/">English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">用 MPNN 框架解读 GAT</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/gnn/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>GNN</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2054 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是-mpnn-框架">什么是 MPNN 框架</a></li>
+    <li><a href="#什么是-gat">什么是 GAT</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#step-1-对节点做线性变换">Step 1. 对节点做线性变换</a></li>
+            <li><a href="#step-2-计算注意力">Step 2. 计算注意力</a>
+              <ul>
+                <li><a href="#多头注意力">多头注意力</a></li>
+              </ul>
+            </li>
+            <li><a href="#step-3-聚合邻居消息">Step 3. 聚合邻居消息</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#实现">实现</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="什么是-mpnn-框架">什么是 MPNN 框架</h2>
+<p>Justin Gilmer 提出了 MPNN（Message Passing Neural Network）框架<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ，用于描述被用来做图上的监督学习的图神经网络模型。我发现这是一个很好用的框架，可以很好理解不同的 GNN 模型是如何工作的，方便快速弄清楚不同的 GNN 模型之间的差别。我们考虑图 $G$ 上的一个节点 $v$，它的向量表示 $h_v$ 的更新方式如下：
+$$m_v^{t+1}=\sum_{u\in \mathcal{N}(v)}M_t(h_v^t,h_u^t,e_{vu})$$
+$$h_v^{t+1}=U_t(h_v^t,m_v^{t+1})$$</p>
+<p>其中</p>
+<ul>
+<li>$u$ 为 $v$ 的邻居节点，$\mathcal{N}(v)$ 则表示节点 $v$ 的所有邻居</li>
+<li>$e_{vu}$ 是可选项，表示边上的特征（若有）</li>
+<li>$M_t$ 是消息函数，$m_v^{t+1}$ 就是所有邻居节点的消息聚合之后的结果</li>
+<li>$U_t$ 是节点更新函数</li>
+</ul>
+<p>在更新完图上所有节点的向量表示之后，我们可能需要要做图级别的分类任务，在 MPNN 框架中对应为：
+$$\hat y=R({h_v^T|v\in G})$$</p>
+<p>其中：</p>
+<ul>
+<li>$R$ 为图读出函数，输入是图上所有节点的向量表示，输出为一个特征向量用于图级别的分类任务</li>
+</ul>
+<h2 id="什么是-gat">什么是 GAT</h2>
+<blockquote>
+<p>🧐 我发现将论文的公式和具体的代码联系起来总是能够帮助理解，因此下面关于 GAT 公式的讲解我会在用 MPNN 框架的基础上，同时附上相关的代码（用 <code>...</code> 表示其他省略的部分）。代码来自于 DGL 官方提供的 GAT 模块的<a href="https://docs.dgl.ai/en/latest/_modules/dgl/nn/pytorch/conv/gatconv.html#GATConv" target="_blank" rel="noopener noreffer ">源码</a></p>
+</blockquote>
+<blockquote>
+<p>🧐 GAT 可以方便堆叠多层，下面的讨论都是从<strong>某一层 $l$<strong>的</strong>某个</strong>节点 $v$ 的角度来谈的</p>
+</blockquote>
+<h4 id="step-1-对节点做线性变换">Step 1. 对节点做线性变换</h4>
+<p>$$h_v^{l}=W^lh_v^{l}$$</p>
+<p>设每个节点的向量表示的长度为 $F$，在第一步中，<strong>对图上每个结点</strong>的向量先做一个线性变换，其中 $W\in\mathcal{R}^{F&rsquo;\times F}$, 因此每个节点的向量都更新长度为 $F&rsquo;$。为了区分不同层的向量，用上角标 $l$ 表示这是第 $l$ 层的。注意<strong>在第 $l$ 层中，所有节点共用同一个权重矩阵 $W$</strong></p>
+<blockquote>
+<p>📒 <strong>注意后面的 $h_v^l$ 或者 $h_u^l$ 都是经过线性变换之后的</strong></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">_in_src_feats</span><span class="p">,</span> <span class="n">out_feats</span> <span class="o">*</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">feat_src</span> <span class="o">=</span> <span class="n">feat_dst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">h_src</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="o">*</span><span class="n">src_prefix_shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_feats</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意，上面代码中的 <code>h_src</code> 会出来两个一样的 <code>feat_src</code> 和 <code>feat_dst</code> 是因为 DGL 采用了数学上等价但是计算效率会更高的实现。后面会解释</p>
+<h4 id="step-2-计算注意力">Step 2. 计算注意力</h4>
+<p>$$e_{vu}^l=LeakyReLU\Big((a^l)^T[h_v^{l}||h_u^{l}]\Big)$$</p>
+<p>$$\alpha_{vu}^l=Softmax_u(e_{vu}^l)$$</p>
+<p>第二步就是要计算中心节点 $v$ 和它的所有邻居节点之间的注意力了。在上面的公式中：</p>
+<ul>
+<li>$e_{vu}^l$ 表示注意力系数（attention coefficient）。论文中提到完全可以采用不同的注意力计算方式，在 GAT 的论文中，作者选择用一层前馈神经网络计算注意力<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。<strong>注意这里的 $e_{vu}^l$ 跟 MPNN 的 $e_{vu}$ 是没有关系的，只是恰好记号一样了而已</strong></li>
+<li>$||$ 表示拼接操作，即我们会将中心节点和它对应的邻居结点的向量表示拼接起来，得到一个长度为 $2F&rsquo;$ 的向量，对应公式中的 $[h_v^{l}||h_u^{l}]$，然后把它送入到前面提到的一层前馈神经网络中，对应公式中的 $(a^l)^T[h_v^{l}||h_u^{l}]$，其中 $(a^l)^T$ 指的是第 $l$ 层的单层前馈神经网络的参数</li>
+<li>激活函数选用的是 $LeakyReLU$</li>
+<li>最后在节点 $v$ 的所有邻居节点之间用 Softmax 做归一化</li>
+</ul>
+<blockquote>
+<p>🤔️ 步骤一和步骤二对应 MPNN 框架的 $m_v^{t+1}$ 的计算</p>
+</blockquote>
+<h5 id="多头注意力">多头注意力</h5>
+<p>正如 Transformer 中有多头注意力一样，GAT 的作者同样在节点更新的时候采用了多头注意力的机制：
+$$h_v^{l+1}= ||^{K^l} \sigma(\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,l)}W^{(k,l)}h_u^{l})$$</p>
+<p>记号越来越复杂了，但是仔细思索一番还是可以理清楚的，上角标 $(k,l)$ 的意思是第 $l$ 层的第 $k$ 个头。其中 $K^l$ 为第 $l$ 层“头”的数量。上面的公式的意思就是每个“头”会计算出一个向量表示，然后不同“头”之间的会拼接起来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attn_l</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">th</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">out_feats</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attn_r</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">th</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">out_feats</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="n">negative_slope</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">el</span> <span class="o">=</span> <span class="p">(</span><span class="n">feat_src</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_l</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">er</span> <span class="o">=</span> <span class="p">(</span><span class="n">feat_dst</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_r</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">srcdata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&#34;ft&#34;</span><span class="p">:</span> <span class="n">feat_src</span><span class="p">,</span> <span class="s2">&#34;el&#34;</span><span class="p">:</span> <span class="n">el</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&#34;er&#34;</span><span class="p">:</span> <span class="n">er</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">apply_edges</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">u_add_v</span><span class="p">(</span><span class="s2">&#34;el&#34;</span><span class="p">,</span> <span class="s2">&#34;er&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edata</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&#34;e&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># normalization</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">edata</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_drop</span><span class="p">(</span><span class="n">edge_softmax</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># weighted sum</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">update_all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">u_mul_e</span><span class="p">(</span><span class="s2">&#34;ft&#34;</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;m&#34;</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s2">&#34;m&#34;</span><span class="p">,</span> <span class="s2">&#34;ft&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rst</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="p">[</span><span class="s2">&#34;ft&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DGL 的实现基于下面这个事实：
+$$a^T[h_v||h_u]=a_l^Th_v+a_r^Th_u$$
+为什么会更为高效呢？</p>
+<ul>
+<li>不需要存储 $[h_v||h_u]$ 这个中间变量了（DGL 会将消息存储为边的属性）</li>
+<li>加法可以用 DGL 优化过的 <code>fn.u_add_v</code> 函数</li>
+</ul>
+<h4 id="step-3-聚合邻居消息">Step 3. 聚合邻居消息</h4>
+<p>最后节点更新的方式就是计算邻居的向量表示的加权和（基于前面算好的注意力）：
+$$h_v^{l+1}=\sigma(\sum_{u\in \mathcal{N}(i)}\alpha_{vu}W^{l}h_u^{l})$$</p>
+<blockquote>
+<p>🤔️ 上面就对应 MPNN 框架中的 $h_v^{t+1}$ 的计算，注意 GAT 算 $h_t^{l+1}$ 的时候并不会用到自己上一层表示 $h_t^l$。同时 GAT 的提出是用于解决图上的节点分类问题，因此也没有图读出的操作。</p>
+</blockquote>
+<p>在 GAT 的论文中，作者是要将 GAT 用于节点级别的分类任务<sup id="fnref1:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。假设我们堆叠了 $L$ 层的 GAT 之后，在最后一层如果还采用拼接的方式显然是不合理的。因此作者在最后一层 GAT 中，是取多个头的平均值<strong>之后才</strong>应用了激活函数，这里的激活函数如果采用 Softmax，就可以直接做节点分类了<sup id="fnref2:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。公式如下所示:
+$$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,L)}W^{(k,L)}h_u^{L}\Big)$$</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># weighted sum</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">update_all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">u_mul_e</span><span class="p">(</span><span class="s2">&#34;ft&#34;</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;m&#34;</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s2">&#34;m&#34;</span><span class="p">,</span> <span class="s2">&#34;ft&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rst</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="p">[</span><span class="s2">&#34;ft&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="实现">实现</h2>
+<blockquote>
+<p>🤔️ 图神经网络的流行框架之一 <a href="https://www.dgl.ai/" target="_blank" rel="noopener noreffer ">DGL</a> 的设计就是基于 MPNN 框架，不过他们的公式会稍有不同，他们还有一个聚合函数 $\rho$，用于决定一个节点如何聚合从邻居那边收到的所有信息。<strong>我认为他们的公式更具有泛化性，能够适用于更多种情况</strong>。他们还贴心地写了关于如何使用 DGL 的 MPNN 相关函数的<a href="https://docs.dgl.ai/en/latest/guide/message.html" target="_blank" rel="noopener noreffer ">教程</a>，推荐一看👍👍👍</p>
+</blockquote>
+<p>至于 GAT 的实现，DGL 不仅提供了 <a href="https://docs.dgl.ai/en/latest/generated/dgl.nn.pytorch.conv.GATConv.html#dgl.nn.pytorch.conv.GATConv" target="_blank" rel="noopener noreffer ">GAT 模块</a>，而且还写了一篇不错的用自带的 <code>message_func</code> 和 <code>reduce_func</code> 手动实现 GAT 的<a href="https://docs.dgl.ai/en/latest/tutorials/models/1_gnn/9_gat.html" target="_blank" rel="noopener noreffer ">教程</a>。一个完整的 GAT 任务训练脚本可以看<a href="https://github.com/dmlc/dgl/blob/master/examples/core/gat/train.py" target="_blank" rel="noopener noreffer ">这里</a></p>
+<h2 id="总结">总结</h2>
+<p>以上就是如何用 MPNN 框架解释 GAT 的方法，其中加上了 DGL 的源码分析进行解释，用注意力计算节点之间的关系看起来是一个很自然的思路，可以看成是对 GCN 的一种泛化。GAT 能够很好学习到图的局部结构表示，而且计算注意力的方式可以并行，是十分高效的🍻🍻🍻</p>
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Gilmer J, Schoenholz S S, Riley P F, et al. Neural message passing for quantum chemistry[C]//International conference on machine learning. PMLR, 2017: 1263-1272. <a href="https://arxiv.org/abs/1704.01212" target="_blank" rel="noopener noreffer ">arXiv</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Veličković P, Cucurull G, Casanova A, et al. Graph attention networks[J]. arXiv preprint arXiv:1710.10903, 2017. <a href="https://arxiv.org/abs/1710.10903" target="_blank" rel="noopener noreffer ">arXiv</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-05-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT" data-hashtags="GNN,Deep-Learning,Paper"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-hashtag="GNN"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/gnn/">GNN</a>,&nbsp;<a href="/zh-cn/tags/deep-learning/">Deep-Learning</a>,&nbsp;<a href="/zh-cn/tags/paper/">Paper</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/sicp-exercise-2-27/" class="prev" rel="prev" title="SICP 练习 2.27"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>SICP 练习 2.27</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

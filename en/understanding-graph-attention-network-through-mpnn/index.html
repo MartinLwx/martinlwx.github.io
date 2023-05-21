@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Understanding GAT throught MPNN - MartinLwx&#39;s blog</title><meta name="Description" content="Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)"><meta property="og:title" content="Understanding GAT throught MPNN" />
+<meta property="og:description" content="Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-21T15:20:50+08:00" />
+<meta property="article:modified_time" content="2023-05-21T15:20:50+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Understanding GAT throught MPNN"/>
+<meta name="twitter:description" content="Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" /><link rel="prev" href="https://martinlwx.github.io/en/sicp-exercise-2-27/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Understanding GAT throught MPNN",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/understanding-graph-attention-network-through-mpnn\/"
+        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  1236 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/understanding-graph-attention-network-through-mpnn\/","datePublished": "2023-05-21T15:20:50+08:00","dateModified": "2023-05-21T15:20:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/" selected>English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/" selected>English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Understanding GAT throught MPNN</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/gnn/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>GNN</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1236 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#whats-mpnn">What&rsquo;s MPNN</a></li>
+    <li><a href="#whats-gat">What&rsquo;s GAT</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#step-1-apply-linear-transformation-to-all-nodes">Step 1. Apply linear transformation to all nodes</a></li>
+            <li><a href="#step-2-compute-the-attention">Step 2. Compute the attention</a>
+              <ul>
+                <li><a href="#multi-head-attention">Multi-head attention</a></li>
+              </ul>
+            </li>
+            <li><a href="#step-3-aggregation">Step 3. Aggregation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#implementation-and-usage">Implementation and usage</a></li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="whats-mpnn">What&rsquo;s MPNN</h2>
+<p>Justin Gilmer proposed the MPNN (Message Passing Neural Network) framework <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> for describing graph neural network models used in supervised learning on graphs. I found this to be a useful framework that provides a clear understanding of how different GNN models work and facilitates a quick grasp of the differences between them. Considering a node $v$ on the graph $G$, the update procedure for its vector representation $h_v$ is as follows:</p>
+<p>$$m_v^{t+1}=\sum_{u\in \mathcal{N}(v)}M_t(h_v^t,h_u^t,e_{vu})$$
+$$h_v^{t+1}=U_t(h_v^t,m_v^{t+1})$$</p>
+<p>where</p>
+<ul>
+<li>$u$ is the neighbor of $v$, and we use $\mathcal{N}(v)$ to represent all its neighbors</li>
+<li>$e_{vu}$ is optional, which represents the edge feature</li>
+<li>$M_t$ is the message function, $m_v^{t+1}$ is the aggregation result of all message from neighbors</li>
+<li>$U_t$ is the vertex update function</li>
+</ul>
+<p>After updating the vector representations of all nodes on the graph, we may need to perform graph-level classification tasks, which correspond to the following formula in the MPNN framework:
+$$\hat y=R({h_v^T|v\in G})$$</p>
+<p>where</p>
+<ul>
+<li>$R$ is the readout function, which computes a feature vector for the whole graph (if you&rsquo;re doing a graph-level classification problem)</li>
+</ul>
+<h2 id="whats-gat">What&rsquo;s GAT</h2>
+<blockquote>
+<p>🧐 I have found that linking the formulas with code can help with understanding. Therefore, I will provide relevant code(with <code>...</code> representing omitted parts). The code is sourced from the <a href="https://docs.dgl.ai/en/latest/_modules/dgl/nn/pytorch/conv/gatconv.html#GATConv" target="_blank" rel="noopener noreffer ">official <code>GATConv</code> module</a> in DGL.</p>
+</blockquote>
+<blockquote>
+<p>🧐 We can stack multiple GAT modules easily. The following discussion is from the perspective of a specific node $v$ in a particular layer $l$.</p>
+</blockquote>
+<h4 id="step-1-apply-linear-transformation-to-all-nodes">Step 1. Apply linear transformation to all nodes</h4>
+<p>$$h_v^{l}=W^lh_v^{l}$$</p>
+<p>Let&rsquo;s assume that the length of the vector representation for each node is denoted as $F$. In the first step, a linear transformation is applied to the vector of <strong>each node</strong> on the graph, where $W\in\mathcal{R}^{F&rsquo;\times F}$. Therefore, the length of each node is updated with a length of $F&rsquo;$. To distinguish vectors from different layers, superscript $l$ is used to indicate that it belongs to the $l$-th layer. Note that <strong>within the layer $l$, all nodes share the same weight matrix $W^l$</strong></p>
+<blockquote>
+<p>📒 <strong>Note that the $h_v^l$ or $h_u^l$ mentioned later have undergone linear transformations</strong>.</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">_in_src_feats</span><span class="p">,</span> <span class="n">out_feats</span> <span class="o">*</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">feat_src</span> <span class="o">=</span> <span class="n">feat_dst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">h_src</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="o">*</span><span class="n">src_prefix_shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_feats</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Note that in the above code, the presence of two identical <code>feat_src</code> and <code>feat_dst</code> variables in DGL is due to the adoption of a mathematically equivalent but computationally more efficient implementation. This will be explained later</p>
+<h4 id="step-2-compute-the-attention">Step 2. Compute the attention</h4>
+<p>$$e_{vu}^l=LeakyReLU\Big((a^l)^T[h_v^{l}||h_u^{l}]\Big)$$</p>
+<p>$$\alpha_{vu}^l=Softmax_u(e_{vu}^l)$$</p>
+<p>The second step is to compute the attention between the central node $v$ and all its neighboring nodes. In the above formula:</p>
+<ul>
+<li>$e_{vu}^l$ represents the attention coefficient. The paper mentions that different attention computation methods can be used. In the GAT paper, the authors chose to use a single-layer feedforward neural network(FNN) to compute the attention<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. <strong>Note that the $e_{vu}^l$ here is unrelated to $e_{vu}$ in MPNN; it just happens to have similar notation</strong></li>
+<li>$||$ denotes the concatenation operation. It means that we concatenate the vector representations of the central node and its corresponding neighbor nodes, resulting in a vector of length $2F&rsquo;$, as indicated by $[h_v^{l}||h_u^{l}]$ in the formula. This concatenated vector is then fed into the aforementioned single-layer FNN, represented as $(a^l)^T[h_v^{l}||h_u^{l}]$, where $(a^l)^T$ refers to the learnable parameters of the single-layer FNN in the $l$-th layer</li>
+<li>$LeakyReLU$ is the activation function</li>
+<li>Finally, we apply Softmax on all neighbors of node $v$ to normalize the attention coefficients</li>
+</ul>
+<blockquote>
+<p>🤔️ Step 1 and 2 correspond to the computation of $m_v^{t+1}$ in the MPNN framework.</p>
+</blockquote>
+<h5 id="multi-head-attention">Multi-head attention</h5>
+<p>Just as Transformers have multi-head attention, the authors of GAT also employ the mechanism of multi-head attention during node updates:
+$$h_v^{l+1}= ||^{K^l} \sigma(\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,l)}W^{(k,l)}h_u^{l})$$</p>
+<p>The notations are getting more complex, but with careful consideration, they can still be understood. The superscript $(k,l)$ indicates the $k$-th head in the $l$-th layer. Here, $K^l$ represents the number of heads in the $l$-th layer. The meaning of the above formula is that each head will compute a vector representation, and these vectors from different heads will be concatenated together.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attn_l</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">th</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">out_feats</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attn_r</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">th</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">out_feats</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="n">negative_slope</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">el</span> <span class="o">=</span> <span class="p">(</span><span class="n">feat_src</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_l</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">er</span> <span class="o">=</span> <span class="p">(</span><span class="n">feat_dst</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_r</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">srcdata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&#34;ft&#34;</span><span class="p">:</span> <span class="n">feat_src</span><span class="p">,</span> <span class="s2">&#34;el&#34;</span><span class="p">:</span> <span class="n">el</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&#34;er&#34;</span><span class="p">:</span> <span class="n">er</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">apply_edges</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">u_add_v</span><span class="p">(</span><span class="s2">&#34;el&#34;</span><span class="p">,</span> <span class="s2">&#34;er&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edata</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&#34;e&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># normalization</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">edata</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_drop</span><span class="p">(</span><span class="n">edge_softmax</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># weighted sum</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">update_all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">u_mul_e</span><span class="p">(</span><span class="s2">&#34;ft&#34;</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;m&#34;</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s2">&#34;m&#34;</span><span class="p">,</span> <span class="s2">&#34;ft&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rst</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="p">[</span><span class="s2">&#34;ft&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The implementation of <code>GATConv</code> in DGL is based on this equation:
+$$a^T[h_v||h_u]=a_l^Th_v+a_r^Th_u$$</p>
+<p>Why it is more efficient?</p>
+<ol>
+<li>We don&rsquo;t need to store $[h_v||h_u]$ on edges (DGL will store messages in edge)</li>
+<li>The addition could be optimized with DGL&rsquo;s built-in function <code>u_add_v</code></li>
+</ol>
+<h4 id="step-3-aggregation">Step 3. Aggregation</h4>
+<p>The final way of updating the nodes is by taking the weighted sum of the neighbor&rsquo;s vector representations using the corresponding attention scores. It can be expressed as follows:
+$$h_v^{l+1}=\sigma(\sum_{u\in \mathcal{N}(i)}\alpha_{vu}W^{l}h_u^{l})$$</p>
+<blockquote>
+<p>🤔️ The above corresponds to the computation of $h_v^{t+1}$ in the MPNN framework. It is worth noting that when calculating $h_t^{l+1}$ in GAT, the previous layer representation $h_t^l$ is not used. Additionally, GAT was proposed to address node classification problems on graphs and does not involve any graph readout operations.</p>
+</blockquote>
+<p>In the GAT paper, the authors intended to use GAT for node-level classification tasks<sup id="fnref1:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. Suppose we stack $L$ layers of GAT. It would be unreasonable to use concatenation in the final(prediction) layer. Therefore, in the last GAT layer, the authors take the average of multiple heads before applying the activation function. If the activation function used here is Softmax, it can be directly used for node classification<sup id="fnref2:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. The formula is as follows:
+$$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,L)}W^{(k,L)}h_u^{L}\Big)$$</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># weighted sum</span>
+</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">update_all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">u_mul_e</span><span class="p">(</span><span class="s2">&#34;ft&#34;</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;m&#34;</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s2">&#34;m&#34;</span><span class="p">,</span> <span class="s2">&#34;ft&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rst</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="p">[</span><span class="s2">&#34;ft&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="implementation-and-usage">Implementation and usage</h2>
+<blockquote>
+<p>🤔️ <a href="https://www.dgl.ai/" target="_blank" rel="noopener noreffer ">DGL</a>&rsquo;s design is based on the MPNN framework, but their formulas are slightly different. They also introduce an aggregation function, denoted as $\rho$, which determines how a node aggregates all the information received from its neighbors. <strong>I thought their formulas are more generalized</strong>. They have thoughtfully provided a tutorial on how to use DGL&rsquo;s MPNN-related functions, which can be found <a href="https://docs.dgl.ai/en/latest/guide/message.html" target="_blank" rel="noopener noreffer ">here</a> 👍👍👍</p>
+</blockquote>
+<p>As for the implementation of GAT, the DGL offers <a href="https://docs.dgl.ai/en/latest/generated/dgl.nn.pytorch.conv.GATConv.html#dgl.nn.pytorch.conv.GATConv" target="_blank" rel="noopener noreffer ">GATConv</a>. The DGL team also write a good tutorial about using the built-in <code>message_func</code> and <code>reduce_func</code> to <a href="https://docs.dgl.ai/en/latest/tutorials/models/1_gnn/9_gat.html" target="_blank" rel="noopener noreffer ">implemente GAT manually</a></p>
+<p>Please refers to <a href="https://github.com/dmlc/dgl/blob/master/examples/core/gat/train.py" target="_blank" rel="noopener noreffer ">here</a> to see a full training example</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>Above is how the GAT can be explained using the MPNN framework, with the inclusion of DGL source code. Using attention to compute importances between nodes appears to be a natural approach and can be seen as a generalization of GCN. GAT is capable of learning local structural representations of graphs effectively, and the attention computation can be parallelized, making it highly efficient. Cheers! 🍻🍻🍻</p>
+<h2 id="refs">Refs</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Gilmer J, Schoenholz S S, Riley P F, et al. Neural message passing for quantum chemistry[C]//International conference on machine learning. PMLR, 2017: 1263-1272. <a href="https://arxiv.org/abs/1704.01212" target="_blank" rel="noopener noreffer ">arXiv</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Veličković P, Cucurull G, Casanova A, et al. Graph attention networks[J]. arXiv preprint arXiv:1710.10903, 2017. <a href="https://arxiv.org/abs/1710.10903" target="_blank" rel="noopener noreffer ">arXiv</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-21</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN" data-hashtags="GNN,Deep-Learning,Paper"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-hashtag="GNN"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/gnn/">GNN</a>,&nbsp;<a href="/en/tags/deep-learning/">Deep-Learning</a>,&nbsp;<a href="/en/tags/paper/">Paper</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/sicp-exercise-2-27/" class="prev" rel="prev" title="SICP Exercise 2.27"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>SICP Exercise 2.27</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
