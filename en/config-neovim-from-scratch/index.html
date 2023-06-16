@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/config-neovim-from-scratch/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-02-08T15:01:42+08:00" />
-<meta property="article:modified_time" content="2023-02-15T13:38:42+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s blog" />
+<meta property="article:modified_time" content="2023-02-15T13:38:42+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
 
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/en\/config-neovim-from-scratch\/"
-        },"genre": "posts","keywords": "Nvim","wordcount":  3318 ,
+        },"genre": "posts","keywords": "Nvim","wordcount":  3316 ,
         "url": "https:\/\/martinlwx.github.io\/en\/config-neovim-from-scratch\/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Transform Your Neovim into a IDE: A Step-by-Step Guide</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/vim/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Vim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3318 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3316 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -875,7 +875,7 @@
 <p>🎙️ You can use basic completion now ~</p>
 </blockquote>
 <h4 id="lsp">LSP</h4>
-<p>To turn <code>Nvim</code> into an IDE, it is necessary to rely on LSP<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. It is cumbersome to install and configure LSP one by one manually, as different LSPs have different installation steps, and it is inconvenient for future management. That&rsquo;s where tools like <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreffer ">mason</a> and [mason-lspconfig](https://github .com/williamboman/mason-lspconfig.nvim) come in to make our lives easier🥰</p>
+<p>To turn <code>Nvim</code> into an IDE, it is necessary to rely on LSP<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. It is cumbersome to install and configure LSP one by one manually, as different LSPs have different installation steps, and it is inconvenient for future management. That&rsquo;s where tools like <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreffer ">mason</a> and <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreffer ">mason-lspconfig</a> come in to make our lives easier🥰</p>
 <blockquote>
 <p>❗️ Note that the order of <code>mason.nvim</code>, <code>mason-lspconfig.nvim</code> and the <code>nvim-lspconfig</code> is crucial. <strong>There is a specific ordering requirement between these three plugins and their configurations</strong>. So it&rsquo;s recommended to follow the code provided</p>
 </blockquote>
@@ -932,7 +932,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>💡 <strong>Add whatever LSP you like in the <code>ensure_installed</code></strong>, the complete list can be found in [server_configurations](<a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations" target="_blank" rel="noopener noreffer ">https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations</a>. md). <em>I personally use the three programming languages <code>python/go/rust</code>, and because we use Lua to configure <code>Nvim</code>, we also added <code>lua_ls</code> here</em></p>
+<p>💡 <strong>Add whatever LSP you like in the <code>ensure_installed</code></strong>, the complete list can be found in <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreffer ">server_configurations</a>. <em>I personally use the three programming languages <code>python/go/rust</code>, and because we use Lua to configure <code>Nvim</code>, we also added <code>lua_ls</code> here</em></p>
 </blockquote>
 <p>After restarting <code>Nvim</code>, you should be able to see in the status bar below that Mason is installing the LSP we specified above (<strong>Note that <code>Nvim</code> cannot be closed at this time</strong>). By typing <code>:Mason</code> in <code>Nvim</code> we can check the installation progress</p>
 <p>After successfully installing LSP, we should use <code>nvim-lspconfig</code> plug-in to configure (because the configuration code is relatively long, the configuration of <code>pylsp</code> is only shown below, and the configuration of other languages is similar). Add the following code to the <code>nvim/lua/lsp.lua</code> file</p>
@@ -1093,7 +1093,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.113.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

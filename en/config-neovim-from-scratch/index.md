@@ -451,7 +451,7 @@ Use `formatting = ...`:
 
 #### LSP
 
-To turn `Nvim` into an IDE, it is necessary to rely on LSP[^4]. It is cumbersome to install and configure LSP one by one manually, as different LSPs have different installation steps, and it is inconvenient for future management. That's where tools like [mason](https://github.com/williamboman/mason.nvim) and [mason-lspconfig](https://github .com/williamboman/mason-lspconfig.nvim) come in to make our lives easier🥰
+To turn `Nvim` into an IDE, it is necessary to rely on LSP[^4]. It is cumbersome to install and configure LSP one by one manually, as different LSPs have different installation steps, and it is inconvenient for future management. That's where tools like [mason](https://github.com/williamboman/mason.nvim) and [mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim) come in to make our lives easier🥰
 
 > ❗️ Note that the order of `mason.nvim`, `mason-lspconfig.nvim` and the `nvim-lspconfig` is crucial. **There is a specific ordering requirement between these three plugins and their configurations**. So it's recommended to follow the code provided
 
@@ -485,7 +485,7 @@ require('mason-lspconfig').setup({
 })
 ```
 
-> 💡 **Add whatever LSP you like in the `ensure_installed`**, the complete list can be found in [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations. md). *I personally use the three programming languages `python/go/rust`, and because we use Lua to configure `Nvim`, we also added `lua_ls` here*
+> 💡 **Add whatever LSP you like in the `ensure_installed`**, the complete list can be found in [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md). *I personally use the three programming languages `python/go/rust`, and because we use Lua to configure `Nvim`, we also added `lua_ls` here*
 
 After restarting `Nvim`, you should be able to see in the status bar below that Mason is installing the LSP we specified above (**Note that `Nvim` cannot be closed at this time**). By typing `:Mason` in `Nvim` we can check the installation progress
 
