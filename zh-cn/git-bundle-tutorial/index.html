@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Git Bundle 指南 - MartinLwx&#39;s blog</title><meta name="Description" content="介绍了少为人知的 git bundle 命令"><meta property="og:title" content="Git Bundle 指南" />
+<meta property="og:description" content="介绍了少为人知的 git bundle 命令" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-16T23:48:28+08:00" />
+<meta property="article:modified_time" content="2023-06-16T23:48:28+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Git Bundle 指南"/>
+<meta name="twitter:description" content="介绍了少为人知的 git bundle 命令"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Git Bundle 指南",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/git-bundle-tutorial\/"
+        },"genre": "posts","keywords": "Git","wordcount":  1451 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/git-bundle-tutorial\/","datePublished": "2023-06-16T23:48:28+08:00","dateModified": "2023-06-16T23:48:28+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "介绍了少为人知的 git bundle 命令"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/git-bundle-tutorial/">English</option><option value="/zh-cn/git-bundle-tutorial/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/git-bundle-tutorial/">English</option><option value="/zh-cn/git-bundle-tutorial/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Git Bundle 指南</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/git/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Git</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-16">2023-06-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1451 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#git-bundle-是什么">git bundle 是什么</a></li>
+    <li><a href="#使用场景">使用场景</a>
+      <ul>
+        <li><a href="#hosta-上首次打包">HostA 上首次打包</a></li>
+        <li><a href="#hostb-上克隆仓库">HostB 上克隆仓库</a></li>
+        <li><a href="#hosta-上继续更新">HostA 上继续更新</a></li>
+        <li><a href="#hostb-上增量更新">HostB 上增量更新</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="git-bundle-是什么">git bundle 是什么</h2>
+<p><code>git bundle</code> 是一个比较少看到的 git 命令，<strong>它的作用是把一个 git 仓库打包📦成一个文件，然后别人可以通过这个文件还原出本来的 git 仓库，而且 git bundle 还支持增量更新功能</strong>。在知道 <code>git bundle</code> 命令之前，我有时候打包一个 git 仓库一般就直接 <code>tar czf some_git_repo</code>。前阵子偶然发现了 <code>git bundle</code> 发现还挺实用的🍻</p>
+<p>这个命令最好通过例子来说明，<em>因此下面我用 <code>HostA</code> 和 <code>HostB</code> 这两个文件夹模拟两台主机，假设在 <code>HostA</code> 上存在某个 git 仓库 <code>foo</code>，目录结构如下</em>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">├── HostA
+</span></span><span class="line"><span class="cl">│   └── foo
+</span></span><span class="line"><span class="cl">│       ├── 1.txt
+</span></span><span class="line"><span class="cl">│       ├── 2.txt
+</span></span><span class="line"><span class="cl">│       └── 3.txt
+</span></span><span class="line"><span class="cl">├── HostB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 <code>foo</code> 有 3 个 commits，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">* 21486d5 (HEAD -&gt; main) add 3.txt
+</span></span><span class="line"><span class="cl">* a051186 add 2.txt
+</span></span><span class="line"><span class="cl">* 2820a6c add 1.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="使用场景">使用场景</h2>
+<h3 id="hosta-上首次打包">HostA 上首次打包</h3>
+<p>首次打包那么必定是要对整个 git 仓库进行打包，打包 <code>HostA</code> 上的 <code>foo</code> 仓库的命令很简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostA/foo</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># syntax: git bundle create &lt;filename&gt; &lt;git-rev-list-args&gt;</span>
+</span></span><span class="line"><span class="cl">$ git bundle create foo.bundle HEAD main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>比较难懂的是 <code>&lt;git-rev-list-args&gt;</code>，<strong>它的含义是我们要把什么东西打包到这个 bundle 文件里面</strong>。<em>这里我们是要打包 <code>HostA</code> 的 <code>foo</code> 仓库，它有一个 <code>main</code> 分支，同时我们把 <code>HEAD</code> 当前指向的位置也打包到这个 bundle 文件里面，所以用的是 <code>HEAD main</code></em></p>
+<h3 id="hostb-上克隆仓库">HostB 上克隆仓库</h3>
+<p>现在假设 <code>HostB</code> 上拿到了前面打包好的 <code>foo.bundle</code> 文件，那么还原出本来的仓库也很简单，命令如下所示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostB</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># syntax: git clone &lt;filename&gt; &lt;target_dir&gt;</span>
+</span></span><span class="line"><span class="cl">$ git clone foo.bundle foo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，提取 bundle 文件的信息就像是从一个普通的 URL 克隆仓库一样，只不过把 URL 换成了 bundle 文件的路径</p>
+<p>此时看下这个仓库的远程仓库信息，你会发现它的远程仓库被设置成了 <code>foo.bundle</code> 文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostB/foo</span>
+</span></span><span class="line"><span class="cl">$ git remote -v
+</span></span><span class="line"><span class="cl"><span class="c1"># output:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># origin	&lt;path_to_foo.bundle&gt; (fetch)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># origin	&lt;path_to_foo.bundle&gt; (push)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="hosta-上继续更新">HostA 上继续更新</h3>
+<p>现在假设 <code>HostA</code> 上的 <code>foo</code> 仓库多更新了几个 commit，如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">* 9ac69b0 (HEAD -&gt; main) add 5.txt        -- new commit
+</span></span><span class="line"><span class="cl">* 0350a1e add 4.txt                       -- new commit
+</span></span><span class="line"><span class="cl">* 21486d5 add 3.txt
+</span></span><span class="line"><span class="cl">* a051186 add 2.txt
+</span></span><span class="line"><span class="cl">* 2820a6c add 1.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们想要把 <code>HostA</code> 上这两个新的 commit 打包📦后发送给 <code>HostB</code> 让 <code>HostB</code> 可以和 <code>HostA</code> 保持同步。所以我们可以利用 git 提供的指定 commit range 的语法，选中这两个 commits<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostA/foo</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># let&#39;s verify what will be bundled first</span>
+</span></span><span class="line"><span class="cl">$ git log --oneline 21486d5..main
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ git bundle create increment.bundle 21486d5..main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="hostb-上增量更新">HostB 上增量更新</h3>
+<p>现在假设 <code>HostB</code> 拿到了 <code>increment.bundle</code>，那么用下面的命令可以提取里面的 commits</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostB/foo</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># syntax: git fetch &lt;BUNDLE_FILE&gt; &lt;BRANCH_IN_BUNDLE&gt;:&lt;BRANCH_IN_LOCAL_REPO&gt;</span>
+</span></span><span class="line"><span class="cl">$ git fetch increment.bundle main:feature
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面这个命令会将 <code>increment.bundle</code> 文件包含的 commit 放到<strong>新的 <code>feature</code> 分支上</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostB/foo</span>
+</span></span><span class="line"><span class="cl">$ git log --oneline --graph --all
+</span></span><span class="line"><span class="cl"><span class="c1"># output:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 9ac69b0 (feature) add 5.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 0350a1e add 4.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 21486d5 (HEAD -&gt; main, origin/main, origin/HEAD) add 3.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * a051186 add 2.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 2820a6c add 1.txt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>确定没有问题之后我们可以尝试合并 <code>feature</code> 分支，并删除 <code>feature</code> 分支</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostB/foo</span>
+</span></span><span class="line"><span class="cl">$ git merge feature
+</span></span><span class="line"><span class="cl">$ git branch -d feature
+</span></span><span class="line"><span class="cl">$ git log --oneline --graph --all
+</span></span><span class="line"><span class="cl"><span class="c1"># output:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 9ac69b0 (HEAD -&gt; main) add 5.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 0350a1e add 4.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 21486d5 (origin/main, origin/HEAD) add 3.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * a051186 add 2.txt</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># * 2820a6c add 1.txt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>🤔️ 那么能否直接将 <code>increment.bundle</code> 文件里的 commits 合并到 <code>HostB</code> 的 <code>foo</code> 的 <code>main</code> 分支上呢？也是可以的，命令是：<code>git pull increment.bundle main:main</code>，<strong>但是并不建议这么做，因为 <code>HostB/foo</code> 也有可能更新了仓库，先 <code>fetch</code> 再 <code>merge</code> 是一个好习惯</strong></p>
+<p>你可能还记得，<code>HostB</code> 上的 <code>foo</code> 这个仓库的远程分支被设置为某个文件，那么能否像一般使用 git 那样直接 <code>git pull</code> 呢？答案是肯定的，我们只需要将 <code>increment.bundle</code> 文件重命名为 <code>foo.bundle</code> 文件然后放在 <code>git remote -v</code> 显示的路径就行（当然改 remote 信息也可）</p>
+<h2 id="faq">FAQ</h2>
+<p>怎么知道 bundle 文件里面有什么分支可以用呢？下面的命令可以显示 bundle 文件里面所有的分支</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># syntax: git bundle list-heads &lt;BUNDLE_FILE&gt;</span>
+</span></span><span class="line"><span class="cl">$ git bundle list-heads  increment.bundle
+</span></span><span class="line"><span class="cl"><span class="c1"># output: 9ac69b08060859bc4b2172a8238cb841846ec5e0 refs/heads/main</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>怎么确定一个 bundle 文件能否用于当前的某个 git 仓库上呢？只需要将 bundle 文件放在这个 git 仓库里然后运行 <code>git bundle verify</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># in HostB/foo</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># syntax: git bundle verify &lt;BUNDLE_FILE&gt;</span>
+</span></span><span class="line"><span class="cl">$ git bundle verify increment.bundle
+</span></span><span class="line"><span class="cl"><span class="c1"># output:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The bundle contains this ref:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 9ac69b08060859bc4b2172a8238cb841846ec5e0 refs/heads/main</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The bundle requires this ref:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 21486d53326de40678a54159de656714a59b8d09</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The bundle uses this hash algorithm: sha1</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># increment.bundle is okay</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><em>从上面的输出可以看到，<code>increment.bundle</code> 要求仓库有 <code>21486d5</code> 这个 commit 才能够被用来更新。前面的 <code>HostB/foo</code> 在同步之前的最后一个 commit 就是这个</em></p>
+<h2 id="总结">总结</h2>
+<p><code>git bundle</code> 打包 git 仓库还是很方便的，结合选取 commit range 的语法还可以只选中部分 commits 增量更新，这样这个 bundle 文件就不会太大，方便我们进行传输</p>
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection" target="_blank" rel="noopener noreffer ">Git Revision Selection</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-06-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" data-title="Git Bundle 指南" data-hashtags="Git"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" data-hashtag="Git"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" data-title="Git Bundle 指南"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" data-title="Git Bundle 指南"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" data-title="Git Bundle 指南"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/git/">Git</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/understanding-graph-attention-network-through-mpnn/" class="prev" rel="prev" title="用 MPNN 框架解读 GAT"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>用 MPNN 框架解读 GAT</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.113.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
