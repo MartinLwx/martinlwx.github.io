@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>如何记忆红黑树的操作 - MartinLwx&#39;s blog</title><meta name="Description" content="介绍了如何在 2-3-4 树上思考红黑树的插入和删除操作，减轻记忆负担"><meta property="og:title" content="如何记忆红黑树的操作" />
+<meta property="og:description" content="介绍了如何在 2-3-4 树上思考红黑树的插入和删除操作，减轻记忆负担" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-01T17:12:40+08:00" />
+<meta property="article:modified_time" content="2023-07-01T17:12:40+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="如何记忆红黑树的操作"/>
+<meta name="twitter:description" content="介绍了如何在 2-3-4 树上思考红黑树的插入和删除操作，减轻记忆负担"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何记忆红黑树的操作",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-memorize-insertion-and-deletion-in-rb-tree\/"
+        },"genre": "posts","keywords": "Data-Structure","wordcount":  3759 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-memorize-insertion-and-deletion-in-rb-tree\/","datePublished": "2023-07-01T17:12:40+08:00","dateModified": "2023-07-01T17:12:40+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "介绍了如何在 2-3-4 树上思考红黑树的插入和删除操作，减轻记忆负担"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/how-to-memorize-insertion-and-deletion-in-rb-tree/">English</option><option value="/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/how-to-memorize-insertion-and-deletion-in-rb-tree/">English</option><option value="/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何记忆红黑树的操作</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/data-structure/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Data-Structure</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-07-01">2023-07-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3759 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#节点映射定义">节点映射定义</a></li>
+    <li><a href="#新增节点操作">新增节点操作</a>
+      <ul>
+        <li><a href="#新增节点的父节点是黑色节点">新增节点的父节点是黑色节点</a></li>
+        <li><a href="#新增节点的父节点是红色节点而且不存在-uncle-节点">新增节点的父节点是红色节点而且不存在 uncle 节点</a></li>
+        <li><a href="#新增节点的父节点是红色节点而且存在-uncle-节点">新增节点的父节点是红色节点而且存在 uncle 节点</a></li>
+      </ul>
+    </li>
+    <li><a href="#删除节点操作">删除节点操作</a>
+      <ul>
+        <li><a href="#被删除的节点有红色右孩子">被删除的节点有红色右孩子</a></li>
+        <li><a href="#被删除的节点有黑色右孩子">被删除的节点有黑色右孩子</a>
+          <ul>
+            <li><a href="#如果兄弟节点是黑色而且有一个红色孩子">如果兄弟节点是黑色而且有「一个红色孩子」</a></li>
+            <li><a href="#如果兄弟节点是黑色而且有两个黑色孩子">如果兄弟节点是黑色而且有「两个黑色孩子」</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#推荐阅读">推荐阅读</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言">引言</h2>
+<p>如果你点进了这一篇文章，相信你也跟我一样：红黑树<strong>学一次忘一次</strong>，又要做树的旋转，又要给节点重新上色，导致每次都是学完了就忘记。我也曾经仔细阅读过 CLRS 写的《算法导论》，但是上面的分类讨论只是让我更加头疼</p>
+<p><strong>当然，记住一项东西的最佳方式永远都是理解它</strong>，而最近看到斯坦福的 CS166 高级数据结构课程的<a href="http://web.stanford.edu/class/cs166/lectures/03/Slides03.pdf" target="_blank" rel="noopener noreffer ">课件</a>的时候，我似乎理解了红黑树————<strong>红黑树和 2-3-4 树是等同（isometry）的数据结构，他们只是用了不同的方式表示 2-3-4 树</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，这意味着我们<strong>可以通过 2-3-4 树上的节点变化，进而推导出红黑树上的形状和颜色的变化</strong>，而 2-3-4 树的节点变化，是简单很多的</p>
+<p>在开始之前，我假定你对以下的内容很熟悉</p>
+<ul>
+<li>你知道 2-3-4 树或者说 B 树是什么，2-3-4 树其实就是 B 树的一种。你需要知道<em>在 2-3-4 树上的删除和插入操作如何进行，什么时候会发生节点的 overflow、underflow，以及这种时候要如何处理</em></li>
+<li>你知道如何在二叉搜索树中插入和删除节点，毕竟红黑树本身就是保证高度是 $O(log\ n)$ 的二叉搜索树，要知道<em>如何找到插入位置，如何确定要删除的节点等</em></li>
+<li>你需要知道红黑树和 2-3-4 树的定义，<em>需要理解红黑树有什么性质，以及在红黑树上插入节点、删除节点都可能打破哪些性质</em></li>
+</ul>
+<p>最重要的，你<strong>不需要记住红黑树的旋转和颜色变化操作</strong>，因为只要你掌握了今天要讲的技巧，<strong>你就可以在红黑树的操作和 2-3-4 树上的操作之间建立直觉上的联系</strong></p>
+<h2 id="节点映射定义">节点映射定义</h2>
+<p>2-3-4 树上一共只有可能有下面 3 种节点：</p>
+<ul>
+<li>2-node，有 2 个孩子，含 1 个 key</li>
+<li>3-node，有 3 个孩子，含 2 个 key</li>
+<li>4-node，有 4 个孩子，含 3 个 key</li>
+</ul>
+<p>通过节点映射关系，我们可以将 2-3-4 树上的节点转化为对应的红黑树结构，反之依然。<strong>注意他们都是黑色节点开始</strong>，后面我们会多次用到这个映射表</p>
+<figure><img src="/img/rbtree_node_mappings.png"
+         alt="左边是 2-3-4 树的 2-node, 3-node, 4-node，右边是对应的红黑树结构"/><figcaption>
+            <p>左边是 2-3-4 树的 2-node, 3-node, 4-node，右边是对应的红黑树结构</p>
+        </figcaption>
+</figure>
+
+<h2 id="新增节点操作">新增节点操作</h2>
+<p>先来简单回顾一下，<strong>往红黑树节点中新增一个节点的步骤</strong></p>
+<ol>
+<li>红黑树是二叉搜索树，所以一开始按照二叉搜索树插入节点的办法找到要插入的位置</li>
+<li>如果新插入的点会成为根节点（即本来的红黑树为空），则新插入的节点为黑色；其他情况则为红色，因为红黑树有个性质是从任一节点到其每个叶子节点的路径都包含相同数量的的黑色节点，让新插入的节点的颜色为红色就可以维护这个性质。<strong>下面我们只考虑新插入的节点为红色的情况</strong></li>
+</ol>
+<p>新插入的节点是红色的话这意味着可能打破红黑树的另外一个性质——不能有 2 个连续的红色节点。红黑树中通过树旋转和节点重新上色🎨解决了这个问题，但是规则<strong>比较复杂不好记</strong></p>
+<p>在讲解具体例子之前，先概括一下<strong>通用的思路</strong>：</p>
+<ul>
+<li>找到要插入的位置插入新节点，设置新节点的颜色为红色</li>
+<li>将红黑树上「违背规则的部分」转化为「2-3-4 树上等同的形式」</li>
+<li>思考如果在 2-3-4 树的这个等价形式要如何处理</li>
+<li>在 2-3-4 树上处理好之后，再转化为红黑树，此时<strong>形状和颜色都决定好了</strong></li>
+</ul>
+<blockquote>
+<p>💡 为了帮助读者理解如何在 2-3-4 树和红黑树之间变换，在变换前后的等同部分，我用了一个带颜色的透明框标记了</p>
+</blockquote>
+<blockquote>
+<p>💡 我选择了直接用具体的数值而不是抽象的符号，因为这样会更加直观，更方便读者在 2-3-4 树和红黑树之间找到联系</p>
+</blockquote>
+<h3 id="新增节点的父节点是黑色节点">新增节点的父节点是黑色节点</h3>
+<p>一个简单情况是，新插入的红色节点的父节点是黑色，此时满足要求仍然是红黑树，不需要任何改动</p>
+<figure><img src="/img/rbtree_insertion_parent_is_black.png"/>
+</figure>
+
+<h3 id="新增节点的父节点是红色节点而且不存在-uncle-节点">新增节点的父节点是红色节点而且不存在 uncle 节点</h3>
+<p>接下来，让我们考虑稍微复杂点的情况，新增节点的父节点是红色节点，红黑树不允许这样的情况出现。此时它可能有也可能没有 unlce 节点，让我们先考虑它没有 uncle 节点的情况，可以很轻松画出下面几种可能的形式</p>
+<figure><img src="/img/rbtree_insertion_parent_is_red_similar_cases.png"/>
+</figure>
+
+<p>注意这几种都是等价的，下面我只展示上图第一个例子是如何操作的</p>
+<blockquote>
+<p>💡 后面当我们讨论其他情况的时候，他们也可能会存在等价形式，但其实方法都大同小异，我会每次挑其中一个讲</p>
+</blockquote>
+<figure><img src="/img/rbtree_insertion_no_uncle.png"/>
+</figure>
+
+<p><em>根据之前提到的节点映射关系，插入前的红黑树正好对应 2-3-4 树上的 3-node，然后我们在红黑树中插入节点 <code>1</code>，与此同时，我们在 3-node 上也进行插入操作，得到了一个 4-node，4-node 符合 2-3-4 树要求，所以也不需要分裂节点，此时再根据节点映射关系转化为红黑树</em></p>
+<p>此时你可能觉得似乎 2-3-4 树没有带来多大方便，因为这里一个简单右旋，然后重新染色并不是一件复杂的事情，但是之后随着情况越来越复杂，你会发现 2-3-4 树的理解角度容易理解很多🤔️</p>
+<h3 id="新增节点的父节点是红色节点而且存在-uncle-节点">新增节点的父节点是红色节点而且存在 uncle 节点</h3>
+<p>现在让我们来考虑它有 uncle 节点的情况，它<strong>可能为黑色，也可能为红色</strong></p>
+<p>先来看看如果 <strong>uncle 节点为黑色</strong>的其中一种可能情况</p>
+<figure><img src="/img/rbtree_insertion_with_black_uncle.png"/>
+</figure>
+
+<p><em>根据节点的映射关系，我们可以把红黑树的 <code>2, 5</code> 映射为 2-3-4 树上的 3-node，而红黑树上的 <code>7</code> 就映射为一个 2-node，在红黑树上插入 <code>1</code>，因此也在 <code>2, 5</code> 这个 3-node 上插入 <code>1</code>，得到的 <code>1, 2, 5</code> 根据节点映射关系，映射为一个黑色节点加两个红色孩子节点，而 <code>7</code> 则映射为一个黑色节点</em></p>
+<p>那如果 <strong>uncle 节点是红色</strong>呢？<em>比如像下面这样</em></p>
+<figure><img src="/img/rbtree_insertion_with_red_uncle.png"/>
+</figure>
+
+<p>这个会稍微复杂一些，因为在等价的 2-3-4 树插入 <code>1</code> 之后我们<strong>需要对 <code>1, 2, 5, 7</code> 进行分裂操作</strong>，也就是将图上的节点 <code>5</code> 插入到父节点中，<em>因为不知道父节点什么情况，因此节点 <code>5</code> 两边用省略号表示</em>，<strong>在 2-3-4 树中往父节点插入一个节点意味着可能导致父节点也 overflow，最坏的情况我们是需要这样一路一直修改回去</strong></p>
+<p>另外注意一个问题，这里插入的新节点的<strong>祖先（grandparent）节点应该是红色节点</strong>，<em>例子中的节点 <code>5</code> 就是新增节点 <code>1</code> 的祖先节点</em>。这样才能保证<strong>从任一节点到其每个叶子节点的路径都包含相同数量的的黑色节点</strong>，但是有个例外，那就是祖先节点是红黑树的根节点的时候，那么它就应该是黑色，下图清晰展示了这 2 种可能</p>
+<figure><img src="/img/rbtree_insertion_grandparent_color.png"/>
+</figure>
+
+<h2 id="删除节点操作">删除节点操作</h2>
+<p>先来简单回顾一下，<strong>在红黑树节点中删除一个节点的步骤</strong></p>
+<ol>
+<li>按照二叉搜索树删除节点的方式，找到要删除的节点，<strong>假设要被删除的节点是 <code>z</code></strong></li>
+<li>那么根据 <code>z</code> 的节点颜色可以分出下面两种情况
+<ol>
+<li><code>z</code> 是红色节点，删除红色节点是比较容易的，因为不会打破红黑树的性质，就是正常的二叉搜索树删除节点的操作，这里不展开</li>
+<li><code>z</code> 是黑色节点，删除黑色节点可能打破红黑树的性质——从任一节点到其每个叶子节点的路径都包含相同数量的的黑色节点，<strong>在红黑树中，遇到这种情况仍然是需要用树的旋转和节点重新上色🎨解决问题</strong>。下面的讨论主要考虑的是这种情况</li>
+</ol>
+</li>
+</ol>
+<h3 id="被删除的节点有红色右孩子">被删除的节点有红色右孩子</h3>
+<blockquote>
+<p>💡 注意，根据二叉搜索树的删除节点操作，我们知道<strong>要删除的节点 <code>z</code> 一定没有左孩子</strong>，如果它有右孩子的话，我们记为 <code>y</code></p>
+</blockquote>
+<blockquote>
+<p>💡 黄色节点表示不知道颜色或者是不关心它什么颜色</p>
+</blockquote>
+<figure><img src="/img/rbtree_deletion_with_red_child.png"/>
+</figure>
+
+<p><em>删除黑色的 <code>z</code>，然后用它的红色右孩子 <code>y</code> 代替 <code>z</code></em></p>
+<h3 id="被删除的节点有黑色右孩子">被删除的节点有黑色右孩子</h3>
+<p>我们暂时用黑色的 <code>y</code> 代替被删除的黑色的 <code>z</code>，并且记 <code>y</code> 为 “double black” 节点，<em>在图上，黑色节点 + 圆环就表示 “double black”</em><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<blockquote>
+<p>💡 “double black” 对于红黑树而言，意味着我们要让这边有 2 个黑色节点；对于 2-3-4 树而言，那就对应 2-3-4 树中删除 2-node 的 key之后引发的 <strong>underflow</strong></p>
+</blockquote>
+<figure><img src="/img/rbtree_deletion_double_black.png"/>
+</figure>
+
+<p><em>删除黑色的 <code>z</code>，然后用它的黑色右孩子 <code>y</code> 代替 <code>z</code>，标记 <code>y</code> 为 “double black” 节点</em></p>
+<p>接下来我们要<strong>根据「“double black” 的兄弟节点」来分情况推导</strong></p>
+<h4 id="如果兄弟节点是黑色而且有一个红色孩子">如果兄弟节点是黑色而且有「一个红色孩子」</h4>
+<figure><img src="/img/rbtree_deletion_black_uncle_with_red.png"/>
+</figure>
+
+<p><em>在上面的例子，转化为等价的 2-3-4 树上的删除节点操作，在 2-3-4 树中遇到这种情况需要执行 transfer 操作，因为兄弟节点 <code>6, 7</code> 是一个 3-node，还有得借。transfer 操作也就是父节点的 key 移动到被删除的节点的位置，然后兄弟节点的最小的 key 移动到父节点填补空缺</em></p>
+<blockquote>
+<p>💡 注意看，现在 <code>4</code> 和 <code>5</code> 是 2 个黑色节点，先前这里是一个特殊的 “double black” 节点，现在有 2 个黑色节点了，“double black” 也就没有必要了。这也是它叫做这个名字的原因，我们需要提醒自己这里需要 2 个黑色节点</p>
+</blockquote>
+<blockquote>
+<p>💡 注意这里节点 <code>6</code> 的颜色就是本来节点 <code>5</code> 的颜色</p>
+</blockquote>
+<h4 id="如果兄弟节点是黑色而且有两个黑色孩子">如果兄弟节点是黑色而且有「两个黑色孩子」</h4>
+<figure><img src="/img/rbtree_deletion_black_uncle_with_black_children.png"/>
+</figure>
+
+<p><em>在上面的例子，转化为等价的 2-3-4 树上的删除节点操作，在 2-3-4 树中遇到这种情况需要执行 fusion 操作，因为兄弟节点 <code>7</code> 是一个 2-node，没得借。fusion 操作就是从父节点那边借一个 key 下来，然后和兄弟节点合并，成为一个 3-node，也就是图上的 <code>5, 7</code></em></p>
+<blockquote>
+<p>💡 但是注意这里的 Fusion 操作找父节点借了一个 key，这可能导致父节点 <strong>underflow</strong> 了，正如前面我们在新增节点的时候可能 overflow</p>
+</blockquote>
+<p>理论上来说，这个例子的节点 <code>5</code> 应该是黑色（根据前面对节点映射的规定），这样才能满足 “double black” 的要求，<strong>但是不要忘了 <code>5</code> 自己是有颜色的</strong></p>
+<ul>
+<li>如果 <code>5</code> 本来是红色，那么把 <code>5</code> 变成黑色是没有问题的，因为现在的节点 <code>7</code> 就是红色，红黑树还是平衡的</li>
+<li>如果 <code>5</code> 本来是黑色，那么把 <code>5</code> 变成黑色是有问题的，因为还是会少了一个黑色节点，那么节点 <code>5</code> 就变成了新的 “double black” 节点，我们还得向上继续调整。<strong>这恰恰是对应了 2-3-4 树中发生了 underflow 的情况</strong>，那么我们就要 bototm-up 一路调整回去。最后如果发现根节点是一个 “double black” 节点，那么把根节点变成黑色节点即可</li>
+</ul>
+<p><strong>最后一种情况，如果兄弟节点为红色，而且有 2 个黑色孩子</strong></p>
+<blockquote>
+<p>💡 注意，如果兄弟节点是红色，他们的共同父节点肯定是黑色，因为红黑树不允许有 2 个连续的红色节点</p>
+</blockquote>
+<p>这个可以通过取巧的办法来转化为前面情况：</p>
+<figure><img src="/img/rbtree_deletion_black_uncle_with_red_children.png"/>
+</figure>
+
+<p><em>现在节点 <code>4</code> 的兄弟节点就是黑色节点了，转化为前面的情况，可以按照前面的办法处理</em></p>
+<h2 id="总结">总结</h2>
+<p>经过前面的例子展示，我们发现<strong>可以在 2-3-4 树上思考要如何处理，处理完成之后转变回红黑树</strong>，而 <strong>2-3-4 树的节点插入和删除操作都是比较简单的</strong>，这也是这套方法的价值所在，最重要的是，终于可以不用记住旋转顺序和怎么交换颜色了👏</p>
+<h2 id="推荐阅读">推荐阅读</h2>
+<p>关于 2-3-4 树和红黑树的对应关系，还有下面的几个参考资源可以阅读</p>
+<ul>
+<li><a href="http://web.stanford.edu/class/cs166/lectures/02/Slides02.pdf" target="_blank" rel="noopener noreffer ">CS166. Balanced Trees, Part I</a></li>
+<li><a href="http://web.stanford.edu/class/cs166/lectures/03/Slides03.pdf" target="_blank" rel="noopener noreffer ">CS166. Balanced Trees, Part II</a></li>
+<li><a href="https://pontus.digipen.edu/~mmead/www/Courses/CS280/Trees-Mapping2-3-4IntoRB.html" target="_blank" rel="noopener noreffer ">CS280. Mapping 2-3-4 trees into Red-Black trees</a></li>
+</ul>
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="http://web.stanford.edu/class/cs166/lectures/03/Slides03.pdf" target="_blank" rel="noopener noreffer ">CS166. Balanced Trees, Part II</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.usna.edu/Users/cs/crabbe/SI321/current/red-black/red-black.html" target="_blank" rel="noopener noreffer ">Red Black Trees</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-07-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" data-title="如何记忆红黑树的操作" data-hashtags="Data-Structure"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" data-hashtag="Data-Structure"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" data-title="如何记忆红黑树的操作"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" data-title="如何记忆红黑树的操作"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" data-title="如何记忆红黑树的操作"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/data-structure/">Data-Structure</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/git-bundle-tutorial/" class="prev" rel="prev" title="Git Bundle 指南"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Git Bundle 指南</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.115.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
