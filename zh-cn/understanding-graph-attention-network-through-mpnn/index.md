@@ -40,11 +40,26 @@ class GATConv(nn.Module):
             self._in_src_feats, out_feats * num_heads, bias=False
         )
         ...
-    def forward(self, ...):
+    def forward(self, graph, feat, ...):
+        """
+        Args
+        ----
+            feat: (N, *, D_in) where D_in is the size of input feature
+
+        Returns
+        -------
+            torch.Tensor
+                (N, *, num_heads, D_out)
+
+        """
         ...
+        src_prefix_shape = dst_prefix_shape = feat.shape[:-1]
+        h_src = h_dst = self.feat_drop(feat)
+        # h_src: (N, *, D_in)
         feat_src = feat_dst = self.fc(h_src).view(
             *src_prefix_shape, self._num_heads, self._out_feats
         )
+        # feat_src/feat_dst: (N, *, num_heads, out_feat)
         ...
 ```
 
@@ -81,24 +96,43 @@ class GATConv(nn.Module):
         )
         self.leaky_relu = nn.LeakyReLU(negative_slope)
         ...
-    def forward(self, ...):
-        ...
+
+    def forward(self, graph, feat, ...):
+        """
+        Args
+        ----
+            feat: (N, *, D_in) where D_in is the size of input feature
+
+        Returns
+        -------
+            torch.Tensor
+                (N, *, num_heads, D_out)
+
+        """
+        # feat_src/feat_dst: (N, *, num_heads, out_feat)
         el = (feat_src * self.attn_l).sum(dim=-1).unsqueeze(-1)
         er = (feat_dst * self.attn_r).sum(dim=-1).unsqueeze(-1)
+        # el/er: (N, *, num_heads, 1)
         graph.srcdata.update({"ft": feat_src, "el": el})
         graph.dstdata.update({"er": er})
         graph.apply_edges(fn.u_add_v("el", "er", "e"))
         e = self.leaky_relu(graph.edata.pop("e"))
+        # e: (N, *, num_heads, 1)
 
         # normalization
         graph.edata["a"] = self.attn_drop(edge_softmax(graph, e))
+        # a: (N, *, num_heads, 1)
 
         # weighted sum
         graph.update_all(
+            # ft: (N, *, num_heads, out_feat)
+            # a: (N, *, num_heads, 1)
+            # m: (N, *, num_heads, out_feat)
             fn.u_mul_e("ft", "a", "m"), 
             fn.sum("m", "ft")
         )
         rst = graph.dstdata["ft"]
+        # rst: (N, *, num_heads, out_feat)
         ...
 ```
 DGL 的实现基于下面这个事实：
@@ -116,19 +150,6 @@ $$h_v^{l+1}=\sigma(\sum_{u\in \mathcal{N}(i)}\alpha_{vu}W^{l}h_u^{l})$$
 在 GAT 的论文中，作者是要将 GAT 用于节点级别的分类任务[^2]。假设我们堆叠了 $L$ 层的 GAT 之后，在最后一层如果还采用拼接的方式显然是不合理的。因此作者在最后一层 GAT 中，是取多个头的平均值**之后才**应用了激活函数，这里的激活函数如果采用 Softmax，就可以直接做节点分类了[^2]。公式如下所示:
 $$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,L)}W^{(k,L)}h_u^{L}\Big)$$
 
-```python
-class GATConv(nn.Module):
-    ...
-    def forward(self, ...):
-        ...
-        # weighted sum
-        graph.update_all(
-            fn.u_mul_e("ft", "a", "m"), 
-            fn.sum("m", "ft")
-        )
-        rst = graph.dstdata["ft"]
-        ...
-```
 
 ## 实现
 

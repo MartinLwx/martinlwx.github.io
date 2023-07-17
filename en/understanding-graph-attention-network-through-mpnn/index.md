@@ -42,11 +42,27 @@ class GATConv(nn.Module):
             self._in_src_feats, out_feats * num_heads, bias=False
         )
         ...
-    def forward(self, ...):
+
+    def forward(self, graph, feat, ...):
+        """
+        Args
+        ----
+            feat: (N, *, D_in) where D_in is the size of input feature
+
+        Returns
+        -------
+            torch.Tensor
+                (N, *, num_heads, D_out)
+
+        """
         ...
+        src_prefix_shape = dst_prefix_shape = feat.shape[:-1]
+        h_src = h_dst = self.feat_drop(feat)
+        # h_src: (N, *, D_in)
         feat_src = feat_dst = self.fc(h_src).view(
             *src_prefix_shape, self._num_heads, self._out_feats
         )
+        # feat_src/feat_dst: (N, *, num_heads, out_feat)
         ...
 ```
 
@@ -84,24 +100,43 @@ class GATConv(nn.Module):
         )
         self.leaky_relu = nn.LeakyReLU(negative_slope)
         ...
-    def forward(self, ...):
-        ...
+
+    def forward(self, graph, feat, ...):
+        """
+        Args
+        ----
+            feat: (N, *, D_in) where D_in is the size of input feature
+
+        Returns
+        -------
+            torch.Tensor
+                (N, *, num_heads, D_out)
+
+        """
+        # feat_src/feat_dst: (N, *, num_heads, out_feat)
         el = (feat_src * self.attn_l).sum(dim=-1).unsqueeze(-1)
         er = (feat_dst * self.attn_r).sum(dim=-1).unsqueeze(-1)
+        # el/er: (N, *, num_heads, 1)
         graph.srcdata.update({"ft": feat_src, "el": el})
         graph.dstdata.update({"er": er})
         graph.apply_edges(fn.u_add_v("el", "er", "e"))
         e = self.leaky_relu(graph.edata.pop("e"))
+        # e: (N, *, num_heads, 1)
 
         # normalization
         graph.edata["a"] = self.attn_drop(edge_softmax(graph, e))
+        # a: (N, *, num_heads, 1)
 
         # weighted sum
         graph.update_all(
+            # ft: (N, *, num_heads, out_feat)
+            # a: (N, *, num_heads, 1)
+            # m: (N, *, num_heads, out_feat)
             fn.u_mul_e("ft", "a", "m"), 
             fn.sum("m", "ft")
         )
         rst = graph.dstdata["ft"]
+        # rst: (N, *, num_heads, out_feat)
         ...
 ```
 The implementation of `GATConv` in DGL is based on this equation:
@@ -119,20 +154,6 @@ $$h_v^{l+1}=\sigma(\sum_{u\in \mathcal{N}(i)}\alpha_{vu}W^{l}h_u^{l})$$
 
 In the GAT paper, the authors intended to use GAT for node-level classification tasks[^2]. Suppose we stack $L$ layers of GAT. It would be unreasonable to use concatenation in the final(prediction) layer. Therefore, in the last GAT layer, the authors take the average of multiple heads before applying the activation function. If the activation function used here is Softmax, it can be directly used for node classification[^2]. The formula is as follows:
 $$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,L)}W^{(k,L)}h_u^{L}\Big)$$
-
-```python
-class GATConv(nn.Module):
-    ...
-    def forward(self, ...):
-        ...
-        # weighted sum
-        graph.update_all(
-            fn.u_mul_e("ft", "a", "m"), 
-            fn.sum("m", "ft")
-        )
-        rst = graph.dstdata["ft"]
-        ...
-```
 
 ## Implementation and usage
 

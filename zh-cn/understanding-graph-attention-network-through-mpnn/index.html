@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/understanding-graph-attention-network-through-mpnn\/"
-        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  2054 ,
+        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  2174 ,
         "url": "https:\/\/martinlwx.github.io\/zh-cn\/understanding-graph-attention-network-through-mpnn\/","datePublished": "2023-05-21T15:20:50+08:00","dateModified": "2023-05-21T15:20:50+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">用 MPNN 框架解读 GAT</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/gnn/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>GNN</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2054 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2174 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -184,6 +184,21 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -193,11 +208,26 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 </span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">_in_src_feats</span><span class="p">,</span> <span class="n">out_feats</span> <span class="o">*</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span>
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="o">...</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Args
+</span></span></span><span class="line"><span class="cl"><span class="s2">        ----
+</span></span></span><span class="line"><span class="cl"><span class="s2">            feat: (N, *, D_in) where D_in is the size of input feature
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Returns
+</span></span></span><span class="line"><span class="cl"><span class="s2">        -------
+</span></span></span><span class="line"><span class="cl"><span class="s2">            torch.Tensor
+</span></span></span><span class="line"><span class="cl"><span class="s2">                (N, *, num_heads, D_out)
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="n">src_prefix_shape</span> <span class="o">=</span> <span class="n">dst_prefix_shape</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">h_src</span> <span class="o">=</span> <span class="n">h_dst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat_drop</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># h_src: (N, *, D_in)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">feat_src</span> <span class="o">=</span> <span class="n">feat_dst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">h_src</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">            <span class="o">*</span><span class="n">src_prefix_shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_feats</span>
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># feat_src/feat_dst: (N, *, num_heads, out_feat)</span>
 </span></span><span class="line"><span class="cl">        <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -251,6 +281,25 @@ $$h_v^{l+1}= ||^{K^l} \sigma(\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,l)}W^{(k,l
 </span><span class="lnt">28
 </span><span class="lnt">29
 </span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -264,24 +313,43 @@ $$h_v^{l+1}= ||^{K^l} \sigma(\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,l)}W^{(k,l
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="n">negative_slope</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="o">...</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Args
+</span></span></span><span class="line"><span class="cl"><span class="s2">        ----
+</span></span></span><span class="line"><span class="cl"><span class="s2">            feat: (N, *, D_in) where D_in is the size of input feature
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Returns
+</span></span></span><span class="line"><span class="cl"><span class="s2">        -------
+</span></span></span><span class="line"><span class="cl"><span class="s2">            torch.Tensor
+</span></span></span><span class="line"><span class="cl"><span class="s2">                (N, *, num_heads, D_out)
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># feat_src/feat_dst: (N, *, num_heads, out_feat)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">el</span> <span class="o">=</span> <span class="p">(</span><span class="n">feat_src</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_l</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">er</span> <span class="o">=</span> <span class="p">(</span><span class="n">feat_dst</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_r</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># el/er: (N, *, num_heads, 1)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">srcdata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&#34;ft&#34;</span><span class="p">:</span> <span class="n">feat_src</span><span class="p">,</span> <span class="s2">&#34;el&#34;</span><span class="p">:</span> <span class="n">el</span><span class="p">})</span>
 </span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&#34;er&#34;</span><span class="p">:</span> <span class="n">er</span><span class="p">})</span>
 </span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">apply_edges</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">u_add_v</span><span class="p">(</span><span class="s2">&#34;el&#34;</span><span class="p">,</span> <span class="s2">&#34;er&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">        <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">leaky_relu</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edata</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&#34;e&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># e: (N, *, num_heads, 1)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1"># normalization</span>
 </span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">edata</span><span class="p">[</span><span class="s2">&#34;a&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_drop</span><span class="p">(</span><span class="n">edge_softmax</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># a: (N, *, num_heads, 1)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1"># weighted sum</span>
 </span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">update_all</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># ft: (N, *, num_heads, out_feat)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># a: (N, *, num_heads, 1)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># m: (N, *, num_heads, out_feat)</span>
 </span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">u_mul_e</span><span class="p">(</span><span class="s2">&#34;ft&#34;</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;m&#34;</span><span class="p">),</span> 
 </span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s2">&#34;m&#34;</span><span class="p">,</span> <span class="s2">&#34;ft&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">rst</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="p">[</span><span class="s2">&#34;ft&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># rst: (N, *, num_heads, out_feat)</span>
 </span></span><span class="line"><span class="cl">        <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -300,35 +368,7 @@ $$h_v^{l+1}=\sigma(\sum_{u\in \mathcal{N}(i)}\alpha_{vu}W^{l}h_u^{l})$$</p>
 </blockquote>
 <p>在 GAT 的论文中，作者是要将 GAT 用于节点级别的分类任务<sup id="fnref1:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。假设我们堆叠了 $L$ 层的 GAT 之后，在最后一层如果还采用拼接的方式显然是不合理的。因此作者在最后一层 GAT 中，是取多个头的平均值<strong>之后才</strong>应用了激活函数，这里的激活函数如果采用 Softmax，就可以直接做节点分类了<sup id="fnref2:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。公式如下所示:
 $$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,L)}W^{(k,L)}h_u^{L}\Big)$$</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GATConv</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="o">...</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="o">...</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># weighted sum</span>
-</span></span><span class="line"><span class="cl">        <span class="n">graph</span><span class="o">.</span><span class="n">update_all</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">u_mul_e</span><span class="p">(</span><span class="s2">&#34;ft&#34;</span><span class="p">,</span> <span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;m&#34;</span><span class="p">),</span> 
-</span></span><span class="line"><span class="cl">            <span class="n">fn</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s2">&#34;m&#34;</span><span class="p">,</span> <span class="s2">&#34;ft&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">rst</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">dstdata</span><span class="p">[</span><span class="s2">&#34;ft&#34;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="o">...</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="实现">实现</h2>
+<h2 id="实现">实现</h2>
 <blockquote>
 <p>🤔️ 图神经网络的流行框架之一 <a href="https://www.dgl.ai/" target="_blank" rel="noopener noreffer ">DGL</a> 的设计就是基于 MPNN 框架，不过他们的公式会稍有不同，他们还有一个聚合函数 $\rho$，用于决定一个节点如何聚合从邻居那边收到的所有信息。<strong>我认为他们的公式更具有泛化性，能够适用于更多种情况</strong>。他们还贴心地写了关于如何使用 DGL 的 MPNN 相关函数的<a href="https://docs.dgl.ai/en/latest/guide/message.html" target="_blank" rel="noopener noreffer ">教程</a>，推荐一看👍👍👍</p>
 </blockquote>
@@ -373,7 +413,7 @@ $$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.115.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.115.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
