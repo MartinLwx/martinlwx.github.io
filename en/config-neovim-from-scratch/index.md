@@ -104,7 +104,7 @@ After completing the installation, If the `~/.config/nvim/` directory doesn't ex
 ```sh
 $ mkdir ~/.config/nvim
 $ mkdir ~/.config/nvim/lua
-$ touch ~/.config/nvim/lua/init.lua
+$ touch ~/.config/nvim/init.lua
 ```
 
 > 💡 **Please note that after making any modifications to the `*.lua` files, you need to restart the `Nvim` to see the changes take effect. I will assume that you restart your `Nvim` after each section**
