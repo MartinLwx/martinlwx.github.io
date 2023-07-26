@@ -1,4 +1,4 @@
-# the solutions for exercise 05&06 of MIT.Missing-semester(2020)
+# The solutions for exercise 05&06 of MIT.Missing-semester(2020)
 
 
 ## Lecture05. Command-line Environment

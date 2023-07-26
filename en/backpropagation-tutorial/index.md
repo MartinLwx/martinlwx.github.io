@@ -1,6 +1,6 @@
 # How to understand the backpropagation algorithm
 
-
+> Update: Backpropagation in matrix form could be found [here]({{<ref "/content/posts/a-trick-to-calculating-partial-derivatives-in-ML.md">}})
 
 ## Intro
 

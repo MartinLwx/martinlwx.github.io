@@ -1,5 +1,6 @@
 # 反向传播公式推导和理解
 
+> 更新：矩阵形式的反向传播可以看 [这里]({{<ref "/content/posts/a-trick-to-calculating-partial-derivatives-in-ML.zh-cn.md">}})
 
 
 ## 引言

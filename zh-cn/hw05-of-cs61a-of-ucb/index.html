@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Hw05 - CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="The simple solutions of hw05 of CS61A of UCB"><meta property="og:title" content="Hw05 - CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="The simple solutions of hw05 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/hw05-of-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-22T23:03:22+08:00" />
+<meta property="article:modified_time" content="2022-02-23T23:03:22+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Hw05 - CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="The simple solutions of hw05 of CS61A of UCB"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/hw05-of-cs61a-of-ucb/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/hw04-of-cs61a-of-ucb/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/lab08-cs61a-of-ucb/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hw05 - CS61A of UCB(2021-Fall)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/hw05-of-cs61a-of-ucb\/"
+        },"genre": "posts","keywords": "Course, Python","wordcount":  2488 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/hw05-of-cs61a-of-ucb\/","datePublished": "2022-02-22T23:03:22+08:00","dateModified": "2022-02-23T23:03:22+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "The simple solutions of hw05 of CS61A of UCB"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/hw05-of-cs61a-of-ucb/">English</option><option value="/zh-cn/hw05-of-cs61a-of-ucb/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/hw05-of-cs61a-of-ucb/">English</option><option value="/zh-cn/hw05-of-cs61a-of-ucb/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hw05 - CS61A of UCB(2021-Fall)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/course/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Course</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-02-22">2022-02-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2488 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#q1-generate-permutations">Q1: Generate Permutations</a></li>
+        <li><a href="#q2-yield-paths">Q2: Yield Paths</a></li>
+        <li><a href="#q3-preorder">Q3: Preorder</a></li>
+        <li><a href="#q4-generate-preorder">Q4: Generate Preorder</a></li>
+        <li><a href="#q5-remainder-generator">Q5: Remainder Generator</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h3 id="q1-generate-permutations">Q1: Generate Permutations</h3>
+<blockquote>
+<p>Given a sequence of unique elements, a <em>permutation</em> of the sequence is a list containing the elements of the sequence in some arbitrary order. For example, <code>[2, 1, 3]</code>, <code>[1, 3, 2]</code>, and <code>[3, 2, 1]</code> are some of the permutations of the sequence <code>[1, 2, 3]</code>.</p>
+<p>Implement <code>gen_perms</code>, a generator function that takes in a sequence <code>seq</code> and returns a generator that yields all permutations of <code>seq</code>. For this question, assume that <code>seq</code> will not be empty.</p>
+<p>Permutations may be yielded in any order. Note that the doctests test whether you are yielding all possible permutations, but not in any particular order. The built-in <code>sorted</code> function takes in an iterable object and returns a list containing the elements of the iterable in non-decreasing order.</p>
+<blockquote>
+<p><em>Hint:</em> If you had the permutations of all the elements in <code>seq</code> not including the first element, how could you use that to generate the permutations of the full <code>seq</code>?</p>
+</blockquote>
+<blockquote>
+<p><em>Hint:</em> Remember, it&rsquo;s possible to loop over generator objects because generators are iterators!</p>
+</blockquote>
+</blockquote>
+<p>题意就是要我们返回一个 generator, 这个 generator 会一个个返回列表的所有排列组合. 这个 Hint 明摆着我们要用递归的方法解决这个问题. 很容易想到这一道题的 base case, 如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">seq</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在的问题就是要如何过渡到子问题, 根据提示我们可以猜: 我们应该递归处理除了第一个位置以外的元素, 再根据题目的另一个提示, 我们应该假定我们的 <code>gen_perms(seq)</code> 就是返回 <code>seq</code> 的全排列, 那我们只要将我们的第一个元素插入到全排列的任意一个位置即可. 举个例子来说, 比如我们处理 <code>[1, 2, 3]</code> 的全排列, 假设我们现在已经得到了 <code>[2, 3]</code> 的全排列——<code>[[2, 3], [3, 2]]</code>, 那么我们只要将 <code>1</code> 插入到 <code>[2, 3]</code> 的不同位置, 我们就可以得到 <code>[1, 2, 3], [2, 1, 3], [2, 3, 1]</code>, 然后我们对 <code>[3, 2]</code> 进行同样的步骤. 这样我们就得到了所有的全排列, 然后我们可以写出如下的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Generates all permutations of the given sequence. Each permutation is a
+</span></span></span><span class="line"><span class="cl"><span class="s2">    list of the elements in SEQ in a different order. The permutations may be
+</span></span></span><span class="line"><span class="cl"><span class="s2">    yielded in any order.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; perms = gen_perms([100])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; type(perms)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &lt;class &#39;generator&#39;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(perms)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [100]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; try: #this piece of code prints &#34;No more permutations!&#34; if calling next would cause an error
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     next(perms)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ... except StopIteration:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     print(&#39;No more permutations!&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    No more permutations!
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms([1, 2, 3])) # Returns a sorted list containing elements of the generator
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms((10, 20, 30)))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[10, 20, 30], [10, 30, 20], [20, 10, 30], [20, 30, 10], [30, 10, 20], [30, 20, 10]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms(&#34;ab&#34;))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[&#39;a&#39;, &#39;b&#39;], [&#39;b&#39;, &#39;a&#39;]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># This problem requires list type, see example above</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">seq</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">seq</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># iterate every permutation in the generator</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># enumerate every position for insertation</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">perm</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q2-yield-paths">Q2: Yield Paths</h3>
+<blockquote>
+<p>Define a generator function <code>path_yielder</code> which takes in a tree <code>t</code>, a value <code>value</code>, and returns a generator object which yields each path from the root of <code>t</code> to a node that has label <code>value</code>.</p>
+<p>Each path should be represented as a list of the labels along that path in the tree. You may yield the paths in any order.</p>
+<p>We have provided a skeleton for you. You do not need to use this skeleton, but if your implementation diverges significantly from it, you might want to think about how you can get it to fit the skeleton.</p>
+</blockquote>
+<p>题目让我们返回从根结点出发到达所有标签为 <code>value</code> 的路径. 注意给我们的提示, 我们要实现的函数应该如下所示:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你仔细观察, 或许可以发现这一题的代码跟 Q1 竟是如此相似, 现在我们开始思考如何来解决这个问题. 首先要处理什么是 base case, 显然当我们遇到 label 是 <code>value</code> 的结点时候就到达了 base case 可以返回. 而将这个问题分解为更简单的子问题的方式也很简单, 我们要从当前结点出发, 遍历它的每一个子树, 只要路径上有就返回, 注意这里我们返回的是子路径(不包括当前结点), 然后我们加上当前结点的 label 即可.</p>
+<p>用一个例子来说, 看下面的 docstring 里面的例子, 假设我们现在要找到所有到达 label 为 <code>3</code> 的所有路径, 我们从根结点 <code>1</code> 出发, 检查的它的每一个子树, 分别是 <code>2</code> 和 <code>5</code>. 然后我们接着对 <code>2</code> 这么处理, 在 <code>2</code> 的第一个子树中我们找到了 <code>3</code>, 此时我们 <code>yield [3]</code>. 当我们回溯到 <code>2</code> 的时候加上 <code>2</code>, 我们又得到了子路径 <code>[2, 3]</code>, 最后我们接着回溯到根结点, 得到 <code>[1] + [2, 3] = [1, 2, 3]</code></p>
+<p>代码如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yields all possible paths from the root of t to a node with the label
+</span></span></span><span class="line"><span class="cl"><span class="s2">    value as a list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(t1)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">      2
+</span></span></span><span class="line"><span class="cl"><span class="s2">        3
+</span></span></span><span class="line"><span class="cl"><span class="s2">        4
+</span></span></span><span class="line"><span class="cl"><span class="s2">          6
+</span></span></span><span class="line"><span class="cl"><span class="s2">        5
+</span></span></span><span class="line"><span class="cl"><span class="s2">      5
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(path_yielder(t1, 6))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [1, 2, 4, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; path_to_5 = path_yielder(t1, 5)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_5))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[1, 2, 5], [1, 5]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t2 = tree(0, [tree(2, [t1])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(t2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    0
+</span></span></span><span class="line"><span class="cl"><span class="s2">      2
+</span></span></span><span class="line"><span class="cl"><span class="s2">        1
+</span></span></span><span class="line"><span class="cl"><span class="s2">          2
+</span></span></span><span class="line"><span class="cl"><span class="s2">            3
+</span></span></span><span class="line"><span class="cl"><span class="s2">            4
+</span></span></span><span class="line"><span class="cl"><span class="s2">              6
+</span></span></span><span class="line"><span class="cl"><span class="s2">            5
+</span></span></span><span class="line"><span class="cl"><span class="s2">          5
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; path_to_2 = path_yielder(t2, 2)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_2))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [[0, 2], [0, 2, 1, 2]]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path_yielder</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span> <span class="o">+</span> <span class="n">path</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-preorder">Q3: Preorder</h3>
+<blockquote>
+<p>Define the function <code>preorder</code>, which takes in a tree as an argument and returns a list of all the entries in the tree in the order that <code>print_tree</code> would print them.</p>
+<p>The following diagram shows the order that the nodes would get printed, with the arrows representing function calls.</p>
+</blockquote>
+<p>又是树的先序遍历问题, 这真的是一个十分经典的问题. 我们要递归访问这一棵树的所有结点, 从根结点出发, 注意我们是先记住根结点的值再去看它的子树, 并递归式处理这样的问题.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a list of the entries in this tree in the order that they
+</span></span></span><span class="line"><span class="cl"><span class="s2">    would be visited by a preorder traversal (see problem description).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(numbers)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [1, 2, 3, 4, 5, 6, 7]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(tree(2, [tree(4, [tree(6)])]))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [2, 4, 6]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q4-generate-preorder">Q4: Generate Preorder</h3>
+<blockquote>
+<p>Similarly to <code>preorder</code> in Question 3, define the function <code>generate_preorder</code>, which takes in a tree as an argument and now instead <code>yield</code>s the entries in the tree in the order that <code>print_tree</code> would print them.</p>
+<p><strong>Hint:</strong> How can you modify your implementation of <code>preorder</code> to <code>yield from</code> your recursive calls instead of returning them?</p>
+</blockquote>
+<p>仍旧是先序遍历的问题, 整体解法上很像 Q3, 只是现在我们不需要用一个 <code>result</code> 来存储遍历的序列, 因为我们要返回的是 generator. 但这个算法的逻辑还是一致的, 先看根结点, 然后去看它的子树的结点. 如果想对 <code>yield from</code> 有更深的了解, 我们可以看看这个人的<a href="http://simeonvisser.com/posts/python-3-using-yield-from-in-generators-part-1.html" target="_blank" rel="noopener noreffer ">这篇文章</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">generate_preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yield the entries in this tree in the order that they
+</span></span></span><span class="line"><span class="cl"><span class="s2">    would be visited by a preorder traversal (see problem description).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; gen = generate_preorder(numbers)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(gen)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; list(gen)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [2, 3, 4, 5, 6, 7]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">yield</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield from</span> <span class="n">generate_preorder</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q5-remainder-generator">Q5: Remainder Generator</h3>
+<blockquote>
+<p>Like functions, generators can also be <em>higher-order</em>. For this problem, we will be writing <code>remainders_generator</code>, which yields a series of generator objects.</p>
+<p><code>remainders_generator</code> takes in an integer <code>m</code>, and yields <code>m</code> different generators. The first generator is a generator of multiples of <code>m</code>, i.e. numbers where the remainder is 0. The second is a generator of natural numbers with remainder 1 when divided by <code>m</code>. The last generator yields natural numbers with remainder <code>m - 1</code> when divided by <code>m</code>.</p>
+<blockquote>
+<p><em>Hint</em>: To create a generator of infinite natural numbers, you can call the <code>naturals</code> function that&rsquo;s provided in the starter code.</p>
+</blockquote>
+<blockquote>
+<p><em>Hint</em>: Consider defining an inner generator function. Each yielded generator varies only in that the elements of each generator have a particular remainder when divided by <code>m</code>. What does that tell you about the argument(s) that the inner function should take in?</p>
+</blockquote>
+</blockquote>
+<p>这个问题如果你对 python 的 generator 一点都不了解的话, 一时要写出这样的代码是比较困难的, 我会推荐你先阅读这个<a href="https://realpython.com/introduction-to-python-generators/" target="_blank" rel="noopener noreffer ">教程</a>.</p>
+<p>在阅读上面的材料之后我们开始以前来想这个问题要怎么解决. 其实它就是要返回 <code>m</code> 个 generator, 第 <code>i</code> 个 generator 里面分别是除以 <code>m</code> 得到余数为 <code>i</code> 的所有数.</p>
+<p>注意, 我们要的是所有数, 所以我们可以现象我们要怎么得到第一个 generator, 其他 generator 其实都是类似的. 我们只要用一个 <code>while True</code> 死循环来一直找就行, 因为我们用的是 <code>yield</code>, 它每次找到一个就会暂停执行并返回那个数. 这样我们就得到了这个无限产生我们想要的数的 generator</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># you can give it a test</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>				<span class="c1"># 2 % 3 == 2</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">5</span>				<span class="c1"># 5 % 3 == 2</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">8</span>				<span class="c1"># 8 % 3 == 2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么我们如何得到一个 generator 的 list 呢, 也很简单, 我们用 <code>for</code> 循环就好了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">remainders_generator</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Yields m generators. The ith yielded generator yields natural numbers whose
+</span></span></span><span class="line"><span class="cl"><span class="s2">    remainder is i when divided by m.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; import types
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; [isinstance(gen, types.GeneratorType) for gen in remainders_generator(5)]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    [True, True, True, True, True]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; remainders_four = remainders_generator(4)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; for i in range(4):
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     print(&#34;First 3 natural numbers with remainder </span><span class="si">{0}</span><span class="s2"> when divided by 4:&#34;.format(i))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     gen = next(remainders_four)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     for _ in range(3):
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...         print(next(gen))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 0 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    4
+</span></span></span><span class="line"><span class="cl"><span class="s2">    8
+</span></span></span><span class="line"><span class="cl"><span class="s2">    12
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 1 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    5
+</span></span></span><span class="line"><span class="cl"><span class="s2">    9
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 2 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    2
+</span></span></span><span class="line"><span class="cl"><span class="s2">    6
+</span></span></span><span class="line"><span class="cl"><span class="s2">    10
+</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 3 when divided by 4:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    3
+</span></span></span><span class="line"><span class="cl"><span class="s2">    7
+</span></span></span><span class="line"><span class="cl"><span class="s2">    11
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">num</span>
+</span></span><span class="line"><span class="cl">            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-02-23</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/hw05-of-cs61a-of-ucb/" data-title="Hw05 - CS61A of UCB(2021-Fall)" data-hashtags="Course,Python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/hw05-of-cs61a-of-ucb/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/hw05-of-cs61a-of-ucb/" data-title="Hw05 - CS61A of UCB(2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/hw05-of-cs61a-of-ucb/" data-title="Hw05 - CS61A of UCB(2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/hw05-of-cs61a-of-ucb/" data-title="Hw05 - CS61A of UCB(2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/course/">Course</a>,&nbsp;<a href="/zh-cn/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/hw04-of-cs61a-of-ucb/" class="prev" rel="prev" title="Hw04 - CS61A of UCB(2021-Fall)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hw04 - CS61A of UCB(2021-Fall)</a>
+            <a href="/zh-cn/lab08-cs61a-of-ucb/" class="next" rel="next" title="Lab08 - CS61A of UCB(2021-Fall)">Lab08 - CS61A of UCB(2021-Fall)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.115.4">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

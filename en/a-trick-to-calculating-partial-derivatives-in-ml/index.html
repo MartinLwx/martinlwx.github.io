@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>A trick to calculating partial derivatives in machine learning - MartinLwx&#39;s blog</title><meta name="Description" content="A introduction of a cool trick to calculate partial derivatives in machine learning"><meta property="og:title" content="A trick to calculating partial derivatives in machine learning" />
+<meta property="og:description" content="A introduction of a cool trick to calculate partial derivatives in machine learning" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-26T00:31:50+08:00" />
+<meta property="article:modified_time" content="2023-07-26T00:31:50+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="A trick to calculating partial derivatives in machine learning"/>
+<meta name="twitter:description" content="A introduction of a cool trick to calculate partial derivatives in machine learning"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><link rel="prev" href="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "A trick to calculating partial derivatives in machine learning",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/a-trick-to-calculating-partial-derivatives-in-ml\/"
+        },"genre": "posts","keywords": "Deep-Learning, Machine-Learning","wordcount":  968 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/a-trick-to-calculating-partial-derivatives-in-ml\/","datePublished": "2023-07-26T00:31:50+08:00","dateModified": "2023-07-26T00:31:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "A introduction of a cool trick to calculate partial derivatives in machine learning"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/a-trick-to-calculating-partial-derivatives-in-ml/" selected>English</option><option value="/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/a-trick-to-calculating-partial-derivatives-in-ml/" selected>English</option><option value="/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">A trick to calculating partial derivatives in machine learning</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/ml-dl/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-07-26">2023-07-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;968 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#application">Application</a>
+      <ul>
+        <li><a href="#backpropagation-in-matrix-form">Backpropagation in matrix form</a></li>
+        <li><a href="#the-gradient-of-a-linear-regression-model">The gradient of a linear regression model</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaway">Key takeaway</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro">Intro</h2>
+<p>You may have difficulties when trying to calculate the partial derivatives in machine learning like me. Even though I found a good reference <a href="https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf" target="_blank" rel="noopener noreffer ">cookbook</a> that could be used to derive the gradients, I still got confused. Today, I want to share a practical technique I recently learned from this <a href="https://youtu.be/JLg1HkzDsKI" target="_blank" rel="noopener noreffer ">video</a>: <strong>when calculating partial derivatives in machine learning, you can treat everything <strong>as if</strong> it were a scalar and then make the shapes match</strong></p>
+<blockquote>
+<p><strong>Disclaimer</strong>: Calculating the partial derivatives using this trick <strong>DO NOT</strong> guarantee that the gradients are correct. The dimensions may match but the gradients could be wrong. Therefore, it is essential to <strong>perform gradient checking to ensure correctness</strong></p>
+</blockquote>
+<h2 id="application">Application</h2>
+<blockquote>
+<p>💡 Uppercase bold letters represent matrices, while non-bold letters represent scalars</p>
+</blockquote>
+<h3 id="backpropagation-in-matrix-form">Backpropagation in matrix form</h3>
+<p>In my previous <a href="https://martinlwx.github.io/en/backpropagation-tutorial/" rel="">post</a>, I try to derive the backpropagation equations in the scalar form because it&rsquo;s much easier to understand. However, if you ever try to <strong>implement</strong> the forward propagation or the backpropagation, you&rsquo;ll find that everything is done <strong>in matrix form</strong>. That is why it&rsquo;s essential to understand how the matrix form of backpropagation works. Now, I will use the technique mentioned earlier to derive it</p>
+<blockquote>
+<p>For simplicity, let&rsquo;s ignore the bias term and only consider the weight term</p>
+</blockquote>
+<p>Consider a simple $L$ layers MLP, where $\mathbf Z^l$ represents the output of layer $l$. We also use $\mathbf Z$ to represent the input. Thus, we have:
+$$\mathbf Z^0=\mathbf X$$</p>
+<p>Here, $\mathbf X\in\mathcal{R}^{m\times d}$, where $m$ is the number of samples, and $d$ is the length of each features for each sample</p>
+<p>The output of the model $f_\theta$ is $$f_\theta(\mathbf X)=\mathbf Z^{L}$$
+Here, $\theta$ represents the learnable parameters of this model</p>
+<p>The relationship between any continuous layers is:
+$$\mathbf Z^{l+1}=\sigma_{l+1}(\mathbf Z^l\mathbf W^{l+1}),l=0,&hellip;,L-1$$
+Here, $\sigma_{l+1}$ is the activate function of layer $l+1$</p>
+<p>The shapes:
+$$\mathbf Z^l\in\mathcal{R}^{m\times n_l}$$
+$$\mathbf W^{l+1} \in \mathcal R^{n_l\times n_{l+1}}$$</p>
+<p>Here, $n_l$ represents the number of neurons in layer $l$</p>
+<hr>
+<p>We want to determine the gradient of the loss $J$ with respect to any learnable parameter in the model. This gradient is essential for using gradient a descent algorithm to update the learnable parameters. Specifically, let&rsquo;s consider that we want to calculate the gradient of $\mathbf{W}^l$.</p>
+<p>$$
+\frac{\partial J}{\partial \mathbf W^l}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot &hellip;\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}}\cdot\frac{\partial \mathbf Z^{l}}{\partial\mathbf W^l}
+$$</p>
+<p>🤔️ What if we also want to calculate the gradient with respect to $\mathbf W^{l+1}$?
+$$
+\frac{\partial J}{\partial \mathbf W^{l-1}}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot &hellip;\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}} \cdot \frac{\partial \mathbf Z^{l}}{\partial\mathbf Z^{l-1}}\cdot\frac{\partial \mathbf Z^{l-1}}{\partial\mathbf W^{l-1}}
+$$</p>
+<p>One thing to notice is that - <strong>both equations share some common components</strong>. So we can introduce an additional notation $\mathbf G^l$ which represents the gradient of $\mathbf Z^l$
+$$\mathbf G^{l}=\frac{\partial J}{\partial \mathbf Z^{l}}$$</p>
+<p>Now, let&rsquo;s try to figure out the relationship between $\mathbf G^l$ and $\mathbf G^{l+1}$</p>
+<p>$$
+\begin{equation}
+\begin{aligned}
+\mathbf G^{l} &amp;=\frac{\partial J}{\partial \mathbf Z^{l+1}}\cdot\frac{\partial \mathbf Z^{l+1}}{\partial \mathbf Z^l} \\\
+&amp;=\mathbf G^{l+1}\cdot \frac{\partial \mathbf Z^{l+1}}{\partial \mathbf Z^l} \\\
+&amp;=\mathbf G^{l+1}\cdot \frac{\partial \sigma_{l+1}(\mathbf Z^{l}\mathbf W^{l+1})}{\partial \mathbf Z^{l}\mathbf W^{l+1}}\cdot\frac{\partial \mathbf Z^{l}\mathbf W^{l+1}}{\partial \mathbf Z^l} \\\
+&amp;=\mathbf G^{l+1}\cdot \sigma&rsquo;(\mathbf Z^{l}\mathbf W^{l+1})\cdot \mathbf W^{l+1}\ (cheat)
+\end{aligned}
+\end{equation}
+$$</p>
+<p>In the last line above, we are <strong>calculating the derivatives as if they were scalars</strong>. Now let&rsquo;s try to <strong>make the shapes match</strong>. Let&rsquo;s first examine the shapes of each component:
+$$\mathbf G^{l+1}\in\mathcal{R}^{m\times n_{l+1}}$$
+$$\sigma_{l+1}&rsquo;(\mathbf Z^{l}\mathbf W^{l+1})\in\mathcal{R}^{m\times n_{l+1}}$$
+$$
+\mathbf W^{l+1}\in\mathcal{R}^{n_l\times n_{l+1}}
+$$</p>
+<p>We want to get a matrix with the shape $m\times n_1$, because
+$$\mathbf G^l\in\mathcal{R}^{m\times n_l}$$</p>
+<p>So we can derive this
+$$\mathbf G^{l}=\Big (\mathbf G^{l+1}\odot\sigma_{l+1}&rsquo;(\mathbf Z^{l}\mathbf W^{l+1})\Big )(\mathbf{W}^{l+1})^T=\Big (\mathbf G^{l+1}\odot\sigma_{l+1}&rsquo;(\mathbf Z^{l+1})\Big )(\mathbf{W}^{l+1})^T$$</p>
+<p>Now, let&rsquo;s get back to what we originally intended to do - computing the gradient with respect to $\mathbf{W}^l$
+$$\frac{\partial J}{\partial \mathbf W^l}=\mathbf G^{l}\cdot\frac{\partial \mathbf Z^l}{\mathbf W^l}$$</p>
+<p>Let&rsquo;s expand the equation in the above
+$$
+\begin{equation}
+\begin{aligned}
+\frac{\partial J}{\partial \mathbf W^l}&amp;=\mathbf G^{l}\cdot\frac{\partial \mathbf Z^l}{\mathbf W^l} \\\
+&amp;= \mathbf G^{l}\cdot\frac{\partial \mathbf \sigma_{l+1}(\mathbf Z^{l-1}\mathbf W^l)}{\partial \mathbf Z^{l-1}\mathbf W^l}\cdot \frac{\partial \mathbf Z^{l-1}\mathbf W^l}{\partial\mathbf W^l} \\\
+&amp;= \mathbf G^{l}\cdot\mathbf \sigma_{l+1}&rsquo;(\mathbf Z^{l-1}\mathbf W^l)\cdot \mathbf Z^{l-1}(cheat)
+\end{aligned}
+\end{equation}
+$$</p>
+<p>$J$ is a scalar, so the shape of $\frac{\partial J}{\partial \mathbf W^l}$ should be equal to $\mathbf W^l$. That is, we want a matrix with the shape $(n_l, n_{l+1})$. Let&rsquo;s rearrange these components</p>
+<p>$$
+\frac{\partial J}{\partial \mathbf W^l}=(\mathbf Z^{l-1})^T\Big(\mathbf G^{l}\odot\mathbf \sigma_{l+1}&rsquo;(\mathbf Z^{l-1}\mathbf W^l) \Big )\
+=(\mathbf Z^{l-1})^T\Big(\mathbf G^{l}\odot\mathbf \sigma_{l+1}&rsquo;(\mathbf Z^l) \Big )\
+$$</p>
+<p>By utilizing the relationship between $\mathbf{G}^l$ and $\mathbf{G}^{l+1}$, we can deduce $\mathbf{G}^l$ from $\mathbf{G}^{l+1}$. This allows us to compute the gradient of $\mathbf{W}^l$ by working backward, which is the essence of backpropagation</p>
+<blockquote>
+<p>🤔️ You may notice that calculating $\mathbf G^l$ and $\frac{\partial J}{\partial \mathbf W^l}$ involves $\mathbf Z^{l-1}, \mathbf Z^{l}, \mathbf Z^{l+1}$, which are the outputs of activation functions in different layers. This means that we need to <strong>cache</strong> the values from forward propagation. Caching requires memory consumption, and that&rsquo;s why larger models require more GPU memory for training.</p>
+</blockquote>
+<h3 id="the-gradient-of-a-linear-regression-model">The gradient of a linear regression model</h3>
+<p>Previously in this <a href="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" rel="">post</a> I need to derive this equation
+$$
+\begin{aligned}
+\frac{\partial}{\partial \theta}\ J(w,b)
+&amp;= \frac{\partial}{\partial \theta}\ \frac{1}{2m}(\mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) \\\
+\end{aligned}
+$$
+With this cool trick, we can derive like this
+$$
+\begin{equation}
+\begin{aligned}
+\frac{\partial}{\partial \theta}\ J(w,b)
+&amp;= \frac{\partial}{\partial \theta}\ \frac{1}{2m}(\mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) \\\
+&amp;= \frac{1}{2m}\frac{\partial(\ \mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) }{\partial \mathbf X\theta-\vec y}\cdot \frac{\partial \mathbf X\theta-\vec y}{\partial \theta}\\\
+&amp;= \frac{1}{2m}\cdot2(\mathbf X\theta-\vec y)\cdot\mathbf X\ (cheat)
+\end{aligned}
+\end{equation}
+$$</p>
+<p>Note the shapes here
+$$\mathbf X\theta-\vec y\in\mathcal{R}^{m\times 1}$$
+$$\mathbf X\in\mathcal{R}^{m\times(n+1)}$$</p>
+<p>We want a vector whose shape is equal to $(n+1)\times 1$
+$$\theta\in\mathcal{R}^{(n+1)\times 1}$$
+Let&rsquo;s make the shapes match:
+$$\frac{1}{m}\mathbf X^T(\mathbf X\theta-\vec y)$$</p>
+<h2 id="key-takeaway">Key takeaway</h2>
+<p>This trick is <strong>practical but not rigorous</strong>. After mastering this technique, the process of formula derivation in machine learning may become much easier. However, don&rsquo;t forget to use gradient checking technique to ensure correctness :)</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-07-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" data-title="A trick to calculating partial derivatives in machine learning" data-hashtags="Deep-Learning,Machine-Learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" data-hashtag="Deep-Learning"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" data-title="A trick to calculating partial derivatives in machine learning"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" data-title="A trick to calculating partial derivatives in machine learning"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" data-title="A trick to calculating partial derivatives in machine learning"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/deep-learning/">Deep-Learning</a>,&nbsp;<a href="/en/tags/machine-learning/">Machine-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/how-to-reprensent-a-tensor-or-ndarray/" class="prev" rel="prev" title="Demystifying Pytorch&#39;s Strides Format"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Demystifying Pytorch's Strides Format</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.115.4">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

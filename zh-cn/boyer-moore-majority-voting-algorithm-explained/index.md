@@ -1,4 +1,4 @@
-# Boyer-Moore Majority Voting Algorithm Explained
+# 摩尔投票法
 
 
 ## 引言
@@ -56,6 +56,7 @@
 
 如果还是不懂可以看看下面的这个 GIF 图理解一下~
 
+{{<figure src="/img/moore-vote.gif">}}
 
 
 ## 代码

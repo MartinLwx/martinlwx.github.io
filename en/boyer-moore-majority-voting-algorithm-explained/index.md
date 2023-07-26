@@ -58,7 +58,7 @@ Because what this algorithm does is actually voting:
 
 To get a intuitive understanding ⬇️
 
-![](/img/moore-vote.gif)
+{{<figure src="/img/moore-vote.gif">}}
 
 ## Code
 

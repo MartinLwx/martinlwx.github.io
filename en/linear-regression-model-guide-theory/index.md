@@ -162,6 +162,8 @@ where
 - $X\theta - \vec y$ is the error of each prediction
 - By the way, assuming $\vec a$ is a column vector, **$\vec a^T\vec a$ always gets a scalar sum of squares** of each element. If you define $\vec a=X\theta -\vec y$ you roughly get the right handside of the equation.
 
+> 🤔️ In my another [post]({{<ref "/content/posts/a-trick-to-calculating-partial-derivatives-in-ML.md">}}) I talked about a useful trick to derive this
+
 Next, let's try to derive the gradient of this formula, **this requires you to have a certain knowledge of vector/matrix calculus, you can choose to skip it🔮 now**. ~~But I highly recommend you to take a look, because there are quite a lot of matrix calculus in machine learning~~
 
 $$

@@ -1,4 +1,4 @@
-# the solutions for exercise 01&02 of MIT. Missing-semester(2020)
+# The solutions for exercise 01&02 of MIT. Missing-semester(2020)
 
 
 ## Lecture 01. Shell

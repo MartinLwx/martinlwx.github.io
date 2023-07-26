@@ -1,4 +1,4 @@
-# the solutions for exercise08 of Missingsemester(2020)
+# The solutions for exercise08 of Missingsemester(2020)
 
 
 ## Lecture 08. Metaprogramming

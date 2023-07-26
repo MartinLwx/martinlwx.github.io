@@ -102,7 +102,7 @@ $ brew install neovim
 ```sh
 $ mkdir ~/.config/nvim
 $ mkdir ~/.config/nvim/lua
-$ touch ~/.config/nvim/lua/init.lua
+$ touch ~/.config/nvim/init.lua
 ```
 
 > 💡 **配置文件编辑保存之后，重启 `Nvim` 就能看到效果，后面默认每次小章节配置完成后就重启**

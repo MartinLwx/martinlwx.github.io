@@ -1,4 +1,4 @@
-# Lab10 CS61A of UCB(2021-Fall)
+# Lab10 - CS61A of UCB(2021-Fall)
 
 
 ## Coding Questions

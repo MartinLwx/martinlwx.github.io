@@ -1,4 +1,4 @@
-# Hw10 of CS61A of UCB(2021-Fall)
+# Hw10 - CS61A of UCB(2021-Fall)
 
 
 ## BNF

@@ -1,4 +1,4 @@
-# the solutions for exercise09 of Missingsemester(2020)
+# The solutions for exercise09 of Missingsemester(2020)
 
 
 ## Lecture 09. Security and Cryptography

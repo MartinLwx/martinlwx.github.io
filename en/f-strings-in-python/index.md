@@ -1,4 +1,4 @@
-# f-strings in Python 3.6
+# The f-strings in Python 3.6
 
 
 > This post is originally written in jupyter notebook and then convert to markdown. To get the original notebook files. Please check the [repo](https://github.com/MartinLwx/oh_my_python)

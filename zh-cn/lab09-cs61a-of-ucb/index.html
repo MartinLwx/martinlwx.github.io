@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Lab09 - CS61A of UCB(2021-Fall) - MartinLwx&#39;s blog</title><meta name="Description" content="the simple solutions for lab09 of CS61A of UCB"><meta property="og:title" content="Lab09 - CS61A of UCB(2021-Fall)" />
+<meta property="og:description" content="the simple solutions for lab09 of CS61A of UCB" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/lab09-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-26T13:09:24+08:00" />
+<meta property="article:modified_time" content="2022-02-26T13:09:24+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Lab09 - CS61A of UCB(2021-Fall)"/>
+<meta name="twitter:description" content="the simple solutions for lab09 of CS61A of UCB"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/lab09-cs61a-of-ucb/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/lab08-cs61a-of-ucb/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/lab10-cs61a-of-ucb/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Lab09 - CS61A of UCB(2021-Fall)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/lab09-cs61a-of-ucb\/"
+        },"genre": "posts","keywords": "Course, Python","wordcount":  4395 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/lab09-cs61a-of-ucb\/","datePublished": "2022-02-26T13:09:24+08:00","dateModified": "2022-02-26T13:09:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "the simple solutions for lab09 of CS61A of UCB"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/lab09-cs61a-of-ucb/">English</option><option value="/zh-cn/lab09-cs61a-of-ucb/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/lab09-cs61a-of-ucb/">English</option><option value="/zh-cn/lab09-cs61a-of-ucb/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Lab09 - CS61A of UCB(2021-Fall)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/course/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Course</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-02-26">2022-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4395 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#recursion-and-tree-recursion">Recursion and Tree Recursion</a>
+      <ul>
+        <li><a href="#q1-subsequences">Q1: Subsequences</a></li>
+        <li><a href="#q2-non-decreasing-subsequences">Q2: Non-Decreasing Subsequences</a></li>
+        <li><a href="#q3-number-of-trees">Q3: Number of Trees</a></li>
+      </ul>
+    </li>
+    <li><a href="#generators">Generators</a>
+      <ul>
+        <li><a href="#q4-merge">Q4: Merge</a></li>
+      </ul>
+    </li>
+    <li><a href="#objects">Objects</a>
+      <ul>
+        <li><a href="#q5-bank-account">Q5: Bank Account</a></li>
+      </ul>
+    </li>
+    <li><a href="#mutable-lists">Mutable Lists</a>
+      <ul>
+        <li><a href="#q6-trade">Q6: Trade</a></li>
+        <li><a href="#q7-shuffle">Q7: Shuffle</a></li>
+      </ul>
+    </li>
+    <li><a href="#linked-lists">Linked Lists</a>
+      <ul>
+        <li><a href="#q8-insert">Q8: Insert</a></li>
+        <li><a href="#q9-deep-linked-list-length">Q9: Deep Linked List Length</a></li>
+        <li><a href="#q10-linked-lists-as-strings">Q10: Linked Lists as Strings</a></li>
+      </ul>
+    </li>
+    <li><a href="#trees">Trees</a>
+      <ul>
+        <li><a href="#q11-long-paths">Q11: Long Paths</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="recursion-and-tree-recursion">Recursion and Tree Recursion</h2>
+<hr>
+<h3 id="q1-subsequences">Q1: Subsequences</h3>
+<blockquote>
+<p>A subsequence of a sequence <code>S</code> is a subset of elements from <code>S</code>, in the same order they appear in <code>S</code>. Consider the list <code>[1, 2, 3]</code>. Here are a few of it&rsquo;s subsequences <code>[]</code>, <code>[1, 3]</code>, <code>[2]</code>, and <code>[1, 2, 3]</code>.</p>
+<p>Write a function that takes in a list and returns all possible subsequences of that list. The subsequences should be returned as a list of lists, where each nested list is a subsequence of the original input.</p>
+<p>In order to accomplish this, you might first want to write a function <code>insert_into_all</code> that takes an item and a list of lists, adds the item to the beginning of each nested list, and returns the resulting list.</p>
+</blockquote>
+<p>这一道题要求我们返回一个列表的所有可能子序列, 返回的格式是列表的列表, 每一个都是可能的子序列</p>
+<p>题目要求我们首先完成一个函数: 功能是把 <code>item</code> 添加到嵌套列表的每个子列表的开头, 这个其实用 list comprehension 就可以了.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">insert_into_all</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">nested_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a new list consisting of all the lists in nested_list,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    but with item added to the front of each. You can assume that
+</span></span></span><span class="line"><span class="cl"><span class="s2">     nested_list is a list of lists.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[[</span><span class="n">item</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">nested_list</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这其实是题目给我们的提示, 我们现在思考有了这个函数我们要怎么找到所有可能的子序列呢? 我们可以递归分解问题: 当前元素 + 剩下元素的所有可能子序列(假设是 <code>tmp</code>). 那么我们只要把当前元素加到 <code>tmp</code> 中的每个列表再加上 <code>tmp</code> 即可. 这刚好就用上了题目让我们实现的 <code>insert_into_all()</code> 函数. 那么最后我们要思考什么对应这个 base case. 显然如果一个空的列表的子序列为空列表, 如果列表长度为 1, 则存在两个可能子序列 - 它自己 + 空列表. 最后我们就可以写出这样的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a nested list (a list of lists) of all subsequences of S.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The subsequences can appear in any order. You can assume S is a list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[[],</span> <span class="n">s</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span> <span class="o">!=</span><span class="p">[]</span> <span class="k">else</span> <span class="p">[[]]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tmp</span> <span class="o">=</span> <span class="n">subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">insert_into_all</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="n">tmp</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q2-non-decreasing-subsequences">Q2: Non-Decreasing Subsequences</h3>
+<blockquote>
+<p>Just like the last question, we want to write a function that takes a list and returns a list of lists, where each individual list is a subsequence of the original input.</p>
+<p>This time we have another condition: we only want the subsequences for which consecutive elements are <em>nondecreasing</em>. For example, <code>[1, 3, 2]</code> is a subsequence of <code>[1, 3, 2, 4]</code>, but since 2 &lt; 3, this subsequence would <em>not</em> be included in our result.</p>
+<p><strong>Fill in the blanks</strong> to complete the implementation of the <code>non_decrease_subseqs</code> function. You may assume that the input list contains no negative elements.</p>
+<p>You may use the provided helper function <code>insert_into_all</code>, which takes in an <code>item</code> and a list of lists and inserts the <code>item</code> to the front of each list.</p>
+</blockquote>
+<p>这一道题是在 Q1 的基础上改编而来的, 相当于提出了一个更高的要求, 我们要求子序列同时是<strong>非降序的</strong>.</p>
+<p>这一题的提示告诉我们要实现一个 <code>subseq_helper</code> 函数, 这其实很好理解, 因为我们现在对子序列的大小顺序有要求, 那么我们就要多一个参数用来比较大小, 这样我们在插入 item 到列表的时候才知道可不可以插入(维持非降序). 比如 <code>[1, 3, 2]</code>, 当我们在检查 <code>3</code> 的时候我们发现 <code>3</code> &lt; <code>1</code>, 显然我们不能把 <code>3</code> 插入到之前生成的子序列列表里. 而其他情况我们则可以选择把 <code>s[0]</code> 加到子序列列表中或者不加.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">non_decrease_subseqs</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Assuming that S is a list, return a nested list of all subsequences
+</span></span></span><span class="line"><span class="cl"><span class="s2">    of S (a list of lists) for which the elements of the subsequence
+</span></span></span><span class="line"><span class="cl"><span class="s2">    are strictly nondecreasing. The subsequences can appear in any order.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">prev</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">[[]]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">prev</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">prev</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">a</span> <span class="o">=</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># include s[0]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">b</span> <span class="o">=</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">prev</span><span class="p">)</span>  <span class="c1"># exclude s[0]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">insert_into_all</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">subseq_helper</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q3-number-of-trees">Q3: Number of Trees</h3>
+<blockquote>
+<p>A <strong>full binary tree</strong> is a tree where each node has either 2 branches or 0 branches, but never 1 branch.</p>
+<p>Write a function which returns the number of unique full binary tree structures that have exactly n leaves.</p>
+<p>For those interested in combinatorics, this problem does have a <a href="http://en.wikipedia.org/wiki/Catalan_number" target="_blank" rel="noopener noreffer ">closed form solution</a>):</p>
+</blockquote>
+<p>题意: 有 <code>n</code> 个叶子结点的完全二叉树可能有几种 ? 答案是卡特兰数, 所以我们要实现的其实是卡特兰数的递归写法. 至于为什么是卡特兰数我也想不大明白, 比较能接受的解释是, 完全二叉树的左右子树肯定也是完全二叉树, 假设左子树有 <code>1</code> 个叶子结点, 右子树就有 <code>n - 1</code> 个叶子结点, 那么此时就有 <code>f(1) * f(n - 1)</code> 种可能, 类似的, 如果左子树有 <code>2</code> 个叶子结点, 那就是 <code>f(2) * f(n - 2)</code>, 这样累加起来就是卡特兰数.</p>
+<p>ps: 这里的完全二叉树不是严格意义上的, 确切来说这里指的是所有节点的度只能为 0 或者 2 的树</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">num_trees</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Returns the number of unique full binary trees with exactly n leaves. E.g.,
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># catalan number</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ans</span> <span class="o">+=</span> <span class="n">num_trees</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_trees</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ans</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="generators">Generators</h2>
+<hr>
+<h3 id="q4-merge">Q4: Merge</h3>
+<blockquote>
+<p>Implement <code>merge(incr_a, incr_b)</code>, which takes two iterables <code>incr_a</code> and <code>incr_b</code> whose elements are ordered. <code>merge</code> yields elements from <code>incr_a</code> and <code>incr_b</code> in sorted order, eliminating repetition. You may assume <code>incr_a</code>and <code>incr_b</code> themselves do not contain repeats, and that none of the elements of either are <code>None</code>. You may <strong>not</strong>assume that the iterables are finite; either may produce an infinite stream of results.</p>
+<p>You will probably find it helpful to use the two-argument version of the built-in <code>next</code> function: <code>next(incr, v)</code> is the same as <code>next(incr)</code>, except that instead of raising <code>StopIteration</code> when <code>incr</code> runs out of elements, it returns <code>v</code>.</p>
+<p>See the doctest for examples of behavior.</p>
+</blockquote>
+<p><code>merge</code> 函数的功能是合并两个有序的可迭代对象, 同时要做去重的工作, 可以假设两个有序的可迭代对象本身是没有元素重复的, 而且没有任何一个元素是 None. 同时不可以假定这两个可迭代对象是有限序列, 它们可能无序的(这样你就不能暴力合并为一个有序可迭代对象再去重)</p>
+<p>因为两个可迭代对象本身不包含重复元素, 所以这一道题处理起来比较简单, 我们只要重复下面的过程:</p>
+<ol>
+<li>如果两个可迭代对象都是非空
+<ol>
+<li>各取一个元素进行比较
+<ol>
+<li>如果一样大: 返回一个, 同时两个 iterator 都要往后移动</li>
+<li>其中一个比较小: 返回小的这个, 移动小的这个可迭代对象的 iterator, 大的元素的 iterator 不动</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>如果重复上面的操作导致其中一个已经空了, 那么接下来的问题就比较简单了, 此时我们只要用 <code>while</code> 循环不断从某一个可迭代对象中返回元素即可.</li>
+</ol>
+<p>代码如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">incr_a</span><span class="p">,</span> <span class="n">incr_b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yield the elements of strictly increasing iterables incr_a and incr_b, removing
+</span></span></span><span class="line"><span class="cl"><span class="s2">    repeats. Assume that incr_a and incr_b have no repeats. incr_a or incr_b may or may not
+</span></span></span><span class="line"><span class="cl"><span class="s2">    be infinite sequences.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">iter_a</span><span class="p">,</span> <span class="n">iter_b</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">incr_a</span><span class="p">),</span> <span class="nb">iter</span><span class="p">(</span><span class="n">incr_b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># both are non-empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">next_a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">next_b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val_a</span><span class="p">,</span> <span class="n">val_b</span> <span class="o">=</span> <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">val_a</span> <span class="o">==</span> <span class="n">val_b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">next_a</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_a</span><span class="p">,</span> <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">val_a</span> <span class="o">&lt;</span> <span class="n">val_b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">next_a</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_a</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">next_b</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># incr_a is not empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">next_a</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">next_a</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_a</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_a</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># incr_b is not empty</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">next_b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">next_b</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next_b</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iter_b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="objects">Objects</h2>
+<hr>
+<h3 id="q5-bank-account">Q5: Bank Account</h3>
+<blockquote>
+<p>Implement the class <code>Account</code>, which acts as a a Bank Account. <code>Account</code> should allow the account holder to deposit money into the account, withdraw money from the account, and view their transaction history. The Bank Account should also prevents a user from withdrawing more than the current balance.</p>
+<p>Transaction history should be stored as a list of tuples, where each tuple contains the type of transaction and the transaction amount. For example a withdrawal of 500 should be stored as (&lsquo;withdraw&rsquo;, 500)</p>
+<blockquote>
+<p><strong>Hint:</strong> You can call the <code>str</code> function on an integer to get a string representation of the integer. You might find this function useful when implementing the <code>__repr__</code> and <code>__str__</code> methods.</p>
+<p><strong>Hint:</strong> You can alternatively use <a href="https://realpython.com/python-f-strings/" target="_blank" rel="noopener noreffer ">fstrings</a> to implement the <code>__repr__</code> and <code>__str__</code> methods cleanly.</p>
+</blockquote>
+</blockquote>
+<p>实现一个 <code>Account</code> 类, 要求有以下功能:</p>
+<ol>
+<li>存款</li>
+<li>取款, 钱不够的时候不让取</li>
+<li>查看操作历史. 转账历史是 tuple 的列表, 每个 tuple 包括了操作的类型和转账的金额</li>
+</ol>
+<p>整体上而言这题不难, 看 <code>__repr__</code> 我们可以知道要求返回存款和取款的次数, 这里可以用两个变量来记住.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Account</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;A bank account that allows deposits and withdrawals.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    It tracks the current account balance and a transaction
+</span></span></span><span class="line"><span class="cl"><span class="s2">    history of deposits and withdrawals.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">interest</span> <span class="o">=</span> <span class="mf">0.02</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account_holder</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">holder</span> <span class="o">=</span> <span class="n">account_holder</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">deposit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Increase the account balance by amount, add the deposit
+</span></span></span><span class="line"><span class="cl"><span class="s2">        to the transaction history, and return the new balance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">amount</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;deposit&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;Decrease the account balance by amount, add the withdraw
+</span></span></span><span class="line"><span class="cl"><span class="s2">        to the transaction history, and return the new balance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">&gt;</span> <span class="n">amount</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-=</span> <span class="n">amount</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;withdraw&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># prevent illegal withdraw</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">balance</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">holder</span><span class="si">}</span><span class="s2">&#39;s Balance: $</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">balance</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&#34;Accountholder: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">holder</span><span class="si">}</span><span class="s2">, Deposits: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">deposit_cnt</span><span class="si">}</span><span class="s2">, Withdraws: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">withdraw_cnt</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="mutable-lists">Mutable Lists</h2>
+<hr>
+<h3 id="q6-trade">Q6: Trade</h3>
+<blockquote>
+<p>In the integer market, each participant has a list of positive integers to trade. When two participants meet, they trade the smallest non-empty prefix of their list of integers. A prefix is a slice that starts at index 0.</p>
+<p>Write a function <code>trade</code> that exchanges the first <code>m</code> elements of list <code>first</code> with the first <code>n</code> elements of list <code>second</code>, such that the sums of those elements are equal, and the sum is as small as possible. If no such prefix exists, return the string <code>'No deal!'</code> and do not change either list. Otherwise change both lists and return <code>'Deal!'</code>. A partial implementation is provided.</p>
+<blockquote>
+<p><strong>Hint:</strong> You can mutate a slice of a list using <em>slice assignment</em>. To do so, specify a slice of the list <code>[i:j]</code> on the left-hand side of an assignment statement and another list on the right-hand side of the assignment statement. The operation will replace the entire given slice of the list from <code>i</code> inclusive to <code>j</code> exclusive with the elements from the given list. The slice and the given list need not be the same length.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; b = a
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; a[2:5] = [10, 11, 12, 13]
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; a
+</span></span><span class="line"><span class="cl">[1, 2, 10, 11, 12, 13, 6]
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; b
+</span></span><span class="line"><span class="cl">[1, 2, 10, 11, 12, 13, 6]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Additionally, recall that the starting and ending indices for a slice can be left out and Python will use a default value. <code>lst[i:]</code> is the same as <code>lst[i:len(lst)]</code>, and <code>lst[:j]</code> is the same as <code>lst[0:j]</code>.</p>
+</blockquote>
+</blockquote>
+<p>题意: 交换两个列表的开头几个元素(<code>m</code> 和 <code>n</code> 可以不等长), 使得两边被用来交换的子列表的和(前缀和)是一样的, 而且这个和要越小越好.</p>
+<p>在代码里已经为我们提供了交换元素的函数, 我们要做的就是让 <code>m</code> 和 <code>n</code> 停在正确的位置(他们的和一样), 这里用 <code>while</code> 循环来实现, 只要两个的索引是有效的(不然他们会一直增加, <code>while</code> 循环就会变为死循环)而且前缀和不想等, 我们移动 <code>m</code> 或者 <code>n</code> 指针.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">trade</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Exchange the smallest prefixes of first and second that have equal sum.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">equal_prefix</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span> <span class="o">==</span> <span class="nb">sum</span><span class="p">(</span><span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">m</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">first</span><span class="p">)</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">second</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">equal_prefix</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">sum</span><span class="p">(</span><span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">equal_prefix</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">],</span> <span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">second</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">first</span><span class="p">[:</span><span class="n">m</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;Deal!&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;No deal!&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q7-shuffle">Q7: Shuffle</h3>
+<blockquote>
+<p>Define a function <code>shuffle</code> that takes a sequence with an even number of elements (cards) and creates a new list that interleaves the elements of the first half with the elements of the second half.</p>
+<p>To interleave two sequences <code>s0</code> and <code>s1</code> is to create a new sequence such that the new sequence contains (in this order) the first element of <code>s0</code>, the first element of <code>s1</code>, the second element of <code>s0</code>, the second element of <code>s1</code>, and so on. If the two lists are not the same length, then the leftover elements of the longer list should still appear at the end.</p>
+<blockquote>
+<p><strong>Note:</strong> If you&rsquo;re running into an issue where the special heart / diamond / spades / clubs symbols are erroring in the doctests, feel free to copy paste the below doctests into your file as these don&rsquo;t use the special characters and should not give an &ldquo;illegal multibyte sequence&rdquo; error.</p>
+</blockquote>
+</blockquote>
+<p>这一道题就是要我们完成洗牌的功能, 洗牌的意思是前一半和后一半的元素交替出现, <em>举例来说</em>:<code>[0, 1, 2, 3, 4, 5] = [0, 3, 1, 4, 2, 5]</code>. 你可以看到奇数索引的是后一半的元素, 偶数索引的是前一半元素.</p>
+<p>这一道题的关键在于弄清楚洗牌之后的索引和原来的索引对应的关系, 总结来来说:<code>[0, 1, ..., len(cards) // 2, len(cards) // 2 + 1, ...]</code>. 你可以发现前一半和后一半对应位置的元素的索引相差 <code>len(cards) // 2</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="n">cards</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a shuffled list that interleaves the two halves of cards.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;len(cards) must be even&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">half</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cards</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">shuffled</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">half</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shuffled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cards</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">shuffled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cards</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">half</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">shuffled</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="linked-lists">Linked Lists</h2>
+<hr>
+<h3 id="q8-insert">Q8: Insert</h3>
+<blockquote>
+<p>Implement a function <code>insert</code> that takes a <code>Link</code>, a <code>value</code>, and an <code>index</code>, and inserts the <code>value</code> into the <code>Link</code> at the given <code>index</code>. You can assume the linked list already has at least one element. Do not return anything &ndash; <code>insert</code> should mutate the linked list.</p>
+<blockquote>
+<p><strong>Note</strong>: If the index is out of bounds, you should raise an <code>IndexError</code> with:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">raise IndexError(&#39;Out of bounds!&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+</blockquote>
+<p>根据指定的索引 <code>index</code> 在链表中插入元素, 如果索引非法, 抛出错误</p>
+<p>这一题有点奇怪的地方在于, 它要求我们在原来的链表上进行修改, 但是如果我们要在链表的开头进行插入一个新节点, 会无法通过它的 <code>link is other_link</code> 的判断(因为插入后链表头是一个新的节点), 所以我这里想的办法是每次在插入前我们拷贝当前结点, 然后修改当前结点的值为想要插入的值, 这样等效于我们做了插入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Insert a value into a Link at the given index.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="n">link</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_index</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">current_index</span> <span class="o">==</span> <span class="n">index</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># make a copy of current node, and modify the current node&#39;s value \</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># which is equal to insert a new node :)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_copy</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">origin_next</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="n">current_copy</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#print(f&#34;link: {link.first}&#34;)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">rest</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Out of bounds!&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q9-deep-linked-list-length">Q9: Deep Linked List Length</h3>
+<blockquote>
+<p>A linked list that contains one or more linked lists as elements is called a <em>deep</em> linked list. Write a function <code>deep_len</code> that takes in a (possibly deep) linked list and returns the <em>deep length</em> of that linked list. The deep length of a linked list is the total number of non-link elements in the list, as well as the total number of elements contained in all contained lists. See the function&rsquo;s doctests for examples of the deep length of linked lists.</p>
+<blockquote>
+<p><strong>Hint:</strong> Use <code>isinstance</code> to check if something is an instance of an object.</p>
+</blockquote>
+</blockquote>
+<p>Deep Linked List Length 其实就是一个可能包含链表为结点的嵌套链表结构. 这一道题要求我们算这种嵌套列表一共有多少个元素. 其实就是之前做的摊平链表的那种题目. 显然, 这是符合递归的嵌套结构, 所以我们可以用递归的办法解决.</p>
+<p>base case 就是空链表或者它是一个元素而不是链表. 其他情况我们就递归处理链表的第一个节点和除了第一个结点以外的子链表 🤗</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; Returns the deep length of a possibly deep linked list.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 1. an empty node</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">lnk</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case 2. an integer</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lnk</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">deep_len</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="q10-linked-lists-as-strings">Q10: Linked Lists as Strings</h3>
+<blockquote>
+<p>Kevin and Jerry like different ways of displaying the linked list structure in Python. While Kevin likes box and pointer diagrams, Jerry prefers a more futuristic way. Write a function <code>make_to_string</code> that returns a function that converts the linked list to a string in their preferred style.</p>
+<p><em>Hint</em>: You can convert numbers to strings using the <code>str</code> function, and you can combine strings together using <code>+</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt;&gt;&gt; str(4)
+</span></span><span class="line"><span class="cl">&#39;4&#39;
+</span></span><span class="line"><span class="cl">&gt;&gt;&gt; &#39;cs &#39; + str(61) + &#39;a&#39;
+</span></span><span class="line"><span class="cl">&#39;cs 61a&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p>简单来说就是想要根据不同人的需求来打印链表, 具体格式就是 <code>front + 当前结点的值 + mid + 子链表的 + back</code> 这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">make_to_string</span><span class="p">(</span><span class="n">front</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">back</span><span class="p">,</span> <span class="n">empty_repr</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34; Returns a function that turns linked lists to strings.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">printer</span><span class="p">(</span><span class="n">lnk</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">lnk</span> <span class="ow">is</span> <span class="n">Link</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">empty_repr</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">front</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">printer</span><span class="p">(</span><span class="n">lnk</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span> <span class="o">+</span> <span class="n">back</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">printer</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="trees">Trees</h2>
+<hr>
+<h3 id="q11-long-paths">Q11: Long Paths</h3>
+<blockquote>
+<p>Implement <code>long_paths</code>, which returns a list of all <em>paths</em> in a tree with length at least <code>n</code>. A path in a tree is a list of node labels that starts with the root and ends at a leaf. Each subsequent element must be from a label of a branch of the previous value&rsquo;s node. The <em>length</em> of a path is the number of edges in the path (i.e. one less than the number of nodes in the path). Paths are ordered in the output list from left to right in the tree. See the doctests for some examples.</p>
+</blockquote>
+<p>返回一个嵌套列表, 每个子列表表示长度至少为 <code>n</code> 的路径. 这里说的路径一定是叶子结点的路径 ! 路径的长度可以理解为从根结点出发到达叶子结点经过的边数.</p>
+<p>这一道题其实是经典的递归与回溯问题, 我们要为其写一个 <code>helper</code> 函数, 要记住我们当前经过的点的路径, 以及路径的长度. 递归与回溯的模板大概如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">function_name</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># base case </span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">dothing</span> <span class="n">thing</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>              <span class="c1"># recursively solve this problem</span>
+</span></span><span class="line"><span class="cl">    <span class="n">recall</span> <span class="n">what</span> <span class="n">you</span> <span class="n">have</span> <span class="n">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>放到我们这里就是我们要在往更深层递归的时候加上当前节点的 label, 当我们回溯的时候撤销我们对之前的添加. 代码如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">long_paths</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a list of all paths in t with length at least n.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">path_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">nonlocal</span> <span class="n">path_list</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># warning: we need to pass a copy instead fo a ref</span>
+</span></span><span class="line"><span class="cl">                <span class="n">path_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_path</span><span class="p">[:])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">path_list</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-02-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/lab09-cs61a-of-ucb/" data-title="Lab09 - CS61A of UCB(2021-Fall)" data-hashtags="Course,Python"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/lab09-cs61a-of-ucb/" data-hashtag="Course"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/lab09-cs61a-of-ucb/" data-title="Lab09 - CS61A of UCB(2021-Fall)"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/lab09-cs61a-of-ucb/" data-title="Lab09 - CS61A of UCB(2021-Fall)"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/lab09-cs61a-of-ucb/" data-title="Lab09 - CS61A of UCB(2021-Fall)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/course/">Course</a>,&nbsp;<a href="/zh-cn/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/lab08-cs61a-of-ucb/" class="prev" rel="prev" title="Lab08 - CS61A of UCB(2021-Fall)"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Lab08 - CS61A of UCB(2021-Fall)</a>
+            <a href="/zh-cn/lab10-cs61a-of-ucb/" class="next" rel="next" title="Lab10 - CS61A of UCB(2021-Fall)">Lab10 - CS61A of UCB(2021-Fall)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.115.4">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
