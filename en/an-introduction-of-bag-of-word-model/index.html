@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>An Introduction of Bag of Word Model - MartinLwx&#39;s blog</title><meta name="Description" content="An introduction of bag-of-word model"><meta property="og:title" content="An Introduction of Bag of Word Model" />
+<meta property="og:description" content="An introduction of bag-of-word model" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-11T18:55:09+08:00" />
+<meta property="article:modified_time" content="2023-08-11T18:55:09+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="An Introduction of Bag of Word Model"/>
+<meta name="twitter:description" content="An introduction of bag-of-word model"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" /><link rel="prev" href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "An Introduction of Bag of Word Model",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-bag-of-word-model\/"
+        },"genre": "posts","keywords": "NLP, Machine-Learning, AI4SE","wordcount":  2149 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-bag-of-word-model\/","datePublished": "2023-08-11T18:55:09+08:00","dateModified": "2023-08-11T18:55:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "An introduction of bag-of-word model"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/an-introduction-of-bag-of-word-model/" selected>English</option><option value="/zh-cn/an-introduction-of-bag-of-word-model/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/an-introduction-of-bag-of-word-model/" selected>English</option><option value="/zh-cn/an-introduction-of-bag-of-word-model/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">An Introduction of Bag of Word Model</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/nlp/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>NLP</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-11">2023-08-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2149 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-the-bag-of-word-model">What is the bag-of-word model?</a>
+      <ul>
+        <li><a href="#motivation--intuition">Motivation &amp; intuition</a></li>
+        <li><a href="#bow-model-in-detail">BoW model in detail</a></li>
+      </ul>
+    </li>
+    <li><a href="#beyond-the-toy-example">Beyond the toy example</a></li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="what-is-the-bag-of-word-model">What is the bag-of-word model?</h2>
+<p>In NLP, we need to represent each document as a vector because machine learning can only accept input as numbers. That is, we want to find a <em>magic</em> function that:
+$$
+f(\text{document}) = vector
+$$</p>
+<p>Today&rsquo;s topic is <strong>bag-of-word(BoW) model</strong>, which can transform a document into a vector representation.</p>
+<blockquote>
+<p>💡 Although the BoW model is outdated in 2023, I still encourage you to learn from the history and think about some <strong>essential problems</strong>:</p>
+</blockquote>
+<ul>
+<li>What is the motivation?</li>
+<li>What are the pros and cons?</li>
+<li>How can we make it better?</li>
+</ul>
+<blockquote>
+<p>💡 Note that I may use word and token interchangeably</p>
+</blockquote>
+<h3 id="motivation--intuition">Motivation &amp; intuition</h3>
+<p>Before we dive into the details, I want to give you an <strong>intuition</strong> why BoW may work - <strong>Similar documents <em>may</em> use similar words</strong></p>
+<p>You may object to this intuition and show some good counterexamples, and I agree with your point. That&rsquo;s why we need more powerful models rather than BoW :)</p>
+<h3 id="bow-model-in-detail">BoW model in detail</h3>
+<p>In BoW, you need to do <strong>two things</strong>:</p>
+<ol>
+<li>Create a vocabulary. Each token in the vocab is assigned a unique id (usually, it will start from <code>0</code>). <strong>The length of the BoW vector will be equal to the size of the vocab</strong></li>
+<li>For each document in the corpus, identify words that are not currently present in the existing vocabulary, and subsequently incorporate these words into the vocabulary list.</li>
+</ol>
+<p>After constructing a BoW model, we can use it to transform any document into a vector representation. The procedure is simple, we just count the occurrences of each word in the document. Note that we <strong>only</strong> consider vocab words and ignore the out-of-vocabulary(OOV) words.</p>
+<p>Let&rsquo;s use a toy example to illustrate this idea<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;This is the first document.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;This is the second second document.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;And the third one.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Is this the first document?&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Remove punctuation, then tokenize with spaces, and also convert all the words to lowercase. After preprocessing, we can obtain:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tokenized_toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To simplify matters, let&rsquo;s encompass all words within the corpus and incorporate them into our vocabulary.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">flatten_list_as_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">tokenized_toy_corpus</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="p">[]))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;the toy vocab size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">flatten_list_as_set</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>the toy vocab size: 9
+</code></pre>
+<blockquote>
+<p>💡 A nice trick to flatten this list :D</p>
+</blockquote>
+<p>Now, let&rsquo;s assign a unique token id to each word in the vocab</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">toy_token2id</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">flatten_list_as_set</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">toy_token2id</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">toy_token2id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">toy_token2id</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>{
+    'and': 0, 'document': 1, 'first': 2, 
+    'is': 3, 'one': 4, 'second': 5,
+    'the': 6, 'third': 7, 'this': 8
+}
+</code></pre>
+<p>The vocab size is <code>9</code>, then we know we can represent each document as a vector with a length <code>9</code> by counting the words</p>
+<p>Let&rsquo;s manually implement this to see if we understand the ideas</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">BoW_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">tokenized_toy_corpus</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">9</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">document</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp</span><span class="p">[</span><span class="n">toy_token2id</span><span class="p">[</span><span class="n">token</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">BoW_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">BoW_matrix</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    [0, 1, 1, 1, 0, 0, 1, 0, 1],
+    [0, 1, 0, 1, 0, 2, 1, 0, 1],
+    [1, 0, 0, 0, 1, 0, 1, 1, 0],
+    [0, 1, 1, 1, 0, 0, 1, 0, 1]
+]
+</code></pre>
+<p>The numbers may not be so intuitive, let&rsquo;s add more information to make this better. If you check the answer<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, that&rsquo;s exactly what we calculated</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>and</th>
+<th>document</th>
+<th>first</th>
+<th>is</th>
+<th>one</th>
+<th>second</th>
+<th>the</th>
+<th>third</th>
+<th>this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>document1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>document2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>document3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>document4</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Here comes the question: How to read this?</p>
+<p><strong>Each row is a BoW vector of the corresponding document</strong>. Take the 2nd row as an example, it means the document2 has:</p>
+<ul>
+<li><code>document</code> * 1</li>
+<li><code>is</code> * 1</li>
+<li><code>second</code> * 2</li>
+<li><code>the</code> * 1</li>
+<li><code>this</code> * 1</li>
+</ul>
+<p>Recall that the tokenized document2 is <code>['this', 'is', 'the', 'second', 'second', 'document']</code>, which is aligned with the vector representation</p>
+<p>Now you know how to interpret the BoW matrix. :D</p>
+<blockquote>
+<p>🧐 You might have observed that there are so many <code>0</code> in this matrix. Indeed, the BoW matrix tends to be sparse. That&rsquo;s one of the limitations of BoW</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can use the inner product to measure the similarity between two vectors.</p>
+<p>Recall our <code>tokenized_toy_corpus</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tokenized_toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now, let&rsquo;s say the query is the last document - <code>['is', 'this', 'the', 'first', 'document']</code>, which document has the highest similarity except the query?</p>
+<p>We as humans can find this at a glance. The first document should be the answer. Let&rsquo;s check if the machine can figure out this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">]]),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">]]),</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[[1.]] [[0.63245553]] [[0.2236068]]
+</code></pre>
+<p>The machine agrees with us. 🤔️</p>
+<h2 id="beyond-the-toy-example">Beyond the toy example</h2>
+<p>The toy example is not quite exciting in my opinion. So I use a real-world dataset - <a href="https://huggingface.co/datasets/code_search_net" target="_blank" rel="noopener noreffer ">CodeSearchNet</a> to play the BoW model.</p>
+<p>The CodeSearchNet contains various functions from many programming languages, I just pick the Python code to analyze.</p>
+<p>You are free to investigate another programming language :)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">gensim</span> <span class="kn">import</span> <span class="n">corpora</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">partition</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Get data from the datasets library from huggingface.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Only keep the `whole_func_string` column
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Arg
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ---
+</span></span></span><span class="line"><span class="cl"><span class="s2">    `partition`: train/validation/test
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Return
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----
+</span></span></span><span class="line"><span class="cl"><span class="s2">        return a list of python functions
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">raw_datasets</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&#34;code_search_net&#34;</span><span class="p">,</span> <span class="s2">&#34;python&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">raw_datasets</span><span class="p">[</span><span class="n">partition</span><span class="p">][</span><span class="s2">&#34;whole_func_string&#34;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This may take a while depending on your network condition(941MB)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># use the test dataset to speed up the process</span>
+</span></span><span class="line"><span class="cl"><span class="n">corpus</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">(</span><span class="s2">&#34;test&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s see a simple example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>def get_vid_from_url(url):
+        &quot;&quot;&quot;Extracts video ID from URL.
+        &quot;&quot;&quot;
+        return match1(url, r'youtu\.be/([^?/]+)') or \
+          match1(url, r'youtube\.com/embed/([^/?]+)') or \
+          match1(url, r'youtube\.com/v/([^/?]+)') or \
+          match1(url, r'youtube\.com/watch/([^/?]+)') or \
+          parse_query_param(url, 'v') or \
+          parse_query_param(parse_query_param(url, 'u'), 'v')
+</code></pre>
+<p>Different from the English text, the programming language has well-defined grammar(context-free grammar). So we can tokenize the source code by a lexer. I use the built-in <code>ast</code> module and <code>tokenize</code> module to achieve this</p>
+<blockquote>
+<p>Feel free to skip this function if you can&rsquo;t understand how a lexer works. The reason behind using a lexer is to make the tokenization process more accurate :)</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">ast</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tokenize</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_token_stream</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Tokenize the source code and return a token stream
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Note that the following token type will be removed:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - COMMENT
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - NEWLINE
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - NL
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - INDENT
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - DEDENT
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - ENCODING
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - STRING
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># see https://docs.python.org/3/library/token.html</span>
+</span></span><span class="line"><span class="cl">    <span class="n">useless_token_type</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">NL</span><span class="p">,</span>  <span class="c1"># non-terminating newline</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">INDENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">DEDENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">ENCODING</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">parse_tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">origin_tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">token_as_strlist</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token</span><span class="o">.</span><span class="n">string</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">origin_tokens</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">useless_token_type</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">token_as_strlist</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Two things to notice are:</p>
+<ul>
+<li>We remove <strong>all</strong> strings, including docstring, f-string, comment, etc.</li>
+<li>We <strong>do not</strong> tokenize the variable name or function name using <code>camelCase</code> or <code>snake_case</code> convention</li>
+</ul>
+<p>First, let&rsquo;s use <code>get_token_stream</code> to tokenize each function within this dataset. Note that the dataset contains Python2 code, which can&rsquo;t be processed by the auxiliary function I have crafted. Consequently, I choose to remove the Python2 code.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">py2_cnt</span><span class="p">,</span> <span class="n">py3_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">codes</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">codes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_token_stream</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">py3_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">py2_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Python2: </span><span class="si">{</span><span class="n">py2_cnt</span><span class="si">}</span><span class="s2">, Python3: </span><span class="si">{</span><span class="n">py3_cnt</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s make sure the <code>get_token_stream</code> function works correctly</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">codes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    'def', 'get_vid_from_url', '(', 'url', ')',
+    ':', 'return', 'match1', '(', 'url', ',', ')',
+    'or', 'match1', '(', 'url', ',', ')', 'or',
+    'match1', '(', 'url', ',', ')', 'or', 'match1',
+    '(', 'url', ',', ')', 'or', 'parse_query_param',
+    '(', 'url', ',', ')', 'or', 'parse_query_param',
+    '(', 'parse_query_param', '(', 'url', ',', ')',
+    ',', ')', ''
+]
+</code></pre>
+<p>Now, we can leverage the API provided by the <a href="https://radimrehurek.com/gensim/" target="_blank" rel="noopener noreffer ">Gensim</a> to create a vocabulary</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">gensim</span> <span class="kn">import</span> <span class="n">corpora</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dictionary</span> <span class="o">=</span> <span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Dictionary&lt;77242 unique tokens: ['', '(', ')', ',', ':']...&gt;
+</code></pre>
+<p>That&rsquo;s a <strong>huge</strong> dictionary. Let&rsquo;s see if we can optimize this. 🤔️</p>
+<p>Usually, we are not interested in tokens that <strong>only appear once</strong> in our corpus. So we can remove them</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">once_ids</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">token_id</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">doc_freq</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">dfs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">doc_freq</span> <span class="o">==</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dictionary</span><span class="o">.</span><span class="n">filter_tokens</span><span class="p">(</span><span class="n">once_ids</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dictionary</span><span class="o">.</span><span class="n">compactify</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Dictionary&lt;31933 unique tokens: ['', '(', ')', ',', ':']...&gt;
+</code></pre>
+<p>Reduced to a mere <code>31933</code> tokens, a notably improved outcome. The abundance of distinct function/variable names might be contributing to this phenomenon 🧐</p>
+<p>We can use the <code>most_common</code> method provided by the <code>Dictionary</code> class to see if we could find some interesting things</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dictionary</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    ('.', 202834), ('(', 199868), (')', 199868), (',', 162853),
+    ('=', 142808), (':', 110829), ('self', 71699), ('[', 55736),
+    (']', 55736), ('if', 40272), ('return', 24021), ('def', 23557),
+    ('', 21948), ('None', 19797), ('in', 19437), ('for', 13509),
+    ('1', 13345), ('0', 13213), ('not', 11826), ('else', 10634),
+    ('+', 10617), ('==', 9323), ('name', 8290), ('is', 7601), ('-', 7544)
+]
+</code></pre>
+<p>🧐 Found an interesting phenomenon, <code>(</code> and <code>)</code> have the same word frequency, and <code>[</code> and <code>]</code> are also the same, which <strong>makes sense</strong> since that&rsquo;s what the grammar requires</p>
+<p>Now let&rsquo;s use the <code>doc2bow</code> API to generate BoW vector for each document(code)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">BoW_matrix_for_code</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">BoW_matrix_for_code</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    (0, 1), (1, 8), (2, 8), (3, 7),
+    (4, 1), (5, 1), (6, 1), (7, 4),
+    (8, 5), (9, 3), (10, 1), (11, 7)
+]
+</code></pre>
+<p>The return value of <code>doc2bow</code> is a list of tuples, each tuple is <code>(token id, count of occurrences)</code> within its document.</p>
+<p>The format is reasonable because now we have a vocab with size <code>31933</code>. We don&rsquo;t want to see a vector with size <code>31933</code> and there are so many zeros!</p>
+<p>Let&rsquo;s replace the token id with the corresponding string</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">dictionary</span><span class="p">[</span><span class="n">token_id</span><span class="p">],</span> <span class="n">cnt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">BoW_matrix_for_code</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    ('', 1), ('(', 8), (')', 8), (',', 7),
+    (':', 1), ('def', 1), ('get_vid_from_url', 1), ('match1', 4),
+    ('or', 5), ('parse_query_param', 3), ('return', 1), ('url', 7)
+]
+</code></pre>
+<p>The next thing I want to do is: <strong>Can we find similar Python code using BoW</strong>?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">gensim.similarities</span> <span class="kn">import</span> <span class="n">Similarity</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">indexer</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">corpus</span><span class="o">=</span><span class="n">BoW_vectors</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num_features</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num_best</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>                  <span class="c1"># let&#39;s see Top-3 result</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Write a Python code as you wish and check if the BoW model returns the similar code</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">query</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;def foo(x):
+</span></span></span><span class="line"><span class="cl"><span class="s2">    if x &gt; 5:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        if x &gt; 10:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x + 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">        else:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x - 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    else:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        if x &lt; 0:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x + 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">        else:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x - 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">indexer</span><span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">get_token_stream</span><span class="p">(</span><span class="n">query</span><span class="p">))]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    (19669, 0.7191814184188843),
+    (19805, 0.705620288848877),
+    (5958, 0.6945071220397949)
+]
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">19669</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>def add_sms_spec_to_request(self, req, federation='', loes=None,
+                            context=''):
+    &quot;&quot;&quot;
+    Update a request with signed metadata statements.
+    
+    :param req: The request 
+    :param federation: Federation Operator ID
+    :param loes: List of :py:class:`fedoidc.operator.LessOrEqual` instances
+    :param context:
+    :return: The updated request
+    &quot;&quot;&quot;
+    if federation:  # A specific federation or list of federations
+        if isinstance(federation, list):
+            req.update(self.gather_metadata_statements(federation,
+                                                       context=context))
+        else:
+            req.update(self.gather_metadata_statements([federation],
+                                                       context=context))
+    else:  # All federations I belong to
+        if loes:
+            _fos = list([r.fo for r in loes])
+            req.update(self.gather_metadata_statements(_fos,
+                                                       context=context))
+        else:
+            req.update(self.gather_metadata_statements(context=context))
+
+    return req
+</code></pre>
+<p>You may find that the query and the result seem to match <em>in some sense</em>. They have some similar <em>syntactic</em> information (the nested <code>if-else</code> structures).</p>
+<p>However, in most circumstances, the BoW model gives a poor result. That&rsquo;s reasonable because the BoW is too naive to find the relationship between codes</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>Now, let&rsquo;s summarize some limitations of BoW. You may have figured out some of them by yourself:</p>
+<ol>
+<li>Loss of word order information. <em><code>The cat chased the dog</code> is different from <code>The dog chased the cat</code></em></li>
+<li>No semantic information. <em>BoW treats each word as an independent entity</em></li>
+<li>The BoW vector is a high-dimensional sparse vector. <em>It is computationally expensive and the size depends on your vocab size</em></li>
+<li>Each word has the same importance. <em>Some words may be more informative</em></li>
+<li>Does not handle out-of-vocabulary problems. <em>What if a document contains many OOV tokens?</em></li>
+<li>&hellip;</li>
+</ol>
+<p>The BoW model has so many drawbacks that you probably only would see it in tutorials for educational purposes. In light of these limitations, more advanced models like Word2Vec, GloVe, and transformer-based architectures (e.g., BERT, GPT) have been developed to overcome these drawbacks and provide better representations of text.</p>
+<h2 id="refs">Refs</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://scikit-learn.org/stable/modules/feature_extraction.html#common-vectorizer-usage" target="_blank" rel="noopener noreffer ">CountVectorizer</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-08-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model" data-hashtags="NLP,Machine-Learning,AI4SE"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-hashtag="NLP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/nlp/">NLP</a>,&nbsp;<a href="/en/tags/machine-learning/">Machine-Learning</a>,&nbsp;<a href="/en/tags/ai4se/">AI4SE</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/a-trick-to-calculating-partial-derivatives-in-ml/" class="prev" rel="prev" title="A trick to calculating partial derivatives in machine learning"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>A trick to calculating partial derivatives in machine learning</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

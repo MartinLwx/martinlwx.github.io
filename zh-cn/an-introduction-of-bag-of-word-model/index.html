@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>词袋模型简介 - MartinLwx&#39;s blog</title><meta name="Description" content="词袋模型简介"><meta property="og:title" content="词袋模型简介" />
+<meta property="og:description" content="词袋模型简介" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-11T18:55:09+08:00" />
+<meta property="article:modified_time" content="2023-08-11T18:55:09+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="词袋模型简介"/>
+<meta name="twitter:description" content="词袋模型简介"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "词袋模型简介",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/an-introduction-of-bag-of-word-model\/"
+        },"genre": "posts","keywords": "NLP, Machine-Learning, AI4SE","wordcount":  3190 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/an-introduction-of-bag-of-word-model\/","datePublished": "2023-08-11T18:55:09+08:00","dateModified": "2023-08-11T18:55:09+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "词袋模型简介"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/an-introduction-of-bag-of-word-model/">English</option><option value="/zh-cn/an-introduction-of-bag-of-word-model/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/an-introduction-of-bag-of-word-model/">English</option><option value="/zh-cn/an-introduction-of-bag-of-word-model/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">词袋模型简介</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/nlp/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>NLP</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-11">2023-08-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3190 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是词袋模型">什么是词袋模型</a>
+      <ul>
+        <li><a href="#词袋模型的-motivation-和直观理解">词袋模型的 motivation 和直观理解</a></li>
+        <li><a href="#词袋模型细节">词袋模型细节</a></li>
+      </ul>
+    </li>
+    <li><a href="#更复杂的真实数据集">更复杂的真实数据集</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="什么是词袋模型">什么是词袋模型</h2>
+<p>在 NLP 中，我们需要将文档（document）表示为向量，这是因为机器学习只能够处理数字。也就是说，我们要找到下面这么一个<em>神奇</em>的函数：</p>
+<p>$$
+f(\text{document}) = vector
+$$</p>
+<p>今天要讨论的是词袋模型（bag-of-word, BoW），词袋模型可以让我们把输入的文档转变成一个向量表示</p>
+<blockquote>
+<p>💡 尽管词袋模型在 2023 年已经过时了，我仍然鼓励你学习词袋模型，并且思考下面几个<strong>重要问题</strong>：</p>
+</blockquote>
+<ul>
+<li>Motivation 是什么？</li>
+<li>优缺点是什么？</li>
+<li>如何把它变得更好？</li>
+</ul>
+<h3 id="词袋模型的-motivation-和直观理解">词袋模型的 motivation 和直观理解</h3>
+<p>在了解词袋模型细节之前，我想先给你一个词袋模型可能是有用的<strong>直观理解</strong> —— <strong>相似的文档用的词<em>也许</em>是差不多的</strong></p>
+<p>你可能持反对意见，并且可以给出许多反例。我承认，这也是为什么我们需要更加强大的模型 :)</p>
+<h3 id="词袋模型细节">词袋模型细节</h3>
+<p>构造一个词袋模型只需要做两件事情</p>
+<ol>
+<li>创建词汇表（Vocab），每个单词都在词汇表里面有一个独特的 ID（一般从 <code>0</code> 开始）。<strong>注意词袋模型输出的向量的长度等于词汇表的大小</strong></li>
+<li>遍历语料库中的每个文档，把这个文档新出现的单词添加到词汇表里面</li>
+</ol>
+<p>在构造好词袋模型之后，就可以把任何文档都转变成向量表示了。方法也很简单，只要统计文档中每个单词出现的次数。值得一提的是，对于文档中不在词汇表里面的单词，<strong>一般直接就忽略不计</strong></p>
+<p>让我们来结合一个简单例子理解<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;This is the first document.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;This is the second second document.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;And the third one.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Is this the first document?&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除标点符号，然后用空格分词，同时把所有的单词变成小写，预处理之后，我们就可以得到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tokenized_toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为了简单，我们这里考虑把所有文档的所有单词都包括在词汇表里面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">flatten_list_as_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">tokenized_toy_corpus</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="p">[]))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;the toy vocab size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">flatten_list_as_set</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>the toy vocab size: 9
+</code></pre>
+<blockquote>
+<p>💡 一个用 <code>sum</code> 函数摊平 list 的小技巧 :D</p>
+</blockquote>
+<p>然后，让我们给词汇表里面的每个单词一个独特的 ID</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">toy_token2id</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">flatten_list_as_set</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">toy_token2id</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">toy_token2id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">toy_token2id</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>{
+    'and': 0, 'document': 1, 'first': 2, 
+    'is': 3, 'one': 4, 'second': 5,
+    'the': 6, 'third': 7, 'this': 8
+}
+</code></pre>
+<p>可以看到，词汇表的大小是 <code>9</code>，那么我们也就知道，每个文档可以用一个长度为 <code>9</code> 的向量表示</p>
+<p>让我们手动计算一下每个文档的词袋模型向量来检查我们是否理解正确</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">BoW_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">tokenized_toy_corpus</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">9</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">document</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp</span><span class="p">[</span><span class="n">toy_token2id</span><span class="p">[</span><span class="n">token</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">BoW_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">BoW_matrix</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    [0, 1, 1, 1, 0, 0, 1, 0, 1],
+    [0, 1, 0, 1, 0, 2, 1, 0, 1],
+    [1, 0, 0, 0, 1, 0, 1, 1, 0],
+    [0, 1, 1, 1, 0, 0, 1, 0, 1]
+]
+</code></pre>
+<p>直接看数字的话不是很直观，可以多增加一行一列，就能把单词和词频对应上了。如果你检查答案<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>的话，你会发现和我们算出来的一模一样</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>and</th>
+<th>document</th>
+<th>first</th>
+<th>is</th>
+<th>one</th>
+<th>second</th>
+<th>the</th>
+<th>third</th>
+<th>this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>document1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>document2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>document3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>document4</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>如何解读这个表格？</p>
+<p><strong>每一行就是对应文档的词袋模型输出的向量表示</strong>，以 document2 为例，它包含了下面这些单词</p>
+<ul>
+<li><code>document</code> * 1</li>
+<li><code>is</code> * 1</li>
+<li><code>second</code> * 2</li>
+<li><code>the</code> * 1</li>
+<li><code>this</code> * 1</li>
+</ul>
+<p>之前提到，分词之后的 document2 是 <code>['this', 'is', 'the', 'second', 'second', 'document']</code>，显然和这个向量表示是对应的</p>
+<p>现在你就知道如何解读这个了矩阵了 :D</p>
+<blockquote>
+<p>🧐 你也许注意到了，这个矩阵中有很多 <code>0</code>。BoW 的矩阵确实是这样的，是一个稀疏矩阵，这也是它的缺点之一</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以用向量内积计算 2 个向量之间的相似度</p>
+<p>之前的 <code>tokenized_toy_corpus</code> 如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tokenized_toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在，假设查询（query）是最后一个文档 —— <code>['is', 'this', 'the', 'first', 'document']</code>，前 3 个文档中哪一个跟它最像？</p>
+<p>我们可以一眼看出答案是第一个，那么机器能否也发现这点？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">]]),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cosine_similarity</span><span class="p">([</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="p">[</span><span class="n">BoW_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">]]),</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[[1.]] [[0.63245553]] [[0.2236068]]
+</code></pre>
+<p>🤔️ 机器也看出来了</p>
+<h2 id="更复杂的真实数据集">更复杂的真实数据集</h2>
+<p>前面的例子太简单了，下面我会用一个更复杂的真实数据集 —— <a href="https://huggingface.co/datasets/code_search_net" target="_blank" rel="noopener noreffer ">CodeSearchNet</a>。它包含了许多编程语言的函数，这里我挑 Python 来展示</p>
+<p>当然你也可以选择你感兴趣的编程语言 :)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">gensim</span> <span class="kn">import</span> <span class="n">corpora</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">partition</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Get data from the datasets library from huggingface.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Only keep the `whole_func_string` column
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Arg
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ---
+</span></span></span><span class="line"><span class="cl"><span class="s2">    `partition`: train/validation/test
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Return
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----
+</span></span></span><span class="line"><span class="cl"><span class="s2">        return a list of python functions
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">raw_datasets</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&#34;code_search_net&#34;</span><span class="p">,</span> <span class="s2">&#34;python&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">raw_datasets</span><span class="p">[</span><span class="n">partition</span><span class="p">][</span><span class="s2">&#34;whole_func_string&#34;</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>取决于你的网络这可能得花上一点时间，压缩文件大小是 941MB</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># use the test dataset to speed up the process</span>
+</span></span><span class="line"><span class="cl"><span class="n">corpus</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">(</span><span class="s2">&#34;test&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>来看一下数据中的一个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>def get_vid_from_url(url):
+        &quot;&quot;&quot;Extracts video ID from URL.
+        &quot;&quot;&quot;
+        return match1(url, r'youtu\.be/([^?/]+)') or \
+          match1(url, r'youtube\.com/embed/([^/?]+)') or \
+          match1(url, r'youtube\.com/v/([^/?]+)') or \
+          match1(url, r'youtube\.com/watch/([^/?]+)') or \
+          parse_query_param(url, 'v') or \
+          parse_query_param(parse_query_param(url, 'u'), 'v')
+</code></pre>
+<p>在前面的英文分词中，我们删除了标点符号，用空格分词。代码的分词则比较不一样，编程语言有自己对应的语法（上下文无关文法），那么就可以用词法分析器拿到一个个 token。我这里用 Python 自带的 <code>ast</code> 和 <code>tokenize</code> 简单实现了一下</p>
+<blockquote>
+<p>下面的函数如果看不懂也没关系，可以直接跳过。用词法分析器分词只是为了得到更精确的分词结果 :)</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">ast</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tokenize</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_token_stream</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Tokenize the source code and return a token stream
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Note that the following token type will be removed:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - COMMENT
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - NEWLINE
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - NL
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - INDENT
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - DEDENT
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - ENCODING
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - STRING
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># see https://docs.python.org/3/library/token.html</span>
+</span></span><span class="line"><span class="cl">    <span class="n">useless_token_type</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">NL</span><span class="p">,</span>  <span class="c1"># non-terminating newline</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">INDENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">DEDENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">ENCODING</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tokenize</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">parse_tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">origin_tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">token_as_strlist</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token</span><span class="o">.</span><span class="n">string</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">origin_tokens</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">useless_token_type</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">token_as_strlist</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意两件事情：</p>
+<ul>
+<li>我删除了<strong>所有</strong>的字符串，包括文档、f-string、普通字符串和注释等</li>
+<li>我<strong>没有</strong>把变量名或者函数名根据 <code>camelCase</code> 或者 <code>snake_case</code> 这两种命名惯例进一步分词</li>
+</ul>
+<p>首先，先用 <code>get_token_stream</code> 把数据中的 Python 代码都分词一下。注意数据中包含了 Python2 和 Python3，这里直接丢弃了 Python2 的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">py2_cnt</span><span class="p">,</span> <span class="n">py3_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">codes</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">codes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_token_stream</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">py3_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">py2_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Python2: </span><span class="si">{</span><span class="n">py2_cnt</span><span class="si">}</span><span class="s2">, Python3: </span><span class="si">{</span><span class="n">py3_cnt</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>让我们验证一下 <code>get_token_stream</code> 是否分词分对了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">codes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    'def', 'get_vid_from_url', '(', 'url', ')',
+    ':', 'return', 'match1', '(', 'url', ',', ')',
+    'or', 'match1', '(', 'url', ',', ')', 'or',
+    'match1', '(', 'url', ',', ')', 'or', 'match1',
+    '(', 'url', ',', ')', 'or', 'parse_query_param',
+    '(', 'url', ',', ')', 'or', 'parse_query_param',
+    '(', 'parse_query_param', '(', 'url', ',', ')',
+    ',', ')', ''
+]
+</code></pre>
+<p>现在，可以利用 <a href="https://radimrehurek.com/gensim/" target="_blank" rel="noopener noreffer ">Gensim</a> 提供的 API 来创建词汇表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">gensim</span> <span class="kn">import</span> <span class="n">corpora</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dictionary</span> <span class="o">=</span> <span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">codes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Dictionary&lt;77242 unique tokens: ['', '(', ')', ',', ':']...&gt;
+</code></pre>
+<p>可以看到，词汇表太大了，让我们看看能否优化一下</p>
+<p>一般来说，我们不会关心<strong>只出现一次</strong>的 token，因此，我们可以把他们删除掉</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">once_ids</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">token_id</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">doc_freq</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">dfs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">doc_freq</span> <span class="o">==</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dictionary</span><span class="o">.</span><span class="n">filter_tokens</span><span class="p">(</span><span class="n">once_ids</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dictionary</span><span class="o">.</span><span class="n">compactify</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Dictionary&lt;31933 unique tokens: ['', '(', ')', ',', ':']...&gt;
+</code></pre>
+<p>现在只剩下 <code>31933</code> tokens 了，这已经好多了，我猜测 token 这么多的原因是有很多变量/函数名都不一样 🧐</p>
+<p><code>Dictionary</code> 提供了 <code>most_common</code> 方法可以找到词频最多的 token，让我们看下能否发现一些有意思的事情</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dictionary</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    ('.', 202834), ('(', 199868), (')', 199868), (',', 162853),
+    ('=', 142808), (':', 110829), ('self', 71699), ('[', 55736),
+    (']', 55736), ('if', 40272), ('return', 24021), ('def', 23557),
+    ('', 21948), ('None', 19797), ('in', 19437), ('for', 13509),
+    ('1', 13345), ('0', 13213), ('not', 11826), ('else', 10634),
+    ('+', 10617), ('==', 9323), ('name', 8290), ('is', 7601), ('-', 7544)
+]
+</code></pre>
+<p>🧐 发现了一个有意思的现象，<code>(</code> 和 <code>)</code> 的词频一样，<code>[</code> 和 <code>]</code> 也是的，因为代码的语法就是这么规定的</p>
+<p>然后用 <code>doc2bow</code> API 就可以得到每个文档（代码）的词袋模型向量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">BoW_matrix_for_code</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">BoW_matrix_for_code</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    (0, 1), (1, 8), (2, 8), (3, 7),
+    (4, 1), (5, 1), (6, 1), (7, 4),
+    (8, 5), (9, 3), (10, 1), (11, 7)
+]
+</code></pre>
+<p><code>doc2bow</code> 的返回值是一个 tuple list，每个 tuple 的含义是 <code>(token 的 ID，这个 token 的词频)</code>，注意统计词频是在这个文档里面进行的</p>
+<p>Gensim 用的这个格式是合理的，因为 BoW 算出来的矩阵是稀疏的，而且这里的词汇表大小有 <code>31933</code>，只展示非 0 的位置就清楚很多</p>
+<p>让我们把每个 token id 替换为对应的字符串表示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">dictionary</span><span class="p">[</span><span class="n">token_id</span><span class="p">],</span> <span class="n">cnt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">token_id</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">BoW_matrix_for_code</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    ('', 1), ('(', 8), (')', 8), (',', 7),
+    (':', 1), ('def', 1), ('get_vid_from_url', 1), ('match1', 4),
+    ('or', 5), ('parse_query_param', 3), ('return', 1), ('url', 7)
+]
+</code></pre>
+<p>下一件想要做的事情是：<strong>能否让词袋模型根据我们提供的 Python 代码找到相似的 Python 代码</strong>？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">gensim.similarities</span> <span class="kn">import</span> <span class="n">Similarity</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">indexer</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">corpus</span><span class="o">=</span><span class="n">BoW_vectors</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num_features</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num_best</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>                  <span class="c1"># let&#39;s see Top-3 result</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>随便写一个 Python 函数来检查词袋模型是否返回了相似的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">query</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;def foo(x):
+</span></span></span><span class="line"><span class="cl"><span class="s2">    if x &gt; 5:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        if x &gt; 10:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x + 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">        else:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x - 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">    else:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        if x &lt; 0:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x + 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">        else:
+</span></span></span><span class="line"><span class="cl"><span class="s2">            return x - 1
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">indexer</span><span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">get_token_stream</span><span class="p">(</span><span class="n">query</span><span class="p">))]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>[
+    (19669, 0.7191814184188843),
+    (19805, 0.705620288848877),
+    (5958, 0.6945071220397949)
+]
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">19669</span><span class="p">])</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>def add_sms_spec_to_request(self, req, federation='', loes=None,
+                            context=''):
+    &quot;&quot;&quot;
+    Update a request with signed metadata statements.
+    
+    :param req: The request 
+    :param federation: Federation Operator ID
+    :param loes: List of :py:class:`fedoidc.operator.LessOrEqual` instances
+    :param context:
+    :return: The updated request
+    &quot;&quot;&quot;
+    if federation:  # A specific federation or list of federations
+        if isinstance(federation, list):
+            req.update(self.gather_metadata_statements(federation,
+                                                       context=context))
+        else:
+            req.update(self.gather_metadata_statements([federation],
+                                                       context=context))
+    else:  # All federations I belong to
+        if loes:
+            _fos = list([r.fo for r in loes])
+            req.update(self.gather_metadata_statements(_fos,
+                                                       context=context))
+        else:
+            req.update(self.gather_metadata_statements(context=context))
+
+    return req
+</code></pre>
+<p>你可能会发现查询和结果似乎<em>在某种意义上</em>匹配。它们有一些相似的<em>语法</em>信息（嵌套的 <code>if-else</code> 结构）</p>
+<p>然而，<strong>在大多数情况下，词袋模型给出的结果很差</strong>。这是合理的，因为词袋模型太简单了，无法找到代码之间的关系</p>
+<h2 id="总结">总结</h2>
+<p>现在，我们来总结一下 BoW 的一些缺点。你可能已经自己弄清楚了其中一些：</p>
+<ol>
+<li>单词之间的顺序信息没有得到保留。<em><code>The cat chased the dog</code> 和 <code>The dog chased the cat</code> 意思完全不一样</em></li>
+<li>没有语义信息。 <em>词袋模型将每个单词视为一个独立的实体</em></li>
+<li>词袋模型输出的向量是高维稀疏向量。 <em>计算量很大，向量长度取决于你的词汇表大小</em></li>
+<li>每个词都有相同的重要性。 <em>但有些词可能提供更多信息</em></li>
+<li>无法处理不在词汇表里面的单词。 <em>如果文档包含很多不在词汇表中的单词要怎么办</em>？</li>
+<li>&hellip;</li>
+</ol>
+<p>词袋模型有很多缺点，你可能只会在教程里面看到它。鉴于这些限制，后面人们又开发了 Word2Vec、GloVe 和基于 Transformer 的架构（例如 BERT、GPT）等更先进的模型来克服这些缺点</p>
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://scikit-learn.org/stable/modules/feature_extraction.html#common-vectorizer-usage" target="_blank" rel="noopener noreffer ">CountVectorizer</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-08-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" data-title="词袋模型简介" data-hashtags="NLP,Machine-Learning,AI4SE"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" data-hashtag="NLP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" data-title="词袋模型简介"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" data-title="词袋模型简介"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" data-title="词袋模型简介"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/nlp/">NLP</a>,&nbsp;<a href="/zh-cn/tags/machine-learning/">Machine-Learning</a>,&nbsp;<a href="/zh-cn/tags/ai4se/">AI4SE</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/" class="prev" rel="prev" title="机器学习求解梯度的小技巧"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>机器学习求解梯度的小技巧</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>
