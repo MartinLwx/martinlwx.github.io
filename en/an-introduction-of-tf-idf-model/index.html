@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>TF-IDF model - MartinLwx&#39;s blog</title><meta name="Description" content="An simple introduction of TF-IDF model"><meta property="og:title" content="TF-IDF model" />
+<meta property="og:description" content="An simple introduction of TF-IDF model" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-16T22:23:26+08:00" />
+<meta property="article:modified_time" content="2023-08-16T22:23:26+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="TF-IDF model"/>
+<meta name="twitter:description" content="An simple introduction of TF-IDF model"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" /><link rel="prev" href="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "TF-IDF model",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-tf-idf-model\/"
+        },"genre": "posts","keywords": "NLP, Machine-Learning","wordcount":  1195 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-tf-idf-model\/","datePublished": "2023-08-16T22:23:26+08:00","dateModified": "2023-08-16T22:23:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "An simple introduction of TF-IDF model"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/"> Home </a><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="Select Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/an-introduction-of-tf-idf-model/" selected>English</option><option value="/zh-cn/an-introduction-of-tf-idf-model/">简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/" title="">Home</a><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/an-introduction-of-tf-idf-model/" selected>English</option><option value="/zh-cn/an-introduction-of-tf-idf-model/">简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">TF-IDF model</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/nlp/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>NLP</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-16">2023-08-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1195 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-the-tf-idf-model">What is the TF-IDF model</a></li>
+    <li><a href="#tf-idf-in-detail">TF-IDF in detail</a>
+      <ul>
+        <li><a href="#tf">TF</a></li>
+        <li><a href="#idf">IDF</a></li>
+        <li><a href="#tf-idf">TF-IDF</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-tf-idf-in-scikit-learn">The TF-IDF in Scikit-Learn</a></li>
+    <li><a href="#implement-tf-idf-manually">Implement TF-IDF manually</a></li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="what-is-the-tf-idf-model">What is the TF-IDF model</h2>
+<p>In previous <a href="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" rel="">post</a>, we talked about the bag-of-word model, which has many limitations. Today we take a step further to see if we can try to fix <strong>one of the limitations - Each word has the same importance</strong>.</p>
+<blockquote>
+<p>💡 The crux of the problem - <strong>How to define the word importance</strong>?</p>
+</blockquote>
+<p>One idea is: The more frequently a word appears <strong>within a single document</strong>, the more important it is <strong>for that document</strong>. <em>For instance, in an article discussing dogs, the word &ldquo;dog&rdquo; is likely to appear frequently, reflecting the document&rsquo;s main topic</em>.</p>
+<p>But what if a word appears very frequently <strong>in all documents</strong>? <em>For example, the word &ldquo;of&rdquo; may appear quite often in every document, can we say &ldquo;of&rdquo; is important?</em> Clearly, that&rsquo;s not the case. So we have a clue here: If a word has a high frequency in <strong>every document</strong>, probably it&rsquo;s not significant and does not convey too much information.</p>
+<p>Therefore, a reasonable solution should consider a word&rsquo;s frequency within <strong>a single document</strong> but also take into account its frequency crossing <strong>multiple documents</strong>. TF-IDF balances these two aspects.</p>
+<p>In summary, the <strong>intuition</strong> behind TF-IDF is - <strong>Similar documents <em>may</em> use similar words, while the importance of different words should vary</strong>.</p>
+<h2 id="tf-idf-in-detail">TF-IDF in detail</h2>
+<p>TF-IDF = Term frequency(TF) + Inverse document frequency(IDF). Let&rsquo;s break it into two parts</p>
+<h3 id="tf">TF</h3>
+<p>The TF can be seen as a function of document $d$ and word $w$, and the equation is:</p>
+<p>$$\text{TF}(w, d)=\frac{\text{frequency of}\ w\ \text{in}\ d}{\text{word counts of } d}$$</p>
+<p>That is, we just need to calculate the frequency of word $w$ in the document $d$, and then divide it by the total number of words in $d$.</p>
+<blockquote>
+<p>🐛 In Scikit-Learn, the computation of TF is a bit different. It doesn&rsquo;t involve dividing by the total number of words in the document. The purpose of dividing is to normalize the $\text{TF}(w, d)$ values within the document $d$, making them add up to one. In Scikit-Learn, this normalization process is performed after the TF-IDF calculation. We will demonstrate this with an example later.</p>
+</blockquote>
+<h3 id="idf">IDF</h3>
+<p>The goal of IDF is to reduce the importance of some common words that appear in each document. Therefore, the IDF is a function involving the word $w$ and the $corpus$.</p>
+<p>$$
+\text{IDF}(w, corpus)=log\ \frac{\text{document count of }corpus}{1+\text{count of document which contains }w}
+$$</p>
+<p>We add one in the denominator to avoid division by 0.</p>
+<blockquote>
+<p>🤔️ The $corpus$ is gennerally fixed. So it can be treated as a constant. In that case, IDF can be considered as something that&rsquo;s only related to the word $w$</p>
+</blockquote>
+<blockquote>
+<p>💡 Note the $log$ here. Are we using $log_2$, $log_{10}$ or $ln$? Different frameworks might have variations. <em>Scikit-Learn use $ln$</em></p>
+</blockquote>
+<blockquote>
+<p>🐛 In Scikit-Learn, the calculation of IDF differs from the equations mentioned above. By default, Scikit-Learn uses the following formula<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+</blockquote>
+<p>$$
+\text{IDF}(w, corpus)=log\ \frac{1 + \text{document count of }corpus}{1+\text{count of document which contains }w} + 1
+$$</p>
+<p>🤔️ In my opinion, <strong>the modification made by Scikit-Learn ensures that $\text{IDF}(w)$ cannot be less than 1</strong>. In the origin equation, if a word $w$ appears in each document within the corpus, $\text{IDF}(w)$ could be a negative value. Therefore, Scikit-Learn&rsquo;s modification seems more practical. It provides a more intuitive comparison of the IDF values for different words.</p>
+<h3 id="tf-idf">TF-IDF</h3>
+<p>$$
+\text{TF-IDF}(w, d, corpus)=\text{TF}(w, d) * \text{IDF}(d, corpus)
+$$</p>
+<h2 id="the-tf-idf-in-scikit-learn">The TF-IDF in Scikit-Learn</h2>
+<p>It&rsquo;s trivial to implement the TF-IDF algorithm. However, probably you will just use the well-established APIs provided by Scikit-Learn. Here, we will delve into how to calculate TF-IDF in Scikit-Learn. Let&rsquo;s proceed by continuing to use the official example from Scikit-Learn:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;This is the first document.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;This is the second second document.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;And the third one.&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;Is this the first document?&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tokenized_toy_corpus</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;second&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;document&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s seed the TF-IDF matrix using the APIs</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># set norm=None for comparison</span>
+</span></span><span class="line"><span class="cl"><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">toy_corpus</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can access the TF-IDF matrix using <code>X.toarray()</code> (Note that I set <code>norm=None</code> in the code snippet)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>and</th>
+<th>document</th>
+<th>first</th>
+<th>is</th>
+<th>one</th>
+<th>second</th>
+<th>the</th>
+<th>third</th>
+<th>this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>document1</td>
+<td>0.0</td>
+<td>1.22314</td>
+<td>1.51082</td>
+<td>1.22314</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.22314</td>
+</tr>
+<tr>
+<td>document2</td>
+<td>0.0</td>
+<td>1.22314</td>
+<td>0.0</td>
+<td>1.22314</td>
+<td>0.0</td>
+<td>3.83258</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.22314</td>
+</tr>
+<tr>
+<td>document3</td>
+<td>1.91629</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.91629</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.91629</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>document4</td>
+<td>0.0</td>
+<td>1.22314</td>
+<td>1.51082</td>
+<td>1.22314</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.22314</td>
+</tr>
+</tbody>
+</table>
+<p>Let me also put the bag-of-word matrix here:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>and</th>
+<th>document</th>
+<th>first</th>
+<th>is</th>
+<th>one</th>
+<th>second</th>
+<th>the</th>
+<th>third</th>
+<th>this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>document1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>document2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>document3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>document4</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>🤔️ <em>Comparing these two matrices, we can find that the word importance of <code>document</code> and <code>first</code> inside the document1 has changed. The <code>TF-IDF</code> value for <code>document</code> is <code>1.22314</code>, while the TF-IDF value for <code>first</code> is <code>1.51082</code>, due to the unequal presence of these words in the corpus. However, the bag-of-word model fails to recognize this and considers both of them as having an importance of <code>1</code></em></p>
+<p>We can retrieve the IDF value of each word by accessing the <code>idf_</code> attribute</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">idf_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [1.91629073 1.22314355 1.51082562 1.22314355 1.91629073 </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  1.91629073 1.         1.91629073 1.22314355]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>🤔️ If we multiply this IDF vector by the matrix output of the bag-of-word model(note that the IDF vector will be broadcasted), you would obtain the TF-IDF matrix calculated by Scikit-Learn. This confirms what we mentioned earlier:</p>
+<ul>
+<li>Scikit-Learn directly uses the output of the bag-of-word model as TF.</li>
+<li>Scikit-Learn&rsquo;s IDF calculation differs from the standard approach.</li>
+</ul>
+<h2 id="implement-tf-idf-manually">Implement TF-IDF manually</h2>
+<p>We assume that each document within the corpus is tokenized, and we use the TF-IDF definition of Scikit-Learn</p>
+<blockquote>
+<p>🐛 The code below is not optimized, just for demonstration :)</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">TF</span><span class="p">(</span><span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tokenized_document</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">tokenized_document</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">IDF</span><span class="p">(</span><span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tokenized_corpus</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">doc_count_contains_word</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">tokenized_corpus</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">doc_count_contains_word</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokenized_corpus</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">doc_count_contains_word</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">TF_IDF</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tokenized_document</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">tokenized_corpus</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">TF</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">tokenized_document</span><span class="p">)</span> <span class="o">*</span> <span class="n">IDF</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">tokenized_corpus</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="wrap-up">Wrap up</h2>
+<p>In this post, we investigate how TF-IDF has brought improvements to the bag-of-word model: <strong>by additionally considering a word&rsquo;s frequency across all documents to adjust its importance</strong>. Through the analysis of official example in Scikit-Learn, we have also validated that, the importance of words are now different. This stands as a noteworthy enhancement to the bag-of-word model.</p>
+<p>From an implementation perspective, the calculation of TF-IDF only requires traversing the corpus once. During the traversal, a few additional variables are maintained: the count of how many documents each word appears in, the total number of processed documents, etc. You may take a look at the source code of the <code>Dictionary</code> class in <a href="https://radimrehurek.com/gensim/index.html" target="_blank" rel="noopener noreffer ">Gensim</a> for more details.</p>
+<h2 id="refs">Refs</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://scikit-learn.org/stable/modules/feature_extraction.html#tfidf-term-weighting" target="_blank" rel="noopener noreffer ">TF-IDF term weighting</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-08-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" data-title="TF-IDF model" data-hashtags="NLP,Machine-Learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" data-hashtag="NLP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" data-title="TF-IDF model"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" data-title="TF-IDF model"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" data-title="TF-IDF model"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/en/tags/nlp/">NLP</a>,&nbsp;<a href="/en/tags/machine-learning/">Machine-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/an-introduction-of-bag-of-word-model/" class="prev" rel="prev" title="An Introduction of Bag of Word Model"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>An Introduction of Bag of Word Model</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

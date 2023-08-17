@@ -17,7 +17,8 @@ $$
 - 如何把它变得更好？
 
 ### 词袋模型的 motivation 和直观理解
-在了解词袋模型细节之前，我想先给你一个词袋模型可能是有用的**直观理解** —— **相似的文档用的词*也许*是差不多的**
+
+在了解词袋模型细节之前，我想先给你一个词袋模型可能是有用的**直觉** —— **相似的文档用的词*也许*是差不多的**
 
 你可能持反对意见，并且可以给出许多反例。我承认，这也是为什么我们需要更加强大的模型 :)
 
@@ -217,7 +218,7 @@ print(corpus[0])
               parse_query_param(parse_query_param(url, 'u'), 'v')
 
 
-在前面的英文分词中，我们删除了标点符号，用空格分词。代码的分词则比较不一样，编程语言有自己对应的语法（上下文无关文法），那么就可以用词法分析器拿到一个个 token。我这里用 Python 自带的 `ast` 和 `tokenize` 简单实现了一下
+在前面的英文分词中，我们删除了标点符号，用空格分词。代码的分词则比较不一样，编程语言有自己对应的语法（上下文无关文法），那么就可以用词法分析器拿到一个个 token。我这里用 Python 自带的 `tokenize` 简单实现了一下
 
 > 下面的函数如果看不懂也没关系，可以直接跳过。用词法分析器分词只是为了得到更精确的分词结果 :)
 
@@ -406,7 +407,7 @@ from gensim.similarities import Similarity
 
 indexer = Similarity(
     output_prefix=None,
-    corpus=BoW_vectors,
+    corpus=BoW_matrix_for_code,
     num_features=len(dictionary),
     num_best=3,                  # let's see Top-3 result
 )

@@ -18,7 +18,7 @@
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" /><link rel="prev" href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" /><link rel="prev" href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><link rel="next" href="https://martinlwx.github.io/en/an-introduction-of-tf-idf-model/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-bag-of-word-model\/"
-        },"genre": "posts","keywords": "NLP, Machine-Learning, AI4SE","wordcount":  2149 ,
+        },"genre": "posts","keywords": "NLP, Machine-Learning, AI4SE","wordcount":  2146 ,
         "url": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-bag-of-word-model\/","datePublished": "2023-08-11T18:55:09+08:00","dateModified": "2023-08-11T18:55:09+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">An Introduction of Bag of Word Model</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/nlp/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>NLP</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-11">2023-08-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2149 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-11">2023-08-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2146 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -468,7 +468,7 @@ $$</p>
           parse_query_param(url, 'v') or \
           parse_query_param(parse_query_param(url, 'u'), 'v')
 </code></pre>
-<p>Different from the English text, the programming language has well-defined grammar(context-free grammar). So we can tokenize the source code by a lexer. I use the built-in <code>ast</code> module and <code>tokenize</code> module to achieve this</p>
+<p>Different from the English text, the programming language has well-defined grammar(context-free grammar). So we can tokenize the source code by a lexer. I use the built-in <code>tokenize</code> module to achieve this</p>
 <blockquote>
 <p>Feel free to skip this function if you can&rsquo;t understand how a lexer works. The reason behind using a lexer is to make the tokenization process more accurate :)</p>
 </blockquote>
@@ -730,7 +730,7 @@ $$</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">indexer</span> <span class="o">=</span> <span class="n">Similarity</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">output_prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">corpus</span><span class="o">=</span><span class="n">BoW_vectors</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">corpus</span><span class="o">=</span><span class="n">BoW_matrix_for_code</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">num_features</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">    <span class="n">num_best</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>                  <span class="c1"># let&#39;s see Top-3 result</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
@@ -860,7 +860,8 @@ $$</p>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/en/a-trick-to-calculating-partial-derivatives-in-ml/" class="prev" rel="prev" title="A trick to calculating partial derivatives in machine learning"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>A trick to calculating partial derivatives in machine learning</a></div>
+    <div class="post-nav"><a href="/en/a-trick-to-calculating-partial-derivatives-in-ml/" class="prev" rel="prev" title="A trick to calculating partial derivatives in machine learning"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>A trick to calculating partial derivatives in machine learning</a>
+            <a href="/en/an-introduction-of-tf-idf-model/" class="next" rel="next" title="TF-IDF model">TF-IDF model<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">

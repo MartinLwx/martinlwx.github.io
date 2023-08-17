@@ -225,7 +225,7 @@ print(corpus[0])
               parse_query_param(parse_query_param(url, 'u'), 'v')
 
 
-Different from the English text, the programming language has well-defined grammar(context-free grammar). So we can tokenize the source code by a lexer. I use the built-in `ast` module and `tokenize` module to achieve this
+Different from the English text, the programming language has well-defined grammar(context-free grammar). So we can tokenize the source code by a lexer. I use the built-in `tokenize` module to achieve this
 
 > Feel free to skip this function if you can't understand how a lexer works. The reason behind using a lexer is to make the tokenization process more accurate :)
 
@@ -417,7 +417,7 @@ from gensim.similarities import Similarity
 
 indexer = Similarity(
     output_prefix=None,
-    corpus=BoW_vectors,
+    corpus=BoW_matrix_for_code,
     num_features=len(dictionary),
     num_best=3,                  # let's see Top-3 result
 )
