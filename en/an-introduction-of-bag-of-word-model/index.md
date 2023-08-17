@@ -1,4 +1,4 @@
-# An Introduction of Bag of Word Model
+# Bag-of-Word model
 
 
 ## What is the bag-of-word model?
@@ -280,14 +280,17 @@ First, let's use `get_token_stream` to tokenize each function within this datase
 from tqdm.auto import tqdm
 
 py2_cnt, py3_cnt = 0, 0
+new_corpus = []
 codes = []
 for code in tqdm(corpus):
     try:
         codes.append(get_token_stream(code))
+        new_corpus.append(code)
         py3_cnt += 1
     except SyntaxError:
         py2_cnt += 1
 print(f"Python2: {py2_cnt}, Python3: {py3_cnt}")
+corpus = new_corpus
 ```
 
 Let's make sure the `get_token_stream` function works correctly
@@ -462,36 +465,35 @@ indexer[dictionary.doc2bow(get_token_stream(query))]
 print(corpus[19669])
 ```
 
-    def add_sms_spec_to_request(self, req, federation='', loes=None,
-                                context=''):
-        """
-        Update a request with signed metadata statements.
-        
-        :param req: The request 
-        :param federation: Federation Operator ID
-        :param loes: List of :py:class:`fedoidc.operator.LessOrEqual` instances
-        :param context:
-        :return: The updated request
-        """
-        if federation:  # A specific federation or list of federations
-            if isinstance(federation, list):
-                req.update(self.gather_metadata_statements(federation,
-                                                           context=context))
-            else:
-                req.update(self.gather_metadata_statements([federation],
-                                                           context=context))
-        else:  # All federations I belong to
-            if loes:
-                _fos = list([r.fo for r in loes])
-                req.update(self.gather_metadata_statements(_fos,
-                                                           context=context))
-            else:
-                req.update(self.gather_metadata_statements(context=context))
+    def ord(x):
+        '''
+        x-->char (str of length 1)
+        Returns-->int
+            Behaves like PY2 ord() in PY2 or PY3
+        if x is str of length > 1 or int > 256
+            raises ValueError/TypeError is not SUPPRESS_ERRORS
+        '''
+        global _ord
+        if isinstance(x, int):
+            if x > 256:
+                if not SUPPRESS_ERRORS:
+                    raise ValueError('ord() arg not in range(256)')
+            return x % 256
+        elif isinstance(x, bytes):
+            x = fromBytes(x)
+            if len(x) > 1:
+                if SUPPRESS_ERRORS:
+                    x = x[0]
+            return _ord(x)
+        elif isinstance(x, str):
+            if len(x) > 1:
+                if SUPPRESS_ERRORS:
+                    x = x[0]
+            return _ord(x)
+        else:
+            raise TypeError('Unknown type passed to ord: %s', str(type(x)))
 
-        return req
-
-
-You may find that the query and the result seem to match *in some sense*. They have some similar *syntactic* information (the nested `if-else` structures).
+You may find that the query and the result seem to match *in some sense*. They have some similar *syntactic* information (the multiple `if-return` structures).
 
 However, in most circumstances, the BoW model gives a poor result. That's reasonable because the BoW is too naive to find the relationship between codes
 

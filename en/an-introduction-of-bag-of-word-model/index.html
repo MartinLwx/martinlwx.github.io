@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>An Introduction of Bag of Word Model - MartinLwx&#39;s blog</title><meta name="Description" content="An introduction of bag-of-word model"><meta property="og:title" content="An Introduction of Bag of Word Model" />
+        <title>Bag-of-Word model - MartinLwx&#39;s blog</title><meta name="Description" content="An introduction of bag-of-word model"><meta property="og:title" content="Bag-of-Word model" />
 <meta property="og:description" content="An introduction of bag-of-word model" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
 
-<meta name="twitter:title" content="An Introduction of Bag of Word Model"/>
+<meta name="twitter:title" content="Bag-of-Word model"/>
 <meta name="twitter:description" content="An introduction of bag-of-word model"/>
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -24,12 +24,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "An Introduction of Bag of Word Model",
+        "headline": "Bag-of-Word model",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-bag-of-word-model\/"
-        },"genre": "posts","keywords": "NLP, Machine-Learning, AI4SE","wordcount":  2146 ,
+        },"genre": "posts","keywords": "NLP, Machine-Learning, AI4SE","wordcount":  2177 ,
         "url": "https:\/\/martinlwx.github.io\/en\/an-introduction-of-bag-of-word-model\/","datePublished": "2023-08-11T18:55:09+08:00","dateModified": "2023-08-11T18:55:09+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -107,9 +107,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">An Introduction of Bag of Word Model</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Bag-of-Word model</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/nlp/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>NLP</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-11">2023-08-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2146 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-11">2023-08-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2177 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;11 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -569,19 +569,25 @@ $$</p>
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">py2_cnt</span><span class="p">,</span> <span class="n">py3_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">new_corpus</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl"><span class="n">codes</span> <span class="o">=</span> <span class="p">[]</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">codes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_token_stream</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_corpus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">py3_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">py2_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Python2: </span><span class="si">{</span><span class="n">py2_cnt</span><span class="si">}</span><span class="s2">, Python3: </span><span class="si">{</span><span class="n">py3_cnt</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">corpus</span> <span class="o">=</span> <span class="n">new_corpus</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s make sure the <code>get_token_stream</code> function works correctly</p>
@@ -789,35 +795,35 @@ $$</p>
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">19669</span><span class="p">])</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>def add_sms_spec_to_request(self, req, federation='', loes=None,
-                            context=''):
-    &quot;&quot;&quot;
-    Update a request with signed metadata statements.
-    
-    :param req: The request 
-    :param federation: Federation Operator ID
-    :param loes: List of :py:class:`fedoidc.operator.LessOrEqual` instances
-    :param context:
-    :return: The updated request
-    &quot;&quot;&quot;
-    if federation:  # A specific federation or list of federations
-        if isinstance(federation, list):
-            req.update(self.gather_metadata_statements(federation,
-                                                       context=context))
-        else:
-            req.update(self.gather_metadata_statements([federation],
-                                                       context=context))
-    else:  # All federations I belong to
-        if loes:
-            _fos = list([r.fo for r in loes])
-            req.update(self.gather_metadata_statements(_fos,
-                                                       context=context))
-        else:
-            req.update(self.gather_metadata_statements(context=context))
-
-    return req
+</div><pre><code>def ord(x):
+    '''
+    x--&gt;char (str of length 1)
+    Returns--&gt;int
+        Behaves like PY2 ord() in PY2 or PY3
+    if x is str of length &gt; 1 or int &gt; 256
+        raises ValueError/TypeError is not SUPPRESS_ERRORS
+    '''
+    global _ord
+    if isinstance(x, int):
+        if x &gt; 256:
+            if not SUPPRESS_ERRORS:
+                raise ValueError('ord() arg not in range(256)')
+        return x % 256
+    elif isinstance(x, bytes):
+        x = fromBytes(x)
+        if len(x) &gt; 1:
+            if SUPPRESS_ERRORS:
+                x = x[0]
+        return _ord(x)
+    elif isinstance(x, str):
+        if len(x) &gt; 1:
+            if SUPPRESS_ERRORS:
+                x = x[0]
+        return _ord(x)
+    else:
+        raise TypeError('Unknown type passed to ord: %s', str(type(x)))
 </code></pre>
-<p>You may find that the query and the result seem to match <em>in some sense</em>. They have some similar <em>syntactic</em> information (the nested <code>if-else</code> structures).</p>
+<p>You may find that the query and the result seem to match <em>in some sense</em>. They have some similar <em>syntactic</em> information (the multiple <code>if-return</code> structures).</p>
 <p>However, in most circumstances, the BoW model gives a poor result. That&rsquo;s reasonable because the BoW is too naive to find the relationship between codes</p>
 <h2 id="wrap-up">Wrap up</h2>
 <p>Now, let&rsquo;s summarize some limitations of BoW. You may have figured out some of them by yourself:</p>
@@ -848,7 +854,7 @@ $$</p>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model" data-hashtags="NLP,Machine-Learning,AI4SE"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-hashtag="NLP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="An Introduction of Bag of Word Model"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="Bag-of-Word model" data-hashtags="NLP,Machine-Learning,AI4SE"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-hashtag="NLP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="Bag-of-Word model"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="Bag-of-Word model"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" data-title="Bag-of-Word model"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>

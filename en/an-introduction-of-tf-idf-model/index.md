@@ -76,7 +76,7 @@ tokenized_toy_corpus = [
 ]
 ```
 
-Let's seed the TF-IDF matrix using the APIs
+Let's retrieve the TF-IDF matrix using the APIs
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
