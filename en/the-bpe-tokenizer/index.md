@@ -1,7 +1,7 @@
 # BPE Tokenization Demystified: Implementation and Examples
 
 
-## BPE
+## A taxonomy of tokenization methods
 
 In NLP, one crux of problems is - how to tokenize the text. There are three methods available:
 - Char-level

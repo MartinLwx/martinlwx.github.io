@@ -120,8 +120,10 @@ def most_common_code(text):
     frequency, return the first one that appears in the input text.
     """
     area_codes_list = area_codes(text)
-    cnts = [area_codes_list.count(e) for e in area_codes_list]          # count every area_code
-    max_cnt_idx = cnts.index(max(cnts))                                 # get the index of the max value
+    # count every area_code
+    cnts = [area_codes_list.count(e) for e in area_codes_list]
+    # get the index of the max value
+    max_cnt_idx = cnts.index(max(cnts))
     return area_codes_list[max_cnt_idx]
 ```
 

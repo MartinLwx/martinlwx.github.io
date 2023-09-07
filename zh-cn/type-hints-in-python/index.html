@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/type-hints-in-python\/"
-        },"genre": "posts","keywords": "Python","wordcount":  3146 ,
+        },"genre": "posts","keywords": "Python","wordcount":  3286 ,
         "url": "https:\/\/martinlwx.github.io\/zh-cn\/type-hints-in-python\/","datePublished": "2023-01-13T16:18:09+08:00","dateModified": "2023-01-13T16:18:09+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python 的类型提示：是什么以及为什么</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-13">2023-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3146 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-13">2023-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3286 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -130,6 +130,7 @@
         <li><a href="#参数化的泛型">参数化的泛型</a></li>
         <li><a href="#optional-和-union-类型">Optional 和 Union 类型</a></li>
         <li><a href="#可调用对象callable">可调用对象（Callable）</a></li>
+        <li><a href="#类">类</a></li>
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
@@ -661,12 +662,35 @@
 </div><pre><code>None
 123
 </code></pre>
+<h3 id="类">类</h3>
+<p>在 Python 3.11 里面<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>提出了 <code>Self</code> 类型，表示当前类的实例。有了 <code>Self</code> 之后在写 Python 的类的时候就很方便，我们可以在一个类的定义里面使用 <code>Self</code> 代指当前的类的实例。<del>再也不需要用 <code>TypeVar</code> 先引入了</del></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Shape</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">set_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>💡 Rust 也采用了 <code>Self</code> 来表示当前正在操纵的对象的类型，这经常可以在 impl block 里面看到</p>
+</blockquote>
 <h2 id="总结">总结</h2>
-<p>以上就是本篇博客的全部内容，我其实只谈到了我认为比较有用的一些类型提示使用场景，不少的高级特性比如 Static protocol<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup> 等没有提到，这些内容留给读者自己探索。</p>
+<p>以上就是本篇博客的全部内容，我其实只谈到了我认为比较有用的一些类型提示使用场景，不少的高级特性比如 Static protocol<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup> 等没有提到，这些内容留给读者自己探索。</p>
 <p>我对类型提示的态度仍然是：<strong>当它变得复杂的时候就不用，除非这个代价是值得的</strong>。</p>
 <p>根据我的开发经验，下面附上关于类型提示的几点建议🎯：</p>
 <ol>
-<li><strong>决定要加上什么类型提示的时候，考虑这个类型能够做什么</strong>。Python 3.8 提出的 static protocols 就很好解决了这点<sup id="fnref1:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>。感觉有点像 Rust 中的 traits</li>
+<li><strong>决定要加上什么类型提示的时候，考虑这个类型能够做什么</strong>。Python 3.8 提出的 static protocols 就很好解决了这点<sup id="fnref1:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup>。感觉有点像 Rust 中的 traits</li>
 <li><strong>对于函数返回类型，力求返回的类型越精确越好</strong>。<em>设想一个返回类型为 <code>Union[str, int]</code>，我们还需要自己手动再进行一次类型检查，就显得这个类型提示不是很有必要</em></li>
 <li><strong>通过了代码静态类型检查也不意味着程序就没有 bug 了</strong>，软件测试才是软件工程领域保证软件质量的标准做法～</li>
 <li>将这份 <a href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html" target="_blank" rel="noopener noreffer ">cheatsheet</a> 加入你的书签👍</li>
@@ -697,7 +721,10 @@
 <p><a href="https://peps.python.org/pep-0604/" target="_blank" rel="noopener noreffer ">PEP 604. Allow writing union types as X | Y</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:8">
-<p><a href="https://peps.python.org/pep-0544/" target="_blank" rel="noopener noreffer ">PEP 544. Protocols: Structural subtyping (static duck typing)</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0673/" target="_blank" rel="noopener noreffer ">PEP 673. Self Type</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9">
+<p><a href="https://peps.python.org/pep-0544/" target="_blank" rel="noopener noreffer ">PEP 544. Protocols: Structural subtyping (static duck typing)</a>&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -727,7 +754,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

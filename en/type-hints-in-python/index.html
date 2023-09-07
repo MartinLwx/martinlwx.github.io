@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/en\/type-hints-in-python\/"
-        },"genre": "posts","keywords": "Python","wordcount":  1923 ,
+        },"genre": "posts","keywords": "Python","wordcount":  2000 ,
         "url": "https:\/\/martinlwx.github.io\/en\/type-hints-in-python\/","datePublished": "2023-01-13T16:18:02+08:00","dateModified": "2023-01-13T16:18:02+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Type hints: what and why</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-13">2023-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1923 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-01-13">2023-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2000 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -130,6 +130,7 @@
         <li><a href="#parameterized-generic-types">Parameterized generic types</a></li>
         <li><a href="#optional-and-union">Optional and Union</a></li>
         <li><a href="#callables">Callables</a></li>
+        <li><a href="#class">Class</a></li>
       </ul>
     </li>
     <li><a href="#summary">Summary</a></li>
@@ -661,12 +662,35 @@
 </div><pre><code>None
 123
 </code></pre>
+<h3 id="class">Class</h3>
+<p>In Python 3.11<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>, the <code>Self</code> type is proposed, which represents an instance of the current class. We can use <code>Self</code> within the class definition everywhere :) <del>No need to use <code>TypeVar</code> anymore</del></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Shape</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">set_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>💡 Rust also uses <code>Self</code> to denote the current object, which usually appears in an impl block.</p>
+</blockquote>
 <h2 id="summary">Summary</h2>
-<p>Well, that&rsquo;s the entire content of this blog. I have covered some of the most common and practical uses of type hints that I have found useful. However, it is not an exhaustive guide, and there are more advanced features such as static protocols<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup> that readers can explore.</p>
+<p>Well, that&rsquo;s the entire content of this blog. I have covered some of the most common and practical uses of type hints that I have found useful. However, it is not an exhaustive guide, and there are more advanced features such as static protocols<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup> that readers can explore.</p>
 <p>Personally, I follow the strategy of using type hints only when the added benefits outweigh the potential added complexity. <strong>In situations where the type hints become too complex, I choose not to use them unless it is deemed necessary.</strong></p>
 <p>I will also give you some advice based on my experiences🎯:</p>
 <ol>
-<li><strong>When you decide what to add, try to think what this type it can do</strong><sup id="fnref1:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup>. The static protocols<sup id="fnref2:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup> are well suited to this requirement. This makes me think of the traits in Rust :)</li>
+<li><strong>When you decide what to add, try to think what this type it can do</strong><sup id="fnref1:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>. The static protocols<sup id="fnref2:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup> are well suited to this requirement. This makes me think of the traits in Rust :)</li>
 <li><strong>Always make the return type as precise as possible</strong>. Just try to imagine that a function returns <code>Union[str, int]</code>. We have to check it manually, which makes me fell like the type hints are a little unnecessary.</li>
 <li><strong>Even if you pass the type checker, you are not free of bugs</strong>. Software testing is the standard practice to make your programs work as expected.</li>
 <li>Add the <a href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html" target="_blank" rel="noopener noreffer ">cheatsheet</a> to your bookmark 👍</li>
@@ -694,7 +718,10 @@
 <p><a href="https://peps.python.org/pep-0483/" target="_blank" rel="noopener noreffer ">PEP 483. The Theory of Type Hints</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:7">
-<p><a href="https://peps.python.org/pep-0544/" target="_blank" rel="noopener noreffer ">PEP 544. Protocols: Structural subtyping (static duck typing)</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0673/" target="_blank" rel="noopener noreffer ">PEP 673. Self Type</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8">
+<p><a href="https://peps.python.org/pep-0544/" target="_blank" rel="noopener noreffer ">PEP 544. Protocols: Structural subtyping (static duck typing)</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -724,7 +751,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.117.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.118.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

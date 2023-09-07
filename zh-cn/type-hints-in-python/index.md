@@ -372,6 +372,20 @@ apply(parse, ['hello', 123])
     None
     123
 
+### 类
+
+在 Python 3.11 里面[^9]提出了 `Self` 类型，表示当前类的实例。有了 `Self` 之后在写 Python 的类的时候就很方便，我们可以在一个类的定义里面使用 `Self` 代指当前的类的实例。~~再也不需要用 `TypeVar` 先引入了~~
+
+```python
+from typing import Self
+
+class Shape:
+    def set_scale(self, scale: float) -> Self:
+        self.scale = scale
+        return self
+```
+
+> 💡 Rust 也采用了 `Self` 来表示当前正在操纵的对象的类型，这经常可以在 impl block 里面看到
 
 ## 总结
 
@@ -402,5 +416,7 @@ apply(parse, ['hello', 123])
 [^7]: [PEP 613. Explicit Type Aliases](https://peps.python.org/pep-0613/)
 
 [^8]: [PEP 544. Protocols: Structural subtyping (static duck typing)](https://peps.python.org/pep-0544/)
+
+[^9]: [PEP 673. Self Type](https://peps.python.org/pep-0673/)
 
 

@@ -376,6 +376,21 @@ apply(parse, ['hello', 123])
     None
     123
 
+### Class
+
+In Python 3.11[^9], the `Self` type is proposed, which represents an instance of the current class. We can use `Self` within the class definition everywhere :) ~~No need to use `TypeVar` anymore~~
+
+
+```python
+from typing import Self
+
+class Shape:
+    def set_scale(self, scale: float) -> Self:
+        self.scale = scale
+        return self
+```
+
+> 💡 Rust also uses `Self` to denote the current object, which usually appears in an impl block.
 
 ## Summary
 
@@ -408,4 +423,5 @@ I will also give you some advice based on my experiences🎯:
 
 [^8]: [PEP 544. Protocols: Structural subtyping (static duck typing)](https://peps.python.org/pep-0544/)
 
+[^9]: [PEP 673. Self Type](https://peps.python.org/pep-0673/)
 
