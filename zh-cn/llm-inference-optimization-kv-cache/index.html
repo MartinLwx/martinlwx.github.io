@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>LLM 推理加速 - KV Cache - MartinLwx&#39;s blog</title><meta name="Description" content="介绍了 LLM 推理加速的方法之一 - KV Cache"><meta property="og:title" content="LLM 推理加速 - KV Cache" />
+<meta property="og:description" content="介绍了 LLM 推理加速的方法之一 - KV Cache" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-12T16:38:18+08:00" />
+<meta property="article:modified_time" content="2023-10-12T16:38:18+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+
+<meta name="twitter:title" content="LLM 推理加速 - KV Cache"/>
+<meta name="twitter:description" content="介绍了 LLM 推理加速的方法之一 - KV Cache"/>
+<meta name="application-name" content="我的网站">
+<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/lora-finetuning/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "LLM 推理加速 - KV Cache",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/llm-inference-optimization-kv-cache\/"
+        },"genre": "posts","keywords": "NLP, Deep-Learning","wordcount":  1063 ,
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/llm-inference-optimization-kv-cache\/","datePublished": "2023-10-12T16:38:18+08:00","dateModified": "2023-10-12T16:38:18+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "介绍了 LLM 推理加速的方法之一 - KV Cache"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/llm-inference-optimization-kv-cache/">English</option><option value="/zh-cn/llm-inference-optimization-kv-cache/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/en/llm-inference-optimization-kv-cache/">English</option><option value="/zh-cn/llm-inference-optimization-kv-cache/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">LLM 推理加速 - KV Cache</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/ml-dl/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-10-12">2023-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1063 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#kv-cache-原理">KV Cache 原理</a></li>
+    <li><a href="#kv-cache-的效率分析">KV Cache 的效率分析</a></li>
+    <li><a href="#kv-cache-api">KV Cache API</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="背景">背景</h2>
+<p>LLM 用于推理的时候就是不断基于前面的所有 token 生成下一个 token</p>
+<p><em>假设现在已经生成了 $t$ 个 token，用 $x_{1:t}$ 表示。在下一轮，LLM 会生成 $x_{1:t+1}$，注意他们的前 $t$ 个 token 是一样的</em></p>
+<p>$$x_{1:t+1}=\text{LLM}(x_{1:t})$$</p>
+<p>下一步也是相似的</p>
+<p>$$x_{1:t+2}=\text{LLM}(x_{1:t+1})$$</p>
+<p>概括来说，<strong>每一轮用上一轮的输出当成新的输入让 LLM 预测</strong>，一般这个过程会持续到输出达到提前设定的最大长度或者是 LLM 自己生成了特殊的结束 token</p>
+<h2 id="kv-cache-原理">KV Cache 原理</h2>
+<blockquote>
+<p>LLM 的推理过程很好理解，但是这个简单的实现存在一个问题——<strong>存在不少的重复计算</strong>导致计算效率不是很高🧐</p>
+</blockquote>
+<p>只需要看 LLM 的连续两次前向传播推理计算就很好理解为什么说存在重复计算了</p>
+<p><em>比如考虑下面这一步</em></p>
+<p>$$
+x_{1:t+1}=\text{LLM}(x_{1:t})
+$$</p>
+<p>LLM 的输入是 $x_{1:t}$，先只看最后一个 token $x_t$，它的 query 向量会和前面的每个 token 以及自己产生的 key 向量计算内积</p>
+<p>$$\mathbf q_{t}^T\mathbf k_{1},\mathbf q_{t}^T\mathbf k_{2},&hellip;,\mathbf q_{t}^T\mathbf k_{t}$$</p>
+<p><em>然后看下一步</em></p>
+<p>$$
+x_{1:t+2}=\text{LLM}(x_{1:t+1})
+$$</p>
+<p>LLM 的输入是 $x_{1:t+1}$，看最后一个 token $x_{t+1}$，它的 query 向量也会和前面的每个 token 以及自己产生的 key 向量计算内积</p>
+<p>$$\mathbf q_{t+1}^T\mathbf k_{1},\mathbf q_{t+1}^T\mathbf k_{2},&hellip;,\mathbf q_{t+1}^T\mathbf k_{t+1}$$</p>
+<p>此时考虑 $x_{1:t+1}$ 的 token $x_t$，它也是类似的步骤</p>
+<p>$$\mathbf q_{t}^T\mathbf k_{1},\mathbf q_{t}^T\mathbf k_{2},&hellip;,\mathbf q_{t}^T\mathbf k_{t}$$</p>
+<p><strong>可以看到，这个计算完全和上一轮的计算重复了</strong>，对于在 $x_t$ 之前的 token 也是这个道理。我们需要<strong>重新计算</strong>得到 $x_{1:t}$ 的所有 key 向量和 value 向量，而这些向量的值<strong>其实是不会变的</strong>🧐</p>
+<blockquote>
+<p>🤔 那么我们只需要把之前 token 的 key 向量和 value 向量都缓存起来，那么就没有必要重复计算了，这就是 KV Cache 的核心思想</p>
+</blockquote>
+<p>在运用了 KV Cache 之后，除了第一轮以外的每一轮，我们<strong>都只需要关注输入的最后一个 token</strong>，用这个 token 计算得到它的 query, key, value 向量，然后拿着这三个新向量和之前<strong>所有缓存的 key/value 向量</strong>计算自注意力</p>
+<p><em>我画了一个示意图来帮助理解开启 KV Cache 之后发生了什么，考虑 LLM 从无到有开始生成 4 个 token，其中蓝色的部分表示 KV Cache 里面缓存的值；红色则表示没有被缓存</em></p>
+<figure><img src="/img/kv_cache_4_steps.png"/>
+</figure>
+
+<h2 id="kv-cache-的效率分析">KV Cache 的效率分析</h2>
+<p>KV Cache 加速推理的原理是：在自注意力层，本来每次要做矩阵乘法 $\mathbf Q\mathbf K^T$，现在因为 KV Cache 的存在，我们不需要整个 $\mathbf Q$ 和 $\mathbf K^T$ 做矩阵乘法，只需要<strong>每次输入的最后一个 token 的 query 向量</strong> $\mathbf q$ 和 $\mathbf K$ 做向量-矩阵乘法，之后更新 KV Cache 缓存即可</p>
+<p>采用了 KV Cache 的话 LLM  的推理过程可以看成 <strong>2 个阶段</strong></p>
+<ol>
+<li>第一次迭代的时候，此时 KV Cache 为空，所有的输入的 token 都需要为其计算 key, value, query 向量，其中 key 和 value 会被缓存起来</li>
+<li>后续的每一次迭代，<strong>只需要为新的 token 计算 key、value、query</strong>，并更新 KV Cache</li>
+</ol>
+<p>KV Cache 加速推理的代价是显存占用会变高，所以它是<strong>空间换时间</strong>的办法，关于开不开 KV Cache 的显存占用的对比可以看 <a href="https://discuss.huggingface.co/t/generate-using-k-v-cache-is-faster-but-no-difference-to-memory-usage/31272" target="_blank" rel="noopener noreffer ">这里</a>。我在这里放一个总结：</p>
+<ul>
+<li>用 KV Cache - <code>2 * hidden_size * num_layers * decoder_length</code></li>
+<li>不用 KV Cache - <code>2 * hidden_size * 1 * decoder_length</code></li>
+</ul>
+<h2 id="kv-cache-api">KV Cache API</h2>
+<p>Huggingface 的 <code>model.generate</code> API 有一个参数为 <code>use_cache</code>，可以用来控制是否开启 KV Cache，<strong>这个选项是默认打开的</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<h2 id="参考">参考</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://huggingface.co/docs/transformers/v4.34.0/en/main_classes/text_generation#transformers.GenerationConfig" target="_blank" rel="noopener noreffer ">GenerationConfig</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-10-12</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" data-title="LLM 推理加速 - KV Cache" data-hashtags="NLP,Deep-Learning"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" data-hashtag="NLP"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" data-title="LLM 推理加速 - KV Cache"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" data-title="LLM 推理加速 - KV Cache"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" data-title="LLM 推理加速 - KV Cache"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/nlp/">NLP</a>,&nbsp;<a href="/zh-cn/tags/deep-learning/">Deep-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/lora-finetuning/" class="prev" rel="prev" title="LoRA 微调"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>LoRA 微调</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
+</html>

@@ -155,8 +155,8 @@
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">guess</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="n">test</span> <span class="n">guess</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">guess</span>
-</span></span><span class="line"><span class="cl">        <span class="k">...</span><span class="p">)))</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">        <span class="k">...</span><span class="p">)))</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>在函数里面用 <code>lambda</code> 返回另外一个函数很方便，但是这一道题要这么用有点“绕”，主要的困难来自于：我们要在 <code>...</code> 的部分放什么？放 <code>((iterative-improve good-enough? improve) (improve guess))</code> 是可以的，但是我感觉这样写并不是很直观</p>
 <p>这样的场景在写递归函数的时候其实经常出现，这种时候我们可以在主函数里面定义一个辅助函数，最后在主函数里面返回这个辅助函数即可。代码如下：</p>
@@ -175,8 +175,8 @@
 </span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="n">test</span> <span class="n">guess</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">guess</span>
 </span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="n">helper</span> <span class="p">(</span><span class="n">improve</span> <span class="n">guess</span><span class="p">))))</span>
-</span></span><span class="line"><span class="cl">  <span class="n">helper</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="n">helper</span><span class="p">)</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>写完了 <code>iterative-improve</code> 之后，要重写 <code>fixed-point</code> 和 <code>sqrt</code> 函数是件很容易的事情。我们只需要定义好对应的 <code>test</code> 和 <code>improve</code> 是什么然后调用 <code>iterative-improve</code></p>
 <div class="highlight"><div class="chroma">
@@ -255,7 +255,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.118.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
