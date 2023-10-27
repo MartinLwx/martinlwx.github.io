@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/lora-finetuning\/"
-        },"genre": "posts","keywords": "Paper, Internal, Deep-Learning","wordcount":  2136 ,
+        },"genre": "posts","keywords": "Paper, Internal, Deep-Learning","wordcount":  2280 ,
         "url": "https:\/\/martinlwx.github.io\/zh-cn\/lora-finetuning\/","datePublished": "2023-09-14T22:57:06+08:00","dateModified": "2023-09-14T22:57:06+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">LoRA 微调</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/ml-dl/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>ML-DL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-14">2023-09-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2136 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-14">2023-09-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2280 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -125,7 +125,10 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="什么是-lora">什么是 LoRA</h2>
-<p>自从 LLM 时代到来之后，如何微调 LLM 成为了一个难题，因为 LLM 的模型实在是太大了，很难做全量微调更新所有参数。可选的路线有：冻结整个模型做 Prompt tuning 或者 In-context Learning；冻结整个模型<strong>但是</strong>会插入可训练的模块。今天要介绍的 LoRA(<strong>L</strong>ow-<strong>R</strong>ank <strong>A</strong>daptation) 就对应了后者的技术路线，这是微软团队的工作<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<figure><img src="/img/lora.jpg"/>
+</figure>
+
+<p>自从 LLM 时代到来之后，如何微调 LLM 成为了一个难题，因为 LLM 的模型实在是太大了，很难做全量微调更新所有参数。可选的路线有：冻结整个模型做 Prompt tuning 或者 In-context Learning；冻结整个模型<strong>但是</strong>会插入可训练的模块。今天要介绍的 LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation) 就对应了后者的技术路线，这是微软团队的工作<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <p>LoRA 的思想其实挺简单，我们知道，在深度学习里面，模型的参数是通过梯度下降进行更新的，考虑一个矩阵 $\mathbf W_0\in\mathcal{R}^{d\times d}$（这里的 0 表示它是初始值），可以用 $\Delta \mathbf W$ 表示它最后训练完成的时候相对于一开始的初始值的<strong>变化量</strong>，那么训练完成之后这个矩阵的参数会是</p>
 <p>$$\mathbf W_0+\Delta \mathbf W$$</p>
 <p>LoRA 微调要解决的问题是 - 能不能在冻结 $\mathbf W_0$ 的情况下，求解出 $\Delta \mathbf W$？而且求解的开销要尽可能低？这是可以的，因为研究人员发现训练完成后的 LLM 的模型权重的 Intrinsic rank 比较低，于是作者假设 $\Delta\mathbf W$ 也是如此，那么我们就可以对 $\Delta \mathbf W$ 做低秩分解，最后实验表明这个假设是正确的，LoRA 微调效果挺好<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，低秩分解指的是</p>
@@ -133,7 +136,7 @@
 <p>其中 $\mathbf B\in\mathcal{R}^{d\times r}$，$\mathbf A\in\mathcal{R}^{r\times d}$，$\mathbf B$ 采用零值初始化，$\mathbf A$ 则是采用高斯函数初始化，这样在一开始训练的时候 $\mathbf B\mathbf A=0$，LoRA 模块对本来的模型不造成影响</p>
 <p>如果输入是 $\mathbf x$，那么 LoRA 的计算方式就是</p>
 <p>$$\mathbf W_0\mathbf x+\frac{\alpha}{r}\Delta \mathbf W\mathbf x=\mathbf W_0\mathbf x+\frac{\alpha}{r}\mathbf B\mathbf A\mathbf x$$</p>
-<p>这里的 $\alpha$ 就是放缩因子，$r$ 则是</p>
+<p>这里的 $\alpha$ 就是放缩因子，$r$ 则是降维矩阵降维后的大小，整体作为一个缩放因子，在后面的源码分析会有所体现</p>
 <p>LoRA 微调<strong>训练的时候</strong>只需要通过梯度下降更新 $\mathbf B$ 和 $\mathbf A$，而<strong>推理的时候</strong>，可以直接把 $\mathbf W_0$ 和 $\mathbf B\mathbf A$ 合并起来。这是 LoRA 一个<strong>显著优势：它并不会带来推理延迟</strong>👍</p>
 <p>另外可以计算一下使用 LoRA 之后，可学习的参数量的变化，对于矩阵 $\mathbf W_0$ 来说</p>
 <p>$$d\times d\rightarrow 2\times d\times r$$</p>
@@ -144,7 +147,7 @@
 <li>在论文的 7.2 里面，作者发现<strong>一味增大 <code>r</code> 并没有带来太多的提升，<code>4 ~ 8</code> 效果就不错了</strong>，这验证了确实 LLM 的模型权重的 Intrinsic rank 比较低<sup id="fnref3:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
 </ul>
 <h2 id="如何使用-lora">如何使用 LoRA？</h2>
-<p>Huggingface 的 <a href="https://github.com/huggingface/peft" target="_blank" rel="noopener noreffer ">peft</a> 就支持 LoRA 微调，在 Github 仓库的 <code>README.md</code> 文件就展示了如何使用 LoRA 微调，只需要用 <code>LoraConfig</code> 对参数进行配置，然后用 <code>get_peft_model</code> 就完成了对模型的改造可以用于后续训练</p>
+<p>Huggingface 的 <a href="https://github.com/huggingface/peft" target="_blank" rel="noopener noreffer ">peft</a> 就支持 LoRA 微调，在 Github 仓库的 <code>README.md</code> 文件就给了一个例子，只需要用 <code>LoraConfig</code> 对参数进行配置，然后用 <code>get_peft_model</code> 就完成了对模型的改造，之后就可以用于后续训练了</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -165,30 +168,58 @@
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForSeq2SeqLM</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">peft</span> <span class="kn">import</span> <span class="n">get_peft_config</span><span class="p">,</span> <span class="n">get_peft_model</span><span class="p">,</span> <span class="n">LoraConfig</span><span class="p">,</span> <span class="n">TaskType</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">model_name_or_path</span> <span class="o">=</span> <span class="s2">&#34;bigscience/mt0-large&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="n">tokenizer_name_or_path</span> <span class="o">=</span> <span class="s2">&#34;bigscience/mt0-large&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">model_name_or_path</span> <span class="o">=</span> <span class="s2">&#34;facebook/opt-350m&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">peft_config</span> <span class="o">=</span> <span class="n">LoraConfig</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">task_type</span><span class="o">=</span><span class="n">TaskType</span><span class="o">.</span><span class="n">SEQ_2_SEQ_LM</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">inference_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">task_type</span><span class="o">=</span><span class="n">TaskType</span><span class="o">.</span><span class="n">CAUSAL_LM</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">lora_alpha</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">lora_dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_name_or_path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">get_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">peft_config</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">print_trainable_parameters</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># output: trainable params: 2359296</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#      || all params: 1231940608</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#      || trainable%: 0.19151053100118282</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># output: trainable params: 786,432</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#      || all params: 331,982,848</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#      || trainable%: 0.2368893467652883</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>训练完成之后需要<strong>保存模型</strong>，调用 <code>model.save_pretrained(output_dir)</code> 即可，其中 <code>output_dir</code> 就是要保存的路径，<em>观察目录结构可以发现，只保存 LoRA 模块的权重而不需要保存整个模型。目录结构长下面这样</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">output_dir
+</span></span><span class="line"><span class="cl">├── README.md
+</span></span><span class="line"><span class="cl">├── adapter_config.json
+</span></span><span class="line"><span class="cl">└── adapter_model.bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>后续要<strong>加载模型</strong>也很简单</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">peft</span> <span class="kn">import</span> <span class="n">AutoPeftModelForCausalLM</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">peft_model_name_or_path</span> <span class="o">=</span> <span class="s2">&#34;./output_dir&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">AutoPeftModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">peft_model_name_or_path</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="lora-源码阅读">LoRA 源码阅读</h2>

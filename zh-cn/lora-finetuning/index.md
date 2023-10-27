@@ -3,7 +3,9 @@
 
 ## 什么是 LoRA
 
-自从 LLM 时代到来之后，如何微调 LLM 成为了一个难题，因为 LLM 的模型实在是太大了，很难做全量微调更新所有参数。可选的路线有：冻结整个模型做 Prompt tuning 或者 In-context Learning；冻结整个模型**但是**会插入可训练的模块。今天要介绍的 LoRA(**L**ow-**R**ank **A**daptation) 就对应了后者的技术路线，这是微软团队的工作[^1]
+{{< figure src="/img/lora.jpg" >}}
+
+自从 LLM 时代到来之后，如何微调 LLM 成为了一个难题，因为 LLM 的模型实在是太大了，很难做全量微调更新所有参数。可选的路线有：冻结整个模型做 Prompt tuning 或者 In-context Learning；冻结整个模型**但是**会插入可训练的模块。今天要介绍的 LoRA(**Lo**w-**R**ank **A**daptation) 就对应了后者的技术路线，这是微软团队的工作[^1]
 
 LoRA 的思想其实挺简单，我们知道，在深度学习里面，模型的参数是通过梯度下降进行更新的，考虑一个矩阵 $\mathbf W_0\in\mathcal{R}^{d\times d}$（这里的 0 表示它是初始值），可以用 $\Delta \mathbf W$ 表示它最后训练完成的时候相对于一开始的初始值的**变化量**，那么训练完成之后这个矩阵的参数会是
 
@@ -19,7 +21,7 @@ $$\Delta \mathbf W=\mathbf B\mathbf A$$
 
 $$\mathbf W_0\mathbf x+\frac{\alpha}{r}\Delta \mathbf W\mathbf x=\mathbf W_0\mathbf x+\frac{\alpha}{r}\mathbf B\mathbf A\mathbf x$$
 
-这里的 $\alpha$ 就是放缩因子，$r$ 则是
+这里的 $\alpha$ 就是放缩因子，$r$ 则是降维矩阵降维后的大小，整体作为一个缩放因子，在后面的源码分析会有所体现
 
 LoRA 微调**训练的时候**只需要通过梯度下降更新 $\mathbf B$ 和 $\mathbf A$，而**推理的时候**，可以直接把 $\mathbf W_0$ 和 $\mathbf B\mathbf A$ 合并起来。这是 LoRA 一个**显著优势：它并不会带来推理延迟**👍
 
@@ -35,30 +37,49 @@ $$d\times d\rightarrow 2\times d\times r$$
 
 ## 如何使用 LoRA？
 
-Huggingface 的 [peft](https://github.com/huggingface/peft) 就支持 LoRA 微调，在 Github 仓库的 `README.md` 文件就展示了如何使用 LoRA 微调，只需要用 `LoraConfig` 对参数进行配置，然后用 `get_peft_model` 就完成了对模型的改造可以用于后续训练
+Huggingface 的 [peft](https://github.com/huggingface/peft) 就支持 LoRA 微调，在 Github 仓库的 `README.md` 文件就给了一个例子，只需要用 `LoraConfig` 对参数进行配置，然后用 `get_peft_model` 就完成了对模型的改造，之后就可以用于后续训练了
+
 
 ```python
-from transformers import AutoModelForSeq2SeqLM
+from transformers import AutoModelForCausalLM
 from peft import get_peft_config, get_peft_model, LoraConfig, TaskType
 
-model_name_or_path = "bigscience/mt0-large"
-tokenizer_name_or_path = "bigscience/mt0-large"
+model_name_or_path = "facebook/opt-350m"
 
 peft_config = LoraConfig(
-    task_type=TaskType.SEQ_2_SEQ_LM,
-    inference_mode=False,
+    task_type=TaskType.CAUSAL_LM,
     r=8,
     lora_alpha=32,
     lora_dropout=0.1,
 )
 
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name_or_path)
+model = AutoModelForCausalLM.from_pretrained(model_name_or_path)
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
-# output: trainable params: 2359296
-#      || all params: 1231940608
-#      || trainable%: 0.19151053100118282
+# output: trainable params: 786,432
+#      || all params: 331,982,848
+#      || trainable%: 0.2368893467652883
 ```
+
+训练完成之后需要**保存模型**，调用 `model.save_pretrained(output_dir)` 即可，其中 `output_dir` 就是要保存的路径，*观察目录结构可以发现，只保存 LoRA 模块的权重而不需要保存整个模型。目录结构长下面这样*
+
+```sh
+output_dir
+├── README.md
+├── adapter_config.json
+└── adapter_model.bin
+```
+
+后续要**加载模型**也很简单
+
+```python
+from peft import AutoPeftModelForCausalLM
+
+peft_model_name_or_path = "./output_dir"
+
+model = AutoPeftModelForCausalLM.from_pretrained(peft_model_name_or_path)
+```
+
 
 ## LoRA 源码阅读
 

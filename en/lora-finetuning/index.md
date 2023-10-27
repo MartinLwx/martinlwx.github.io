@@ -2,7 +2,10 @@
 
 
 ## What's LoRA
-Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM **but** inserting trainable modules. Today, I will introduce the LoRA(**L**ow-**R**ank **A**daptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team[^1]
+
+{{< figure src="/img/lora.jpg" >}}
+
+Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM **but** inserting trainable modules. Today, I will introduce the LoRA(**Lo**w-**R**ank **A**daptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team[^1]
 
 The idea behind LoRA is quite simple. If you are familiar with deep learning, you should know that the parameters are updated by the gradient descent. Let's consider a weight matrix $\mathbf W_0\in\mathcal{R}^{d\times d}$(the subscript 0 here means it's the initial value), we can use $\Delta \mathbf W$ to denote the **relative change** to the initial value when it has been trained. After training, the parameters of this matrix will be
 
@@ -18,7 +21,7 @@ If the input is $\mathbf x$, then the computation will be
 
 $$\mathbf W_0\mathbf x+\frac{\alpha}{r}\Delta \mathbf W\mathbf x=\mathbf W_0\mathbf x+\frac{\alpha}{r}\mathbf B\mathbf A\mathbf x$$
 
-The $\alpha$ here is a scaling factor, and $r$ is the low-rank
+The $\alpha$ here is a scaling factor, and $r$ is the value of low-rank
 
 During **training**, only $\mathbf B$ and $\mathbf A$ are updated by the gradient descent. During **inference**, we can combint $\mathbf W_0$ with $\mathbf B\mathbf A$. **This is a significant advantage of LoRA: it does not introduce inference latency**👍
 
@@ -35,29 +38,46 @@ Here, $r<<d$, significantly reduces the number of parameters, making LoRA a **pa
 
 ## How to use LoRA
 
-The Huggingface has a library called [peft](https://github.com/huggingface/peft) which supports LoRA fine-tuning and many other fine-tuning techniques. The `README.md` file in this repo explains how to use LoRA fine-tuning. You simply need to configure the parameters using `LoraConfig`, and then use `get_peft_model` to transform the model, making it ready for subsequent training.
+The Huggingface has a library called [peft](https://github.com/huggingface/peft) which supports LoRA fine-tuning and many other fine-tuning techniques. The `README.md` file in this repo explains how to use LoRA fine-tuning. We simply need to configure the parameters using `LoraConfig`, and then use `get_peft_model` to transform the model, making it ready for subsequent training.
 
 ```python
-from transformers import AutoModelForSeq2SeqLM
+from transformers import AutoModelForCausalLM
 from peft import get_peft_config, get_peft_model, LoraConfig, TaskType
 
-model_name_or_path = "bigscience/mt0-large"
-tokenizer_name_or_path = "bigscience/mt0-large"
+model_name_or_path = "facebook/opt-350m"
 
 peft_config = LoraConfig(
-    task_type=TaskType.SEQ_2_SEQ_LM,
-    inference_mode=False,
+    task_type=TaskType.CAUSAL_LM,
     r=8,
     lora_alpha=32,
     lora_dropout=0.1,
 )
 
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name_or_path)
+model = AutoModelForCausalLM.from_pretrained(model_name_or_path)
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
-# output: trainable params: 2359296
-#      || all params: 1231940608
-#      || trainable%: 0.19151053100118282
+# output: trainable params: 786,432
+#      || all params: 331,982,848
+#      || trainable%: 0.2368893467652883
+```
+
+After training, we can **save the model** by using `model.save_pretrained(output_dir)`, where `output_dir` means the path to save. *If we check the `output_dir` folder, you will find that we only saved the incremental PEFT weights rather than the whole model weights*
+
+```sh
+output_dir
+├── README.md
+├── adapter_config.json
+└── adapter_model.bin
+```
+
+To **load the model and the LoRA module**, we can leverage this *magic* API :)
+
+```python
+from peft import AutoPeftModelForCausalLM
+
+peft_model_name_or_path = "./output_dir"
+
+model = AutoPeftModelForCausalLM.from_pretrained(peft_model_name_or_path)
 ```
 
 ## The source code of LoRA
