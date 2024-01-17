@@ -34,17 +34,17 @@ $$\mathbf W^{l+1} \in \mathcal R^{n_l\times n_{l+1}}$$
 
 ---
 
-我们想要确定损失 $J$ 对模型任意可学习参数的梯度（标量对矩阵求导），这样才能用梯度下降算法更新可学习参数，考虑我们要求解 $\mathbf W^l$ 的梯度
+我们想要确定损失 $J$ 对模型任意可学习参数的梯度（标量对矩阵求导），这样才能用梯度下降算法更新可学习参数，假设我们要求解 $\mathbf W^l$ 的梯度
 $$
 \frac{\partial J}{\partial \mathbf W^l}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot ...\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}}\cdot\frac{\partial \mathbf Z^{l}}{\partial\mathbf W^l}
 $$
 
-🤔️ 那如果求解的是关于 $\mathbf W^{l+1}$ 的梯度呢？
+🤔️ 那如果求解的是关于 $\mathbf W^{l-1}$ 的梯度呢？
 $$
 \frac{\partial J}{\partial \mathbf W^{l-1}}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot ...\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}} \cdot \frac{\partial \mathbf Z^{l}}{\partial\mathbf Z^{l-1}}\cdot\frac{\partial \mathbf Z^{l-1}}{\partial\mathbf W^{l-1}}
 $$
 
-你会发现，**不同参数的梯度公式存在大量共同的部分**，因此我们可以引入额外一个记号 $\mathbf G^l$，表示损失对 $\mathbf Z^l$ 的梯度
+你会发现，**不同参数的梯度公式存在大量相同的部分**，因此我们可以引入额外一个记号 $\mathbf G^l$，表示损失对 $\mathbf Z^l$ 的梯度
 $$\mathbf G^{l}=\frac{\partial J}{\partial \mathbf Z^{l}}$$
 
 下面我们就可以推导 $\mathbf G^l$ 和 $\mathbf G^{l+1}$ 的关系
@@ -60,13 +60,13 @@ $$
 \end{equation}
 $$
 
-在上面的最后一行，我们用**把矩阵当成标量处理**直接求导，然后根据前面说的，接下来**让维度匹配**就可以，先来看上面的每个部分的维度
+在上面的最后一行，我们**把矩阵当成标量处理**直接求导，然后根据前面说的，接下来**让维度匹配**就可以，先来看上面的每个部分的维度
 $$\mathbf G^{l+1}\in\mathcal{R}^{m\times n_{l+1}}$$
 $$\sigma_{l+1}'(\mathbf Z^{l}\mathbf W^{l+1})\in\mathcal{R}^{m\times n_{l+1}}$$
 $$
 \mathbf W^{l+1}\in\mathcal{R}^{n_l\times n_{l+1}}
 $$
-我们想要得到大小为 $m\times n_1$ 的矩阵，因为
+我们想要得到大小为 $m\times n_l$ 的矩阵，因为
 $$\mathbf G^l\in\mathcal{R}^{m\times n_l}$$
 
 所以可以这么凑
@@ -80,13 +80,13 @@ $$
 \begin{equation}
 \begin{aligned}
 \frac{\partial J}{\partial \mathbf W^l}&=\mathbf G^{l}\cdot\frac{\partial \mathbf Z^l}{\mathbf W^l} \\\\\\
-&= \mathbf G^{l}\cdot\frac{\partial \mathbf \sigma_{l+1}(\mathbf Z^{l-1}\mathbf W^l)}{\partial \mathbf Z^{l-1}\mathbf W^l}\cdot \frac{\partial \mathbf Z^{l-1}\mathbf W^l}{\partial\mathbf W^l} \\\\\\
-&= \mathbf G^{l}\cdot\mathbf \sigma_{l+1}'(\mathbf Z^{l-1}\mathbf W^l)\cdot \mathbf Z^{l-1}(cheat)
+&= \mathbf G^{l}\cdot\frac{\partial \mathbf \sigma_{l}(\mathbf Z^{l-1}\mathbf W^l)}{\partial \mathbf Z^{l-1}\mathbf W^l}\cdot \frac{\partial \mathbf Z^{l-1}\mathbf W^l}{\partial\mathbf W^l} \\\\\\
+&= \mathbf G^{l}\cdot\mathbf \sigma_{l}'(\mathbf Z^{l-1}\mathbf W^l)\cdot \mathbf Z^{l-1}(cheat)
 \end{aligned} 
 \end{equation}
 $$
 
-我们想要得到和 $\mathbf W^l$ 一样大小的矩阵：$(n_l, n_{l+1})$，整理一下上面的不同部分
+我们想要得到和 $\mathbf W^l$ 一样大小的矩阵：$(n_{l-1}, n_{l})$，**再次把矩阵当作标量处理让最后的维度是正确的**：
 
 $$
 \frac{\partial J}{\partial \mathbf W^l}=(\mathbf Z^{l-1})^T\Big(\mathbf G^{l}\odot\mathbf \sigma_{l+1}'(\mathbf Z^{l-1}\mathbf W^l) \Big )\\
@@ -110,14 +110,14 @@ $$
 \begin{aligned} 
 \frac{\partial}{\partial \theta}\ J(w,b) 
 &= \frac{\partial}{\partial \theta}\ \frac{1}{2m}(\mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) \\\\\\
-&= \frac{1}{2m}\frac{\partial(\ \mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) }{\partial \mathbf X\theta-\vec y}\cdot \frac{\partial \mathbf X\theta-\vec y}{\partial \theta}\\\\\\
+&= \frac{1}{2m}\frac{\partial(\ \mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) }{\partial (\mathbf X\theta-\vec y)}\cdot \frac{\partial (\mathbf X\theta-\vec y)}{\partial \theta}\\\\\\
 &= \frac{1}{2m}\cdot2(\mathbf X\theta-\vec y)\cdot\mathbf X\ (cheat)
 \end{aligned} 
 \end{equation}
 $$
 
 考虑维度信息
-$$\mathbf X\theta-\vec y\in\mathcal{R}^{m\times 1}$$
+$$(\mathbf X\theta-\vec y)\in\mathcal{R}^{m\times 1}$$
 $$\mathbf X\in\mathcal{R}^{m\times(n+1)}$$
 我们想要得到的是跟 $\theta$ 一样维度大小的：
 $$\theta\in\mathcal{R}^{(n+1)\times 1}$$

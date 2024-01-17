@@ -35,13 +35,14 @@ $$\mathbf W^{l+1} \in \mathcal R^{n_l\times n_{l+1}}$$
 Here, $n_l$ represents the number of neurons in layer $l$
 
 ---
+
 We want to determine the gradient of the loss $J$ with respect to any learnable parameter in the model. This gradient is essential for using gradient a descent algorithm to update the learnable parameters. Specifically, let's consider that we want to calculate the gradient of $\mathbf{W}^l$.
 
 $$
 \frac{\partial J}{\partial \mathbf W^l}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot ...\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}}\cdot\frac{\partial \mathbf Z^{l}}{\partial\mathbf W^l}
 $$
 
-🤔️ What if we also want to calculate the gradient with respect to $\mathbf W^{l+1}$?
+🤔️ What if we also want to calculate the gradient with respect to $\mathbf W^{l-1}$?
 $$
 \frac{\partial J}{\partial \mathbf W^{l-1}}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot ...\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}} \cdot \frac{\partial \mathbf Z^{l}}{\partial\mathbf Z^{l-1}}\cdot\frac{\partial \mathbf Z^{l-1}}{\partial\mathbf W^{l-1}}
 $$
@@ -69,7 +70,7 @@ $$
 \mathbf W^{l+1}\in\mathcal{R}^{n_l\times n_{l+1}}
 $$
 
-We want to get a matrix with the shape $m\times n_1$, because
+We want to get a matrix with the shape $m\times n_l$, because
 $$\mathbf G^l\in\mathcal{R}^{m\times n_l}$$
 
 So we can derive this
@@ -83,13 +84,13 @@ $$
 \begin{equation}
 \begin{aligned}
 \frac{\partial J}{\partial \mathbf W^l}&=\mathbf G^{l}\cdot\frac{\partial \mathbf Z^l}{\mathbf W^l} \\\\\\
-&= \mathbf G^{l}\cdot\frac{\partial \mathbf \sigma_{l+1}(\mathbf Z^{l-1}\mathbf W^l)}{\partial \mathbf Z^{l-1}\mathbf W^l}\cdot \frac{\partial \mathbf Z^{l-1}\mathbf W^l}{\partial\mathbf W^l} \\\\\\
-&= \mathbf G^{l}\cdot\mathbf \sigma_{l+1}'(\mathbf Z^{l-1}\mathbf W^l)\cdot \mathbf Z^{l-1}(cheat)
+&= \mathbf G^{l}\cdot\frac{\partial \mathbf \sigma_{l}(\mathbf Z^{l-1}\mathbf W^l)}{\partial \mathbf Z^{l-1}\mathbf W^l}\cdot \frac{\partial \mathbf Z^{l-1}\mathbf W^l}{\partial\mathbf W^l} \\\\\\
+&= \mathbf G^{l}\cdot\mathbf \sigma_{l}'(\mathbf Z^{l-1}\mathbf W^l)\cdot \mathbf Z^{l-1}(cheat)
 \end{aligned} 
 \end{equation}
 $$
 
-$J$ is a scalar, so the shape of $\frac{\partial J}{\partial \mathbf W^l}$ should be equal to $\mathbf W^l$. That is, we want a matrix with the shape $(n_l, n_{l+1})$. Let's rearrange these components
+$J$ is a scalar, so the shape of $\frac{\partial J}{\partial \mathbf W^l}$ should be equal to $\mathbf W^l$. That is, we want a matrix with the shape $(n_{l-1}, n_{l})$. Let's rearrange these components
 
 $$
 \frac{\partial J}{\partial \mathbf W^l}=(\mathbf Z^{l-1})^T\Big(\mathbf G^{l}\odot\mathbf \sigma_{l+1}'(\mathbf Z^{l-1}\mathbf W^l) \Big )\\
@@ -114,14 +115,14 @@ $$
 \begin{aligned} 
 \frac{\partial}{\partial \theta}\ J(w,b) 
 &= \frac{\partial}{\partial \theta}\ \frac{1}{2m}(\mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) \\\\\\
-&= \frac{1}{2m}\frac{\partial(\ \mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) }{\partial \mathbf X\theta-\vec y}\cdot \frac{\partial \mathbf X\theta-\vec y}{\partial \theta}\\\\\\
+&= \frac{1}{2m}\frac{\partial(\ \mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) }{\partial (\mathbf X\theta-\vec y)}\cdot \frac{\partial (\mathbf X\theta-\vec y)}{\partial \theta}\\\\\\
 &= \frac{1}{2m}\cdot2(\mathbf X\theta-\vec y)\cdot\mathbf X\ (cheat)
 \end{aligned} 
 \end{equation}
 $$
 
 Note the shapes here
-$$\mathbf X\theta-\vec y\in\mathcal{R}^{m\times 1}$$
+$$(\mathbf X\theta-\vec y)\in\mathcal{R}^{m\times 1}$$
 $$\mathbf X\in\mathcal{R}^{m\times(n+1)}$$
 
 We want a vector whose shape is equal to $(n+1)\times 1$

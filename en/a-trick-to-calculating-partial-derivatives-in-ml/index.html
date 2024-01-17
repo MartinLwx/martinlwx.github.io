@@ -7,13 +7,12 @@
         <title>A trick to calculating partial derivatives in machine learning - MartinLwx&#39;s blog</title><meta name="Description" content="A introduction of a cool trick to calculate partial derivatives in machine learning"><meta property="og:title" content="A trick to calculating partial derivatives in machine learning" />
 <meta property="og:description" content="A introduction of a cool trick to calculate partial derivatives in machine learning" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-07-26T00:31:50+08:00" />
-<meta property="article:modified_time" content="2023-07-26T00:31:50+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
+<meta property="article:modified_time" content="2024-01-17T20:11:30+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
 
-<meta name="twitter:title" content="A trick to calculating partial derivatives in machine learning"/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="A trick to calculating partial derivatives in machine learning"/>
 <meta name="twitter:description" content="A introduction of a cool trick to calculate partial derivatives in machine learning"/>
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -30,7 +29,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/en\/a-trick-to-calculating-partial-derivatives-in-ml\/"
         },"genre": "posts","keywords": "Deep-Learning, Machine-Learning","wordcount":  968 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/a-trick-to-calculating-partial-derivatives-in-ml\/","datePublished": "2023-07-26T00:31:50+08:00","dateModified": "2023-07-26T00:31:50+08:00","publisher": {
+        "url": "https:\/\/martinlwx.github.io\/en\/a-trick-to-calculating-partial-derivatives-in-ml\/","datePublished": "2023-07-26T00:31:50+08:00","dateModified": "2024-01-17T20:11:30+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -159,7 +158,7 @@ $$\mathbf W^{l+1} \in \mathcal R^{n_l\times n_{l+1}}$$</p>
 <p>$$
 \frac{\partial J}{\partial \mathbf W^l}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot &hellip;\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}}\cdot\frac{\partial \mathbf Z^{l}}{\partial\mathbf W^l}
 $$</p>
-<p>🤔️ What if we also want to calculate the gradient with respect to $\mathbf W^{l+1}$?
+<p>🤔️ What if we also want to calculate the gradient with respect to $\mathbf W^{l-1}$?
 $$
 \frac{\partial J}{\partial \mathbf W^{l-1}}=\frac{\partial J}{\partial\mathbf Z^{L}}\cdot \frac{\partial \mathbf Z^{L}}{\partial\mathbf Z^{L-1}}\cdot &hellip;\cdot \frac{\partial \mathbf Z^{l+1}}{\partial\mathbf Z^{l}} \cdot \frac{\partial \mathbf Z^{l}}{\partial\mathbf Z^{l-1}}\cdot\frac{\partial \mathbf Z^{l-1}}{\partial\mathbf W^{l-1}}
 $$</p>
@@ -182,7 +181,7 @@ $$\sigma_{l+1}&rsquo;(\mathbf Z^{l}\mathbf W^{l+1})\in\mathcal{R}^{m\times n_{l+
 $$
 \mathbf W^{l+1}\in\mathcal{R}^{n_l\times n_{l+1}}
 $$</p>
-<p>We want to get a matrix with the shape $m\times n_1$, because
+<p>We want to get a matrix with the shape $m\times n_l$, because
 $$\mathbf G^l\in\mathcal{R}^{m\times n_l}$$</p>
 <p>So we can derive this
 $$\mathbf G^{l}=\Big (\mathbf G^{l+1}\odot\sigma_{l+1}&rsquo;(\mathbf Z^{l}\mathbf W^{l+1})\Big )(\mathbf{W}^{l+1})^T=\Big (\mathbf G^{l+1}\odot\sigma_{l+1}&rsquo;(\mathbf Z^{l+1})\Big )(\mathbf{W}^{l+1})^T$$</p>
@@ -193,12 +192,12 @@ $$
 \begin{equation}
 \begin{aligned}
 \frac{\partial J}{\partial \mathbf W^l}&amp;=\mathbf G^{l}\cdot\frac{\partial \mathbf Z^l}{\mathbf W^l} \\\
-&amp;= \mathbf G^{l}\cdot\frac{\partial \mathbf \sigma_{l+1}(\mathbf Z^{l-1}\mathbf W^l)}{\partial \mathbf Z^{l-1}\mathbf W^l}\cdot \frac{\partial \mathbf Z^{l-1}\mathbf W^l}{\partial\mathbf W^l} \\\
-&amp;= \mathbf G^{l}\cdot\mathbf \sigma_{l+1}&rsquo;(\mathbf Z^{l-1}\mathbf W^l)\cdot \mathbf Z^{l-1}(cheat)
+&amp;= \mathbf G^{l}\cdot\frac{\partial \mathbf \sigma_{l}(\mathbf Z^{l-1}\mathbf W^l)}{\partial \mathbf Z^{l-1}\mathbf W^l}\cdot \frac{\partial \mathbf Z^{l-1}\mathbf W^l}{\partial\mathbf W^l} \\\
+&amp;= \mathbf G^{l}\cdot\mathbf \sigma_{l}&rsquo;(\mathbf Z^{l-1}\mathbf W^l)\cdot \mathbf Z^{l-1}(cheat)
 \end{aligned}
 \end{equation}
 $$</p>
-<p>$J$ is a scalar, so the shape of $\frac{\partial J}{\partial \mathbf W^l}$ should be equal to $\mathbf W^l$. That is, we want a matrix with the shape $(n_l, n_{l+1})$. Let&rsquo;s rearrange these components</p>
+<p>$J$ is a scalar, so the shape of $\frac{\partial J}{\partial \mathbf W^l}$ should be equal to $\mathbf W^l$. That is, we want a matrix with the shape $(n_{l-1}, n_{l})$. Let&rsquo;s rearrange these components</p>
 <p>$$
 \frac{\partial J}{\partial \mathbf W^l}=(\mathbf Z^{l-1})^T\Big(\mathbf G^{l}\odot\mathbf \sigma_{l+1}&rsquo;(\mathbf Z^{l-1}\mathbf W^l) \Big )\
 =(\mathbf Z^{l-1})^T\Big(\mathbf G^{l}\odot\mathbf \sigma_{l+1}&rsquo;(\mathbf Z^l) \Big )\
@@ -221,13 +220,13 @@ $$
 \begin{aligned}
 \frac{\partial}{\partial \theta}\ J(w,b)
 &amp;= \frac{\partial}{\partial \theta}\ \frac{1}{2m}(\mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) \\\
-&amp;= \frac{1}{2m}\frac{\partial(\ \mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) }{\partial \mathbf X\theta-\vec y}\cdot \frac{\partial \mathbf X\theta-\vec y}{\partial \theta}\\\
+&amp;= \frac{1}{2m}\frac{\partial(\ \mathbf X\theta - \vec{y})^T(\mathbf X\theta - \vec{y}) }{\partial (\mathbf X\theta-\vec y)}\cdot \frac{\partial (\mathbf X\theta-\vec y)}{\partial \theta}\\\
 &amp;= \frac{1}{2m}\cdot2(\mathbf X\theta-\vec y)\cdot\mathbf X\ (cheat)
 \end{aligned}
 \end{equation}
 $$</p>
 <p>Note the shapes here
-$$\mathbf X\theta-\vec y\in\mathcal{R}^{m\times 1}$$
+$$(\mathbf X\theta-\vec y)\in\mathcal{R}^{m\times 1}$$
 $$\mathbf X\in\mathcal{R}^{m\times(n+1)}$$</p>
 <p>We want a vector whose shape is equal to $(n+1)\times 1$
 $$\theta\in\mathcal{R}^{(n+1)\times 1}$$
@@ -239,7 +238,7 @@ $$\frac{1}{m}\mathbf X^T(\mathbf X\theta-\vec y)$$</p>
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-07-26</span>
+                <span>Updated on 2024-01-17</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
@@ -261,8 +260,8 @@ $$\frac{1}{m}\mathbf X^T(\mathbf X\theta-\vec y)$$</p>
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

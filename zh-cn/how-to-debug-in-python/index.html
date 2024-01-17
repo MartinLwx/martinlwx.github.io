@@ -7,13 +7,12 @@
         <title>怎么 debug Python 代码 - MartinLwx&#39;s blog</title><meta name="Description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"><meta property="og:title" content="怎么 debug Python 代码" />
 <meta property="og:description" content="简单介绍了用 ipdb 对 Python 文件进行 debug" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-12-28T11:19:00+08:00" />
 <meta property="article:modified_time" content="2023-03-17T13:51:00+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"/>
 
-<meta name="twitter:title" content="怎么 debug Python 代码"/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="怎么 debug Python 代码"/>
 <meta name="twitter:description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"/>
 <meta name="application-name" content="我的网站">
 <meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -29,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-debug-in-python\/"
-        },"genre": "posts","keywords": "Debug, Python","wordcount":  1623 ,
+        },"genre": "posts","keywords": "Debug, Python","wordcount":  1631 ,
         "url": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-debug-in-python\/","datePublished": "2021-12-28T11:19:00+08:00","dateModified": "2023-03-17T13:51:00+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -109,7 +108,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">怎么 debug Python 代码</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/python/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-12-28">2021-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1623 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-12-28">2021-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1631 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -140,8 +139,8 @@
 <blockquote>
 <p>PS. 有兴趣的可以查看我翻译的一个项目 - <a href="https://github.com/MartinLwx/pdb-tutorial" target="_blank" rel="noopener noreffer ">pdb 教程</a> 🙌</p>
 </blockquote>
-<p>很长一段时间内我写代码都是用最简单的 debug 方法, 手动在程序里面插入 <code>print</code> 代码来看具体的变量的值, 然后自己推断程序到底是在哪里出问题。根据 <code>print</code> 的结果可能还要到别的地方重复这个步骤。debug 完之后还得去把这些 <code>print</code> 语句注释掉，即<strong>我是一名 print debugger</strong> 😢</p>
-<p>最近在看 MIT.Missing semester 的课讲到 debug, 顿时感到应该系统学习一下在 Python 里面如何 debug, 虽然用 <code>print</code> 也凑合, 学完之后只恨自己没有早点了解😢</p>
+<p>很长一段时间内我写代码都是用最简单的 debug 方法, 手动在程序里面插入 <code>print</code> 代码来看具体的变量的值, 然后自己推断程序到底是在哪里出问题。根据 <code>print</code> 的结果可能还要到别的地方重复这个步骤。debug 完之后还得去把这些 <code>print</code> 语句注释掉，即<strong>我是一名 print debugger</strong> &#x1f622;</p>
+<p>最近在看 MIT.Missing semester 的课讲到 debug, 顿时感到应该系统学习一下在 Python 里面如何 debug, 虽然用 <code>print</code> 也凑合, 学完之后只恨自己没有早点了解&#x1f622;</p>
 <h2 id="快速上手">快速上手</h2>
 <h3 id="安装">安装</h3>
 <p>虽然 Python 有自带的 <code>pdb</code>, 但是 <code>ipdb</code> 的跟它大差不差, 还<strong>带颜色输出</strong>, 当然用这个了(其实就跟你在命令行要用 <code>python</code> 还是 <code>ipython</code> 一样, 肯定是选择 UI 比较好的</p>
@@ -288,7 +287,7 @@
 <p>Q: 每次单步执行之后都要用 <code>p expression</code> 的方式来看变量的值, 有没有更为简便的方法?</p>
 <p>A: 可以用 <code>display expression</code>, 那么在 <code>expression</code> 的值发生变动的时候, 它就会输出对应的值. 如果要取消就用 <code>undisplay expression</code></p>
 <p>Q: 觉得命令有点少不满足自己的需要 ?</p>
-<p>A: 可以在 <code>ipdb</code> 里面直接写 python 的代码 🤗</p>
+<p>A: 可以在 <code>ipdb</code> 里面直接写 python 的代码 &#x1f917;</p>
 <p>Q: 不想使用 <code>python -m ipdb &lt;filename&gt;</code> 想直接在代码里插入程序断点 ?</p>
 <p>A: 这也是可以的, 你可以在要插入的行之前设置, 像这样:</p>
 <div class="highlight"><div class="chroma">
@@ -340,8 +339,8 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
