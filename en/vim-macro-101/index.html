@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/vim-macro-101/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-02T10:40:38+08:00" />
-<meta property="article:modified_time" content="2022-07-02T10:40:38+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta property="article:modified_time" content="2023-01-18T10:40:38+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Vim Macro 101"/>
@@ -28,8 +28,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/en\/vim-macro-101\/"
-        },"genre": "posts","keywords": "Vim","wordcount":  997 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/vim-macro-101\/","datePublished": "2022-07-02T10:40:38+08:00","dateModified": "2022-07-02T10:40:38+08:00","publisher": {
+        },"genre": "posts","keywords": "Vim","wordcount":  929 ,
+        "url": "https:\/\/martinlwx.github.io\/en\/vim-macro-101\/","datePublished": "2022-07-02T10:40:38+08:00","dateModified": "2023-01-18T10:40:38+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -108,7 +108,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vim Macro 101</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">included in <a href="/en/categories/vim/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Vim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-02">2022-07-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;997 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-02">2022-07-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;929 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="true">
                 <div class="details-summary toc-title">
@@ -118,69 +118,61 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
-    <li><a href="#what-is-macro-in-vim">What is macro in vim?</a></li>
+    <li><a href="#what-is-macro-in-vim">What is macro in Vim?</a></li>
     <li><a href="#macro-how">Macro-how?</a>
       <ul>
-        <li><a href="#how-to-record-your-macro">How to record your macro</a></li>
-        <li><a href="#how-to-check-my-macro">How to check my macro</a></li>
-        <li><a href="#how-to-execute-my-macro">How to execute my macro</a>
+        <li><a href="#how-to-record-a-macro">How to record a macro</a></li>
+        <li><a href="#how-to-inspect-a-macro">How to inspect a macro</a></li>
+        <li><a href="#how-to-execute-a-macro">How to execute a macro</a>
           <ul>
             <li><a href="#within-a-file">Within a file</a></li>
-            <li><a href="#a-bunch-of-files">a bunch of files</a></li>
+            <li><a href="#a-bunch-of-files">A bunch of files</a></li>
           </ul>
         </li>
-        <li><a href="#how-to-modify-my-macro">How to modify my macro</a>
+        <li><a href="#how-to-modify-a-macro">How to modify a macro</a>
           <ul>
-            <li><a href="#simple-case">simple case</a></li>
-            <li><a href="#complex-case">complex case</a></li>
+            <li><a href="#simple-case">Simple case</a></li>
+            <li><a href="#complex-case">Complex case</a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#combined-with-other-tools">Combined with other tools</a></li>
     <li><a href="#wrap-up">Wrap up</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="intro">Intro</h2>
-<p>In the process of learning <code>vim</code>, the most enlightening sentence for me is :</p>
+<p>In the process of learning Vim, the most enlightening sentence for me is :</p>
 <blockquote>
-<p><strong>vim is a kind of programming language</strong></p>
+<p><strong>Vim is a kind of <em>programming language</em></strong></p>
 </blockquote>
-<p>I once try to learn <code>vim</code> a long time ago. However, the key combination logic is very difficult to remember in my opinion. So I later gave up learning <code>vim</code> and switched to a normal text editor. My view of <code>vim</code> changed when I met this course: <em><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreffer ">Missing semester</a></em>. I started to regard <code>vim</code> as a kind of programming language rather than just a text editor. :)</p>
-<p>It seems that I am talking about something unrelated to this blog post. That&rsquo;s not true. As programmers, we often do repetitive tasks by programming. Different people have different favorites. <code>vim</code> is definitely one of the options for solving problems.</p>
-<h2 id="what-is-macro-in-vim">What is macro in vim?</h2>
+<p>I once tried to learn Vim a long time ago. However, the keystroke combinations are very difficult to memorize in my opinion. So I later gave up learning Vim and switched to a normal text editor. My view of Vim changed when I took this course: <em><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreffer ">Missing semester</a></em>. I started to regard Vim as a kind of programming language rather than just a text editor. Then I find that <strong>the combinations of various operations of Vim are the syntax of programming language</strong>.</p>
+<p>It seems that I am talking about something unrelated to this blog post. That&rsquo;s not true. As programmers, we often avoid doing repetitive tasks by programming. Different people have different favorites. Vim is one of the options you probably do not know.</p>
 <blockquote>
-<p>I assume you have a basic understanding of basic <code>vim</code> usage  : )</p>
+<p>I assume you have a basic understanding of basic Vim usage  : )</p>
 </blockquote>
-<p>We know that we can use <code>.</code> to repeat the last change, well, a simple change I mean. Have you wondered if there is a more powerful way to repeat <strong>complex changes</strong>?</p>
-<p>Yeah, It is called <code>macro</code> in <code>vim</code>. You can record your typed characters(operations) into a register and execute them later. It is just a sequence of characters that could be understood by <code>vim</code>.</p>
+<h2 id="what-is-macro-in-vim">What is macro in Vim?</h2>
+<p>We know that we can use <code>.</code> to repeat the last change. However, what if we want to apply many changes? Macro comes to the rescue. :)</p>
+<p>By using macro, we can record our operations and then store them in a register which can be executed later. If you check the content of the corresponding register, you may find that it is just a sequence of characters.</p>
 <h2 id="macro-how">Macro-how?</h2>
-<h3 id="how-to-record-your-macro">How to record your macro</h3>
-<p><strong>Steps followed</strong>:</p>
+<h3 id="how-to-record-a-macro">How to record a macro</h3>
+<p><strong>Steps to follow</strong>:</p>
 <ol>
 <li>
 <p>In normal mode, press <code>q&lt;register&gt;</code>.</p>
 <ol>
-<li>
-<p>It means you first press <code>q</code> and then choose a <code>register</code> you like to store your macro.</p>
-</li>
-<li>
-<p>the <code>regitser</code>s you can use: <code>0-9</code>, <code>a-z</code>, and <code>&quot;</code>. I will explain why not use the uppercase letters here later</p>
-</li>
+<li>It means you first press <code>q</code> and then choose a <code>&lt;register&gt;</code> you like to store your macro.</li>
+<li>The <code>regitser</code>s you can use are: <code>0-9</code>, <code>a-z</code>, and <code>&quot;</code>.</li>
 </ol>
 </li>
 <li>
-<p>Start typing. If everything goes right, you will see <code>recording @&lt;register&gt;</code> in the bottom left. From now on, everything you typed will be recorded.</p>
+<p>Start typing. If everything goes right, you will see <code>recording @&lt;register&gt;</code> in the bottom left. From now on, everything you type will be recorded.</p>
 </li>
 <li>
-<p>Press <code>q</code> again to exit the recording.</p>
+<p>Press <code>q</code> again to quit the recording.</p>
 </li>
 </ol>
-<blockquote>
-<p>📒 The most important thing when you record your macro is: you should <strong>make all steps repeatable in other similar files</strong>. So, the takeaway is: look into the files and figure out the common pattern before recording :)</p>
-</blockquote>
-<h3 id="how-to-check-my-macro">How to check my macro</h3>
-<p>I previously mentioned that the macro is just a sequence of characters stored in a specific register. So if we want to look into the register, we just type the <code>:reg</code> command.</p>
+<h3 id="how-to-inspect-a-macro">How to inspect a macro</h3>
+<p>I previously mentioned that the macro is just a sequence of characters stored in a specific register. We can use the following command to inspect the content:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -191,52 +183,41 @@
 </div>
 </div><p>You may see some strange characters:</p>
 <ul>
-<li>
-<p><code>^[</code> means <code>&lt;ESC&gt;</code></p>
-</li>
-<li>
-<p><code>&lt;80&gt;kb</code> means <code>BAKESPACE</code></p>
-</li>
+<li><code>^[</code> means <code>&lt;ESC&gt;</code></li>
+<li><code>&lt;80&gt;kb</code> means <code>BAKESPACE</code></li>
 </ul>
-<h3 id="how-to-execute-my-macro">How to execute my macro</h3>
+<h3 id="how-to-execute-a-macro">How to execute a macro</h3>
 <h4 id="within-a-file">Within a file</h4>
 <ul>
-<li>
-<p><code>@&lt;register&gt;</code>: execute the macro in <code>&lt;register&gt;</code></p>
-</li>
-<li>
-<p><code>@@</code>: execute the previously executed macro</p>
-</li>
-<li>
-<p>What if I want to execute my macro many times? Well, it is easy. You just add <code>[COUNT]</code> before <code>@@</code> or <code>@&lt;register&gt;</code>. Remember, <code>vim</code> is a kind of programming language. Do all these make sense if you consider it as a kind of programming language?</p>
+<li><code>@&lt;register&gt;</code>: execute the macro in <code>&lt;register&gt;</code></li>
+<li><code>@@</code>: execute the last executed macro</li>
+</ul>
+<p>What if we want to execute a macro many times? Well, it is easy. We just add <code>[COUNT]</code> before <code>@@</code> or <code>@&lt;register&gt;</code>. Remember, Vim is a kind of <em>programming language</em>. Do all these make sense if you consider it as a kind of programming language?</p>
 <ul>
-<li>e.g. <code>100@@</code> means executing the previous executed macro 100 times : )</li>
+<li>e.g. <em><code>100@@</code> means executing the last executed macro 100 times</em></li>
 </ul>
-</li>
-</ul>
-<p>It is worth mentioning that if you want to apply your macro within a file, you can set a larger <code>[COUNT]</code>. The exceeding part will be ignored.</p>
-<h4 id="a-bunch-of-files">a bunch of files</h4>
-<p>Open a file and apply a macro repeatedly could be very tedious. It is absolutely a violation of the DRY(Don&rsquo;t repeat yourself) principle.</p>
-<p><code>vim</code> allows us to open multiple files at the same time and edit them one by one. What&rsquo;s more, we can apply our macro to all files in a single command.</p>
-<p>For example, you want to edit all the <code>txt</code> files in the current directory. You can open all of them by typing <code>vim *.txt</code> in your terminal. At first glance, it looks like you are editing a file, except that if you try to type <code>:x</code> to save and exit you will get an error! The basic way is modifying and then typing <code>:wn</code> to save the changes and go to the next file. Now I will tell you how to do this cleverly.</p>
+<p>Calculating what the value of <code>[COUNT]</code> should be is tedious. Luckily, we can set it to a large value. The exceeding part will be ignored.</p>
+<h4 id="a-bunch-of-files">A bunch of files</h4>
+<p>Things got complicated when you tried to modify multiple files. Opening each file and applying a macro repeatedly would be unreasonable. It is a violation of the DRY(Don&rsquo;t repeat yourself) principle.</p>
+<p>Vim allows us to open multiple files at the same time and edit them one by one. What&rsquo;s more, we can apply our recorded macro to all files with a single command.</p>
+<p>For example, you may want to edit all the <code>txt</code> files in the current directory. Typing <code>vim *.txt</code> in your terminal will open all these files. At first glance, it looks like you are editing a file, except that if you try to type <code>:x</code> to save and exit you will get an error! The naive way is modifying the file content and then typing <code>:wn</code> to save the changes and go to the next file. Now I will tell you how to do this more cleverly.</p>
 <ol>
-<li>Record your specific macro first then drop the changes by typing <code>:edit!</code> in the 1st file because we will change all files later. Without this step, the 1st file will be modified twice.</li>
-<li>Typing <code>:bufdo execute &quot;normal @&lt;register&gt;&quot; | update</code>.</li>
+<li>Record your macro first then drop the changes by typing <code>:edit!</code> in the 1-st file because we will change all files including the 1-st file later. Without this cancellation, the 1st file will be modified twice.</li>
+<li>In normal mode, type <code>:bufdo execute &quot;normal @&lt;register&gt;&quot; | update</code>.</li>
 </ol>
 <p>More details can be found <a href="https://vim.fandom.com/wiki/Run_a_command_in_multiple_buffers" target="_blank" rel="noopener noreffer ">here</a></p>
-<h3 id="how-to-modify-my-macro">How to modify my macro</h3>
-<h4 id="simple-case">simple case</h4>
-<p>If you are recording a quite long macro and you press <code>q</code> unexpectedly, you may need this feature. It is good news that we don&rsquo;t need to start from the beginning again.</p>
-<p>Do you still remember that I deliberately skip the uppercase letter registers earlier? Actually. <strong>When you press <code>q&lt;REIGSTER&gt;</code>(<code>REGISTER</code> means <code>A-Z</code>). Everything you typed will be appended to the <code>REGISTER</code></strong> 🚀</p>
-<h4 id="complex-case">complex case</h4>
-<p>You may need to change some operations in the middle of the macro. Still, you don&rsquo;t need to redo all these.</p>
-<p>You may follow the steps to modify your macro:</p>
+<h3 id="how-to-modify-a-macro">How to modify a macro</h3>
+<h4 id="simple-case">Simple case</h4>
+<p>If you are recording a quite long macro and you press <code>q</code> unexpectedly, you definitely do not want to start from the beginning. Vim has a feature to save us from this trouble.</p>
+<p>In Vim, if we press <code>q&lt;REIGSTER&gt;</code>(<code>&lt;REGISTER&gt;</code> means <code>A-Z</code>) in normal mode. Everything we typed now will be appended to the corresponding <code>register</code>. <em>For example, we may have recorded macro in register <code>a</code>, then we can press <code>qA</code> to append operations to this marco</em>. That is how we continue recording a half-finished macro.</p>
+<h4 id="complex-case">Complex case</h4>
+<p>What if we want to change the operations in the middle rather than appending them? The secret is that we can just treat the macro as a text sequence. After editing, we can store it back:</p>
 <ol>
-<li>Press <code>G</code> to jump to the last line, then type <code>:put &lt;register&gt;</code>. You will see the content of the <code>register</code> now appear below.</li>
-<li>Just edit the content</li>
-<li>After you have edited the content, you can type <code>:d &lt;register&gt;</code> to put back the content</li>
+<li>Press <code>G</code> to jump to the last line, then type <code>:put &lt;register&gt;</code>. The content of the <code>register</code> will appear in the next line.</li>
+<li>Just edit this mysterious text sequence.</li>
+<li>After you have edited the content, you can type <code>:d &lt;register&gt;</code> to put back the content(make sure your cursor is still in this line).</li>
 </ol>
-<p>e.g. The followed gif shows the procedure of modifying a macro. I have a dumb macro in the register <code>y</code> whose function is appending <code> world</code> in the current line. I just modify it to append <code> hello world</code> instead.</p>
+<p>e.g. <em>The following gif shows the procedure of modifying a macro. I have a dumb macro in the register <code>y</code> which can append <code> world</code> in the current line. I change it to append <code> hello world</code> instead.</em></p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -245,20 +226,13 @@
         data-sizes="auto"
         alt="/img/modify_macro.gif"
         title="/img/modify_macro.gif" /></p>
-<h2 id="combined-with-other-tools">Combined with other tools</h2>
-<p>In the Linux world, we can combine the CLI tools to achieve what we want in an elegant way.</p>
-<p>Let&rsquo;s say you want to edit a bunch of files(the operation is the same) using <code>vim</code>. Check this <a href="https://stackoverflow.com/questions/4867679/redirecting-output-of-find-command-to-vim" target="_blank" rel="noopener noreffer ">link</a>.</p>
-<ol>
-<li>You can using <code>find &lt;pattern&gt; -exec vim {} +</code> to open all the files in <code>vim</code>.</li>
-<li>Use the <code>bufdo</code> technology aforementioned to modify files.</li>
-</ol>
 <h2 id="wrap-up">Wrap up</h2>
-<p>This is a simple tutorial about the macro in vim. It is just the tip of the iceberg in <code>vim</code>. Only when you really master the <code>vim</code> you may make the most of it. It would be great if this blog get you interested in <code>vim</code>. I once heard that: at first, we choose the tools we like, and then the tool will shape us. Hope this tutorial will be helpful 😉</p>
+<p>This is a simple tutorial about the macro in Vim, which is just the tip of the iceberg in Vim. Only when you master Vim do you make the most of it. It would be great if this blog got you interested in learning Vim. Hope this tutorial will be helpful 😉</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-07-02</span>
+                <span>Updated on 2023-01-18</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
