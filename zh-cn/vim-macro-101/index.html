@@ -4,22 +4,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Vim Macro 101 - MartinLwx&#39;s blog</title><meta name="Description" content="How to use vim&#39;s macro system"><meta property="og:title" content="Vim Macro 101" />
+        <title>Vim Macro 101 - MartinLwx&#39;s Blog</title><meta name="description" content="How to use vim&#39;s macro system"><meta property="og:title" content="Vim Macro 101" />
 <meta property="og:description" content="How to use vim&#39;s macro system" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-02T10:40:38+08:00" />
-<meta property="article:modified_time" content="2023-01-18T10:40:38+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta property="article:modified_time" content="2023-01-18T10:40:38+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Vim Macro 101"/>
 <meta name="twitter:description" content="How to use vim&#39;s macro system"/>
-<meta name="application-name" content="我的网站">
-<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="application-name" content="MartinLwx&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
+        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -29,46 +30,56 @@
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/vim-macro-101\/"
         },"genre": "posts","keywords": "Vim","wordcount":  1842 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/vim-macro-101\/","datePublished": "2022-07-02T10:40:38+08:00","dateModified": "2023-01-18T10:40:38+08:00","publisher": {
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/vim-macro-101\/","datePublished": "2022-07-02T10:40:38+08:00","dateModified": "2023-01-18T10:40:38+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "How to use vim's macro system"
     }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
+}
+</script>
+</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/vim-macro-101/">English</option><option value="/zh-cn/vim-macro-101/" selected>简体中文</option></select>
+                    </span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
                         </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/vim-macro-101/">English</option><option value="/zh-cn/vim-macro-101/" selected>简体中文</option></select>
-                </a></div>
+                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -77,45 +88,48 @@
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
                         </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
+                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
                     <select class="language-select" onchange="location = this.value;"><option value="/en/vim-macro-101/">English</option><option value="/zh-cn/vim-macro-101/" selected>简体中文</option></select>
-                </a></div>
+                </span></div>
     </div>
 </header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vim Macro 101</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/vim/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Vim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-07-02">2022-07-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1842 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="true">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Vim Macro 101</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">出版于  <a href="/zh-cn/categories/vim/"><i class="fa-regular fa-folder fa-fw"></i>Vim</a></span></div>
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-02">2022-07-02</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1842 字</span>&nbsp;
+                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
     <li><a href="#什么是-vim-里面的宏">什么是 Vim 里面的宏</a></li>
@@ -140,12 +154,12 @@
     <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="引言">引言</h2>
+                </div><div class="content" id="content"><h2 id="引言">引言</h2>
 <p>在我学习 Vim 的过程中，最具有启发意义的一句话是：</p>
 <blockquote>
 <p><strong>Vim 其实是一门“编程语言”</strong></p>
 </blockquote>
-<p>很早之前我就接触过 Vim，但是当时 Vim 的按键组合对我来说很难记，再加上 Vim 的界面实在太过于复古，于是我就转向了比较现代的文本编辑器。但当我学完 <em><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreffer ">Missing semester</a></em> 这门课程的时候，我对 Vim 的看法有了改观：它远远不止是一个文本编辑器，各种 Vim 的命令的排列组合更像是在写代码，背后都是有逻辑的！</p>
+<p>很早之前我就接触过 Vim，但是当时 Vim 的按键组合对我来说很难记，再加上 Vim 的界面实在太过于复古，于是我就转向了比较现代的文本编辑器。但当我学完 <em><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreffer">Missing semester</a></em> 这门课程的时候，我对 Vim 的看法有了改观：它远远不止是一个文本编辑器，各种 Vim 的命令的排列组合更像是在写代码，背后都是有逻辑的！</p>
 <p>这似乎和这篇博客要讨论的主题没有关系。但其实不是这样的，认识到 Vim 是一门编程语言是一件重要的事情。程序员经常通过编程来避免重复操作，不同人对编程语言的偏好各不相同。如果把 Vim 看成一门编程语言，那么它应该也可以做到类似的事情，<strong>今天要研究的就是——如何使用 Vim 来避免重复操作</strong>。</p>
 <blockquote>
 <p>下面假定你对 Vim 有一定的了解 : )</p>
@@ -198,14 +212,14 @@
 <p><em>比如，我们想要编辑当前目录下的所有 <code>txt</code> 文件</em>，只要在命令行输入 <code>vim *.txt</code> 就可以打开所有文件（每个文件对应一个 buffer，整体可以看成是一个 buffer 列表）。在这个模式下我们可以一个个文件地编辑，编辑完毕之后按 <code>:wn</code> 保存当前文件的更改并跳转到下一个文件。但我们也能一次性对这个文件列表里的所有文件进行更改：</p>
 <ol>
 <li>先用第一个文件录制宏，录制完成之后，在 normal 模式下输入 <code>:edit!</code> 撤销对第一个文件的更改（不然后续批处理文件的时候第一个文件会被修改两次）</li>
-<li>在 normal 模式下，输入命令 <code>:bufdo execute &quot;normal @&lt;register&gt; | update</code>.
+<li>在 normal 模式下，输入命令 <code>:bufdo execute &quot;normal @&lt;register&gt;&quot; | update</code>.
 <ol>
 <li>关于 <code>bufdo</code> 的说明可以在 Vim 里面输入 <code>:h bufdo</code> 查看。可以理解为对所有的 buffer 执行指定的操作</li>
 <li>这里的 <code>normal @&lt;register&gt;</code> 的意思就是在 normal 模式下执行 <code>@&lt;register&gt;</code> 里面的宏</li>
 </ol>
 </li>
 </ol>
-<p>更多的细节可以看 <a href="https://vim.fandom.com/wiki/Run_a_command_in_multiple_buffers" target="_blank" rel="noopener noreffer ">这里</a></p>
+<p>更多的细节可以看 <a href="https://vim.fandom.com/wiki/Run_a_command_in_multiple_buffers" target="_blank" rel="noopener noreffer">这里</a></p>
 <h3 id="怎么修改已经录制好的宏">怎么修改已经录制好的宏</h3>
 <h4 id="简单情况">简单情况</h4>
 <p>设想你在录制一个很长的宏，突然录到一半不小心按下了 <code>q</code> 键结束了录制。重新录制肯定很繁琐，Vim 允许我们直接在某个录制好了的宏后面继续追加操作。办法就是用 <code>q&lt;REGISTER&gt;</code>，这里的 <code>&lt;REGISTER&gt;</code> 表示 <code>A-Z</code> 中的一个字母。<em>比如之前录制到一半的宏在 <code>a</code>，那么追加的时候就要用 <code>A</code></em></p>
@@ -228,43 +242,41 @@
 <h2 id="总结">总结</h2>
 <p>这只是对 Vim 的宏的一个简单介绍，它只是 Vim 强大功能的冰山一角，当你掌握更多 Vim 的其他操作的时候（比如搜索与替换，快速定位到某个位置），把他们结合起来 Vim 将会变得很强大。如果这篇博客可以让你对 Vim 产生兴趣那就再好不过。希望本篇博客对你有所帮助😉</p>
 </div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/zh-cn/tags/vim/">Vim</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
                 <span>更新于 2023-01-18</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101" data-hashtags="Vim"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-hashtag="Vim"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/vim/">Vim</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav"><a href="/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" class="prev" rel="prev" title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>How to use the semantic actions to generate the symbol tables in ANTLR4</a>
-            <a href="/zh-cn/what-is-the-heap-and-stack/" class="next" rel="next" title="什么是堆和栈">什么是堆和栈<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+            </div><div class="post-info-mod"></div>
+        </div><div class="post-info-share">
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101" data-hashtags="Vim"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-hashtag="Vim"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/vim-macro-101/" data-title="Vim Macro 101"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
+        </div></div><div class="post-nav"><a href="/zh-cn/how-to-use-antlr4-to-make-semantic-actions/" class="prev" rel="prev" title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/zh-cn/what-is-the-heap-and-stack/" class="next" rel="next" title="什么是堆和栈">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
+</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-</article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.2', { scope: '/' })
+        .then(() => {
+            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
         </div>
-    </footer></div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+                <i class="fa-solid fa-chevron-up fa-fw"></i>
             </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
-            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
-            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
-        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
-</html>
+                <i class="fa-solid fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>

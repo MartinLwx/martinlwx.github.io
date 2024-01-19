@@ -4,22 +4,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>用 SRTBOT 框架分析动态规划问题 - MartinLwx&#39;s blog</title><meta name="Description" content="介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题"><meta property="og:title" content="用 SRTBOT 框架分析动态规划问题" />
+        <title>用 SRTBOT 框架分析动态规划问题 - MartinLwx&#39;s Blog</title><meta name="description" content="介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题"><meta property="og:title" content="用 SRTBOT 框架分析动态规划问题" />
 <meta property="og:description" content="介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-04-09T12:30:31+08:00" />
-<meta property="article:modified_time" content="2023-04-13T12:30:31+08:00" /><meta property="og:site_name" content="MartinLwx&#39;s Blog" />
+<meta property="article:modified_time" content="2023-04-13T12:30:31+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="用 SRTBOT 框架分析动态规划问题"/>
 <meta name="twitter:description" content="介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题"/>
-<meta name="application-name" content="我的网站">
-<meta name="apple-mobile-web-app-title" content="我的网站"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="application-name" content="MartinLwx&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
+        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -29,46 +30,56 @@
             "@type": "WebPage",
             "@id": "https:\/\/martinlwx.github.io\/zh-cn\/solving-dynamic-programming-problems-using-srtbot\/"
         },"genre": "posts","keywords": "Algorithm","wordcount":  3618 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/solving-dynamic-programming-problems-using-srtbot\/","datePublished": "2023-04-09T12:30:31+08:00","dateModified": "2023-04-13T12:30:31+08:00","publisher": {
+        "url": "https:\/\/martinlwx.github.io\/zh-cn\/solving-dynamic-programming-problems-using-srtbot\/","datePublished": "2023-04-09T12:30:31+08:00","dateModified": "2023-04-13T12:30:31+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "介绍了 MIT6.006 里面提到的 SRTBOT 框架，用于解决动态规划问题"
     }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
+}
+</script>
+</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/zh-cn/"> 主页 </a><a class="menu-item" href="/zh-cn/posts/"> 文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/solving-dynamic-programming-problems-using-srtbot/">English</option><option value="/zh-cn/solving-dynamic-programming-problems-using-srtbot/" selected>简体中文</option></select>
+                    </span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
                         </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/solving-dynamic-programming-problems-using-srtbot/">English</option><option value="/zh-cn/solving-dynamic-programming-problems-using-srtbot/" selected>简体中文</option></select>
-                </a></div>
+                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/zh-cn/" title="MartinLwx&#39;s blog"></a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -77,45 +88,48 @@
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
                         </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/zh-cn/" title="">主页</a><a class="menu-item" href="/zh-cn/posts/" title="">文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
+                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
                     <select class="language-select" onchange="location = this.value;"><option value="/en/solving-dynamic-programming-problems-using-srtbot/">English</option><option value="/zh-cn/solving-dynamic-programming-problems-using-srtbot/" selected>简体中文</option></select>
-                </a></div>
+                </span></div>
     </div>
 </header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">用 SRTBOT 框架分析动态规划问题</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>MartinLwx</a></span>&nbsp;<span class="post-category">收录于 <a href="/zh-cn/categories/algorithm/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Algorithm</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-09">2023-04-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3618 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="true">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">用 SRTBOT 框架分析动态规划问题</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">出版于  <a href="/zh-cn/categories/algorithm/"><i class="fa-regular fa-folder fa-fw"></i>Algorithm</a></span></div>
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-04-09">2023-04-09</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3618 字</span>&nbsp;
+                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
     <li><a href="#什么是动态规划问题">什么是动态规划问题</a></li>
@@ -133,12 +147,12 @@
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p><strong>Changelog</strong>:</p>
+                </div><div class="content" id="content"><p><strong>Changelog</strong>:</p>
 <ul>
 <li><a href="#relate-subproblems" rel="">更新依赖图</a> @2023.04.13</li>
 </ul>
 <h2 id="引言">引言</h2>
-<p>在做算法题的时候，让我头疼的经常是动态规划问题，它属于那种自己琢磨半天想不出来，但是看了答案之后会恍然大悟，下次再做的话很有可能又忘记了的一类问题。我也曾经看了很多人的题解，试图消化、吸收、应用他们的思路，但我<strong>一直</strong>找不到一个归纳得特别好的框架，似乎每个人都有自己解决动态规划的思路，将他们的思路应用在没有见过的动态规划问题的时候我总是遇到困难，而他们的方法轮<em>似乎</em>也无法让我处理所有的动态规划问题。这种寻寻觅觅对动态规划似懂非懂的状态，终于在我看完 <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" target="_blank" rel="noopener noreffer ">MIT6.006</a> 的课程之后发生了改变，课上老师提出了解决动态规划问题的 6 个步骤——被称为 <strong>SRTBOT 框架</strong>，我发现它是<strong>如此地好用</strong>，因此我决定写下这篇博客来与大家分享🙌</p>
+<p>在做算法题的时候，让我头疼的经常是动态规划问题，它属于那种自己琢磨半天想不出来，但是看了答案之后会恍然大悟，下次再做的话很有可能又忘记了的一类问题。我也曾经看了很多人的题解，试图消化、吸收、应用他们的思路，但我<strong>一直</strong>找不到一个归纳得特别好的框架，似乎每个人都有自己解决动态规划的思路，将他们的思路应用在没有见过的动态规划问题的时候我总是遇到困难，而他们的方法轮<em>似乎</em>也无法让我处理所有的动态规划问题。这种寻寻觅觅对动态规划似懂非懂的状态，终于在我看完 <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" target="_blank" rel="noopener noreffer">MIT6.006</a> 的课程之后发生了改变，课上老师提出了解决动态规划问题的 6 个步骤——被称为 <strong>SRTBOT 框架</strong>，我发现它是<strong>如此地好用</strong>，因此我决定写下这篇博客来与大家分享🙌</p>
 <blockquote>
 <p>👉 总的来说，这篇博客更适合已经对动态规划有了初步了解但是还没有找到系统方法论人的阅读</p>
 </blockquote>
@@ -206,7 +220,7 @@
 <blockquote>
 <p>📒 进阶：掌握了上面的一般思路之后，其实已经能够解决很多动态规划问题，但你有时候会发现你定义的子问题<strong>不够精确</strong>，导致难以无法关联子问题，<strong>当你在关联子问题有困难的时候总是可以尝试给你定义的子问题加上约束，或者是对子问题进行扩展</strong>。在 MIT 6.006 中称为 Subproblem Constraints and Expansion</p>
 </blockquote>
-<p>对子问题进行扩展会更为常见一些，一般此时就是将定义的 <code>dp[i]</code> 变成 <code>dp[i][j]</code> 这样的形式，<strong>同时修改你的子问题定义</strong>。<em>举例来说，在 <a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener noreffer ">198. 打家劫舍</a> 中可以考虑额外引入一个状态记住是否偷了房屋 <code>i</code></em></p>
+<p>对子问题进行扩展会更为常见一些，一般此时就是将定义的 <code>dp[i]</code> 变成 <code>dp[i][j]</code> 这样的形式，<strong>同时修改你的子问题定义</strong>。<em>举例来说，在 <a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener noreffer">198. 打家劫舍</a> 中可以考虑额外引入一个状态记住是否偷了房屋 <code>i</code></em></p>
 <p>也稍微提一下对子问题的定义加上限制是什么意思，<em>比如我们定义 <code>dp[i]</code> 是输入为 <code>A[:i+1]</code> 的解，假设每个 <code>A[i]</code> 存在选中与不选中两个状态，那么可以考虑将 <code>dp[i]</code> 定义为 输入为 <code>A[:i+1]</code> <strong>而且 <code>A[i]</code> 一定是选中状态</strong>的时候的解</em>（这么说可能有点抽象，待我之后找到可以这样处理的问题后贴个链接在这）</p>
 <blockquote>
 <p>📒 你会发现，<strong>定义子问题的时候我们根本不会去思考要如何计算出来</strong>，千万不要在定义子问题的时候就开始想要怎么计算出这个值，当你使用 SRTBOT 框架分析到最后，你就自然而然知道怎么计算了~</p>
@@ -244,7 +258,7 @@ $$
 </span></span><span class="line"><span class="cl">              <span class="o">...</span>   <span class="o">...</span>  <span class="o">...</span> <span class="o">...</span> <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>举例来说，在 <a href="https://leetcode.cn/problems/climbing-stairs/" target="_blank" rel="noopener noreffer ">70. 爬楼梯</a> 问题中，每次只能爬一个台阶或者两个台阶（$K=2$），那么爬到第 <code>i</code> 个台阶一定是从第 <code>i - 1</code> 个台阶和第 <code>i - 2</code> 个台阶过来的，又因为求解的是所有可能的走法，因此 <code>dp[i] = dp[i - 1] + dp[i - 2]</code>，画出依赖图如下</em></p>
+</div><p><em>举例来说，在 <a href="https://leetcode.cn/problems/climbing-stairs/" target="_blank" rel="noopener noreffer">70. 爬楼梯</a> 问题中，每次只能爬一个台阶或者两个台阶（$K=2$），那么爬到第 <code>i</code> 个台阶一定是从第 <code>i - 1</code> 个台阶和第 <code>i - 2</code> 个台阶过来的，又因为求解的是所有可能的走法，因此 <code>dp[i] = dp[i - 1] + dp[i - 2]</code>，画出依赖图如下</em></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -301,78 +315,78 @@ $$</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="https://leetcode.cn/problems/climbing-stairs/" target="_blank" rel="noopener noreffer ">70. 爬楼梯</a></td>
-<td><a href="https://leetcode.cn/problems/climbing-stairs/solution/srtbot-kuang-jia-jie-jue-dong-tai-gui-hu-1vo5/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/climbing-stairs/" target="_blank" rel="noopener noreffer">70. 爬楼梯</a></td>
+<td><a href="https://leetcode.cn/problems/climbing-stairs/solution/srtbot-kuang-jia-jie-jue-dong-tai-gui-hu-1vo5/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>数</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener noreffer ">746. 使用最小花费爬楼梯</a></td>
-<td><a href="https://leetcode.cn/problems/min-cost-climbing-stairs/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-imb0/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener noreffer">746. 使用最小花费爬楼梯</a></td>
+<td><a href="https://leetcode.cn/problems/min-cost-climbing-stairs/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-imb0/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener noreffer ">198. 打家劫舍</a></td>
-<td><a href="https://leetcode.cn/problems/house-robber/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-cdib/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener noreffer">198. 打家劫舍</a></td>
+<td><a href="https://leetcode.cn/problems/house-robber/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-cdib/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列 + 扩展子问题</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/" target="_blank" rel="noopener noreffer ">322. 零钱兑换</a></td>
-<td><a href="https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/" target="_blank" rel="noopener noreffer">322. 零钱兑换</a></td>
+<td><a href="https://leetcode.cn/problems/coin-change/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-2c9s/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>数 + 非$O(1)$ 子问题</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/longest-increasing-subsequence/" target="_blank" rel="noopener noreffer ">300. 最长递增子序列</a></td>
-<td><a href="https://leetcode.cn/problems/longest-increasing-subsequence/solution/srtbot-dp-by-martinlwx-d73e/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/longest-increasing-subsequence/" target="_blank" rel="noopener noreffer">300. 最长递增子序列</a></td>
+<td><a href="https://leetcode.cn/problems/longest-increasing-subsequence/solution/srtbot-dp-by-martinlwx-d73e/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列 + 限制子问题</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/longest-palindromic-substring/" target="_blank" rel="noopener noreffer ">5. 最长回文子串</a></td>
-<td><a href="https://leetcode.cn/problems/longest-palindromic-substring/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-i29p/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/longest-palindromic-substring/" target="_blank" rel="noopener noreffer">5. 最长回文子串</a></td>
+<td><a href="https://leetcode.cn/problems/longest-palindromic-substring/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-i29p/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>子串</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/decode-ways/" target="_blank" rel="noopener noreffer ">91. 解码方法</a></td>
-<td><a href="https://leetcode.cn/problems/decode-ways/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-gd54/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/decode-ways/" target="_blank" rel="noopener noreffer">91. 解码方法</a></td>
+<td><a href="https://leetcode.cn/problems/decode-ways/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-gd54/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/word-break/" target="_blank" rel="noopener noreffer ">139. 单词拆分</a></td>
-<td><a href="https://leetcode.cn/problems/word-break/solution/yong-srtbot-jie-jue-dong-tai-gui-hua-wen-p3um/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/word-break/" target="_blank" rel="noopener noreffer">139. 单词拆分</a></td>
+<td><a href="https://leetcode.cn/problems/word-break/solution/yong-srtbot-jie-jue-dong-tai-gui-hua-wen-p3um/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/perfect-squares/" target="_blank" rel="noopener noreffer ">279. 完全平方数</a></td>
-<td><a href="https://leetcode.cn/problems/perfect-squares/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-uuyg/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/perfect-squares/" target="_blank" rel="noopener noreffer">279. 完全平方数</a></td>
+<td><a href="https://leetcode.cn/problems/perfect-squares/solution/yong-srtbot-kuang-jia-jie-jue-dong-tai-g-uuyg/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单数字</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/number-of-longest-increasing-subsequence/" target="_blank" rel="noopener noreffer ">673. 最长递增子序列的个数</a></td>
-<td><a href="https://leetcode.cn/problems/number-of-longest-increasing-subsequence/solution/tong-shi-ji-zhu-lischang-du-he-ge-shu-de-sgrt/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/number-of-longest-increasing-subsequence/" target="_blank" rel="noopener noreffer">673. 最长递增子序列的个数</a></td>
+<td><a href="https://leetcode.cn/problems/number-of-longest-increasing-subsequence/solution/tong-shi-ji-zhu-lischang-du-he-ge-shu-de-sgrt/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/unique-paths/" target="_blank" rel="noopener noreffer ">62. 不同路径</a></td>
-<td><a href="https://leetcode.cn/problems/unique-paths/solution/yong-srtbot-kuang-jia-chu-li-dong-tai-gu-za9c/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/unique-paths/" target="_blank" rel="noopener noreffer">62. 不同路径</a></td>
+<td><a href="https://leetcode.cn/problems/unique-paths/solution/yong-srtbot-kuang-jia-chu-li-dong-tai-gu-za9c/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>网格</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/longest-common-subsequence/" target="_blank" rel="noopener noreffer ">1143. 最长公共子序列</a></td>
-<td><a href="https://leetcode.cn/problems/longest-common-subsequence/solution/srtbot-kuang-jia-jie-jue-jing-dian-lcs-w-ebjf/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/longest-common-subsequence/" target="_blank" rel="noopener noreffer">1143. 最长公共子序列</a></td>
+<td><a href="https://leetcode.cn/problems/longest-common-subsequence/solution/srtbot-kuang-jia-jie-jue-jing-dian-lcs-w-ebjf/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>双序列 + 扩展子问题</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank" rel="noopener noreffer ">309. 最佳买卖股票时机含冷冻期</a></td>
-<td><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/solution/you-dian-bu-yi-yang-de-dong-tai-gui-hua-scaqf/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank" rel="noopener noreffer">309. 最佳买卖股票时机含冷冻期</a></td>
+<td><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/solution/you-dian-bu-yi-yang-de-dong-tai-gui-hua-scaqf/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列 + 扩展子问题</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/maximum-alternating-subsequence-sum/" target="_blank" rel="noopener noreffer ">1911. 最大子序列交替和</a></td>
-<td><a href="https://leetcode.cn/problems/maximum-alternating-subsequence-sum/solution/cong-ling-kai-shi-de-dp-tui-dao-si-lu-by-crrd/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/maximum-alternating-subsequence-sum/" target="_blank" rel="noopener noreffer">1911. 最大子序列交替和</a></td>
+<td><a href="https://leetcode.cn/problems/maximum-alternating-subsequence-sum/solution/cong-ling-kai-shi-de-dp-tui-dao-si-lu-by-crrd/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>单序列 + 扩展子问题</td>
 </tr>
 <tr>
-<td><a href="https://leetcode.cn/problems/count-vowels-permutation/" target="_blank" rel="noopener noreffer ">1220. 统计元音字母序列的数目</a></td>
-<td><a href="https://leetcode.cn/problems/count-vowels-permutation/solution/jian-dan-dong-tai-gui-hua-by-martinlwx-5ien/" target="_blank" rel="noopener noreffer ">题解</a></td>
+<td><a href="https://leetcode.cn/problems/count-vowels-permutation/" target="_blank" rel="noopener noreffer">1220. 统计元音字母序列的数目</a></td>
+<td><a href="https://leetcode.cn/problems/count-vowels-permutation/solution/jian-dan-dong-tai-gui-hua-by-martinlwx-5ien/" target="_blank" rel="noopener noreffer">题解</a></td>
 <td>数 + 扩展子问题</td>
 </tr>
 </tbody>
@@ -382,51 +396,49 @@ $$</p>
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://en.wikipedia.org/wiki/Dynamic_programming" target="_blank" rel="noopener noreffer ">Dynamic programming - Wiki</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Dynamic_programming" target="_blank" rel="noopener noreffer">Dynamic programming - Wiki</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer ">Lecture 15 ~ 18 of MIT 6.006</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer">Lecture 15 ~ 18 of MIT 6.006</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
 </div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/zh-cn/tags/algorithm/">Algorithm</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
                 <span>更新于 2023-04-13</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题" data-hashtags="Algorithm"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-hashtag="Algorithm"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/zh-cn/tags/algorithm/">Algorithm</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
-        </section>
-    </div>
-
-    <div class="post-nav"><a href="/zh-cn/backpropagation-tutorial/" class="prev" rel="prev" title="反向传播公式推导和理解"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>反向传播公式推导和理解</a>
-            <a href="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" class="next" rel="next" title="CS61A 的项目四之 Scheme 解释器实现 (2021-Fall)">CS61A 的项目四之 Scheme 解释器实现 (2021-Fall)<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+            </div><div class="post-info-mod"></div>
+        </div><div class="post-info-share">
+            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题" data-hashtags="Algorithm"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-hashtag="Algorithm"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/solving-dynamic-programming-problems-using-srtbot/" data-title="用 SRTBOT 框架分析动态规划问题"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
+        </div></div><div class="post-nav"><a href="/zh-cn/backpropagation-tutorial/" class="prev" rel="prev" title="反向传播公式推导和理解"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" class="next" rel="next" title="CS61A 的项目四之 Scheme 解释器实现 (2021-Fall)">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
+</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-</article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/" target="_blank">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.2', { scope: '/' })
+        .then(() => {
+            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
         </div>
-    </footer></div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+                <i class="fa-solid fa-chevron-up fa-fw"></i>
             </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/contrib/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
-            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
-            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
-        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></body>
-</html>
+                <i class="fa-solid fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
