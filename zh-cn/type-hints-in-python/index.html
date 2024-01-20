@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Python 的类型提示：是什么以及为什么 - MartinLwx&#39;s Blog</title><meta name="description" content="Python 的类型提示的简单介绍"><meta property="og:title" content="Python 的类型提示：是什么以及为什么" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Python 的类型提示：是什么以及为什么 - MartinLwx&#39;s Blog</title><meta name="Description" content="Python 的类型提示的简单介绍"><meta property="og:title" content="Python 的类型提示：是什么以及为什么" />
 <meta property="og:description" content="Python 的类型提示的简单介绍" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/type-hints-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Python 的类型提示：是什么以及为什么"/>
 <meta name="twitter:description" content="Python 的类型提示的简单介绍"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/type-hints-in-python/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/unpacking-in-python/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/type-hints-in-python/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/unpacking-in-python/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/type-hints-in-python\/"
-        },"genre": "posts","keywords": "Python","wordcount":  3286 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/type-hints-in-python\/","datePublished": "2023-01-13T16:18:09+08:00","dateModified": "2023-01-13T16:18:09+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/zh-cn/type-hints-in-python/"
+        },"genre": "posts","keywords": "Python","wordcount":  3302 ,
+        "url": "https://martinlwx.github.io/zh-cn/type-hints-in-python/","datePublished": "2023-01-13T16:18:09+08:00","dateModified": "2023-01-13T16:18:09+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "Python 的类型提示的简单介绍"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/type-hints-in-python/">English</option><option value="/zh-cn/type-hints-in-python/" selected>简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="选择语言" id="language-select-desktop" onchange="location = this.value;"><option value="/en/type-hints-in-python/">English</option><option value="/zh-cn/type-hints-in-python/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/type-hints-in-python/">English</option><option value="/zh-cn/type-hints-in-python/" selected>简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="选择语言" onchange="location = this.value;"><option value="/en/type-hints-in-python/">English</option><option value="/zh-cn/type-hints-in-python/" selected>简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Python 的类型提示：是什么以及为什么</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">出版于  <a href="/zh-cn/categories/python/"><i class="fa-regular fa-folder fa-fw"></i>Python</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-01-13">2023-01-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 3286 字</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
     <li><a href="#函数的类型提示语法">函数的类型提示语法</a></li>
@@ -150,12 +153,43 @@ if (!doNotTrack) {
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="引言">引言</h2>
-<p>一开始吸引我学习 Python 的是它的动态语言特性，以及它的<strong>鸭子类型（Duck typing）系统——我们不关心具体的类型是什么，我们只关心它的行为</strong>。得益于 Python 的动态语言特性，我们不需要声明具体类型，这很大程度上加快了开发速度，而且去掉了不少心智负担，再加上强大的第三方库支持，Python 成为了我最爱用的编程语言😺</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python 的类型提示：是什么以及为什么</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-01-13">2023-01-13</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-01-13">2023-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3302 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#函数的类型提示语法">函数的类型提示语法</a></li>
+    <li><a href="#变量的类型提示语法">变量的类型提示语法</a></li>
+    <li><a href="#常见使用场景">常见使用场景</a>
+      <ul>
+        <li><a href="#简单的内建类型">简单的内建类型</a></li>
+        <li><a href="#any-类型"><code>Any</code> 类型</a></li>
+        <li><a href="#集合类型和映射类型">集合类型和映射类型</a></li>
+        <li><a href="#类型别名type-alias">类型别名（Type alias）</a></li>
+        <li><a href="#参数化的泛型">参数化的泛型</a></li>
+        <li><a href="#optional-和-union-类型">Optional 和 Union 类型</a></li>
+        <li><a href="#可调用对象callable">可调用对象（Callable）</a></li>
+        <li><a href="#类">类</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言" class="headerLink">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>一开始吸引我学习 Python 的是它的动态语言特性，以及它的<strong>鸭子类型（Duck typing）系统——我们不关心具体的类型是什么，我们只关心它的行为</strong>。得益于 Python 的动态语言特性，我们不需要声明具体类型，这很大程度上加快了开发速度，而且去掉了不少心智负担，再加上强大的第三方库支持，Python 成为了我最爱用的编程语言😺</p>
 <p>而随着 PEP 484<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 的提出，Python 决定引入类型提示（Type hint），这似乎又向静态类型语言看齐了？<strong>但其实非也，Python 仍然是一门动态编程语言，它的类型提示是可选项，加不加都可以，不会对程序运行产生影响</strong>。</p>
 <p>这样听起来似乎没有必要专门写这篇博客来介绍 Python 的类型提示特性，但我发现<strong>写类型提示还是有不少好处的</strong>：</p>
 <ul>
-<li>可以使用类型检查工具对代码进行检查，<em>比如 <a href="https://github.com/python/mypy" target="_blank" rel="noopener noreffer">Mypy</a></em></li>
+<li>可以使用类型检查工具对代码进行检查，<em>比如 <a href="https://github.com/python/mypy" target="_blank" rel="noopener noreferrer">Mypy</a></em></li>
 <li>IDE 的代码补全会更加智能，推荐的 API 更准确，我们用错了 API 也能及时发现。<strong>这可能是我选择写类型提示的最大动力</strong></li>
 <li>对抗代码复杂性。<strong>类型提示暴露了 API 的不少信息</strong>。作为开发者，我们只要看一下这样的函数签名就能知道个大概，而不用经常去看文档</li>
 </ul>
@@ -169,8 +203,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>Python 3.11.0
 </code></pre>
-<h2 id="函数的类型提示语法">函数的类型提示语法</h2>
-<p>早在 Python 3.0，类型提示的语法就已经确定了下来<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>：</p>
+<h2 id="函数的类型提示语法" class="headerLink">
+    <a href="#%e5%87%bd%e6%95%b0%e7%9a%84%e7%b1%bb%e5%9e%8b%e6%8f%90%e7%a4%ba%e8%af%ad%e6%b3%95" class="header-mark"></a>函数的类型提示语法</h2><p>早在 Python 3.0，类型提示的语法就已经确定了下来<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>：</p>
 <ul>
 <li>函数参数：<code>name[: type] [ = default_val ]</code>，其中 <code>[]</code> 表示这是可选项</li>
 <li>函数返回类型：用 <code>-&gt; return_type</code> 表示</li>
@@ -229,8 +263,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>'world'
 </code></pre>
-<h2 id="变量的类型提示语法">变量的类型提示语法</h2>
-<p>在 Python 3.6 之前，如果要给一个变量加上类型提示只能使用 Type comments，也就是在注释里面用 <code># type ...</code> 声明<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，但在 PEP 526 中提出了变量的类型提示语法，和函数参数的语法是类似的<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<h2 id="变量的类型提示语法" class="headerLink">
+    <a href="#%e5%8f%98%e9%87%8f%e7%9a%84%e7%b1%bb%e5%9e%8b%e6%8f%90%e7%a4%ba%e8%af%ad%e6%b3%95" class="header-mark"></a>变量的类型提示语法</h2><p>在 Python 3.6 之前，如果要给一个变量加上类型提示只能使用 Type comments，也就是在注释里面用 <code># type ...</code> 声明<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，但在 PEP 526 中提出了变量的类型提示语法，和函数参数的语法是类似的<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -256,11 +290,11 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>{'a': int}
 </code></pre>
-<h2 id="常见使用场景">常见使用场景</h2>
-<h3 id="简单的内建类型">简单的内建类型</h3>
-<p>这里说的简单内建类型就是：<code>int</code>、<code>str</code> 等，也<strong>可以是第三方库里面定义的类型</strong>。<em>前面提到的 <code>maximum</code> 函数的 2 个参数就是用 <code>float</code></em></p>
-<h3 id="any-类型"><code>Any</code> 类型</h3>
-<p><strong><code>Any</code> 表示什么类型都有可能</strong>。但它跟 <code>object</code> 并不相同<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<h2 id="常见使用场景" class="headerLink">
+    <a href="#%e5%b8%b8%e8%a7%81%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="header-mark"></a>常见使用场景</h2><h3 id="简单的内建类型" class="headerLink">
+    <a href="#%e7%ae%80%e5%8d%95%e7%9a%84%e5%86%85%e5%bb%ba%e7%b1%bb%e5%9e%8b" class="header-mark"></a>简单的内建类型</h3><p>这里说的简单内建类型就是：<code>int</code>、<code>str</code> 等，也<strong>可以是第三方库里面定义的类型</strong>。<em>前面提到的 <code>maximum</code> 函数的 2 个参数就是用 <code>float</code></em></p>
+<h3 id="any-类型" class="headerLink">
+    <a href="#any-%e7%b1%bb%e5%9e%8b" class="header-mark"></a><code>Any</code> 类型</h3><p><strong><code>Any</code> 表示什么类型都有可能</strong>。但它跟 <code>object</code> 并不相同<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <p>基本上我们可以认为一个不包含类型提示的函数的参数类型和返回类型都是 <code>Any</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -280,8 +314,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="集合类型和映射类型">集合类型和映射类型</h3>
-<p>我们称集合里面的每个东西为 item，那么我们如何给集合和 item 都加上类型提示信息？==Python 采用 <code>[]</code> 记号支持这个特性，<code>[]</code> 里面指定 item 的类型==。比如，一个包含字符串的列表这个类型可以写作 <code>list[str]</code>，非常清楚。</p>
+</div><h3 id="集合类型和映射类型" class="headerLink">
+    <a href="#%e9%9b%86%e5%90%88%e7%b1%bb%e5%9e%8b%e5%92%8c%e6%98%a0%e5%b0%84%e7%b1%bb%e5%9e%8b" class="header-mark"></a>集合类型和映射类型</h3><p>我们称集合里面的每个东西为 item，那么我们如何给集合和 item 都加上类型提示信息？==Python 采用 <code>[]</code> 记号支持这个特性，<code>[]</code> 里面指定 item 的类型==。比如，一个包含字符串的列表这个类型可以写作 <code>list[str]</code>，非常清楚。</p>
 <p>注意：Python 3.9 发布了 PEP 585 <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，允许我们直接使用自带的 <code>list</code>、<code>dict</code> 等而无需使用 <code>typing</code> 模块对应的类型。下面我列出了不同，更为详细的请查阅原文 <sup id="fnref1:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>：</p>
 <table>
 <thead>
@@ -442,10 +476,10 @@ if (!doNotTrack) {
 </div>
 </div><p>其实直接用 <code>list</code> 就可以，而且更为简洁</p>
 <blockquote>
-<p>📒 如果这 3 个基本的集合类型不能满足你的要求，可以查阅 <a href="https://docs.python.org/3/library/collections.abc.html" target="_blank" rel="noopener noreffer"><code>collections.abc</code></a> 的文档了解更多</p>
+<p>📒 如果这 3 个基本的集合类型不能满足你的要求，可以查阅 <a href="https://docs.python.org/3/library/collections.abc.html" target="_blank" rel="noopener noreferrer"><code>collections.abc</code></a> 的文档了解更多</p>
 </blockquote>
-<h3 id="类型别名type-alias">类型别名（Type alias）</h3>
-<p>有时候，类型会变得很复杂而且很长，我们并不想要在每一个地方都写上一长串的类型提示。那么我们应该怎么做呢？一个通常的做法是为其取一个有意义的别名。定义别名的方法也很简单：</p>
+<h3 id="类型别名type-alias" class="headerLink">
+    <a href="#%e7%b1%bb%e5%9e%8b%e5%88%ab%e5%90%8dtype-alias" class="header-mark"></a>类型别名（Type alias）</h3><p>有时候，类型会变得很复杂而且很长，我们并不想要在每一个地方都写上一长串的类型提示。那么我们应该怎么做呢？一个通常的做法是为其取一个有意义的别名。定义别名的方法也很简单：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -506,8 +540,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="参数化的泛型">参数化的泛型</h3>
-<p>其他编程语言中经常使用大写字母比如 <code>T</code> 等表示参数化的泛型，在 Python 里面，我们使用 <code>TypeVar</code> 关键字，如同文档所说，一共有 3 种用法：</p>
+</div><h3 id="参数化的泛型" class="headerLink">
+    <a href="#%e5%8f%82%e6%95%b0%e5%8c%96%e7%9a%84%e6%b3%9b%e5%9e%8b" class="header-mark"></a>参数化的泛型</h3><p>其他编程语言中经常使用大写字母比如 <code>T</code> 等表示参数化的泛型，在 Python 里面，我们使用 <code>TypeVar</code> 关键字，如同文档所说，一共有 3 种用法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -551,8 +585,8 @@ if (!doNotTrack) {
 </div><blockquote>
 <p>📒 实际上 Python 已经帮你定义好了可能是 <code>str</code> 也可能是 <code>bytes</code> 的类型——<code>typing.AnyStr</code></p>
 </blockquote>
-<h3 id="optional-和-union-类型">Optional 和 Union 类型</h3>
-<p><code>Optional[type1]</code> 用于表示类型可能是 <code>type1</code> 也可能是 <code>None</code>。</p>
+<h3 id="optional-和-union-类型" class="headerLink">
+    <a href="#optional-%e5%92%8c-union-%e7%b1%bb%e5%9e%8b" class="header-mark"></a>Optional 和 Union 类型</h3><p><code>Optional[type1]</code> 用于表示类型可能是 <code>type1</code> 也可能是 <code>None</code>。</p>
 <p><code>Union[type1, type2, ...]</code> 表示允许的类型<strong>可能是我们指定的多个可能类型的的任意一种</strong>，也就是逻辑上的「或」关系**。因此，<code>Optional[type1]</code> 其实和 <code>Union[type1, None]</code> 是一个意思</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -633,8 +667,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>{'s': str | int, 'return': int | None}
 </code></pre>
-<h3 id="可调用对象callable">可调用对象（Callable）</h3>
-<p>下面用函数作为例子，<strong>Python 的函数是 first-class object，所以函数可以是另一个函数的参数或者返回值</strong>。类型提示对此的支持是：</p>
+<h3 id="可调用对象callable" class="headerLink">
+    <a href="#%e5%8f%af%e8%b0%83%e7%94%a8%e5%af%b9%e8%b1%a1callable" class="header-mark"></a>可调用对象（Callable）</h3><p>下面用函数作为例子，<strong>Python 的函数是 first-class object，所以函数可以是另一个函数的参数或者返回值</strong>。类型提示对此的支持是：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -675,8 +709,8 @@ if (!doNotTrack) {
 </div><pre><code>None
 123
 </code></pre>
-<h3 id="类">类</h3>
-<p>在 Python 3.11 里面<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>提出了 <code>Self</code> 类型，表示当前类的实例。有了 <code>Self</code> 之后在写 Python 的类的时候就很方便，我们可以在一个类的定义里面使用 <code>Self</code> 代指当前的类的实例。<del>再也不需要用 <code>TypeVar</code> 先引入了</del></p>
+<h3 id="类" class="headerLink">
+    <a href="#%e7%b1%bb" class="header-mark"></a>类</h3><p>在 Python 3.11 里面<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup>提出了 <code>Self</code> 类型，表示当前类的实例。有了 <code>Self</code> 之后在写 Python 的类的时候就很方便，我们可以在一个类的定义里面使用 <code>Self</code> 代指当前的类的实例。<del>再也不需要用 <code>TypeVar</code> 先引入了</del></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -698,85 +732,113 @@ if (!doNotTrack) {
 </div><blockquote>
 <p>💡 Rust 也采用了 <code>Self</code> 来表示当前正在操纵的对象的类型，这经常可以在 impl block 里面看到</p>
 </blockquote>
-<h2 id="总结">总结</h2>
-<p>以上就是本篇博客的全部内容，我其实只谈到了我认为比较有用的一些类型提示使用场景，不少的高级特性比如 Static protocol<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup> 等没有提到，这些内容留给读者自己探索。</p>
+<h2 id="总结" class="headerLink">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>以上就是本篇博客的全部内容，我其实只谈到了我认为比较有用的一些类型提示使用场景，不少的高级特性比如 Static protocol<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup> 等没有提到，这些内容留给读者自己探索。</p>
 <p>我对类型提示的态度仍然是：<strong>当它变得复杂的时候就不用，除非这个代价是值得的</strong>。</p>
 <p>根据我的开发经验，下面附上关于类型提示的几点建议🎯：</p>
 <ol>
 <li><strong>决定要加上什么类型提示的时候，考虑这个类型能够做什么</strong>。Python 3.8 提出的 static protocols 就很好解决了这点<sup id="fnref1:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup>。感觉有点像 Rust 中的 traits</li>
 <li><strong>对于函数返回类型，力求返回的类型越精确越好</strong>。<em>设想一个返回类型为 <code>Union[str, int]</code>，我们还需要自己手动再进行一次类型检查，就显得这个类型提示不是很有必要</em></li>
 <li><strong>通过了代码静态类型检查也不意味着程序就没有 bug 了</strong>，软件测试才是软件工程领域保证软件质量的标准做法～</li>
-<li>将这份 <a href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html" target="_blank" rel="noopener noreffer">cheatsheet</a> 加入你的书签👍</li>
+<li>将这份 <a href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html" target="_blank" rel="noopener noreferrer">cheatsheet</a> 加入你的书签👍</li>
 </ol>
-<h2 id="参考">参考</h2>
-<div class="footnotes" role="doc-endnotes">
+<h2 id="参考" class="headerLink">
+    <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://peps.python.org/pep-0484/" target="_blank" rel="noopener noreffer">PEP 484. Type Hints</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0484/" target="_blank" rel="noopener noreferrer">PEP 484. Type Hints</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://peps.python.org/pep-3107/" target="_blank" rel="noopener noreffer">PEP 3107. Function Annotations</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-3107/" target="_blank" rel="noopener noreferrer">PEP 3107. Function Annotations</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="https://peps.python.org/pep-0526/" target="_blank" rel="noopener noreffer">PEP 526. Syntax for Variable Annotations</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0526/" target="_blank" rel="noopener noreferrer">PEP 526. Syntax for Variable Annotations</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:4">
-<p><a href="https://peps.python.org/pep-0585/" target="_blank" rel="noopener noreffer">PEP 585. Type Hinting Generics In Standard Collections</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0585/" target="_blank" rel="noopener noreferrer">PEP 585. Type Hinting Generics In Standard Collections</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:5">
-<p><a href="https://peps.python.org/pep-0613/" target="_blank" rel="noopener noreffer">PEP 613. Explicit Type Aliases</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0613/" target="_blank" rel="noopener noreferrer">PEP 613. Explicit Type Aliases</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:6">
-<p><a href="https://peps.python.org/pep-0483/" target="_blank" rel="noopener noreffer">PEP 483. The Theory of Type Hints</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0483/" target="_blank" rel="noopener noreferrer">PEP 483. The Theory of Type Hints</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:7">
-<p><a href="https://peps.python.org/pep-0604/" target="_blank" rel="noopener noreffer">PEP 604. Allow writing union types as X | Y</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0604/" target="_blank" rel="noopener noreferrer">PEP 604. Allow writing union types as X | Y</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:8">
-<p><a href="https://peps.python.org/pep-0673/" target="_blank" rel="noopener noreffer">PEP 673. Self Type</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0673/" target="_blank" rel="noopener noreferrer">PEP 673. Self Type</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:9">
-<p><a href="https://peps.python.org/pep-0544/" target="_blank" rel="noopener noreffer">PEP 544. Protocols: Structural subtyping (static duck typing)</a>&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0544/" target="_blank" rel="noopener noreferrer">PEP 544. Protocols: Structural subtyping (static duck typing)</a>&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/zh-cn/tags/python/">Python</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2023-01-13</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么" data-hashtags="Python"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-hashtag="Python"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/zh-cn/unpacking-in-python/" class="prev" rel="prev" title="Python 3.5 的解包操作符"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/zh-cn/config-neovim-from-scratch/" class="next" rel="next" title="从零开始配置 Neovim(Nvim)">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-01-13</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么" data-hashtags="Python"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-hashtag="Python"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/type-hints-in-python/" data-title="Python 的类型提示：是什么以及为什么" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;Python 的类型提示：是什么以及为什么&#34;, &#34;https://martinlwx.github.io/zh-cn/type-hints-in-python/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/unpacking-in-python/" class="prev" rel="prev" title="Python 3.5 的解包操作符"><i class="fas fa-angle-left fa-fw"></i>Python 3.5 的解包操作符</a>
+            <a href="/zh-cn/config-neovim-from-scratch/" class="next" rel="next" title="从零开始配置 Neovim(Nvim)">从零开始配置 Neovim(Nvim)<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

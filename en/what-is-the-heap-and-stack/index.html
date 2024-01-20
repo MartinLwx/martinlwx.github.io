@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>What is stack and heap - MartinLwx&#39;s Blog</title><meta name="description" content="the differences between the stack and the heap"><meta property="og:title" content="What is stack and heap" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>What is stack and heap - MartinLwx&#39;s Blog</title><meta name="Description" content="the differences between the stack and the heap"><meta property="og:title" content="What is stack and heap" />
 <meta property="og:description" content="the differences between the stack and the heap" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="What is stack and heap"/>
 <meta name="twitter:description" content="the differences between the stack and the heap"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/en/vim-macro-101/" /><link rel="next" href="https://martinlwx.github.io/en/pattern-matching-in-python/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/en/vim-macro-101/" /><link rel="next" href="https://martinlwx.github.io/en/pattern-matching-in-python/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/what-is-the-heap-and-stack\/"
-        },"genre": "posts","keywords": "System-programming","wordcount":  2304 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/what-is-the-heap-and-stack\/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/what-is-the-heap-and-stack/"
+        },"genre": "posts","keywords": "System-programming","wordcount":  2296 ,
+        "url": "https://martinlwx.github.io/en/what-is-the-heap-and-stack/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "the differences between the stack and the heap"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/what-is-the-heap-and-stack/" selected>English</option><option value="/zh-cn/what-is-the-heap-and-stack/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/what-is-the-heap-and-stack/" selected>English</option><option value="/zh-cn/what-is-the-heap-and-stack/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/what-is-the-heap-and-stack/" selected>English</option><option value="/zh-cn/what-is-the-heap-and-stack/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/what-is-the-heap-and-stack/" selected>English</option><option value="/zh-cn/what-is-the-heap-and-stack/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">What is stack and heap</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/system-programming/"><i class="fa-regular fa-folder fa-fw"></i>System-Programming</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;2304 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;11 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
     <li><a href="#the-layout-of-a-program-in-memory">The layout of a program in memory</a></li>
@@ -151,23 +154,55 @@ if (!doNotTrack) {
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="intro">Intro</h2>
-<p>If you&rsquo;ve been using dynamic languages like Python, Javascript, etc., you probably won&rsquo;t notice the difference between stack and heap. Because these languages have garbage collectors (GCs) that will automatically manage memory for you, you just need to program at a high level without considering the details. The bad news is that GC is not a cost-free design. No matter how well designed a GC algorithm is, the performance of the code will be degraded to some extent. If you have been in programming for a long time, you may have heard something like &ldquo;the recursion explodes the stack&rdquo;. You may or may not click on the search engine to understand the difference between stack and heap. Chances are you just clicked into this article :)</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">What is stack and heap</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/system-programming/"><i class="far fa-folder fa-fw"></i>System-Programming</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2296 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;11 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#the-layout-of-a-program-in-memory">The layout of a program in memory</a></li>
+    <li><a href="#stack">Stack</a>
+      <ul>
+        <li><a href="#terms">Terms</a></li>
+        <li><a href="#stack-allocation">Stack allocation</a></li>
+        <li><a href="#an-example-fibonacci-sequence">An example: fibonacci sequence</a></li>
+        <li><a href="#the-data-on-the-stack">The data on the stack</a></li>
+      </ul>
+    </li>
+    <li><a href="#heap">Heap</a>
+      <ul>
+        <li><a href="#heap-allocation">Heap allocation</a></li>
+        <li><a href="#the-data-on-the-heap">The data on the heap</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>If you&rsquo;ve been using dynamic languages like Python, Javascript, etc., you probably won&rsquo;t notice the difference between stack and heap. Because these languages have garbage collectors (GCs) that will automatically manage memory for you, you just need to program at a high level without considering the details. The bad news is that GC is not a cost-free design. No matter how well designed a GC algorithm is, the performance of the code will be degraded to some extent. If you have been in programming for a long time, you may have heard something like &ldquo;the recursion explodes the stack&rdquo;. You may or may not click on the search engine to understand the difference between stack and heap. Chances are you just clicked into this article :)</p>
 <blockquote>
 <p>📒 Although GC will degrade the performance, it removes the mental burden of manually managing memory for developers, which can greatly speed up software development. This is sacrificing performance for development speed. However, when the performance bottleneck occurs in the later stage of the software, it is necessary to study how to refactor or even rewrite the key parts of code to improve performance.</p>
 </blockquote>
 <p>The stack and heap I mentioned here <strong>are not the heap and stack in the data structure</strong>, but the two mechanisms of memory management. Understanding the detailed differences between stack and heap helps us understand some programming languages that are closer to the low-level, <em>such as Rust, C, C++, etc</em>. In Rust, the most important concept is ownership. Mastering the ownership can make you feel easier when you are learning other designs in rust😄.</p>
-<h2 id="the-layout-of-a-program-in-memory">The layout of a program in memory</h2>
-<p>To run a program, it must be loaded into the memory. During the process of the program running, the data also needs to be read into the memory, so have you ever wondered how all this is distributed in the memory? I will give you a rough illustration below<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<h2 id="the-layout-of-a-program-in-memory" class="headerLink">
+    <a href="#the-layout-of-a-program-in-memory" class="header-mark"></a>The layout of a program in memory</h2><p>To run a program, it must be loaded into the memory. During the process of the program running, the data also needs to be read into the memory, so have you ever wondered how all this is distributed in the memory? I will give you a rough illustration below<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
 <hr>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/img/program_layout_in_memory.png"
-        data-srcset="/img/program_layout_in_memory.png, /img/program_layout_in_memory.png 1.5x, /img/program_layout_in_memory.png 2x"
-        data-sizes="auto"
+<p><figure><img
+        
+        loading="lazy"
+        src="/img/program_layout_in_memory.png"
+        srcset="/img/program_layout_in_memory.png, /img/program_layout_in_memory.png 1.5x, /img/program_layout_in_memory.png 2x"
+        sizes="auto"
         alt="/img/program_layout_in_memory.png"
-        title="/img/program_layout_in_memory.png" /></p>
+        title="/img/program_layout_in_memory.png" ></figure></p>
 <hr>
 <p>In the image above, the meanings of different parts:</p>
 <ul>
@@ -184,26 +219,26 @@ if (!doNotTrack) {
 <blockquote>
 <p>📒 It seems that as we allocate more and more memory, the stack and heap may collide (because they are getting closer to each other). However, there is no need to worry about this problem, because: 1) This layout is happening in virtual memory. Today&rsquo;s processors are generally 64-bit, and the capacity is very large. 2) Before the conflict, it is very likely that your physical memory has been exhausted long ago, this should be your first concern.</p>
 </blockquote>
-<h2 id="stack">Stack</h2>
-<h3 id="terms">Terms</h3>
-<ul>
+<h2 id="stack" class="headerLink">
+    <a href="#stack" class="header-mark"></a>Stack</h2><h3 id="terms" class="headerLink">
+    <a href="#terms" class="header-mark"></a>Terms</h3><ul>
 <li><strong>Stack pointer(SP)</strong>: the value of a specific register, which stores the address of the <em>top</em> of the stack</li>
 <li><strong>Stack frame</strong>: created as function calls are made, it is a frame of data(for one function call) that gets pushed onto the stack.</li>
 <li><strong>push</strong>: allocating space on the stack</li>
 <li><strong>pop</strong>: free space on the stack</li>
 </ul>
-<h3 id="stack-allocation">Stack allocation</h3>
-<p>The biggest feature of the stack is the last in first out (LIFO), which is also the pattern we follow when allocating and freeing space on the stack. Allocating space on the stack is quite simple, we just need to modify the value of the stack pointer. Naturally, from the bottom of the stack (<code>A</code> in the figure below) to the top of the stack (the position pointed to by <code>sp</code>) is the space we have allocated.</p>
+<h3 id="stack-allocation" class="headerLink">
+    <a href="#stack-allocation" class="header-mark"></a>Stack allocation</h3><p>The biggest feature of the stack is the last in first out (LIFO), which is also the pattern we follow when allocating and freeing space on the stack. Allocating space on the stack is quite simple, we just need to modify the value of the stack pointer. Naturally, from the bottom of the stack (<code>A</code> in the figure below) to the top of the stack (the position pointed to by <code>sp</code>) is the space we have allocated.</p>
 <p>The following figure<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> shows the simple logic behind:</p>
 <hr>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/img/stack_and_sp.png"
-        data-srcset="/img/stack_and_sp.png, /img/stack_and_sp.png 1.5x, /img/stack_and_sp.png 2x"
-        data-sizes="auto"
+<p><figure><img
+        
+        loading="lazy"
+        src="/img/stack_and_sp.png"
+        srcset="/img/stack_and_sp.png, /img/stack_and_sp.png 1.5x, /img/stack_and_sp.png 2x"
+        sizes="auto"
         alt="/img/stack_and_sp.png"
-        title="/img/stack_and_sp.png" /></p>
+        title="/img/stack_and_sp.png" ></figure></p>
 <hr>
 <p>It should be emphasized again here that the stack grows from <strong>high address -&gt; low address</strong>, so from left to right in the above figure is <strong>high address -&gt; low address</strong>.</p>
 <p>How does the function call work(simplified version)?</p>
@@ -217,8 +252,8 @@ if (!doNotTrack) {
 <blockquote>
 <p>📒 The problem to be worried about when allocating space on the stack is: do not keep allocating which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. <em>For example, in Python, you can use <code>sys.getrecursionlimit()</code> to modify the size limit of the stack</em>. In some programming languages, we can also change the recursive function to the tail recursion version, which can benefit from the optimizations.</p>
 </blockquote>
-<h3 id="an-example-fibonacci-sequence">An example: fibonacci sequence</h3>
-<p>When explaining recursion in CS courses, we usually use the Fibonacci sequence as an example. Now we use <code>F(n)</code> to represent the <code>n</code>th value of the Fibonacci sequence, then the formulas are:</p>
+<h3 id="an-example-fibonacci-sequence" class="headerLink">
+    <a href="#an-example-fibonacci-sequence" class="header-mark"></a>An example: fibonacci sequence</h3><p>When explaining recursion in CS courses, we usually use the Fibonacci sequence as an example. Now we use <code>F(n)</code> to represent the <code>n</code>th value of the Fibonacci sequence, then the formulas are:</p>
 <ul>
 <li><code>F(0) = 0</code></li>
 <li><code>F(1) = 1</code></li>
@@ -279,18 +314,18 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                         <span class="c1"># Function return, return to the body of F(4)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="the-data-on-the-stack">The data on the stack</h3>
-<p><strong>Memory space management on the stack is achieved by modifying the value of the <code>sp</code> pointer</strong>, so we can conclude that:</p>
+</div><h3 id="the-data-on-the-stack" class="headerLink">
+    <a href="#the-data-on-the-stack" class="header-mark"></a>The data on the stack</h3><p><strong>Memory space management on the stack is achieved by modifying the value of the <code>sp</code> pointer</strong>, so we can conclude that:</p>
 <ol>
 <li>It is very efficient when allocating or freeing the space on the stack. We can think of it as <code>O(1)</code> complexity.</li>
 <li>The logic of this LIFO of the stack is relatively simple. The compiler can shandle it for us. As developers, we do not need to intervene in this process.</li>
 <li>To modify the <code>sp</code> pointer, we need to know how much space will be used, so the data on the stack should be a fixed and known size(at compile time). As for data of variable size, this is the problem to be solved by the heap.</li>
 </ol>
-<h2 id="heap">Heap</h2>
-<p>The disadvantage of the stack allocation is: <strong>it can not handle variable size data</strong>, and we can&rsquo;t know how much the value of <code>sp</code> needs to be modified at this time.</p>
+<h2 id="heap" class="headerLink">
+    <a href="#heap" class="header-mark"></a>Heap</h2><p>The disadvantage of the stack allocation is: <strong>it can not handle variable size data</strong>, and we can&rsquo;t know how much the value of <code>sp</code> needs to be modified at this time.</p>
 <p>How do you bridge the gap between variable-sized data and stack? This requires the use of pointers. Although the size of the actual data stored is unknown, the size of the pointer is fixed (usually, it is equal to the word size of the underlying machine), so we can <strong>store a fixed-size pointer on the stack</strong>, let it point to <strong>the real data stored on the heap</strong>.</p>
-<h3 id="heap-allocation">Heap allocation</h3>
-<p>As mentioned earlier, allocating memory on the heap is finding a large enough space on the heap, returning a pointer to this location, and then pushing the pointer onto the stack.</p>
+<h3 id="heap-allocation" class="headerLink">
+    <a href="#heap-allocation" class="header-mark"></a>Heap allocation</h3><p>As mentioned earlier, allocating memory on the heap is finding a large enough space on the heap, returning a pointer to this location, and then pushing the pointer onto the stack.</p>
 <p>Later, when we want to access this data, we can dereference the pointer. The <code>*</code> operator in C or Rust is used for this purpose. Hopefully understanding this will make it easier for you to learn pointers. :)</p>
 <p>Unlike simply modifying the <code>sp</code> value on stack allocation, memory management on the heap is much more complicated. Including the following points:</p>
 <ol>
@@ -301,14 +336,14 @@ if (!doNotTrack) {
 <blockquote>
 <p>📒 The memory that can be allocated on the heap is way larger than the stack, but better management mechanisms are needed to handle this more complex situation. <strong>For developers, it also causes a certain burden. We can&rsquo;t rely on the compiler to automatically handle it for us, we have to manage the memory manually</strong>. If you forget to call <code>free()</code> after allocating space, then your program will have a <strong>memory leak problem</strong>. Not to mention other issues such as dangling pointers and double-free.</p>
 </blockquote>
-<h3 id="the-data-on-the-heap">The data on the heap</h3>
-<p>After having a certain understanding of the allocation of memory space on the heap, it is not difficult for us to draw the following conclusions:</p>
+<h3 id="the-data-on-the-heap" class="headerLink">
+    <a href="#the-data-on-the-heap" class="header-mark"></a>The data on the heap</h3><p>After having a certain understanding of the allocation of memory space on the heap, it is not difficult for us to draw the following conclusions:</p>
 <ol>
 <li>Variable-size data is stored on the heap. More flexibility at the expense of a little performance</li>
 <li>Sometimes it can be fixed-size data, but you don&rsquo;t want to put it on the stack. Why is this the case? For example, in Rust, data on the stack is copied by default. Sometimes for performance considerations, you may want to put large data on the heap to avoid the overhead of multiple copies. I don&rsquo;t know if this reminds you of the optimization that we often did. i.e. passing function parameter by reference rather than value.</li>
 </ol>
-<h2 id="wrap-up">Wrap up</h2>
-<ol>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><ol>
 <li>Stack and heap are concepts in memory management, they are different from the concept of stack and heap in the data structure. The reason why the stack is called the stack is because we follow the classical LIFO pattern when we manage the memory on the stack, and the name of the heap implies disorganization.</li>
 <li>Generally speaking, it is more efficient to allocate and free memory space on the stack. For this reason, Rust operates on the stack by default.</li>
 <li>Data of &ldquo;fixed size&rdquo; is generally placed on the stack, and data of &ldquo;variable size&rdquo; is generally placed on the heap. However, sometimes for performance considerations, fixed-size data can also be stored on the heap.</li>
@@ -327,54 +362,82 @@ if (!doNotTrack) {
 <blockquote>
 <p>⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check the refs.</p>
 </blockquote>
-<h2 id="refs">Refs</h2>
-<div class="footnotes" role="doc-endnotes">
+<h2 id="refs" class="headerLink">
+    <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/" target="_blank" rel="noopener noreffer">6.172. Performance engineering of software systems - Lecture 11 &amp;&amp; Lecture 12</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://ocw.mit.edu/courses/6-172-performance-engineering-of-software-systems-fall-2018/video_galleries/lecture-videos/" target="_blank" rel="noopener noreferrer">6.172. Performance engineering of software systems - Lecture 11 &amp;&amp; Lecture 12</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://people.cs.rutgers.edu/~pxk/419/notes/frames.html" target="_blank" rel="noopener noreffer">Stack frame</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://people.cs.rutgers.edu/~pxk/419/notes/frames.html" target="_blank" rel="noopener noreferrer">Stack frame</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/system-programming/">System-programming</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>Updated on 2022-09-19</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap" data-hashtags="System-programming"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-hashtag="System-programming"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/vim-macro-101/" class="prev" rel="prev" title="Vim Macro 101"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/pattern-matching-in-python/" class="next" rel="next" title="Pattern Matching in Python 3.10">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-09-19</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap" data-hashtags="System-programming"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-hashtag="System-programming"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;What is stack and heap&#34;, &#34;https://martinlwx.github.io/en/what-is-the-heap-and-stack/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/system-programming/">System-programming</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/vim-macro-101/" class="prev" rel="prev" title="Vim Macro 101"><i class="fas fa-angle-left fa-fw"></i>Vim Macro 101</a>
+            <a href="/en/pattern-matching-in-python/" class="next" rel="next" title="Pattern Matching in Python 3.10">Pattern Matching in Python 3.10<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

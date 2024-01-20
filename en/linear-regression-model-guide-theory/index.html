@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Linear Regression Model Guide - theory part - MartinLwx&#39;s Blog</title><meta name="description" content="The simple guide of theory part of linear regression model in machine learning"><meta property="og:title" content="Linear Regression Model Guide - theory part" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Linear Regression Model Guide - theory part - MartinLwx&#39;s Blog</title><meta name="Description" content="The simple guide of theory part of linear regression model in machine learning"><meta property="og:title" content="Linear Regression Model Guide - theory part" />
 <meta property="og:description" content="The simple guide of theory part of linear regression model in machine learning" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Linear Regression Model Guide - theory part"/>
 <meta name="twitter:description" content="The simple guide of theory part of linear regression model in machine learning"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><link rel="prev" href="https://martinlwx.github.io/en/config-neovim-from-scratch/" /><link rel="next" href="https://martinlwx.github.io/en/backpropagation-tutorial/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><link rel="prev" href="https://martinlwx.github.io/en/config-neovim-from-scratch/" /><link rel="next" href="https://martinlwx.github.io/en/backpropagation-tutorial/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/linear-regression-model-guide-theory\/"
-        },"genre": "posts","keywords": "Machine-Learning","wordcount":  2573 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/linear-regression-model-guide-theory\/","datePublished": "2023-03-15T12:37:52+08:00","dateModified": "2023-03-15T12:37:52+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/linear-regression-model-guide-theory/"
+        },"genre": "posts","keywords": "Machine-Learning","wordcount":  2566 ,
+        "url": "https://martinlwx.github.io/en/linear-regression-model-guide-theory/","datePublished": "2023-03-15T12:37:52+08:00","dateModified": "2023-03-15T12:37:52+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "The simple guide of theory part of linear regression model in machine learning"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/" selected>English</option><option value="/zh-cn/linear-regression-model-guide-theory/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/" selected>English</option><option value="/zh-cn/linear-regression-model-guide-theory/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/" selected>English</option><option value="/zh-cn/linear-regression-model-guide-theory/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/" selected>English</option><option value="/zh-cn/linear-regression-model-guide-theory/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Linear Regression Model Guide - theory part</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/ml-dl/"><i class="fa-regular fa-folder fa-fw"></i>ML-DL</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-03-15">2023-03-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;2573 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;13 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
     <li><a href="#linear-regression-model">Linear regression model</a></li>
@@ -148,8 +151,37 @@ if (!doNotTrack) {
     <li><a href="#wrap-up">Wrap up</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="introduction">Introduction</h2>
-<p>Recently, I review the machine learning course of Andrew ng in Coursera. Surprisingly, I can still learn a lot, so I decided to write some posts👍.</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Linear Regression Model Guide - theory part</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/ml-dl/"><i class="far fa-folder fa-fw"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-03-15">2023-03-15</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-03-15">2023-03-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2566 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#linear-regression-model">Linear regression model</a></li>
+    <li><a href="#categories">Categories</a>
+      <ul>
+        <li><a href="#univariate-linear-regression-model">Univariate linear regression model</a></li>
+        <li><a href="#multiple-linear-regression-model">Multiple linear regression model</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-train-this-model">How to train this model</a>
+      <ul>
+        <li><a href="#cost-function">Cost function</a></li>
+        <li><a href="#training-use-gradient-descent">Training use gradient descent</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="introduction" class="headerLink">
+    <a href="#introduction" class="header-mark"></a>Introduction</h2><p>Recently, I review the machine learning course of Andrew ng in Coursera. Surprisingly, I can still learn a lot, so I decided to write some posts👍.</p>
 <p>To talk about linear regression, we must first have a basic understanding of what is machine learning. What is machine learning? abstractly speaking, <strong>machine learning is learning a function</strong>:
 $$
 f(input) = output
@@ -158,7 +190,7 @@ where $f$ refers to the specific machine learning model. <strong>Machine learnin
 <blockquote>
 <p>📒 That&rsquo;s why I always feel that <strong>every programmer should know some machine learning/deep learning</strong>, it is a great tool for us to solve problems💪</p>
 </blockquote>
-<p>Linear regression is one of the classic machine learning models. In my opinion, it can be regarded as the counterpart of <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreffer">&ldquo;Hello world&rdquo;</a> in the machine learning world.</p>
+<p>Linear regression is one of the classic machine learning models. In my opinion, it can be regarded as the counterpart of <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreferrer">&ldquo;Hello world&rdquo;</a> in the machine learning world.</p>
 <p>In the previous formula, $input$ is the so-called <strong>feature</strong> in machine learning, which is often represented by the symbol $x$. And $output$ can be roughly divided into two categories: class/category (Classification problem) and number (Regression problem).</p>
 <blockquote>
 <p>📒 How to understand features? The so-called <strong>features are characteristics that are highly correlated with the target to be predicted</strong>. <em>Take predicting housing prices as an example. The housing price is obviously related to the house area, distance to the downtown, etc. The house area here is a feature</em>. In machine learning, we can analyze the importance of different features to see which ones are highly correlated with the output, or use our domain knowledge (Domain knowledge) to choose good features wisely. But in general, <strong>machine learning still requires us to spend a lot of time spotting good features</strong>. This is the drawback of machine learning, and this shortcoming is greatly alleviated in deep learning. Of course, that is not the topic today.</p>
@@ -170,22 +202,22 @@ where $f$ refers to the specific machine learning model. <strong>Machine learnin
 <blockquote>
 <p>📒 This article assumes that you have a basic understanding of matrix/vector calculus, <em>for example, you need to know the definition of matrix multiplication, how to calculate derivatives, etc</em>.</p>
 </blockquote>
-<h2 id="linear-regression-model">Linear regression model</h2>
-<p>As the name suggests, it consists of two parts:</p>
+<h2 id="linear-regression-model" class="headerLink">
+    <a href="#linear-regression-model" class="header-mark"></a>Linear regression model</h2><p>As the name suggests, it consists of two parts:</p>
 <ul>
 <li>Linear. <em>Taking a two-dimensional plane as an example, $y=kx+b$ is linear, for it is a straight line when drawn, but $y=x^2$ is not, because it is drawn as a curve</em></li>
 <li>Regression because it fits the definition of a regression problem in <strong>machine learning</strong> - predicting a value of <strong>unlimited range</strong></li>
 </ul>
-<h2 id="categories">Categories</h2>
-<blockquote>
+<h2 id="categories" class="headerLink">
+    <a href="#categories" class="header-mark"></a>Categories</h2><blockquote>
 <p>📒 To reduce the visual noise, the following notation $f(x)$ omits the subscripts $w,b$ for simplicity. I.e. $f(x)=f_{w,b}(x)$</p>
 </blockquote>
 <blockquote>
 <p>📒 Sometimes you may see some books or blogs use $h_\theta$ to represent the model(h means hypothesis), I think $f(x)$ as it is more concise and intuitive.</p>
 </blockquote>
 <p>The linear regression model can be divided into the following categories:</p>
-<h3 id="univariate-linear-regression-model">Univariate linear regression model</h3>
-<p>Univariate means that your model only accepts a single feature:
+<h3 id="univariate-linear-regression-model" class="headerLink">
+    <a href="#univariate-linear-regression-model" class="header-mark"></a>Univariate linear regression model</h3><p>Univariate means that your model only accepts a single feature:
 $$
 f(x)=wx+b
 $$
@@ -196,8 +228,8 @@ In machine learning world, we call $w$ and $b$ as weight and bias</p>
 <blockquote>
 <p>📒 The equation above can also be written in the form of vector multiplication. Let $\theta=[b, w]$ represent the parameters of the model, and rewrite x as $\vec x=[1, x]^T$. According to the knowledge of vector multiplication, we can infer that $\theta^T\vec x=wx+b$</p>
 </blockquote>
-<h3 id="multiple-linear-regression-model">Multiple linear regression model</h3>
-<p>Multiple means that your model accepts multiple features:
+<h3 id="multiple-linear-regression-model" class="headerLink">
+    <a href="#multiple-linear-regression-model" class="header-mark"></a>Multiple linear regression model</h3><p>Multiple means that your model accepts multiple features:
 $$
 f(x)=w_1x_1+w_1x_2+&hellip;w_nx_n+b
 $$
@@ -205,9 +237,9 @@ Where $x_i$ is the ith feature, there are $n$ features in total, for this, we ne
 <blockquote>
 <p>📒 Similarly, we can choose to write in the form of vector multiplication. Let $\theta=[b, w_1, w_2, &hellip;, w_n]$ and $\vec x=[1, x_1, x_2, &hellip;, x_n]^T$. You will be surprised to find that <strong>univariate linear regression and multivariate linear regression have a unified form - $f(\vec x)=\theta^T\vec x$</strong>. This will bring great convenience when calculating the gradient later.</p>
 </blockquote>
-<h2 id="how-to-train-this-model">How to train this model</h2>
-<h3 id="cost-function">Cost function</h3>
-<p>After defining the linear regression model, we need to measure its prediction quality. Obviously, we wish to minimize the &ldquo;distance&rdquo; between the predicted value and the actual value. In machine learning, we will specify a cost function to measure the &ldquo;distance&rdquo;. <strong>The lower the cost, the better</strong>. When the cost of the model on the validation set is minimized to a small value and no longer changes significantly, we think that the model has converged, and the best model is obtained at this time</p>
+<h2 id="how-to-train-this-model" class="headerLink">
+    <a href="#how-to-train-this-model" class="header-mark"></a>How to train this model</h2><h3 id="cost-function" class="headerLink">
+    <a href="#cost-function" class="header-mark"></a>Cost function</h3><p>After defining the linear regression model, we need to measure its prediction quality. Obviously, we wish to minimize the &ldquo;distance&rdquo; between the predicted value and the actual value. In machine learning, we will specify a cost function to measure the &ldquo;distance&rdquo;. <strong>The lower the cost, the better</strong>. When the cost of the model on the validation set is minimized to a small value and no longer changes significantly, we think that the model has converged, and the best model is obtained at this time</p>
 <blockquote>
 <p>📒 In machine learning, the data is usually divided into training/validation/test set, the model learns on the training set, verifies and adjusts parameters on the validation set, and performs generalization verification on the test set finally (<strong>The test set contains unseen data</strong>). It is incorrect to directly adjust parameters on the test set by only using the division method of training/test set. The test set is used <strong>if and only if</strong> after you finish training and tuning your model</p>
 </blockquote>
@@ -227,8 +259,8 @@ $$</p>
 <blockquote>
 <p>📒 Linear regression model <strong>does not have to use MSE though</strong>, you can also use the absolute value error(MAE). Use MAE when there are many outliers in the training set, which can reduce the sensitivity to them.</p>
 </blockquote>
-<h3 id="training-use-gradient-descent">Training use gradient descent</h3>
-<p>As aforementioned, when the cost of the model on the validation set is minimized and does not change significantly, we get the best model. But how to make the model continuously improve the prediction and reduce the cost? 🤔 The Gradient descent algorithm is a general practice</p>
+<h3 id="training-use-gradient-descent" class="headerLink">
+    <a href="#training-use-gradient-descent" class="header-mark"></a>Training use gradient descent</h3><p>As aforementioned, when the cost of the model on the validation set is minimized and does not change significantly, we get the best model. But how to make the model continuously improve the prediction and reduce the cost? 🤔 The Gradient descent algorithm is a general practice</p>
 <p>Don&rsquo;t be fooled by the name, the gradient descent algorithm is not that mysterious. Let&rsquo;s recap what we have learned so far:</p>
 <ul>
 <li>The prediction $\hat y$ of the model is related to its parameters, <em>if it is a univariate linear regression model, it is related to $w$ and $b$</em></li>
@@ -323,54 +355,82 @@ $$</p>
 <p>Explanations:</p>
 <ul>
 <li>The shape of $X^T$ is $(n+1, m)$, and the shape of $\vec y$ is $(m, 1)$, so $X^T\vec y$ will give us a column vector with $(n +1, 1)$. <strong>Note that in linear algebra, when $\vec a$ and $\vec b$ are both column vectors, $\vec a^T\vec b=\vec b^T\vec a$ holds</strong>. So $\theta^T(X^T\vec y) = (X^T\vec y)^T\theta$ is satisfied.</li>
-<li>For the derivation in several other places, I recommend reading the <a href="http://www.gatsby.ucl.ac.uk/teaching/courses/sntn/sntn-2017/resources/Matrix_derivatives_cribsheet.pdf" target="_blank" rel="noopener noreffer">Cheatsheet</a>. Of course, if you are interested in this aspect, it is recommended to try to prove them by yourself
+<li>For the derivation in several other places, I recommend reading the <a href="http://www.gatsby.ucl.ac.uk/teaching/courses/sntn/sntn-2017/resources/Matrix_derivatives_cribsheet.pdf" target="_blank" rel="noopener noreferrer">Cheatsheet</a>. Of course, if you are interested in this aspect, it is recommended to try to prove them by yourself
 <ul>
 <li>For example, to compute the $\frac{\partial}{\partial \theta}(\theta^TX^T\vec y))$, we can let $\vec b=X^T\vec y$, which just corresponds to $\frac{\partial }{\partial \theta}\theta^T\vec b=\vec b$ in cheatsheet</li>
 </ul>
 </li>
 </ul>
 <blockquote>
-<p>📒 The vector form also brings great convenience when implementing this model. We can use the mature <a href="https://numpy.org/" target="_blank" rel="noopener noreffer">Numpy</a> for calculations instead of writing a for loop by computing one by one.</p>
+<p>📒 The vector form also brings great convenience when implementing this model. We can use the mature <a href="https://numpy.org/" target="_blank" rel="noopener noreferrer">Numpy</a> for calculations instead of writing a for loop by computing one by one.</p>
 </blockquote>
-<h2 id="wrap-up">Wrap up</h2>
-<p>We have finished the theoretical part of the linear regression model. This post introduces univariate linear regression and multivariate linear regression. The former can be regarded as a special case of the latter. Finally, we unified the equations in vector form, and derive the gradient when MSE is used as the cost function.</p>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><p>We have finished the theoretical part of the linear regression model. This post introduces univariate linear regression and multivariate linear regression. The former can be regarded as a special case of the latter. Finally, we unified the equations in vector form, and derive the gradient when MSE is used as the cost function.</p>
 <p>I originally wanted to put the code here, but I found out that this blog is already very long. It will be a better choice to put the implementation part in another post🙌</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/machine-learning/">Machine-Learning</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>Updated on 2023-03-15</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part" data-hashtags="Machine-Learning"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-hashtag="Machine-Learning"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/config-neovim-from-scratch/" class="prev" rel="prev" title="Transform Your Neovim into a IDE: A Step-by-Step Guide"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/backpropagation-tutorial/" class="next" rel="next" title="How to understand the backpropagation algorithm">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-03-15</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part" data-hashtags="Machine-Learning"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-hashtag="Machine-Learning"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" data-title="Linear Regression Model Guide - theory part" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Linear Regression Model Guide - theory part&#34;, &#34;https://martinlwx.github.io/en/linear-regression-model-guide-theory/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/machine-learning/">Machine-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/config-neovim-from-scratch/" class="prev" rel="prev" title="Transform Your Neovim into a IDE: A Step-by-Step Guide"><i class="fas fa-angle-left fa-fw"></i>Transform Your Neovim into a IDE: A Step-by-Step Guide</a>
+            <a href="/en/backpropagation-tutorial/" class="next" rel="next" title="How to understand the backpropagation algorithm">How to understand the backpropagation algorithm<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

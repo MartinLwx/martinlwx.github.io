@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>线性回归模型指南 - 理论部分 - MartinLwx&#39;s Blog</title><meta name="description" content="机器学习中的线性回归模型指南，包括梯度下降算法推导等"><meta property="og:title" content="线性回归模型指南 - 理论部分" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>线性回归模型指南 - 理论部分 - MartinLwx&#39;s Blog</title><meta name="Description" content="机器学习中的线性回归模型指南，包括梯度下降算法推导等"><meta property="og:title" content="线性回归模型指南 - 理论部分" />
 <meta property="og:description" content="机器学习中的线性回归模型指南，包括梯度下降算法推导等" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="线性回归模型指南 - 理论部分"/>
 <meta name="twitter:description" content="机器学习中的线性回归模型指南，包括梯度下降算法推导等"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/linear-regression-model-guide-theory\/"
+            "@id": "https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/"
         },"genre": "posts","keywords": "Machine-Learning","wordcount":  4566 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/linear-regression-model-guide-theory\/","datePublished": "2023-03-15T12:27:40+08:00","dateModified": "2023-03-15T12:27:40+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        "url": "https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/","datePublished": "2023-03-15T12:27:40+08:00","dateModified": "2023-03-15T12:27:40+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "机器学习中的线性回归模型指南，包括梯度下降算法推导等"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/">English</option><option value="/zh-cn/linear-regression-model-guide-theory/" selected>简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="选择语言" id="language-select-desktop" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/">English</option><option value="/zh-cn/linear-regression-model-guide-theory/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/">English</option><option value="/zh-cn/linear-regression-model-guide-theory/" selected>简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="选择语言" onchange="location = this.value;"><option value="/en/linear-regression-model-guide-theory/">English</option><option value="/zh-cn/linear-regression-model-guide-theory/" selected>简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">线性回归模型指南 - 理论部分</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">出版于  <a href="/zh-cn/categories/ml-dl/"><i class="fa-regular fa-folder fa-fw"></i>ML-DL</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-03-15">2023-03-15</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4566 字</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
     <li><a href="#线性回归模型">线性回归模型</a></li>
@@ -148,8 +151,37 @@ if (!doNotTrack) {
     <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="引言">引言</h2>
-<p>最近，重新刷起了吴恩达的机器学习课程，系统性复习了之前学过的知识，发现又有不少收获，打算仔细整理一番👍</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">线性回归模型指南 - 理论部分</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/ml-dl/"><i class="far fa-folder fa-fw"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-03-15">2023-03-15</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-03-15">2023-03-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4566 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#线性回归模型">线性回归模型</a></li>
+    <li><a href="#分类">分类</a>
+      <ul>
+        <li><a href="#单变量线性回归">单变量线性回归</a></li>
+        <li><a href="#多变量线性回归">多变量线性回归</a></li>
+      </ul>
+    </li>
+    <li><a href="#模型如何训练">模型如何训练</a>
+      <ul>
+        <li><a href="#损失函数">损失函数</a></li>
+        <li><a href="#梯度下降训练法">梯度下降训练法</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言" class="headerLink">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>最近，重新刷起了吴恩达的机器学习课程，系统性复习了之前学过的知识，发现又有不少收获，打算仔细整理一番👍</p>
 <p>要谈论什么是线性回归首先要对什么是机器学习有一个基本的认识，什么是机器学习？抽象来说机器学习就是学习一个函数
 $$
 f(input) = output
@@ -158,7 +190,7 @@ $$
 <blockquote>
 <p>📒 为此，我总觉得<strong>每个程序员都应该懂点机器学习/深度学习</strong>，它也是我们解决问题的一大工具💪</p>
 </blockquote>
-<p>线性回归就是经典的机器学习入门模型之一，可以说是机器学习界的 <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreffer">“Hello world”</a>，<em>经典的比如波士顿房价预测项目（虽然说现在已经是烂大街的项目了）</em></p>
+<p>线性回归就是经典的机器学习入门模型之一，可以说是机器学习界的 <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" target="_blank" rel="noopener noreferrer">“Hello world”</a>，<em>经典的比如波士顿房价预测项目（虽然说现在已经是烂大街的项目了）</em></p>
 <p>前面的公式中，$input$ 为机器学习中所谓的特征（Feature），常用记号 $x$ 表示。而 $output$ 可以根据是预测值还是预测类别可以大致划分为回归问题（Regression problem）和分类问题（Classification problem）两大类</p>
 <blockquote>
 <p>📒 如何理解特征？所谓<strong>特征就是，跟要预测的东西高度相关的东西</strong>。<em>还是用预测房价作为例子，房价显然跟占地面积、绿化条件等相关，这里的占地面积等就是特征</em>。机器学习中可以对特征分析，看哪些跟输出的关联程度高，或者运用我们的领域知识（Domain knowledge），自己选择好的特征。但总的来说，<strong>机器学习还是要求我们花费大量精力在提取好的特征上</strong>，这也是机器学习被人诟病的地方，而这个缺点在深度学习中被大大缓解，当然那是后话了</p>
@@ -170,22 +202,22 @@ $$
 <blockquote>
 <p>📒 本文假定你对基本的微积分和线性代数有所了解，<em>比如你需要知道行向量乘列向量如何进行以及对应的记号表示，矩阵乘法的定义，函数如何求导等</em></p>
 </blockquote>
-<h2 id="线性回归模型">线性回归模型</h2>
-<p>线性回归的英文是 Linear regression。顾名思义，由两部分组成：</p>
+<h2 id="线性回归模型" class="headerLink">
+    <a href="#%e7%ba%bf%e6%80%a7%e5%9b%9e%e5%bd%92%e6%a8%a1%e5%9e%8b" class="header-mark"></a>线性回归模型</h2><p>线性回归的英文是 Linear regression。顾名思义，由两部分组成：</p>
 <ul>
 <li>Linear 的含义就是它<strong>是线性的</strong>。<em>以二维平面为例，$y=kx+b$ 这种就是线性，画出来是一条直线，而 $y=x^2$ 这种就不是，因为它画出来为曲线</em></li>
 <li>Regression 是因为它符合<strong>机器学习中对回归问题的定义</strong>——预测一个<strong>不限制范围</strong>的值</li>
 </ul>
-<h2 id="分类">分类</h2>
-<blockquote>
+<h2 id="分类" class="headerLink">
+    <a href="#%e5%88%86%e7%b1%bb" class="header-mark"></a>分类</h2><blockquote>
 <p>📒 为了形式的简洁下面的记号 $f(x)$ 其实省略了下标 $w,b$。$f(x)=f_{w,b}(x)$</p>
 </blockquote>
 <blockquote>
 <p>📒 有时候会看到有的书或者博客用 $h_\theta$ 表示模型，我认为 $f(x)$ 比较简洁就用了这个记法</p>
 </blockquote>
 <p>如果要进一步对线性回归模型进行细分，又可以分成如下几类</p>
-<h3 id="单变量线性回归">单变量线性回归</h3>
-<p>如果模型的输入特征只有一个，就叫做单变量线性回归（Univariate linear regression），此时达到了最简单的形式
+<h3 id="单变量线性回归" class="headerLink">
+    <a href="#%e5%8d%95%e5%8f%98%e9%87%8f%e7%ba%bf%e6%80%a7%e5%9b%9e%e5%bd%92" class="header-mark"></a>单变量线性回归</h3><p>如果模型的输入特征只有一个，就叫做单变量线性回归（Univariate linear regression），此时达到了最简单的形式
 $$
 f(x)=wx+b
 $$
@@ -196,8 +228,8 @@ $$
 <blockquote>
 <p>📒 也可以用向量的形式写，用 $\theta=[b, w]$ 表示模型的参数，令 $\vec x=[1, x]^T$。那么根据向量乘法的知识我们可以知道 $\theta^T\vec x=wx+b$</p>
 </blockquote>
-<h3 id="多变量线性回归">多变量线性回归</h3>
-<p>如果模型有多个输入的特征，就叫做多变量线性回归（Multiple linear regresseion）
+<h3 id="多变量线性回归" class="headerLink">
+    <a href="#%e5%a4%9a%e5%8f%98%e9%87%8f%e7%ba%bf%e6%80%a7%e5%9b%9e%e5%bd%92" class="header-mark"></a>多变量线性回归</h3><p>如果模型有多个输入的特征，就叫做多变量线性回归（Multiple linear regresseion）
 $$
 f(x)=w_1x_1+w_1x_2+&hellip;w_nx_n+b
 $$
@@ -205,9 +237,9 @@ $$
 <blockquote>
 <p>📒 同理，可以选择用向量的形式来写，令 $\theta=[b, w_1, w_2, &hellip;, w_n]$，$\vec x=[1, x_1, x_2, &hellip;, x_n]^T$，向量乘法之后也可以得到上面的形式。你会惊讶地发现，<strong>单变量线性回归和多变量线性回归有了统一的形式——$f(\vec x)=\theta^T\vec x$</strong>。<strong>这在后面求解梯度的时候会带来很大的方便</strong></p>
 </blockquote>
-<h2 id="模型如何训练">模型如何训练</h2>
-<h3 id="损失函数">损失函数</h3>
-<p>定义了线性回归模型之后，我们需要衡量它的预测好坏，显然，我们<strong>希望预测的值跟实际上的值的“距离”越接近越好</strong>。在机器学习中，我们会规定一个损失函数（Cost function）衡量“距离”，<strong>损失自然是越低越好</strong>。当模型在验证集上的损失降到最低不再明显变化的时候，我们认为模型收敛了，此时得到了最好的模型</p>
+<h2 id="模型如何训练" class="headerLink">
+    <a href="#%e6%a8%a1%e5%9e%8b%e5%a6%82%e4%bd%95%e8%ae%ad%e7%bb%83" class="header-mark"></a>模型如何训练</h2><h3 id="损失函数" class="headerLink">
+    <a href="#%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" class="header-mark"></a>损失函数</h3><p>定义了线性回归模型之后，我们需要衡量它的预测好坏，显然，我们<strong>希望预测的值跟实际上的值的“距离”越接近越好</strong>。在机器学习中，我们会规定一个损失函数（Cost function）衡量“距离”，<strong>损失自然是越低越好</strong>。当模型在验证集上的损失降到最低不再明显变化的时候，我们认为模型收敛了，此时得到了最好的模型</p>
 <blockquote>
 <p>📒 在机器学习中，通常将数据划分为训练集/验证集/测试集，模型用训练集上的数据学习，在验证集上验证、调参，最后在测试集上进行泛化性验证（<strong>测试集包含没有见过的数据</strong>）。只用训练集/测试集这种划分方法，直接在测试集上调参<strong>是不正确的做法</strong>。测试集<strong>当且仅当</strong>最后你训练和调参结束，选出你认为的最好模型的的时候，在论文里面是报告结果的时候采用的</p>
 </blockquote>
@@ -227,8 +259,8 @@ $$</p>
 <blockquote>
 <p>📒 线性回归模型<strong>不是非要</strong>用 MSE，也可以用绝对值误差 MAE，MAE 适用于：当数据集中的异常值（Outlier）比较多的时候，降低对这种样本的敏感度</p>
 </blockquote>
-<h3 id="梯度下降训练法">梯度下降训练法</h3>
-<p>前面提到当模型在验证集上的损失降到最低而且不再变化的时候，我们得到最好的模型。但是要如何让模型不断改进预测，降低损失呢？🤔 梯度下降（Gradient descent）算法是一种通用的做法</p>
+<h3 id="梯度下降训练法" class="headerLink">
+    <a href="#%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d%e8%ae%ad%e7%bb%83%e6%b3%95" class="header-mark"></a>梯度下降训练法</h3><p>前面提到当模型在验证集上的损失降到最低而且不再变化的时候，我们得到最好的模型。但是要如何让模型不断改进预测，降低损失呢？🤔 梯度下降（Gradient descent）算法是一种通用的做法</p>
 <p>不要被这个名字所迷惑，梯度下降算法其实没有那么神秘。先整理我们目前学到了什么：</p>
 <ul>
 <li>模型的预测 $\hat y$ 跟它参数，<em>如果是单变量线性回归模型，就是和 $w$ 和 $b$ 有关</em></li>
@@ -323,54 +355,82 @@ $$</p>
 <p>几个解释：</p>
 <ul>
 <li>$X^T$ 的大小是 $(n+1, m)$，$\vec y$ 是 $(m, 1)$，因此 $X^T\vec y$ 其实是一个维度为 $(n+1, 1)$ 的列向量，<strong>注意在线性代数中，当 $\vec a$ 和 $\vec b$ 都为列向量的时候，有 $\vec a^T\vec b=\vec b^T\vec a$ 成立</strong>。所以 $\theta^T(X^T\vec y) = (X^T\vec y)^T\theta$</li>
-<li>其他几个地方的推导我推荐直接代向量/矩阵求导公式，可以参考这个 <a href="http://www.gatsby.ucl.ac.uk/teaching/courses/sntn/sntn-2017/resources/Matrix_derivatives_cribsheet.pdf" target="_blank" rel="noopener noreffer">Cheatsheet</a>。当然如果对这方面很感兴趣更推荐直接去看原理证明
+<li>其他几个地方的推导我推荐直接代向量/矩阵求导公式，可以参考这个 <a href="http://www.gatsby.ucl.ac.uk/teaching/courses/sntn/sntn-2017/resources/Matrix_derivatives_cribsheet.pdf" target="_blank" rel="noopener noreferrer">Cheatsheet</a>。当然如果对这方面很感兴趣更推荐直接去看原理证明
 <ul>
 <li>比如上面的 $\frac{\partial}{\partial \theta}(\theta^TX^T\vec y))$，其实就是换元法，令 $\vec b=X^T\vec y$，刚好对应 Cheatsheet 里面的 $\frac{\partial }{\partial \theta}\theta^T\vec b=\vec b$</li>
 </ul>
 </li>
 </ul>
 <blockquote>
-<p>📒 向量形式在实现代码的时候也带来了很大方便，我们可以利用成熟的 <a href="https://numpy.org/" target="_blank" rel="noopener noreffer">Numpy</a> <strong>高效</strong>进行计算，而不是自己写一个 for 循环一个个样本计算</p>
+<p>📒 向量形式在实现代码的时候也带来了很大方便，我们可以利用成熟的 <a href="https://numpy.org/" target="_blank" rel="noopener noreferrer">Numpy</a> <strong>高效</strong>进行计算，而不是自己写一个 for 循环一个个样本计算</p>
 </blockquote>
-<h2 id="总结">总结</h2>
-<p>线性回归模型的理论部分就是以上的内容，本文介绍了单变量线性回归，多变量线性回归，前者可以看成是后者的一个特例。最后我们将其都用向量的形式统一了写法，并给出了向量形式下采用 MSE 作为损失函数的时候的梯度计算公式</p>
+<h2 id="总结" class="headerLink">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>线性回归模型的理论部分就是以上的内容，本文介绍了单变量线性回归，多变量线性回归，前者可以看成是后者的一个特例。最后我们将其都用向量的形式统一了写法，并给出了向量形式下采用 MSE 作为损失函数的时候的梯度计算公式</p>
 <p>本来还想放一下代码在这里，结果写着写着发现这一篇博客已经很长了，看来只好将线性回归模型的算法放在另一篇了🙌</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/zh-cn/tags/machine-learning/">Machine-Learning</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2023-03-15</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分" data-hashtags="Machine-Learning"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-hashtag="Machine-Learning"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/zh-cn/config-neovim-from-scratch/" class="prev" rel="prev" title="从零开始配置 Neovim(Nvim)"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/zh-cn/backpropagation-tutorial/" class="next" rel="next" title="反向传播公式推导和理解">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-03-15</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分" data-hashtags="Machine-Learning"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-hashtag="Machine-Learning"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" data-title="线性回归模型指南 - 理论部分" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;线性回归模型指南 - 理论部分&#34;, &#34;https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/machine-learning/">Machine-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/config-neovim-from-scratch/" class="prev" rel="prev" title="从零开始配置 Neovim(Nvim)"><i class="fas fa-angle-left fa-fw"></i>从零开始配置 Neovim(Nvim)</a>
+            <a href="/zh-cn/backpropagation-tutorial/" class="next" rel="next" title="反向传播公式推导和理解">反向传播公式推导和理解<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

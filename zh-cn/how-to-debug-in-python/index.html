@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>怎么 debug Python 代码 - MartinLwx&#39;s Blog</title><meta name="description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"><meta property="og:title" content="怎么 debug Python 代码" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>怎么 debug Python 代码 - MartinLwx&#39;s Blog</title><meta name="Description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"><meta property="og:title" content="怎么 debug Python 代码" />
 <meta property="og:description" content="简单介绍了用 ipdb 对 Python 文件进行 debug" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="怎么 debug Python 代码"/>
 <meta name="twitter:description" content="简单介绍了用 ipdb 对 Python 文件进行 debug"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/gitlfs/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/how-to-use-local-file-in-homebrew/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/gitlfs/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/how-to-use-local-file-in-homebrew/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-debug-in-python\/"
-        },"genre": "posts","keywords": "Debug, Python","wordcount":  1631 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-debug-in-python\/","datePublished": "2021-12-28T11:19:00+08:00","dateModified": "2023-03-17T13:51:00+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/zh-cn/how-to-debug-in-python/"
+        },"genre": "posts","keywords": "Debug, Python","wordcount":  1636 ,
+        "url": "https://martinlwx.github.io/zh-cn/how-to-debug-in-python/","datePublished": "2021-12-28T11:19:00+08:00","dateModified": "2023-03-17T13:51:00+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "简单介绍了用 ipdb 对 Python 文件进行 debug"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/zh-cn/how-to-debug-in-python/" selected>简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="选择语言" id="language-select-desktop" onchange="location = this.value;"><option value="/zh-cn/how-to-debug-in-python/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/zh-cn/how-to-debug-in-python/" selected>简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="选择语言" onchange="location = this.value;"><option value="/zh-cn/how-to-debug-in-python/" selected>简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">怎么 debug Python 代码</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">出版于  <a href="/zh-cn/categories/python/"><i class="fa-regular fa-folder fa-fw"></i>Python</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-28">2021-12-28</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 1631 字</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
     <li><a href="#快速上手">快速上手</a>
@@ -149,15 +152,45 @@ if (!doNotTrack) {
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="引言">引言</h2>
-<blockquote>
-<p>PS. 有兴趣的可以查看我翻译的一个项目 - <a href="https://github.com/MartinLwx/pdb-tutorial" target="_blank" rel="noopener noreffer">pdb 教程</a> 🙌</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">怎么 debug Python 代码</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-28">2021-12-28</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-03-17">2023-03-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1636 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#快速上手">快速上手</a>
+      <ul>
+        <li><a href="#安装">安装</a></li>
+        <li><a href="#开始-debug">开始 debug</a></li>
+      </ul>
+    </li>
+    <li><a href="#ipdb">ipdb</a>
+      <ul>
+        <li><a href="#常用-debug-指令">常用 Debug 指令</a></li>
+        <li><a href="#程序断点专题">程序断点专题</a></li>
+        <li><a href="#查看各种信息">查看各种信息</a></li>
+      </ul>
+    </li>
+    <li><a href="#常见问题">常见问题</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言" class="headerLink">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><blockquote>
+<p>PS. 有兴趣的可以查看我翻译的一个项目 - <a href="https://github.com/MartinLwx/pdb-tutorial" target="_blank" rel="noopener noreferrer">pdb 教程</a> 🙌</p>
 </blockquote>
 <p>很长一段时间内我写代码都是用最简单的 debug 方法, 手动在程序里面插入 <code>print</code> 代码来看具体的变量的值, 然后自己推断程序到底是在哪里出问题。根据 <code>print</code> 的结果可能还要到别的地方重复这个步骤。debug 完之后还得去把这些 <code>print</code> 语句注释掉，即<strong>我是一名 print debugger</strong> &#x1f622;</p>
 <p>最近在看 MIT.Missing semester 的课讲到 debug, 顿时感到应该系统学习一下在 Python 里面如何 debug, 虽然用 <code>print</code> 也凑合, 学完之后只恨自己没有早点了解&#x1f622;</p>
-<h2 id="快速上手">快速上手</h2>
-<h3 id="安装">安装</h3>
-<p>虽然 Python 有自带的 <code>pdb</code>, 但是 <code>ipdb</code> 的跟它大差不差, 还<strong>带颜色输出</strong>, 当然用这个了(其实就跟你在命令行要用 <code>python</code> 还是 <code>ipython</code> 一样, 肯定是选择 UI 比较好的</p>
+<h2 id="快速上手" class="headerLink">
+    <a href="#%e5%bf%ab%e9%80%9f%e4%b8%8a%e6%89%8b" class="header-mark"></a>快速上手</h2><h3 id="安装" class="headerLink">
+    <a href="#%e5%ae%89%e8%a3%85" class="header-mark"></a>安装</h3><p>虽然 Python 有自带的 <code>pdb</code>, 但是 <code>ipdb</code> 的跟它大差不差, 还<strong>带颜色输出</strong>, 当然用这个了(其实就跟你在命令行要用 <code>python</code> 还是 <code>ipython</code> 一样, 肯定是选择 UI 比较好的</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -166,8 +199,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ pip install ipdb
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="开始-debug">开始 debug</h3>
-<p>直接在命令行输入以下内容即可, 其中 <code>&lt;filename&gt;</code> 表示你要 debug 的文件</p>
+</div><h3 id="开始-debug" class="headerLink">
+    <a href="#%e5%bc%80%e5%a7%8b-debug" class="header-mark"></a>开始 debug</h3><p>直接在命令行输入以下内容即可, 其中 <code>&lt;filename&gt;</code> 表示你要 debug 的文件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -176,15 +209,15 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ python -m ipdb &lt;filename&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="ipdb">ipdb</h2>
-<blockquote>
+</div><h2 id="ipdb" class="headerLink">
+    <a href="#ipdb" class="header-mark"></a>ipdb</h2><blockquote>
 <p>📒 <code>[ ]</code> 表示是可选参数, 如果没有 <code>[ ]</code> 表示一定要给这个参数</p>
 </blockquote>
 <blockquote>
 <p>📒 <code>( )</code> 表示括号里面的可以不写, 简写命令</p>
 </blockquote>
-<h3 id="常用-debug-指令">常用 Debug 指令</h3>
-<ul>
+<h3 id="常用-debug-指令" class="headerLink">
+    <a href="#%e5%b8%b8%e7%94%a8-debug-%e6%8c%87%e4%bb%a4" class="header-mark"></a>常用 Debug 指令</h3><ul>
 <li><code>l(ist)</code>
 <ul>
 <li><strong>显示当前行附近的代码</strong>, <del>具体来说是附近的 11 行, 但是记这个具体的数字好像也没啥意义</del></li>
@@ -225,8 +258,8 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h3 id="程序断点专题">程序断点专题</h3>
-<p>每次设置程序断点的时候都会输出你当前这个程序断点的序号</p>
+<h3 id="程序断点专题" class="headerLink">
+    <a href="#%e7%a8%8b%e5%ba%8f%e6%96%ad%e7%82%b9%e4%b8%93%e9%a2%98" class="header-mark"></a>程序断点专题</h3><p>每次设置程序断点的时候都会输出你当前这个程序断点的序号</p>
 <blockquote>
 <p>📒 序号默认从 1 开始, 也就是后面提到的 <code>breakpoint [count]</code></p>
 </blockquote>
@@ -269,8 +302,8 @@ if (!doNotTrack) {
 </li>
 <li><code>restart [args...]</code> - 可以给定不同的参数再次重新运行 debug</li>
 </ul>
-<h3 id="查看各种信息">查看各种信息</h3>
-<ul>
+<h3 id="查看各种信息" class="headerLink">
+    <a href="#%e6%9f%a5%e7%9c%8b%e5%90%84%e7%a7%8d%e4%bf%a1%e6%81%af" class="header-mark"></a>查看各种信息</h3><ul>
 <li><code>h(elp) [command]</code>
 <ul>
 <li>不知道命令可以查询一下</li>
@@ -295,8 +328,8 @@ if (!doNotTrack) {
 </ul>
 </li>
 </ul>
-<h2 id="常见问题">常见问题</h2>
-<p>Q: 我的变量名跟命令重复了怎么办, 比如变量名是 <code>p</code> ?</p>
+<h2 id="常见问题" class="headerLink">
+    <a href="#%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98" class="header-mark"></a>常见问题</h2><p>Q: 我的变量名跟命令重复了怎么办, 比如变量名是 <code>p</code> ?</p>
 <p>A: 这个其实不影响, 你还是可以通过 <code>p p</code> 来获取变量名的值. 如果你直接输入 <code>p</code> 显示 <code>p</code> 对应的值的话, 你可以使用 <code>!p</code>, 用 <code>!</code> 来告诉 <code>ipdb</code> 在它后面的是 python 语句</p>
 <p>Q: 每次单步执行之后都要用 <code>p expression</code> 的方式来看变量的值, 有没有更为简便的方法?</p>
 <p>A: 可以用 <code>display expression</code>, 那么在 <code>expression</code> 的值发生变动的时候, 它就会输出对应的值. 如果要取消就用 <code>undisplay expression</code></p>
@@ -323,47 +356,74 @@ if (!doNotTrack) {
 <p>A: 没有</p>
 <p>Q: 如果我一直在调用 <code>step</code> 命令, 难道我每一次都要输入 <code>s</code> 吗, 有没有更快捷的方法 ?</p>
 <p>A: 可以直接使用回车键(ENTER), 会自动重复上一次的命令</p>
-<h2 id="参考">参考</h2>
-<ol>
-<li><a href="https://docs.python.org/3/library/pdb.html" target="_blank" rel="noopener noreffer">pdb 的官方文档</a></li>
+<h2 id="参考" class="headerLink">
+    <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><ol>
+<li><a href="https://docs.python.org/3/library/pdb.html" target="_blank" rel="noopener noreferrer">pdb 的官方文档</a></li>
 </ol>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/zh-cn/tags/debug/">Debug</a>
-                </span><span><a href="/zh-cn/tags/python/">Python</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2023-03-17</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码" data-hashtags="Debug,Python"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-hashtag="Debug"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/zh-cn/gitlfs/" class="prev" rel="prev" title="Git LFS 使用指南"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/zh-cn/how-to-use-local-file-in-homebrew/" class="next" rel="next" title="怎么在 homebrew 里面安装本地安装包">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-03-17</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码" data-hashtags="Debug,Python"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-hashtag="Debug"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/how-to-debug-in-python/" data-title="怎么 debug Python 代码" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;怎么 debug Python 代码&#34;, &#34;https://martinlwx.github.io/zh-cn/how-to-debug-in-python/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/debug/">Debug</a>,&nbsp;<a href="/zh-cn/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/gitlfs/" class="prev" rel="prev" title="Git LFS 使用指南"><i class="fas fa-angle-left fa-fw"></i>Git LFS 使用指南</a>
+            <a href="/zh-cn/how-to-use-local-file-in-homebrew/" class="next" rel="next" title="怎么在 homebrew 里面安装本地安装包">怎么在 homebrew 里面安装本地安装包<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

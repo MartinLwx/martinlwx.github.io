@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Pattern Matching in Python 3.10 - MartinLwx&#39;s Blog</title><meta name="description" content="The tutorial about the pattern matching in Python 3.10"><meta property="og:title" content="Pattern Matching in Python 3.10" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Pattern Matching in Python 3.10 - MartinLwx&#39;s Blog</title><meta name="Description" content="The tutorial about the pattern matching in Python 3.10"><meta property="og:title" content="Pattern Matching in Python 3.10" />
 <meta property="og:description" content="The tutorial about the pattern matching in Python 3.10" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/pattern-matching-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Pattern Matching in Python 3.10"/>
 <meta name="twitter:description" content="The tutorial about the pattern matching in Python 3.10"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/pattern-matching-in-python/" /><link rel="prev" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="next" href="https://martinlwx.github.io/en/walrus-operator-in-python/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/pattern-matching-in-python/" /><link rel="prev" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="next" href="https://martinlwx.github.io/en/walrus-operator-in-python/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/pattern-matching-in-python\/"
-        },"genre": "posts","keywords": "Python","wordcount":  2988 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/pattern-matching-in-python\/","datePublished": "2022-10-16T15:14:57+08:00","dateModified": "2022-10-16T15:14:57+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/pattern-matching-in-python/"
+        },"genre": "posts","keywords": "Python","wordcount":  2974 ,
+        "url": "https://martinlwx.github.io/en/pattern-matching-in-python/","datePublished": "2022-10-16T15:14:57+08:00","dateModified": "2022-10-16T15:14:57+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "The tutorial about the pattern matching in Python 3.10"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/pattern-matching-in-python/" selected>English</option><option value="/zh-cn/pattern-matching-in-python/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/pattern-matching-in-python/" selected>English</option><option value="/zh-cn/pattern-matching-in-python/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/pattern-matching-in-python/" selected>English</option><option value="/zh-cn/pattern-matching-in-python/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/pattern-matching-in-python/" selected>English</option><option value="/zh-cn/pattern-matching-in-python/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Pattern Matching in Python 3.10</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/python/"><i class="fa-regular fa-folder fa-fw"></i>Python</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;2988 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;15 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
     <li><a href="#syntax-rules">Syntax rules</a></li>
@@ -151,11 +154,43 @@ if (!doNotTrack) {
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><blockquote>
-<p>This post is originally written in jupyter notebook and then convert to markdown. To get the original notebook files. Please check the <a href="https://github.com/MartinLwx/oh_my_python" target="_blank" rel="noopener noreffer">repo</a></p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Pattern Matching in Python 3.10</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-10-16">2022-10-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2974 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;14 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#syntax-rules">Syntax rules</a></li>
+    <li><a href="#patterns">Patterns</a>
+      <ul>
+        <li><a href="#capture-pattern">Capture pattern</a></li>
+        <li><a href="#literal-pattern">Literal pattern</a></li>
+        <li><a href="#wildcard-pattern">Wildcard pattern</a></li>
+        <li><a href="#or-pattern">Or pattern</a></li>
+        <li><a href="#as-pattern">As pattern</a></li>
+        <li><a href="#class-pattern">Class pattern</a></li>
+        <li><a href="#mapping-pattern">Mapping pattern</a></li>
+        <li><a href="#value-pattern">Value pattern</a></li>
+      </ul>
+    </li>
+    <li><a href="#use-pattern-matching-on-a-class">Use pattern matching on a class</a></li>
+    <li><a href="#guard">Guard</a></li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>This post is originally written in jupyter notebook and then convert to markdown. To get the original notebook files. Please check the <a href="https://github.com/MartinLwx/oh_my_python" target="_blank" rel="noopener noreferrer">repo</a></p>
 </blockquote>
-<h2 id="intro">Intro</h2>
-<p>Today I want to talk about the new feature bring in Python 3.10 &ndash; Pattern matching 🎉</p>
+<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>Today I want to talk about the new feature bring in Python 3.10 &ndash; Pattern matching 🎉</p>
 <p>Those who have learned C language must be familiar with the following <code>switch</code> statement:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -267,8 +302,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="syntax-rules">Syntax rules</h2>
-<p>The syntax of the pattern matching is:</p>
+</div><h2 id="syntax-rules" class="headerLink">
+    <a href="#syntax-rules" class="header-mark"></a>Syntax rules</h2><p>The syntax of the pattern matching is:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -301,16 +336,16 @@ if (!doNotTrack) {
 <li>No <code>default</code> available. But we can use <code>case _</code> to capture all cases, which is called the <em>Wildcard pattern</em> that will be discussed later</li>
 <li>The <code>subject</code> and <code>pattern</code> here are much more powerful than the C language, <strong>not only the integer and char types</strong>, but <code>pattern</code> can also be <strong>combined and nested</strong> with each other. It will be explained in detail later</li>
 </ol>
-<h2 id="patterns">Patterns</h2>
-<p>In pattern matching, a pattern basically does two things:</p>
+<h2 id="patterns" class="headerLink">
+    <a href="#patterns" class="header-mark"></a>Patterns</h2><p>In pattern matching, a pattern basically does two things:</p>
 <ol>
 <li>Structure constraints: we can add constraints to the <code>subject</code> in various ways. <em>For example the length, the specific value in a specific position, etc</em></li>
 <li>Bind variables: we can bind some names in the pattern to component elements of the subject. See the <em>Capture pattern</em> below.</li>
 </ol>
 <p>Below I discuss different patterns :)</p>
 <p>To avoid confusion, it&rsquo;s worth explaining in advance that both <code>()</code> and <code>[]</code> are optional when pattern matching matches a sequence. <em>For example, <code>case foo, bar</code> and <code>case (foo, bar)</code> and <code>case [foo, bar]</code> are equivalent</em>. They have the same meaning.</p>
-<h3 id="capture-pattern">Capture pattern</h3>
-<p><em>Capture pattern</em> means that when we check whether a <code>pattern</code> matches, we can use <strong>variable names to bind to any part of it</strong>, and we can <strong>use these variables later</strong></p>
+<h3 id="capture-pattern" class="headerLink">
+    <a href="#capture-pattern" class="header-mark"></a>Capture pattern</h3><p><em>Capture pattern</em> means that when we check whether a <code>pattern</code> matches, we can use <strong>variable names to bind to any part of it</strong>, and we can <strong>use these variables later</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -383,8 +418,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>the 1st element: foo, 2nd element: ['bar', 'another_foo', 'another_bar']
 </code></pre>
-<h3 id="literal-pattern">Literal pattern</h3>
-<p><em>Literal pattern</em> means that we can <strong>specify literal values in specific positions</strong>. The literals here can be number literals, string literals, <code>True</code>, <code>False</code>, and <code>None</code></p>
+<h3 id="literal-pattern" class="headerLink">
+    <a href="#literal-pattern" class="header-mark"></a>Literal pattern</h3><p><em>Literal pattern</em> means that we can <strong>specify literal values in specific positions</strong>. The literals here can be number literals, string literals, <code>True</code>, <code>False</code>, and <code>None</code></p>
 <blockquote>
 <p>📒 Note: For number literals and string literals, python will use <code>==</code> for comparison, and for <code>True/False/None</code> these three will use <code>is</code>.</p>
 </blockquote>
@@ -430,8 +465,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>Matched, 1 == True
 </code></pre>
-<h3 id="wildcard-pattern">Wildcard pattern</h3>
-<p>It is a common practice in python that: use <code>_</code> to indicate that we don&rsquo;t care about the value. Similarly, <code>_</code> can be used here, and it <strong>will not bind any variables</strong></p>
+<h3 id="wildcard-pattern" class="headerLink">
+    <a href="#wildcard-pattern" class="header-mark"></a>Wildcard pattern</h3><p>It is a common practice in python that: use <code>_</code> to indicate that we don&rsquo;t care about the value. Similarly, <code>_</code> can be used here, and it <strong>will not bind any variables</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -483,8 +518,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>Default case
 </code></pre>
-<h3 id="or-pattern">Or pattern</h3>
-<p>Just like in the <code>if</code> statement we can use <code>or</code>, in pattern matching we also have a similar syntax. Like most other languages, Python chooses to use <code>|</code> to express an &ldquo;or&rdquo; logical relationship. We can declare the alternatives conveniently</p>
+<h3 id="or-pattern" class="headerLink">
+    <a href="#or-pattern" class="header-mark"></a>Or pattern</h3><p>Just like in the <code>if</code> statement we can use <code>or</code>, in pattern matching we also have a similar syntax. Like most other languages, Python chooses to use <code>|</code> to express an &ldquo;or&rdquo; logical relationship. We can declare the alternatives conveniently</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -519,8 +554,8 @@ if (!doNotTrack) {
 [Second match] Match foo or bar
 </code></pre>
 <p>The disadvantage of the Or pattern above is that we have no way of knowing which one we matched exactly</p>
-<h3 id="as-pattern">As pattern</h3>
-<p>In the previous example, we may match any of the alternatives, so how do we know which one we match? Because we <strong>may need to decide what to do based on which one is matched</strong>. In pattern matching, we can use <code>as</code> to bind a value</p>
+<h3 id="as-pattern" class="headerLink">
+    <a href="#as-pattern" class="header-mark"></a>As pattern</h3><p>In the previous example, we may match any of the alternatives, so how do we know which one we match? Because we <strong>may need to decide what to do based on which one is matched</strong>. In pattern matching, we can use <code>as</code> to bind a value</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -543,8 +578,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Match </span><span class="si">{</span><span class="n">matched_element</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="class-pattern">Class pattern</h3>
-<p>Python is a dynamically typed language, and sometimes we need to <strong>decide whether to match based on the type</strong>. The intuitive way is using <code>isinstance()</code> to check if it is qualified, but there is a better way. Next, I will show you how to add type constraints step by step:</p>
+</div><h3 id="class-pattern" class="headerLink">
+    <a href="#class-pattern" class="header-mark"></a>Class pattern</h3><p>Python is a dynamically typed language, and sometimes we need to <strong>decide whether to match based on the type</strong>. The intuitive way is using <code>isinstance()</code> to check if it is qualified, but there is a better way. Next, I will show you how to add type constraints step by step:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -610,8 +645,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>Match foo - 1 - 3.14
 </code></pre>
-<h3 id="mapping-pattern">Mapping pattern</h3>
-<p>The previous ones are all matching against a sequence, here we are matching against the <code>dict</code>. I believe that after reading the previous examples, it is not difficult to understand the following example. But there are a few things to keep in mind:</p>
+<h3 id="mapping-pattern" class="headerLink">
+    <a href="#mapping-pattern" class="header-mark"></a>Mapping pattern</h3><p>The previous ones are all matching against a sequence, here we are matching against the <code>dict</code>. I believe that after reading the previous examples, it is not difficult to understand the following example. But there are a few things to keep in mind:</p>
 <ol>
 <li>we match <code>dict</code> based on its present keys. The keys here must be a literal value or a value of enum type (for performance considerations), values do not have this restriction</li>
 <li>we can use <code>**&lt;name&gt;</code> to capture the key-value pair we didn&rsquo;t write in <code>pattern</code>. Otherwise <strong>the undeclared key-value pairs will be ignored</strong></li>
@@ -651,8 +686,8 @@ if (!doNotTrack) {
 </div><pre><code>[First match]  The first_name: foo
 [Second match] The rest: {'second_name': 'bar'}
 </code></pre>
-<h3 id="value-pattern">Value pattern</h3>
-<p>It&rsquo;s good practice to use &ldquo;named variables&rdquo; as parameter values or to clarify the meaning of specific values. <em>e.g. <code>case (HttpStatus.OK, body)</code> is better than <code>case (200, body)</code></em></p>
+<h3 id="value-pattern" class="headerLink">
+    <a href="#value-pattern" class="header-mark"></a>Value pattern</h3><p>It&rsquo;s good practice to use &ldquo;named variables&rdquo; as parameter values or to clarify the meaning of specific values. <em>e.g. <code>case (HttpStatus.OK, body)</code> is better than <code>case (200, body)</code></em></p>
 <p>The challenge of implementing the <em>Value pattern</em> in Python is to distinguish it from the previous <em>Capture pattern</em>. A discussion of this can be found at <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <p>The final solution provided by python is a restricted <em>Value pattern</em> that only supports <em>Value pattern</em> of the form <code>foo.bar</code>. Common usage will be combined with the enum type, see the following example</p>
 <div class="highlight"><div class="chroma">
@@ -685,8 +720,8 @@ if (!doNotTrack) {
 </div>
 </div><pre><code>Receive HttpStatusCode.OK
 </code></pre>
-<h2 id="use-pattern-matching-on-a-class">Use pattern matching on a class</h2>
-<p>If we can only use pattern matching on built-in types, it doesn&rsquo;t seem to be that useful. But in fact, Python also allows us to use pattern matching on objects of our own custom classes.</p>
+<h2 id="use-pattern-matching-on-a-class" class="headerLink">
+    <a href="#use-pattern-matching-on-a-class" class="header-mark"></a>Use pattern matching on a class</h2><p>If we can only use pattern matching on built-in types, it doesn&rsquo;t seem to be that useful. But in fact, Python also allows us to use pattern matching on objects of our own custom classes.</p>
 <p>Considering the application scenario, when we use pattern matching on an object, we often want to check whether the object is a certain class type. We may also care about some of its fields and want to extract the values.</p>
 <p>But in Python, this is difficult to implement<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, mainly because the class has a lot of fields, most of which are special methods like <code>__repr__</code>, and these <strong>fields are unordered</strong>. Because it is unordered, we <strong>can&rsquo;t directly bind variables by position</strong> in <code>pattern</code>, see the following example:</p>
 <div class="highlight"><div class="chroma">
@@ -873,8 +908,8 @@ The y: 2
 The x: 1
 The y: 2
 </code></pre>
-<h2 id="guard">Guard</h2>
-<p>Sometimes we not only care about whether the pattern matches, but we also want to impose certain restrictions.</p>
+<h2 id="guard" class="headerLink">
+    <a href="#guard" class="header-mark"></a>Guard</h2><p>Sometimes we not only care about whether the pattern matches, but we also want to impose certain restrictions.</p>
 <p>Consider such a situation where we want to match a sequence containing two <code>int</code> values, but we require the first element shoudld be larger than the second. How would you write it? Combined with the previous <em>Class pattern</em>, it is not difficult for us to write the following code:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -941,62 +976,90 @@ The y: 2
 </span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Match successfully!&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="wrap-up">Wrap up</h2>
-<p>I would prefer pattern matching to the <code>if...elif...elif...else</code> for several reasons:</p>
+</div><h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><p>I would prefer pattern matching to the <code>if...elif...elif...else</code> for several reasons:</p>
 <ol>
 <li>We can easily bind values for subsequent processing when matching</li>
 <li>For better readabilityg</li>
 <li>The various patterns of pattern matching can actually be nested and combined, that&rsquo;s what makes pattern matching a shining point.</li>
 </ol>
 <p>The above is a brief introduction to pattern matching introduced in Python 3.10 🚀</p>
-<h2 id="refs">Refs</h2>
-<div class="footnotes" role="doc-endnotes">
+<h2 id="refs" class="headerLink">
+    <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://peps.python.org/pep-0635/" target="_blank" rel="noopener noreffer">PEP 635 – Structural Pattern Matching: Motivation and Rationale</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0635/" target="_blank" rel="noopener noreferrer">PEP 635 – Structural Pattern Matching: Motivation and Rationale</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass" target="_blank" rel="noopener noreffer">dataclasses - documentation</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass" target="_blank" rel="noopener noreferrer">dataclasses - documentation</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/python/">Python</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>Updated on 2022-10-16</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10" data-hashtags="Python"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-hashtag="Python"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/what-is-the-heap-and-stack/" class="prev" rel="prev" title="What is stack and heap"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/walrus-operator-in-python/" class="next" rel="next" title="Walrus Operator in Python 3.8">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-16</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10" data-hashtags="Python"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-hashtag="Python"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/pattern-matching-in-python/" data-title="Pattern Matching in Python 3.10" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Pattern Matching in Python 3.10&#34;, &#34;https://martinlwx.github.io/en/pattern-matching-in-python/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/python/">Python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/what-is-the-heap-and-stack/" class="prev" rel="prev" title="What is stack and heap"><i class="fas fa-angle-left fa-fw"></i>What is stack and heap</a>
+            <a href="/en/walrus-operator-in-python/" class="next" rel="next" title="Walrus Operator in Python 3.8">Walrus Operator in Python 3.8<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

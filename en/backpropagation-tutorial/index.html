@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>How to understand the backpropagation algorithm - MartinLwx&#39;s Blog</title><meta name="description" content="A simple tutorial about the backpropagation algorithm in deep learning"><meta property="og:title" content="How to understand the backpropagation algorithm" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>How to understand the backpropagation algorithm - MartinLwx&#39;s Blog</title><meta name="Description" content="A simple tutorial about the backpropagation algorithm in deep learning"><meta property="og:title" content="How to understand the backpropagation algorithm" />
 <meta property="og:description" content="A simple tutorial about the backpropagation algorithm in deep learning" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/backpropagation-tutorial/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="How to understand the backpropagation algorithm"/>
 <meta name="twitter:description" content="A simple tutorial about the backpropagation algorithm in deep learning"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/backpropagation-tutorial/" /><link rel="prev" href="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><link rel="next" href="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/backpropagation-tutorial/" /><link rel="prev" href="https://martinlwx.github.io/en/linear-regression-model-guide-theory/" /><link rel="next" href="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/backpropagation-tutorial\/"
-        },"genre": "posts","keywords": "Deep-Learning","wordcount":  1418 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/backpropagation-tutorial\/","datePublished": "2023-04-04T13:45:48+08:00","dateModified": "2023-04-04T19:54:48+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/backpropagation-tutorial/"
+        },"genre": "posts","keywords": "Deep-Learning","wordcount":  1408 ,
+        "url": "https://martinlwx.github.io/en/backpropagation-tutorial/","datePublished": "2023-04-04T13:45:48+08:00","dateModified": "2023-04-04T19:54:48+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "A simple tutorial about the backpropagation algorithm in deep learning"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/" selected>English</option><option value="/zh-cn/backpropagation-tutorial/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/" selected>English</option><option value="/zh-cn/backpropagation-tutorial/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/" selected>English</option><option value="/zh-cn/backpropagation-tutorial/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/backpropagation-tutorial/" selected>English</option><option value="/zh-cn/backpropagation-tutorial/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">How to understand the backpropagation algorithm</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/ml-dl/"><i class="fa-regular fa-folder fa-fw"></i>ML-DL</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-04-04">2023-04-04</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;1418 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;7 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
     <li><a href="#define-a-model">Define a model</a></li>
@@ -147,11 +150,39 @@ if (!doNotTrack) {
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><blockquote>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">How to understand the backpropagation algorithm</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/ml-dl/"><i class="far fa-folder fa-fw"></i>ML-DL</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-04-04">2023-04-04</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-04-04">2023-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1408 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#define-a-model">Define a model</a></li>
+    <li><a href="#the-intuition-of-backpropagation">The intuition of backpropagation</a></li>
+    <li><a href="#the-four-formulas-of-the-backpropagation">The four formulas of the backpropagation</a>
+      <ul>
+        <li><a href="#formula-1">Formula 1</a></li>
+        <li><a href="#formula-2">Formula 2</a></li>
+        <li><a href="#formula-3">Formula 3</a></li>
+        <li><a href="#formula-4">Formula 4</a></li>
+        <li><a href="#backpropagation-algorithm-procedure">Backpropagation algorithm procedure</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
 <p>Update: Backpropagation in matrix form could be found <a href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" rel="">here</a></p>
 </blockquote>
-<h2 id="intro">Intro</h2>
-<p>In the field of deep learning, optimizing the network involves a crucial process of continuously updating the weights and bias items. This is achieved by implementing the gradient descent method, which progressively minimizes the loss function. At the heart of this process lies the backpropagation algorithm, which facilitates efficient computation of gradients across the network</p>
+<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>In the field of deep learning, optimizing the network involves a crucial process of continuously updating the weights and bias items. This is achieved by implementing the gradient descent method, which progressively minimizes the loss function. At the heart of this process lies the backpropagation algorithm, which facilitates efficient computation of gradients across the network</p>
 <p>To better understand this concept, let us recall the formula for gradient descent. In this formula, we utilize the symbol $\theta$ to represent all the learnable parameters of the model, $J$ to represent the cost or loss function, and $\alpha$ to denote the learning rate. Thus, we can express the updating process as:</p>
 <p>$$
 \theta \leftarrow \theta - \alpha * \frac{\partial J}{\partial \theta}
@@ -163,8 +194,8 @@ $$</p>
 <blockquote>
 <p>📒 It is assumed that the reader has a basic understanding of the chain rule of derivation in mathematics to follow the explanations provided🫡</p>
 </blockquote>
-<h2 id="define-a-model">Define a model</h2>
-<p>Before we proceed, we need to define a model for subsequent derivation. For this purpose, let&rsquo;s consider a simple yet classical three-layer fully connected neural network:</p>
+<h2 id="define-a-model" class="headerLink">
+    <a href="#define-a-model" class="header-mark"></a>Define a model</h2><p>Before we proceed, we need to define a model for subsequent derivation. For this purpose, let&rsquo;s consider a simple yet classical three-layer fully connected neural network:</p>
 <figure><img src="/img/3_layer.png" width="70%"/>
 </figure>
 
@@ -211,13 +242,13 @@ $$</p>
 <p>$$
 J = \frac{1}{2k}\sum_{j=1}^k(a_j^L-y_j)^2
 $$</p>
-<h2 id="the-intuition-of-backpropagation">The intuition of backpropagation</h2>
-<p><strong>Understanding a concept at a high level before delving into its details is always beneficial.</strong> In the context of deep learning, the goal of the training process is to minimize the error between the predicted value $a^L_j$ and the actual label $y_j$ for each sample. By calculating this error, we can determine whether to increase or decrease $a^L_j$ to improve the model&rsquo;s predictions. However, we can only adjust $a^L_j$ by modifying the weights $w^L_{jk}$ between the $L-1$ layer and the output layer, the bias term $b_j^L$, or the output value $a^{L-1}_k$ after the activation function in the $L-1$ layer. It&rsquo;s worth mentioning that we can&rsquo;t directly modify $a_k^{L-1}$, which is determined by the values of the previous weight and bias items. <strong>When we decide how to modify each weight and bias of the model backwardly based on the prediction error, we are doing backpropagation</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<h2 id="the-intuition-of-backpropagation" class="headerLink">
+    <a href="#the-intuition-of-backpropagation" class="header-mark"></a>The intuition of backpropagation</h2><p><strong>Understanding a concept at a high level before delving into its details is always beneficial.</strong> In the context of deep learning, the goal of the training process is to minimize the error between the predicted value $a^L_j$ and the actual label $y_j$ for each sample. By calculating this error, we can determine whether to increase or decrease $a^L_j$ to improve the model&rsquo;s predictions. However, we can only adjust $a^L_j$ by modifying the weights $w^L_{jk}$ between the $L-1$ layer and the output layer, the bias term $b_j^L$, or the output value $a^{L-1}_k$ after the activation function in the $L-1$ layer. It&rsquo;s worth mentioning that we can&rsquo;t directly modify $a_k^{L-1}$, which is determined by the values of the previous weight and bias items. <strong>When we decide how to modify each weight and bias of the model backwardly based on the prediction error, we are doing backpropagation</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <p>The above process describes how $a_j^L$ <em>wants</em> to adjust the weights and biases of the entire model. However, we need to consider the <em>opinions</em> of all neurons in the output layer, as each neuron may has a different idea of how the weights and biases should change. Ultimately, we need to update the model&rsquo;s weights and biases by incorporating the <em>opinions</em> of all neurons in the output layer.</p>
-<h2 id="the-four-formulas-of-the-backpropagation">The four formulas of the backpropagation</h2>
-<p>The core of the backpropagation algorithm contains 4 formulas</p>
-<h3 id="formula-1">Formula 1</h3>
-<p>$$
+<h2 id="the-four-formulas-of-the-backpropagation" class="headerLink">
+    <a href="#the-four-formulas-of-the-backpropagation" class="header-mark"></a>The four formulas of the backpropagation</h2><p>The core of the backpropagation algorithm contains 4 formulas</p>
+<h3 id="formula-1" class="headerLink">
+    <a href="#formula-1" class="header-mark"></a>Formula 1</h3><p>$$
 \delta_j^L=\frac{\partial J}{\partial a_j^L}\sigma&rsquo;(z_j^L)
 $$</p>
 <p>Where $L$ is the number of layers of the model($L=3$ in this example), $\delta_j^L$ represents the gradient of the $j$-th neuron in the $L$ layer</p>
@@ -235,8 +266,8 @@ $$
 &amp;=\frac{\partial J}{\partial a_j^L}\sigma&rsquo;(z_j^L)
 \end{aligned}
 $$</p>
-<h3 id="formula-2">Formula 2</h3>
-<p>$$
+<h3 id="formula-2" class="headerLink">
+    <a href="#formula-2" class="header-mark"></a>Formula 2</h3><p>$$
 \delta^l=((w^{l+1})^T\delta^{l+1})\odot \sigma&rsquo;(z^l)
 $$</p>
 <blockquote>
@@ -254,8 +285,8 @@ $$</p>
 <p>The derivative only exists when $p=j$, so the solution to the above formula is $w^{l+1}_{kj}\sigma&rsquo;(z_j^l)$.</p>
 <p>That is, we have shown that $\delta_j^l=\sum_k\delta_k^{l+1}\ w^{l+1}_{kj}\sigma&rsquo;(z_j^l)$</p>
 <p>$\sum_k\delta_k^{l+1}w^{l+1}_{kj}$ is actually calculating the inner product of 2 vectors, so it can be rewritten as a vectorized form -  $\delta^l=((w^{l+1})^T\delta^{l+1})\odot \sigma&rsquo;(z^l)$</p>
-<h3 id="formula-3">Formula 3</h3>
-<p>$$
+<h3 id="formula-3" class="headerLink">
+    <a href="#formula-3" class="header-mark"></a>Formula 3</h3><p>$$
 \frac{\partial J}{\partial b^l_j}=\delta_j^l
 $$</p>
 <blockquote>
@@ -270,8 +301,8 @@ $$
 \end{aligned}
 $$</p>
 <p>Note that the first equal sign above is similar to the derivation of formula 1. I skipped the process of removing $\sum_k$</p>
-<h3 id="formula-4">Formula 4</h3>
-<p>$$
+<h3 id="formula-4" class="headerLink">
+    <a href="#formula-4" class="header-mark"></a>Formula 4</h3><p>$$
 \frac{\partial J}{\partial w_{jk}^l}=a_k^{l-1}\delta_j^l
 $$</p>
 <blockquote>
@@ -286,8 +317,8 @@ $$
 &amp;=\delta_j^la_k^{l-1}
 \end{aligned}
 $$</p>
-<h3 id="backpropagation-algorithm-procedure">Backpropagation algorithm procedure</h3>
-<p>Based on the aforementioned formulas, we can know the whole process of backpropagation will be:</p>
+<h3 id="backpropagation-algorithm-procedure" class="headerLink">
+    <a href="#backpropagation-algorithm-procedure" class="header-mark"></a>Backpropagation algorithm procedure</h3><p>Based on the aforementioned formulas, we can know the whole process of backpropagation will be:</p>
 <ol>
 <li>Forward propagation, compute $z_j^l$，$a_j^l$ for each neuron in each layer</li>
 <li>Compute $\delta^L$ in the output layer based on the formula 1</li>
@@ -304,58 +335,86 @@ $$</p>
 <li>👍 When calculating the gradient vector $\delta^l$ for the $l$-th layer based on formula 2, $\delta^{l+1}$ has already been computed and there is no need to start from scratch at the output layer.</li>
 <li>👍 By directly calculating the gradient of the loss function with respect to the current layer&rsquo;s weights and bias terms using formulas 3 and 4, we avoid computing intermediate gradient results.</li>
 </ul>
-<h2 id="wrap-up">Wrap up</h2>
-<p>The above is the entire process of the backpropagation algorithm. Although it involves a lot of formulas and notation, it is still relatively easy to understand. When reviewing the backpropagation algorithm, I found some points that may help readers understand it:</p>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><p>The above is the entire process of the backpropagation algorithm. Although it involves a lot of formulas and notation, it is still relatively easy to understand. When reviewing the backpropagation algorithm, I found some points that may help readers understand it:</p>
 <ul>
 <li><strong>Backpropagation is an algorithm for a single sample</strong>, so when you derive the formulas, you only need to consider one sample as the input of the model</li>
 <li>When deriving the formulas, <strong>start from the scalar form and then generalize it into vectorized form</strong>. Don&rsquo;t start with vectorized form or you may get stuck easily. <del>Of course, if you&rsquo;ve solid basics of math, ignore what I just said</del></li>
 </ul>
 <p>That&rsquo;s all, thanks for reading👋</p>
-<h2 id="refs">Refs</h2>
-<div class="footnotes" role="doc-endnotes">
+<h2 id="refs" class="headerLink">
+    <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://youtu.be/Ilg3gGewQ5U" target="_blank" rel="noopener noreffer">What is backpropagation really doing? - 3Blue1Brown</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://youtu.be/Ilg3gGewQ5U" target="_blank" rel="noopener noreferrer">What is backpropagation really doing? - 3Blue1Brown</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/deep-learning/">Deep-Learning</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>Updated on 2023-04-04</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm" data-hashtags="Deep-Learning"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-hashtag="Deep-Learning"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/linear-regression-model-guide-theory/" class="prev" rel="prev" title="Linear Regression Model Guide - theory part"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/solving-dynamic-programming-problems-using-srtbot/" class="next" rel="next" title="Solving DP problems by SRTBOT Framework">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-04-04</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm" data-hashtags="Deep-Learning"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-hashtag="Deep-Learning"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/backpropagation-tutorial/" data-title="How to understand the backpropagation algorithm" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;How to understand the backpropagation algorithm&#34;, &#34;https://martinlwx.github.io/en/backpropagation-tutorial/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/deep-learning/">Deep-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/linear-regression-model-guide-theory/" class="prev" rel="prev" title="Linear Regression Model Guide - theory part"><i class="fas fa-angle-left fa-fw"></i>Linear Regression Model Guide - theory part</a>
+            <a href="/en/solving-dynamic-programming-problems-using-srtbot/" class="next" rel="next" title="Solving DP problems by SRTBOT Framework">Solving DP problems by SRTBOT Framework<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

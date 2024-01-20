@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Pytorch 张量的 strides 格式是什么 - MartinLwx&#39;s Blog</title><meta name="description" content="介绍了 Pytorch 的张量的 strides 格式原理"><meta property="og:title" content="Pytorch 张量的 strides 格式是什么" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Pytorch 张量的 strides 格式是什么 - MartinLwx&#39;s Blog</title><meta name="Description" content="介绍了 Pytorch 的张量的 strides 格式原理"><meta property="og:title" content="Pytorch 张量的 strides 格式是什么" />
 <meta property="og:description" content="介绍了 Pytorch 的张量的 strides 格式原理" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Pytorch 张量的 strides 格式是什么"/>
 <meta name="twitter:description" content="介绍了 Pytorch 的张量的 strides 格式原理"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-reprensent-a-tensor-or-ndarray\/"
+            "@id": "https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/"
         },"genre": "posts","keywords": "Internal, Pytorch, Deep-Learning","wordcount":  4007 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/how-to-reprensent-a-tensor-or-ndarray\/","datePublished": "2023-07-14T15:26:16+08:00","dateModified": "2023-07-14T15:26:16+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        "url": "https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/","datePublished": "2023-07-14T15:26:16+08:00","dateModified": "2023-07-14T15:26:16+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "介绍了 Pytorch 的张量的 strides 格式原理"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/">English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" selected>简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="选择语言" id="language-select-desktop" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/">English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/">English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" selected>简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="选择语言" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/">English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" selected>简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Pytorch 张量的 strides 格式是什么</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">出版于  <a href="/zh-cn/categories/ml-dl/"><i class="fa-regular fa-folder fa-fw"></i>ML-DL</a>&nbsp;<a href="/zh-cn/categories/internal/"><i class="fa-regular fa-folder fa-fw"></i>Internal</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-07-14">2023-07-14</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 4007 字</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
     <li><a href="#按行存储与按列存储">按行存储与按列存储</a></li>
@@ -146,15 +149,42 @@ if (!doNotTrack) {
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="引言">引言</h2>
-<p>尽管我已经使用 Numpy 和 Pytorch 好长一段时间了，但我一直不知道他们是如何实现底层的张量（tensor），而且<strong>这么高效</strong>。最近在看 <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreffer">Deep Learning Systems</a> 这门课，终于有机会尝试自己实现张量，实现一遍之后对张量的理解更深刻了🧐</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Pytorch 张量的 strides 格式是什么</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/ml-dl/"><i class="far fa-folder fa-fw"></i>ML-DL</a>&nbsp;<a href="/zh-cn/categories/internal/"><i class="far fa-folder fa-fw"></i>Internal</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-07-14">2023-07-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-07-14">2023-07-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4007 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#按行存储与按列存储">按行存储与按列存储</a></li>
+    <li><a href="#strides-格式">Strides 格式</a></li>
+    <li><a href="#why-strides">Why strides？</a>
+      <ul>
+        <li><a href="#print_internal-函数">print_internal 函数</a></li>
+        <li><a href="#permute-操作">permute 操作</a></li>
+        <li><a href="#broadcast_to-操作">broadcast_to 操作</a></li>
+        <li><a href="#reshape-操作和-contiguous-操作">reshape 操作和 contiguous 操作</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="引言" class="headerLink">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>尽管我已经使用 Numpy 和 Pytorch 好长一段时间了，但我一直不知道他们是如何实现底层的张量（tensor），而且<strong>这么高效</strong>。最近在看 <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a> 这门课，终于有机会尝试自己实现张量，实现一遍之后对张量的理解更深刻了🧐</p>
 <p>作为 Pytorch 的使用者有必要理解底层的张量存储原理吗？我觉得是<strong>有必要的</strong>，大多数情况下理解底层原理都能让你更好理解上层的东西，<em>比如理解张量的存储原理之后有助于你会回答下面这几个问题</em></p>
 <ul>
 <li>广播操作涉及到数组的拷贝吗？</li>
 <li>Pytorch 的 <code>contiguous</code> 中是干什么的？为什么需要这个函数？</li>
 </ul>
-<h2 id="按行存储与按列存储">按行存储与按列存储</h2>
-<p>让我们从简单的二维数组出发，<strong>二维数组在内存中占据连续的位置</strong>，但是要按行存储还是按列存储这点可能不相同</p>
+<h2 id="按行存储与按列存储" class="headerLink">
+    <a href="#%e6%8c%89%e8%a1%8c%e5%ad%98%e5%82%a8%e4%b8%8e%e6%8c%89%e5%88%97%e5%ad%98%e5%82%a8" class="header-mark"></a>按行存储与按列存储</h2><p>让我们从简单的二维数组出发，<strong>二维数组在内存中占据连续的位置</strong>，但是要按行存储还是按列存储这点可能不相同</p>
 <p><em>比如现在有下面这个 $2\times 3$ 的二维数组 <code>A</code></em></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -202,8 +232,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A_in_col</span><span class="p">[</span><span class="n">j</span> <span class="o">*</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="strides-格式">Strides 格式</h2>
-<p>张量在底层可以是按行存储也可以是按列存储。Numpy 和 Pytorch 都采用了<strong>按行存储</strong>的方式，<strong>任何维度的张量在底层存储都占据着内存中连续的空间</strong>，那么问题来了，我们如何访问到我们想要的位置的数据？</p>
+</div><h2 id="strides-格式" class="headerLink">
+    <a href="#strides-%e6%a0%bc%e5%bc%8f" class="header-mark"></a>Strides 格式</h2><p>张量在底层可以是按行存储也可以是按列存储。Numpy 和 Pytorch 都采用了<strong>按行存储</strong>的方式，<strong>任何维度的张量在底层存储都占据着内存中连续的空间</strong>，那么问题来了，我们如何访问到我们想要的位置的数据？</p>
 <p>答案就是 <strong>strides 格式</strong>。strides 格式可以看成是前面两种索引格式的泛化版本，假设现在有一个 $N$ 维的张量 <code>A</code>（假设维度从 0 开始），它的底层存储为 <code>A_internal</code>，我们想要访问 <code>A[i0][i1][i2]...</code>，那么索引的方式如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -262,10 +292,10 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 <blockquote>
 <p>💡 再次强调，上面的公式只有在张量的底层存储在内存上是连续存储（紧凑格式）的时候成立</p>
 </blockquote>
-<h2 id="why-strides">Why strides？</h2>
-<p>知道了 strides 的存储格式之后，<strong>我们还要理解为什么这么设计</strong>，strides 究竟给我们带来了什么？<strong>最大的好处是：很多关于张量的操作都可以是零拷贝（Zero-copy）的</strong>。通过 strides 格式，<strong>「底层存储」和「视图」之间是分离开的</strong>，下面我来讲解一下几个常见的操作</p>
-<h3 id="print_internal-函数">print_internal 函数</h3>
-<p>在开始之前，让我们先写一个函数获取 Pytorch 的张量底层存储</p>
+<h2 id="why-strides" class="headerLink">
+    <a href="#why-strides" class="header-mark"></a>Why strides？</h2><p>知道了 strides 的存储格式之后，<strong>我们还要理解为什么这么设计</strong>，strides 究竟给我们带来了什么？<strong>最大的好处是：很多关于张量的操作都可以是零拷贝（Zero-copy）的</strong>。通过 strides 格式，<strong>「底层存储」和「视图」之间是分离开的</strong>，下面我来讲解一下几个常见的操作</p>
+<h3 id="print_internal-函数" class="headerLink">
+    <a href="#print_internal-%e5%87%bd%e6%95%b0" class="header-mark"></a>print_internal 函数</h3><p>在开始之前，让我们先写一个函数获取 Pytorch 的张量底层存储</p>
 <p>首先是 Pytorch 提供的 <code>data_ptr()</code> 这个方法，他会返回张量底层存储表示的第一个元素的内存地址</p>
 <p>然后通过 Pytorch 提供的 <code>storage().nbytes()</code> 就可以知道张量的底层存储在内存上占据了多大的空间<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，而张量的 <code>dtype</code> 属性则告诉了我们每个元素占据多大，<em>比如 <code>torch.float32</code> 就是 4 个字节</em></p>
 <p>最后通过 <code>ctypes.string_at(address, size=-1)</code> 函数就可以读取这个张量为 C 的字符串（buffer），而 <code>torch.frombuffer</code> 可以从一个 buffer 创建出 tensor</p>
@@ -337,8 +367,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </div>
 </div><p>按照我们前面说的从张量的维度推导 stride 的方法，我们不难知道这个 tensor 的 stride 应该是 <code>(2 * 3 * 4, 3 * 4, 4, 1)</code> 也就是 <code>(24, 12, 4, 1)</code></p>
 <p>在 Pytorch 里面，我们可以通过调用 tensor 的 <code>stride()</code> 方法获得 stride，可以看到，确实跟我们手动计算出来的一样🤔️</p>
-<h3 id="permute-操作">permute 操作</h3>
-<p>假设我们用 <code>permute</code> 重新排列了各个维度，那么 <code>strides</code> 如何变化？</p>
+<h3 id="permute-操作" class="headerLink">
+    <a href="#permute-%e6%93%8d%e4%bd%9c" class="header-mark"></a>permute 操作</h3><p>假设我们用 <code>permute</code> 重新排列了各个维度，那么 <code>strides</code> 如何变化？</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -378,8 +408,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>permute</code> 操作显然不会影响 <code>offset</code>，<strong>而且底层存储仍然是紧凑的</strong>，所以我们可以通过 <code>permute</code> 之后的新的维度 <code>new_shape</code> 然后根据定义计算出 <code>strides</code>，但是<strong>更快的办法是，直接在 <code>strides</code> 上也做一样的 <code>permute</code> 操作即可</strong>。<code>print_internal</code> 函数的输出证明了底层存储确实没有变化。</p>
-<h3 id="broadcast_to-操作">broadcast_to 操作</h3>
-<p>广播操作是比较有意思的，在不了解张量的存储原理之前，你可能以为广播操作就是在对应的维度上拷贝多份，但其实，<strong>根本就没有发生拷贝，只是修改了 <code>strides</code> 数组的值而已</strong>。更确切来说，Pytorch 会把被广播的维度（本来的维度大小是 1）的 stride 设置为 0<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<h3 id="broadcast_to-操作" class="headerLink">
+    <a href="#broadcast_to-%e6%93%8d%e4%bd%9c" class="header-mark"></a>broadcast_to 操作</h3><p>广播操作是比较有意思的，在不了解张量的存储原理之前，你可能以为广播操作就是在对应的维度上拷贝多份，但其实，<strong>根本就没有发生拷贝，只是修改了 <code>strides</code> 数组的值而已</strong>。更确切来说，Pytorch 会把被广播的维度（本来的维度大小是 1）的 stride 设置为 0<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 <p><em>比如现在我们在第一个维度上做广播，观察广播之后的维度大小，以及 strides 数组的变化情况</em></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -426,8 +456,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>你（可能）会惊讶地发现</strong>，Pytorch 确实没有在广播的时候拷贝对应维度的张量，仅仅只是修改 <code>strides</code> 数组了而已。回忆 <code>strides[i]</code> 的含义，被广播的维度的 stride 设置为 <code>0</code> 意味着这个维度上移动“一个单位“并不需要在内存上跳过元素，<strong>也就是在被广播的维度上我们一直在访问的是同一块区域</strong></p>
-<h3 id="reshape-操作和-contiguous-操作">reshape 操作和 contiguous 操作</h3>
-<p>索引操作可能会修改 <code>offset</code>，因为索引之后<em>形成的</em>张量不一定从本来底层存储的第一个元素开始，同时索引操作可能会索引到<strong>底层存储中的「非连续」部分</strong>。因此我们可以通过索引操作来研究 <code>reshape</code> 操作和 <code>contiguous</code> 操作是如何起作用的</p>
+<h3 id="reshape-操作和-contiguous-操作" class="headerLink">
+    <a href="#reshape-%e6%93%8d%e4%bd%9c%e5%92%8c-contiguous-%e6%93%8d%e4%bd%9c" class="header-mark"></a>reshape 操作和 contiguous 操作</h3><p>索引操作可能会修改 <code>offset</code>，因为索引之后<em>形成的</em>张量不一定从本来底层存储的第一个元素开始，同时索引操作可能会索引到<strong>底层存储中的「非连续」部分</strong>。因此我们可以通过索引操作来研究 <code>reshape</code> 操作和 <code>contiguous</code> 操作是如何起作用的</p>
 <p><em>现在假设我们想要从 <code>t</code> 拿到下面这个张量</em></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -646,8 +676,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </div>
 </div><p><em>上面的代码验证了我们的猜想</em></p>
 <p>但是，索引操作可能远远比我们这里讲解的 <code>[:, :, :, 2]</code> 复杂得多，<em>比如 <code>[2, 1:3, 1:6:3]</code> 这种</em>，此时 <code>strides</code> 和 <code>offset</code> 又该如何变化？这里不展开，但是可以放一个<strong>提示</strong>：把每个格式都变成 Python 的 Slice 对象，然后从 <code>strides[i]</code> 的定义出发进行推导</p>
-<h2 id="总结">总结</h2>
-<p>可以看到，Pytorch 的张量的不少操作都是通过改变 strides 的 <code>offset</code> 或（和）<code>strides</code> 数组实现的，<strong>这让很多操作维持了零拷贝开销，因此效率会很高</strong>，而且，这使得我们可以把不少张量操作实现为 Lazy 的。理解 strides 格式<strong>有助于构建张量的 mental model，它能够让你更好理解张量的操作的代码</strong>。顺便推荐一下这个<a href="https://youtu.be/7kclgMIcMq0" target="_blank" rel="noopener noreffer">视频</a>，在这个视频中，可以看到如何操纵 strides 来实现高效的卷积操作</p>
+<h2 id="总结" class="headerLink">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>可以看到，Pytorch 的张量的不少操作都是通过改变 strides 的 <code>offset</code> 或（和）<code>strides</code> 数组实现的，<strong>这让很多操作维持了零拷贝开销，因此效率会很高</strong>，而且，这使得我们可以把不少张量操作实现为 Lazy 的。理解 strides 格式<strong>有助于构建张量的 mental model，它能够让你更好理解张量的操作的代码</strong>。顺便推荐一下这个<a href="https://youtu.be/7kclgMIcMq0" target="_blank" rel="noopener noreferrer">视频</a>，在这个视频中，可以看到如何操纵 strides 来实现高效的卷积操作</p>
 <p>现在我们可以回答前面我抛出的问题了：</p>
 <ul>
 <li>广播操作涉及到数组的拷贝吗？
@@ -661,59 +691,85 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </ul>
 </li>
 </ul>
-<h2 id="参考">参考</h2>
-<div class="footnotes" role="doc-endnotes">
+<h2 id="参考" class="headerLink">
+    <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://discuss.pytorch.org/t/tensor-type-memory-usage/150933" target="_blank" rel="noopener noreffer">Tensor type memory usage - Memory Format - PyTorch Forums</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://discuss.pytorch.org/t/tensor-type-memory-usage/150933" target="_blank" rel="noopener noreferrer">Tensor type memory usage - Memory Format - PyTorch Forums</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://pytorch.org/docs/stable/generated/torch.Tensor.expand.html#torch.Tensor.expand" target="_blank" rel="noopener noreffer">torch.expand  - PyTorch 2.0 documentation</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://pytorch.org/docs/stable/generated/torch.Tensor.expand.html#torch.Tensor.expand" target="_blank" rel="noopener noreferrer">torch.expand  - PyTorch 2.0 documentation</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="https://pytorch.org/docs/stable/generated/torch.reshape.html#torch.reshape" target="_blank" rel="noopener noreffer">torch.reshape — PyTorch 2.0 documentation</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://pytorch.org/docs/stable/generated/torch.reshape.html#torch.reshape" target="_blank" rel="noopener noreferrer">torch.reshape — PyTorch 2.0 documentation</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/zh-cn/tags/internal/">Internal</a>
-                </span><span><a href="/zh-cn/tags/pytorch/">Pytorch</a>
-                </span><span><a href="/zh-cn/tags/deep-learning/">Deep-Learning</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2023-07-14</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么" data-hashtags="Internal,Pytorch,Deep-Learning"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-hashtag="Internal"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" class="prev" rel="prev" title="如何记忆红黑树的操作"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/" class="next" rel="next" title="机器学习求解梯度的小技巧">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-07-14</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么" data-hashtags="Internal,Pytorch,Deep-Learning"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-hashtag="Internal"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" data-title="Pytorch 张量的 strides 格式是什么" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;Pytorch 张量的 strides 格式是什么&#34;, &#34;https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/internal/">Internal</a>,&nbsp;<a href="/zh-cn/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/zh-cn/tags/deep-learning/">Deep-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" class="prev" rel="prev" title="如何记忆红黑树的操作"><i class="fas fa-angle-left fa-fw"></i>如何记忆红黑树的操作</a>
+            <a href="/zh-cn/a-trick-to-calculating-partial-derivatives-in-ml/" class="next" rel="next" title="机器学习求解梯度的小技巧">机器学习求解梯度的小技巧<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

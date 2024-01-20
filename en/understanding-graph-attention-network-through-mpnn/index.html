@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Understanding GAT throught MPNN - MartinLwx&#39;s Blog</title><meta name="description" content="Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)"><meta property="og:title" content="Understanding GAT throught MPNN" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Understanding GAT throught MPNN - MartinLwx&#39;s Blog</title><meta name="Description" content="Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)"><meta property="og:title" content="Understanding GAT throught MPNN" />
 <meta property="og:description" content="Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Understanding GAT throught MPNN"/>
 <meta name="twitter:description" content="Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" /><link rel="prev" href="https://martinlwx.github.io/en/sicp-exercise-2-27/" /><link rel="next" href="https://martinlwx.github.io/en/git-bundle-tutorial/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" /><link rel="prev" href="https://martinlwx.github.io/en/sicp-exercise-2-27/" /><link rel="next" href="https://martinlwx.github.io/en/git-bundle-tutorial/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/understanding-graph-attention-network-through-mpnn\/"
-        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  1357 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/understanding-graph-attention-network-through-mpnn\/","datePublished": "2023-05-21T15:20:50+08:00","dateModified": "2023-05-21T15:20:50+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/"
+        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  1351 ,
+        "url": "https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/","datePublished": "2023-05-21T15:20:50+08:00","dateModified": "2023-05-21T15:20:50+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "Understanding the classic graph attention network(GAT) throught MPNN(Message passing neural network, MPNN)"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/" selected>English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/" selected>English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/" selected>English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/" selected>English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Understanding GAT throught MPNN</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/gnn/"><i class="fa-regular fa-folder fa-fw"></i>GNN</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;1357 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;7 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#whats-mpnn">What&rsquo;s MPNN</a></li>
     <li><a href="#whats-gat">What&rsquo;s GAT</a>
@@ -152,8 +155,41 @@ if (!doNotTrack) {
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="whats-mpnn">What&rsquo;s MPNN</h2>
-<p>Justin Gilmer proposed the MPNN (Message Passing Neural Network) framework <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> for describing graph neural network models used in supervised learning on graphs. I found this to be a useful framework that provides a clear understanding of how different GNN models work and facilitates a quick grasp of the differences between them. Considering a node $v$ on the graph $G$, the update procedure for its vector representation $h_v$ is as follows:</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Understanding GAT throught MPNN</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/gnn/"><i class="far fa-folder fa-fw"></i>GNN</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1351 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#whats-mpnn">What&rsquo;s MPNN</a></li>
+    <li><a href="#whats-gat">What&rsquo;s GAT</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#step-1-apply-linear-transformation-to-all-nodes">Step 1. Apply linear transformation to all nodes</a></li>
+            <li><a href="#step-2-compute-the-attention">Step 2. Compute the attention</a>
+              <ul>
+                <li><a href="#multi-head-attention">Multi-head attention</a></li>
+              </ul>
+            </li>
+            <li><a href="#step-3-aggregation">Step 3. Aggregation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#implementation-and-usage">Implementation and usage</a></li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="whats-mpnn" class="headerLink">
+    <a href="#whats-mpnn" class="header-mark"></a>What&rsquo;s MPNN</h2><p>Justin Gilmer proposed the MPNN (Message Passing Neural Network) framework <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> for describing graph neural network models used in supervised learning on graphs. I found this to be a useful framework that provides a clear understanding of how different GNN models work and facilitates a quick grasp of the differences between them. Considering a node $v$ on the graph $G$, the update procedure for its vector representation $h_v$ is as follows:</p>
 <p>$$m_v^{t+1}=\sum_{u\in \mathcal{N}(v)}M_t(h_v^t,h_u^t,e_{vu})$$
 $$h_v^{t+1}=U_t(h_v^t,m_v^{t+1})$$</p>
 <p>where</p>
@@ -169,15 +205,15 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 <ul>
 <li>$R$ is the readout function, which computes a feature vector for the whole graph (if you&rsquo;re doing a graph-level classification problem)</li>
 </ul>
-<h2 id="whats-gat">What&rsquo;s GAT</h2>
-<blockquote>
-<p>🧐 I have found that linking the formulas with code can help with understanding. Therefore, I will provide relevant code(with <code>...</code> representing omitted parts). The code is sourced from the <a href="https://docs.dgl.ai/en/latest/_modules/dgl/nn/pytorch/conv/gatconv.html#GATConv" target="_blank" rel="noopener noreffer">official <code>GATConv</code> module</a> in DGL.</p>
+<h2 id="whats-gat" class="headerLink">
+    <a href="#whats-gat" class="header-mark"></a>What&rsquo;s GAT</h2><blockquote>
+<p>🧐 I have found that linking the formulas with code can help with understanding. Therefore, I will provide relevant code(with <code>...</code> representing omitted parts). The code is sourced from the <a href="https://docs.dgl.ai/en/latest/_modules/dgl/nn/pytorch/conv/gatconv.html#GATConv" target="_blank" rel="noopener noreferrer">official <code>GATConv</code> module</a> in DGL.</p>
 </blockquote>
 <blockquote>
 <p>🧐 We can stack multiple GAT modules easily. The following discussion is from the perspective of a specific node $v$ in a particular layer $l$.</p>
 </blockquote>
-<h4 id="step-1-apply-linear-transformation-to-all-nodes">Step 1. Apply linear transformation to all nodes</h4>
-<p>$$h_v^{l}=W^lh_v^{l}$$</p>
+<h4 id="step-1-apply-linear-transformation-to-all-nodes" class="headerLink">
+    <a href="#step-1-apply-linear-transformation-to-all-nodes" class="header-mark"></a>Step 1. Apply linear transformation to all nodes</h4><p>$$h_v^{l}=W^lh_v^{l}$$</p>
 <p>Let&rsquo;s assume that the length of the vector representation for each node is denoted as $F$. In the first step, a linear transformation is applied to the vector of <strong>each node</strong> on the graph, where $W\in\mathcal{R}^{F&rsquo;\times F}$. Therefore, the length of each node is updated with a length of $F&rsquo;$. To distinguish vectors from different layers, superscript $l$ is used to indicate that it belongs to the $l$-th layer. Note that <strong>within the layer $l$, all nodes share the same weight matrix $W^l$</strong></p>
 <blockquote>
 <p>📒 <strong>Note that the $h_v^l$ or $h_u^l$ mentioned later have undergone linear transformations</strong>.</p>
@@ -247,8 +283,8 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Note that in the above code, the presence of two identical <code>feat_src</code> and <code>feat_dst</code> variables in DGL is due to the adoption of a mathematically equivalent but computationally more efficient implementation. This will be explained later</p>
-<h4 id="step-2-compute-the-attention">Step 2. Compute the attention</h4>
-<p>$$e_{vu}^l=LeakyReLU\Big((a^l)^T[h_v^{l}||h_u^{l}]\Big)$$</p>
+<h4 id="step-2-compute-the-attention" class="headerLink">
+    <a href="#step-2-compute-the-attention" class="header-mark"></a>Step 2. Compute the attention</h4><p>$$e_{vu}^l=LeakyReLU\Big((a^l)^T[h_v^{l}||h_u^{l}]\Big)$$</p>
 <p>$$\alpha_{vu}^l=Softmax_u(e_{vu}^l)$$</p>
 <p>The second step is to compute the attention between the central node $v$ and all its neighboring nodes. In the above formula:</p>
 <ul>
@@ -260,8 +296,8 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 <blockquote>
 <p>🤔️ Step 1 and 2 correspond to the computation of $m_v^{t+1}$ in the MPNN framework.</p>
 </blockquote>
-<h5 id="multi-head-attention">Multi-head attention</h5>
-<p>Just as Transformers have multi-head attention, the authors of GAT also employ the mechanism of multi-head attention during node updates:
+<h5 id="multi-head-attention" class="headerLink">
+    <a href="#multi-head-attention" class="header-mark"></a>Multi-head attention</h5><p>Just as Transformers have multi-head attention, the authors of GAT also employ the mechanism of multi-head attention during node updates:
 $$h_v^{l+1}= ||^{K^l} \sigma(\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,l)}W^{(k,l)}h_u^{l})$$</p>
 <p>The notations are getting more complex, but with careful consideration, they can still be understood. The superscript $(k,l)$ indicates the $k$-th head in the $l$-th layer. Here, $K^l$ represents the number of heads in the $l$-th layer. The meaning of the above formula is that each head will compute a vector representation, and these vectors from different heads will be concatenated together.</p>
 <div class="highlight"><div class="chroma">
@@ -375,72 +411,98 @@ $$a^T[h_v||h_u]=a_l^Th_v+a_r^Th_u$$</p>
 <li>We don&rsquo;t need to store $[h_v||h_u]$ on edges (DGL will store messages in edge)</li>
 <li>The addition could be optimized with DGL&rsquo;s built-in function <code>u_add_v</code></li>
 </ol>
-<h4 id="step-3-aggregation">Step 3. Aggregation</h4>
-<p>The final way of updating the nodes is by taking the weighted sum of the neighbor&rsquo;s vector representations using the corresponding attention scores. It can be expressed as follows:
+<h4 id="step-3-aggregation" class="headerLink">
+    <a href="#step-3-aggregation" class="header-mark"></a>Step 3. Aggregation</h4><p>The final way of updating the nodes is by taking the weighted sum of the neighbor&rsquo;s vector representations using the corresponding attention scores. It can be expressed as follows:
 $$h_v^{l+1}=\sigma(\sum_{u\in \mathcal{N}(i)}\alpha_{vu}W^{l}h_u^{l})$$</p>
 <blockquote>
 <p>🤔️ The above corresponds to the computation of $h_v^{t+1}$ in the MPNN framework. It is worth noting that when calculating $h_t^{l+1}$ in GAT, the previous layer representation $h_t^l$ is not used. Additionally, GAT was proposed to address node classification problems on graphs and does not involve any graph readout operations.</p>
 </blockquote>
 <p>In the GAT paper, the authors intended to use GAT for node-level classification tasks<sup id="fnref1:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. Suppose we stack $L$ layers of GAT. It would be unreasonable to use concatenation in the final(prediction) layer. Therefore, in the last GAT layer, the authors take the average of multiple heads before applying the activation function. If the activation function used here is Softmax, it can be directly used for node classification<sup id="fnref2:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. The formula is as follows:
 $$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,L)}W^{(k,L)}h_u^{L}\Big)$$</p>
-<h2 id="implementation-and-usage">Implementation and usage</h2>
-<blockquote>
-<p>🤔️ <a href="https://www.dgl.ai/" target="_blank" rel="noopener noreffer">DGL</a>&rsquo;s design is based on the MPNN framework, but their formulas are slightly different. They also introduce an aggregation function, denoted as $\rho$, which determines how a node aggregates all the information received from its neighbors. <strong>I thought their formulas are more generalized</strong>. They have thoughtfully provided a tutorial on how to use DGL&rsquo;s MPNN-related functions, which can be found <a href="https://docs.dgl.ai/en/latest/guide/message.html" target="_blank" rel="noopener noreffer">here</a> 👍👍👍</p>
+<h2 id="implementation-and-usage" class="headerLink">
+    <a href="#implementation-and-usage" class="header-mark"></a>Implementation and usage</h2><blockquote>
+<p>🤔️ <a href="https://www.dgl.ai/" target="_blank" rel="noopener noreferrer">DGL</a>&rsquo;s design is based on the MPNN framework, but their formulas are slightly different. They also introduce an aggregation function, denoted as $\rho$, which determines how a node aggregates all the information received from its neighbors. <strong>I thought their formulas are more generalized</strong>. They have thoughtfully provided a tutorial on how to use DGL&rsquo;s MPNN-related functions, which can be found <a href="https://docs.dgl.ai/en/latest/guide/message.html" target="_blank" rel="noopener noreferrer">here</a> 👍👍👍</p>
 </blockquote>
-<p>As for the implementation of GAT, the DGL offers <a href="https://docs.dgl.ai/en/latest/generated/dgl.nn.pytorch.conv.GATConv.html#dgl.nn.pytorch.conv.GATConv" target="_blank" rel="noopener noreffer">GATConv</a>. The DGL team also write a good tutorial about using the built-in <code>message_func</code> and <code>reduce_func</code> to <a href="https://docs.dgl.ai/en/latest/tutorials/models/1_gnn/9_gat.html" target="_blank" rel="noopener noreffer">implemente GAT manually</a></p>
-<p>Please refers to <a href="https://github.com/dmlc/dgl/blob/master/examples/core/gat/train.py" target="_blank" rel="noopener noreffer">here</a> to see a full training example</p>
-<h2 id="wrap-up">Wrap up</h2>
-<p>Above is how the GAT can be explained using the MPNN framework, with the inclusion of DGL source code. Using attention to compute importances between nodes appears to be a natural approach and can be seen as a generalization of GCN. GAT is capable of learning local structural representations of graphs effectively, and the attention computation can be parallelized, making it highly efficient. Cheers! 🍻🍻🍻</p>
-<h2 id="refs">Refs</h2>
-<div class="footnotes" role="doc-endnotes">
+<p>As for the implementation of GAT, the DGL offers <a href="https://docs.dgl.ai/en/latest/generated/dgl.nn.pytorch.conv.GATConv.html#dgl.nn.pytorch.conv.GATConv" target="_blank" rel="noopener noreferrer">GATConv</a>. The DGL team also write a good tutorial about using the built-in <code>message_func</code> and <code>reduce_func</code> to <a href="https://docs.dgl.ai/en/latest/tutorials/models/1_gnn/9_gat.html" target="_blank" rel="noopener noreferrer">implemente GAT manually</a></p>
+<p>Please refers to <a href="https://github.com/dmlc/dgl/blob/master/examples/core/gat/train.py" target="_blank" rel="noopener noreferrer">here</a> to see a full training example</p>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><p>Above is how the GAT can be explained using the MPNN framework, with the inclusion of DGL source code. Using attention to compute importances between nodes appears to be a natural approach and can be seen as a generalization of GCN. GAT is capable of learning local structural representations of graphs effectively, and the attention computation can be parallelized, making it highly efficient. Cheers! 🍻🍻🍻</p>
+<h2 id="refs" class="headerLink">
+    <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p>Gilmer J, Schoenholz S S, Riley P F, et al. Neural message passing for quantum chemistry[C]//International conference on machine learning. PMLR, 2017: 1263-1272. <a href="https://arxiv.org/abs/1704.01212" target="_blank" rel="noopener noreffer">arXiv</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Gilmer J, Schoenholz S S, Riley P F, et al. Neural message passing for quantum chemistry[C]//International conference on machine learning. PMLR, 2017: 1263-1272. <a href="https://arxiv.org/abs/1704.01212" target="_blank" rel="noopener noreferrer">arXiv</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p>Veličković P, Cucurull G, Casanova A, et al. Graph attention networks[J]. arXiv preprint arXiv:1710.10903, 2017. <a href="https://arxiv.org/abs/1710.10903" target="_blank" rel="noopener noreffer">arXiv</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Veličković P, Cucurull G, Casanova A, et al. Graph attention networks[J]. arXiv preprint arXiv:1710.10903, 2017. <a href="https://arxiv.org/abs/1710.10903" target="_blank" rel="noopener noreferrer">arXiv</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/gnn/">GNN</a>
-                </span><span><a href="/en/tags/deep-learning/">Deep-Learning</a>
-                </span><span><a href="/en/tags/paper/">Paper</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>Updated on 2023-05-21</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN" data-hashtags="GNN,Deep-Learning,Paper"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-hashtag="GNN"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/sicp-exercise-2-27/" class="prev" rel="prev" title="SICP Exercise 2.27"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/git-bundle-tutorial/" class="next" rel="next" title="Git bundle guide">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-05-21</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN" data-hashtags="GNN,Deep-Learning,Paper"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-hashtag="GNN"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/" data-title="Understanding GAT throught MPNN" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Understanding GAT throught MPNN&#34;, &#34;https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/gnn/">GNN</a>,&nbsp;<a href="/en/tags/deep-learning/">Deep-Learning</a>,&nbsp;<a href="/en/tags/paper/">Paper</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/sicp-exercise-2-27/" class="prev" rel="prev" title="SICP Exercise 2.27"><i class="fas fa-angle-left fa-fw"></i>SICP Exercise 2.27</a>
+            <a href="/en/git-bundle-tutorial/" class="next" rel="next" title="Git bundle guide">Git bundle guide<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

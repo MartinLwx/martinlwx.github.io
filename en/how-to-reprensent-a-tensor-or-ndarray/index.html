@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Demystifying Pytorch&#39;s Strides Format - MartinLwx&#39;s Blog</title><meta name="description" content="A simple introduction of strides format used by Pytorch"><meta property="og:title" content="Demystifying Pytorch&#39;s Strides Format" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Demystifying Pytorch&#39;s Strides Format - MartinLwx&#39;s Blog</title><meta name="Description" content="A simple introduction of strides format used by Pytorch"><meta property="og:title" content="Demystifying Pytorch&#39;s Strides Format" />
 <meta property="og:description" content="A simple introduction of strides format used by Pytorch" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Demystifying Pytorch&#39;s Strides Format"/>
 <meta name="twitter:description" content="A simple introduction of strides format used by Pytorch"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" /><link rel="prev" href="https://martinlwx.github.io/en/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><link rel="next" href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" /><link rel="prev" href="https://martinlwx.github.io/en/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><link rel="next" href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/how-to-reprensent-a-tensor-or-ndarray\/"
-        },"genre": "posts","keywords": "Internal, Pytorch, Deep-Learning","wordcount":  2467 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/how-to-reprensent-a-tensor-or-ndarray\/","datePublished": "2023-07-14T15:22:02+08:00","dateModified": "2023-07-14T15:22:02+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/"
+        },"genre": "posts","keywords": "Internal, Pytorch, Deep-Learning","wordcount":  2459 ,
+        "url": "https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/","datePublished": "2023-07-14T15:22:02+08:00","dateModified": "2023-07-14T15:22:02+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "A simple introduction of strides format used by Pytorch"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/" selected>English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/" selected>English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/" selected>English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/how-to-reprensent-a-tensor-or-ndarray/" selected>English</option><option value="/zh-cn/how-to-reprensent-a-tensor-or-ndarray/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Demystifying Pytorch&#39;s Strides Format</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/ml-dl/"><i class="fa-regular fa-folder fa-fw"></i>ML-DL</a>&nbsp;<a href="/en/categories/internal/"><i class="fa-regular fa-folder fa-fw"></i>Internal</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-07-14">2023-07-14</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;2467 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;12 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
     <li><a href="#row-major-and-column-major">Row-major and column-major</a></li>
@@ -146,15 +149,42 @@ if (!doNotTrack) {
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="intro">Intro</h2>
-<p>Even though I have been using Numpy and Pytorch for a long time, I never really knew how they implemented the underlying tensors and why they are <strong>so efficient</strong>. Recently, while studying the course <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreffer">Deep Learning Systems</a>, I finally got the opportunity to try implementing tensors on my own. After going through the process, my understanding of tensors is much better 🧐</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Demystifying Pytorch&#39;s Strides Format</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">categories <a href="/en/categories/ml-dl/"><i class="far fa-folder fa-fw"></i>ML-DL</a>&nbsp;<a href="/en/categories/internal/"><i class="far fa-folder fa-fw"></i>Internal</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-07-14">2023-07-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-07-14">2023-07-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2459 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;12 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#row-major-and-column-major">Row-major and column-major</a></li>
+    <li><a href="#strides-format">Strides format</a></li>
+    <li><a href="#why-strides">Why strides？</a>
+      <ul>
+        <li><a href="#print_internal-function">print_internal function</a></li>
+        <li><a href="#permute-operations">permute operations</a></li>
+        <li><a href="#broadcast_to-operation">broadcast_to operation</a></li>
+        <li><a href="#reshape-operation-and-contiguous-operation">reshape operation and contiguous operation</a></li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>Even though I have been using Numpy and Pytorch for a long time, I never really knew how they implemented the underlying tensors and why they are <strong>so efficient</strong>. Recently, while studying the course <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a>, I finally got the opportunity to try implementing tensors on my own. After going through the process, my understanding of tensors is much better 🧐</p>
 <p>As a Pytorch user, is it necessary to understand the underlying tensor storage mechanism? I believe <strong>it is essential</strong>. In most cases, understanding the underlying principles helps you grasp higher-level concepts better. For example, understanding the tensor storage mechanism can help you answer the following questions:</p>
 <ul>
 <li>Does broadcasting involve copying arrays?</li>
 <li>What does <code>contiguous</code> do in Pytorch, and why is this function needed?</li>
 </ul>
-<h2 id="row-major-and-column-major">Row-major and column-major</h2>
-<p>Let&rsquo;s start with a simple 2D array, <strong>A 2D array occupies a contiguous location in memory</strong>, but how it is stored, whether using row-major or column-major, may vary.</p>
+<h2 id="row-major-and-column-major" class="headerLink">
+    <a href="#row-major-and-column-major" class="header-mark"></a>Row-major and column-major</h2><p>Let&rsquo;s start with a simple 2D array, <strong>A 2D array occupies a contiguous location in memory</strong>, but how it is stored, whether using row-major or column-major, may vary.</p>
 <p><em>Let&rsquo;s say we have a 2D array <code>A</code> whose size is $2\times 3$</em></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -202,8 +232,8 @@ if (!doNotTrack) {
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A_in_col</span><span class="p">[</span><span class="n">j</span> <span class="o">*</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="strides-format">Strides format</h2>
-<blockquote>
+</div><h2 id="strides-format" class="headerLink">
+    <a href="#strides-format" class="header-mark"></a>Strides format</h2><blockquote>
 <p>Note: I will use continuous/contiguous/compact interchangeably.</p>
 </blockquote>
 <p>At the low level, tensors can be stored either by rows or columns. Both Numpy and PyTorch adopt the approach of storing tensors by rows. Regardless of the tensor&rsquo;s dimension, <strong>the underlying storage always occupies continuous memory space</strong>. Now, the question arises: How do we access the data at the desired positions?</p>
@@ -265,10 +295,10 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 <blockquote>
 <p>💡 It is important to reiterate that the above formula holds only when the tensor&rsquo;s underlying memory layout is contiguous.</p>
 </blockquote>
-<h2 id="why-strides">Why strides？</h2>
-<p>After understanding the strides format. The next question would be: <strong>Why do we need the strides format and what benefits it brings</strong>? The most significant advantage is that many tensor operations can be performed in a <strong>zero-copy</strong> manner. By using the strides format, the concepts of &ldquo;underlying storage&rdquo; and &ldquo;views&rdquo; are separated. Now let&rsquo;s talk about some common tensor operations</p>
-<h3 id="print_internal-function">print_internal function</h3>
-<p>Before we start to investigate the tensor operations, we need to write a helper function such that we can get the underlying storage.</p>
+<h2 id="why-strides" class="headerLink">
+    <a href="#why-strides" class="header-mark"></a>Why strides？</h2><p>After understanding the strides format. The next question would be: <strong>Why do we need the strides format and what benefits it brings</strong>? The most significant advantage is that many tensor operations can be performed in a <strong>zero-copy</strong> manner. By using the strides format, the concepts of &ldquo;underlying storage&rdquo; and &ldquo;views&rdquo; are separated. Now let&rsquo;s talk about some common tensor operations</p>
+<h3 id="print_internal-function" class="headerLink">
+    <a href="#print_internal-function" class="header-mark"></a>print_internal function</h3><p>Before we start to investigate the tensor operations, we need to write a helper function such that we can get the underlying storage.</p>
 <p>Pytorch provides us with the <code>data_ptr</code> API, which will return the address of the first element of a tensor.</p>
 <p>Then, by using the storage().nbytes() method provided by PyTorch, we can determine the amount of memory space the tensor&rsquo;s underlying storage occupies(in bytes)<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Additionally, the <code>dtype</code> attribute of the tensor informs us about the size of each element. <em>For example, <code>torch.float32</code> occupies 4 bytes</em></p>
 <p>Finally, we can use the <code>ctypes.string_at(address, size=-1)</code> function to read the tensor as a C-style string (buffer), and <code>torch.frombuffer</code> can be used to create a tensor from this buffer.</p>
@@ -339,8 +369,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>By using the formula we previously talked about, we know the strides of <code>t</code> should be <code>(2 * 3 * 4, 3 * 4, 4, 1)</code>, that is, <code>(24, 12, 4, 1)</code>. The <code>t.stride()</code> will give us the strides array maintained by Pytorch. Indeed, it gives us the answer which is exactly what we expected.</p>
-<h3 id="permute-operations">permute operations</h3>
-<p>Suppose we rearrange the dimensions with <code>permute</code>, how does <code>strides</code> change?</p>
+<h3 id="permute-operations" class="headerLink">
+    <a href="#permute-operations" class="header-mark"></a>permute operations</h3><p>Suppose we rearrange the dimensions with <code>permute</code>, how does <code>strides</code> change?</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -380,8 +410,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The <code>permute</code> operation will not change <code>offset</code>. And <strong>the underlying storage is still compact</strong>(indicated by <code>is_contiguous</code>). So we can use the <code>new_shape</code> after permuting to re-calculate the <code>strides</code> array. However, we can <strong>just permute the original <code>strides</code> array</strong>. The output of <code>print_internal</code> indicates that the underlying storage doesn&rsquo;t change.</p>
-<h3 id="broadcast_to-operation">broadcast_to operation</h3>
-<p>Broadcast_to operation is an interesting operation. Before knowing the internals, you <em>might</em> think that broadcasting involves copying along the corresponding dimensions. However, there is <strong>no</strong> copying under the hood. Pytorch just change the <code>strides</code> array. More specifically, Pytorch will set <code>stride[k] = 0</code> if its size is one before broadcasting<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+<h3 id="broadcast_to-operation" class="headerLink">
+    <a href="#broadcast_to-operation" class="header-mark"></a>broadcast_to operation</h3><p>Broadcast_to operation is an interesting operation. Before knowing the internals, you <em>might</em> think that broadcasting involves copying along the corresponding dimensions. However, there is <strong>no</strong> copying under the hood. Pytorch just change the <code>strides</code> array. More specifically, Pytorch will set <code>stride[k] = 0</code> if its size is one before broadcasting<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
 <p><em>Let&rsquo;s try to do broadcasting along the first dimension of tensor <code>t</code> and observe how the shape and strides will change</em></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -428,8 +458,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Surprisingly, Pytorch does not allocate memory, and copy elements in the dimension got broadcasted. The only thing that changed is the <code>strides</code> array. Pause for a second and try to figure out what&rsquo;s the meaning of setting stride as 0. It means we don&rsquo;t need to skip any elements along this dimension, which indicates we are referring to the same data(same memory location).</p>
-<h3 id="reshape-operation-and-contiguous-operation">reshape operation and contiguous operation</h3>
-<p>The indexing operation may modify the <code>offset</code> because the resulting tensor after indexing may not start from the first element of the original underlying storage. Moreover, the indexing operation <strong>may access the non-contiguous parts</strong> of the underlying storage. So the indexing operation will help us to understand the <code>reshape</code> and <code>contiguous</code> operations better.</p>
+<h3 id="reshape-operation-and-contiguous-operation" class="headerLink">
+    <a href="#reshape-operation-and-contiguous-operation" class="header-mark"></a>reshape operation and contiguous operation</h3><p>The indexing operation may modify the <code>offset</code> because the resulting tensor after indexing may not start from the first element of the original underlying storage. Moreover, the indexing operation <strong>may access the non-contiguous parts</strong> of the underlying storage. So the indexing operation will help us to understand the <code>reshape</code> and <code>contiguous</code> operations better.</p>
 <p><em>Let&rsquo;s say we want to get the following tensor from <code>t</code></em></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -648,8 +678,8 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </div>
 </div><p><em>The output meets our expectations</em></p>
 <p>However, the indexing operations can be much more complex than our naive <code>[:, :, :, 2]</code> like <code>[2, 1:3, 1:6:3]</code>, and in such cases, how do <code>strides</code> and <code>offset</code> change? I won&rsquo;t elaborate on this, but here&rsquo;s a <strong>hint</strong>: convert each format into Python&rsquo;s Slice object and then reason through the definition of <code>strides[i]</code></p>
-<h2 id="wrap-up">Wrap up</h2>
-<p>As you can see, many operations on Pytorch tensors are achieved by modifying the <code>offset</code> or(and) <code>strides</code> array. <strong>This approach allows many operations to maintain zero-copy overhead, leading to high efficiency</strong>. Moreover, this enables the <em>lazy</em> operations. Understanding the strides format <strong>helps in constructing a mental model of tensors and facilitates a better understanding of tensor operation code</strong>. I would also recommend watching the awesome <a href="https://youtu.be/7kclgMIcMq0" target="_blank" rel="noopener noreffer">video</a> which talks about the cool tricks that manipulating strides to perform convolution efficiently</p>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><p>As you can see, many operations on Pytorch tensors are achieved by modifying the <code>offset</code> or(and) <code>strides</code> array. <strong>This approach allows many operations to maintain zero-copy overhead, leading to high efficiency</strong>. Moreover, this enables the <em>lazy</em> operations. Understanding the strides format <strong>helps in constructing a mental model of tensors and facilitates a better understanding of tensor operation code</strong>. I would also recommend watching the awesome <a href="https://youtu.be/7kclgMIcMq0" target="_blank" rel="noopener noreferrer">video</a> which talks about the cool tricks that manipulating strides to perform convolution efficiently</p>
 <p>Now we can answer the questions raised earlier:</p>
 <ul>
 <li>Does broadcasting involve copying arrays?
@@ -663,59 +693,85 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
 </ul>
 </li>
 </ul>
-<h2 id="refs">Refs</h2>
-<div class="footnotes" role="doc-endnotes">
+<h2 id="refs" class="headerLink">
+    <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://discuss.pytorch.org/t/tensor-type-memory-usage/150933" target="_blank" rel="noopener noreffer">Tensor type memory usage - Memory Format - PyTorch Forums</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://discuss.pytorch.org/t/tensor-type-memory-usage/150933" target="_blank" rel="noopener noreferrer">Tensor type memory usage - Memory Format - PyTorch Forums</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://pytorch.org/docs/stable/generated/torch.Tensor.expand.html#torch.Tensor.expand" target="_blank" rel="noopener noreffer">torch.expand  - PyTorch 2.0 documentation</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://pytorch.org/docs/stable/generated/torch.Tensor.expand.html#torch.Tensor.expand" target="_blank" rel="noopener noreferrer">torch.expand  - PyTorch 2.0 documentation</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="https://pytorch.org/docs/stable/generated/torch.reshape.html#torch.reshape" target="_blank" rel="noopener noreffer">torch.reshape — PyTorch 2.0 documentation</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://pytorch.org/docs/stable/generated/torch.reshape.html#torch.reshape" target="_blank" rel="noopener noreferrer">torch.reshape — PyTorch 2.0 documentation</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/internal/">Internal</a>
-                </span><span><a href="/en/tags/pytorch/">Pytorch</a>
-                </span><span><a href="/en/tags/deep-learning/">Deep-Learning</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>Updated on 2023-07-14</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format" data-hashtags="Internal,Pytorch,Deep-Learning"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-hashtag="Internal"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/how-to-memorize-insertion-and-deletion-in-rb-tree/" class="prev" rel="prev" title="How to memorize the Red-black tree"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/a-trick-to-calculating-partial-derivatives-in-ml/" class="next" rel="next" title="A trick to calculating partial derivatives in machine learning">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-07-14</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format" data-hashtags="Internal,Pytorch,Deep-Learning"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-hashtag="Internal"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/" data-title="Demystifying Pytorch&#39;s Strides Format" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Demystifying Pytorch&#39;s Strides Format&#34;, &#34;https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/internal/">Internal</a>,&nbsp;<a href="/en/tags/pytorch/">Pytorch</a>,&nbsp;<a href="/en/tags/deep-learning/">Deep-Learning</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/how-to-memorize-insertion-and-deletion-in-rb-tree/" class="prev" rel="prev" title="How to memorize the Red-black tree"><i class="fas fa-angle-left fa-fw"></i>How to memorize the Red-black tree</a>
+            <a href="/en/a-trick-to-calculating-partial-derivatives-in-ml/" class="next" rel="next" title="A trick to calculating partial derivatives in machine learning">A trick to calculating partial derivatives in machine learning<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

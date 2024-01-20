@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall) - MartinLwx&#39;s Blog</title><meta name="description" content="The solution of proj4. Scheme Interpreter"><meta property="og:title" content="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall) - MartinLwx&#39;s Blog</title><meta name="Description" content="The solution of proj4. Scheme Interpreter"><meta property="og:title" content="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)" />
 <meta property="og:description" content="The solution of proj4. Scheme Interpreter" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"/>
 <meta name="twitter:description" content="The solution of proj4. Scheme Interpreter"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" /><link rel="prev" href="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" /><link rel="next" href="https://martinlwx.github.io/en/sicp-exercise-1-34/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" /><link rel="prev" href="https://martinlwx.github.io/en/solving-dynamic-programming-problems-using-srtbot/" /><link rel="next" href="https://martinlwx.github.io/en/sicp-exercise-1-34/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21\/"
-        },"genre": "posts","keywords": "Course, Python, Scheme","wordcount":  2086 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21\/","datePublished": "2023-04-21T10:18:16+08:00","dateModified": "2023-04-21T10:18:16+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/"
+        },"genre": "posts","keywords": "Course, Python, Scheme","wordcount":  2085 ,
+        "url": "https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/","datePublished": "2023-04-21T10:18:16+08:00","dateModified": "2023-04-21T10:18:16+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "The solution of proj4. Scheme Interpreter"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" selected>English</option><option value="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" selected>English</option><option value="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" selected>English</option><option value="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" selected>English</option><option value="/zh-cn/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/course/"><i class="fa-regular fa-folder fa-fw"></i>Course</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-04-21">2023-04-21</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;2086 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;10 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
     <li><a href="#part-1-the-evaluator">Part 1. The Evaluator</a>
@@ -162,14 +165,57 @@ if (!doNotTrack) {
     </li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="intro">Intro</h2>
-<p>Recently, I am reading a book called <a href="https://craftinginterpreters.com/" target="_blank" rel="noopener noreffer"><em>Crafting interpreters</em></a> written by Robert Nystrom. In the original book, a Tree-walker interpreter jlox was implemented in Java. And I am trying to rewrite in Python - <a href="https://github.com/MartinLwx/pylox" target="_blank" rel="noopener noreffer">pylox</a>. I highly recommend it👍. At this moment, I suddenly remembered that there were a few small issues with the Scheme interpreter for CS61A that I had not resolved after finishing it a year ago, which kept it in an unfinished state. So today I opened the project and intended to run through it from beginning to end and talk about the ideas.</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/course/"><i class="far fa-folder fa-fw"></i>Course</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-04-21">2023-04-21</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-04-21">2023-04-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2085 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;10 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#part-1-the-evaluator">Part 1. The Evaluator</a>
+      <ul>
+        <li><a href="#problem-1">Problem 1</a></li>
+        <li><a href="#problem-2">Problem 2</a></li>
+        <li><a href="#problem-3">Problem 3</a></li>
+        <li><a href="#problem-4">Problem 4</a></li>
+        <li><a href="#problem-5">Problem 5</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-2-procedures">Part 2. Procedures</a>
+      <ul>
+        <li><a href="#problem-6">Problem 6</a></li>
+        <li><a href="#problem-7">Problem 7</a></li>
+        <li><a href="#problem-8">Problem 8</a></li>
+        <li><a href="#problem-9">Problem 9</a></li>
+        <li><a href="#problem-10">Problem 10</a></li>
+        <li><a href="#problem-11">Problem 11</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-3-special-forms">Part 3. Special Forms</a>
+      <ul>
+        <li><a href="#problem-12">Problem 12</a></li>
+        <li><a href="#problem-13">Problem 13</a></li>
+        <li><a href="#problem-14">Problem 14</a></li>
+        <li><a href="#problem-15">Problem 15</a></li>
+        <li><a href="#problem-16">Problem 16</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>Recently, I am reading a book called <a href="https://craftinginterpreters.com/" target="_blank" rel="noopener noreferrer"><em>Crafting interpreters</em></a> written by Robert Nystrom. In the original book, a Tree-walker interpreter jlox was implemented in Java. And I am trying to rewrite in Python - <a href="https://github.com/MartinLwx/pylox" target="_blank" rel="noopener noreferrer">pylox</a>. I highly recommend it👍. At this moment, I suddenly remembered that there were a few small issues with the Scheme interpreter for CS61A that I had not resolved after finishing it a year ago, which kept it in an unfinished state. So today I opened the project and intended to run through it from beginning to end and talk about the ideas.</p>
 <blockquote>
 <p>Note: I only quote <strong>part</strong> of the original problem description. To make the post more compact, I also omit the irrelevant code :)</p>
 </blockquote>
-<h2 id="part-1-the-evaluator">Part 1. The Evaluator</h2>
-<h3 id="problem-1">Problem 1</h3>
-<blockquote>
+<h2 id="part-1-the-evaluator" class="headerLink">
+    <a href="#part-1-the-evaluator" class="header-mark"></a>Part 1. The Evaluator</h2><h3 id="problem-1" class="headerLink">
+    <a href="#problem-1" class="header-mark"></a>Problem 1</h3><blockquote>
 <p>Implement the <code>define</code> and <code>lookup</code> methods of the Frame class&hellip;<code>bindings</code> is a dictionary representing the bindings in the frame&hellip;<code>parent</code> is the parent Frame instance&hellip;The <em>environment</em> for a <code>Frame</code> instance consists of that frame, its parent frame, and all its ancestor frames, including the Global Frame.</p>
 </blockquote>
 <p>Problem 1 is trivial in my opinion. To implement the <code>define</code> function, you just need to save the <code>{ symbol: value }</code> in <code>self.bindings</code>. As for the <code>lookup</code> function, we can write a iterative solution or recursive one. The iterative solution is more intuitive though.</p>
@@ -219,8 +265,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl"><span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-2">Problem 2</h3>
-<blockquote>
+</div><h3 id="problem-2" class="headerLink">
+    <a href="#problem-2" class="header-mark"></a>Problem 2</h3><blockquote>
 <p>To be able to call built-in procedures, such as <code>+</code>, you need to complete the <code>BuiltinProcedure</code> case within the <code>scheme_apply</code> function in <code>scheme_eval_apply.py</code>. Built-in procedures are applied by calling a corresponding Python function that implements the procedure.</p>
 </blockquote>
 <p>The full problem description elaborates on the procedure of implementing <code>scheme_apply</code> function. Notice that you should distinguish <code>nil</code> and <code>None</code>. This subtle bug may cause you other correct solutions fail to pass the test suite.</p>
@@ -272,8 +318,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-3">Problem 3</h3>
-<blockquote>
+</div><h3 id="problem-3" class="headerLink">
+    <a href="#problem-3" class="header-mark"></a>Problem 3</h3><blockquote>
 <p>Implement the missing part of <code>scheme_eval</code>, which evaluates a call expression&hellip;You&rsquo;ll have to recursively call <code>scheme_eval</code> in the first two steps&hellip;The <code>map</code> method of <code>Pair</code> returns a new Scheme list constructed by applying a <em>one-argument function</em> to every item in a Scheme list&hellip;Important: do not mutate the passed-in <code>expr</code>. That would change a program as it&rsquo;s being evaluated, creating strange and incorrect effects.</p>
 </blockquote>
 <p>Is&rsquo; quite straightforward to implement <code>scheme_eval</code>. The main obstacle in the way may comes from the requirement that we need to pass one-argument function to <code>rest.map</code>. However, the <code>scheme_eval</code> has two arguments(let&rsquo;s ignore the optional part). To make the <code>scheme_eval</code> a one-argument function, we may write a simple <code>lambda</code> to wrapper it, or we can use the <code>partial</code> function in <code>functools</code> packages to <em>fix</em> arguments for a specefic function. I choose to use the latter solution.</p>
@@ -305,8 +351,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">scheme_apply</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">operands</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-4">Problem 4</h3>
-<blockquote>
+</div><h3 id="problem-4" class="headerLink">
+    <a href="#problem-4" class="header-mark"></a>Problem 4</h3><blockquote>
 <p>The type of the first operand tells us what is being defined&hellip;implement just the first part, which evaluates the second operand to obtain a value and binds the first operand, a symbol, to that value. Then, <code>do_define_form</code> returns the symbol that was bound.</p>
 </blockquote>
 <p>In problem 1, we have implemented the <code>define</code> method, which can bind value to a symbol. All we need to do is pass the correct arguments to this method. To access the <code>some_val</code> part in <code>(define a some_val)</code>, we can use the <code>.rest.first</code></p>
@@ -336,8 +382,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-5">Problem 5</h3>
-<blockquote>
+</div><h3 id="problem-5" class="headerLink">
+    <a href="#problem-5" class="header-mark"></a>Problem 5</h3><blockquote>
 <p>Implement the <code>do_quote_form</code> function in <code>scheme_forms.py</code> so that it simply returns the unevaluated operand of the <code>(quote ...)</code> expression.</p>
 </blockquote>
 <p><code>validate_form(expressions, 1, 1)</code> ensures that the <code>expressions</code> is <code>'...</code>. And we just need to return it.</p>
@@ -353,9 +399,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">expressions</span><span class="o">.</span><span class="n">first</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="part-2-procedures">Part 2. Procedures</h2>
-<h3 id="problem-6">Problem 6</h3>
-<blockquote>
+</div><h2 id="part-2-procedures" class="headerLink">
+    <a href="#part-2-procedures" class="header-mark"></a>Part 2. Procedures</h2><h3 id="problem-6" class="headerLink">
+    <a href="#problem-6" class="header-mark"></a>Problem 6</h3><blockquote>
 <p>Change the <code>eval_all</code> function in <code>scheme_eval_apply.py</code> (which is called from <code>do_begin_form</code> in <code>scheme_forms.py</code>) to complete the implementation of the <code>begin</code> special form (spec). A <code>begin</code> expression is evaluated by evaluating all sub-expressions in order. The value of the <code>begin</code> expression is the value of the final sub-expression.</p>
 </blockquote>
 <p>Let&rsquo;s write the recursive solution:</p>
@@ -385,8 +431,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">eval_all</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-7">Problem 7</h3>
-<blockquote>
+</div><h3 id="problem-7" class="headerLink">
+    <a href="#problem-7" class="header-mark"></a>Problem 7</h3><blockquote>
 <p>Implement the <code>do_lambda_form</code> function (spec), which creates and returns a <code>LambdaProcedure</code> instance</p>
 </blockquote>
 <p>By reading the problem description of Problem 6, we know how to construct a <code>LambdaProcedure</code></p>
@@ -406,8 +452,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">LambdaProcedure</span><span class="p">(</span><span class="n">formals</span><span class="p">,</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-8">Problem 8</h3>
-<blockquote>
+</div><h3 id="problem-8" class="headerLink">
+    <a href="#problem-8" class="header-mark"></a>Problem 8</h3><blockquote>
 <p>This method takes in two arguments: <code>formals</code>, which is a Scheme list of symbols, and <code>vals</code>, which is a Scheme list of values. It should return a new child frame, binding the formal parameters to the values.</p>
 </blockquote>
 <p>The full problem description is well written and this problem us trivial.</p>
@@ -439,8 +485,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">sub_frame</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-9">Problem 9</h3>
-<blockquote>
+</div><h3 id="problem-9" class="headerLink">
+    <a href="#problem-9" class="header-mark"></a>Problem 9</h3><blockquote>
 <p>You should first create a new <code>Frame</code> instance using the <code>make_child_frame</code> method of the appropriate parent frame, binding formal parameters to argument values. Then, evaluate each of the expressions of the body of the procedure using <code>eval_all</code> within this new frame.</p>
 </blockquote>
 <p>In this problem, we can use the <code>make_child_frame</code> implemented in Problem 8.</p>
@@ -462,8 +508,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-10">Problem 10</h3>
-<blockquote>
+</div><h3 id="problem-10" class="headerLink">
+    <a href="#problem-10" class="header-mark"></a>Problem 10</h3><blockquote>
 <p>Modify the <code>do_define_form</code> function in <code>scheme_forms.py</code> so that it correctly handles <code>define (...) ...)</code> expressions</p>
 </blockquote>
 <p>Use <code>do_lambda_form</code> or just call the constructer of <code>LambdaProcedure</code>.</p>
@@ -499,8 +545,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-11">Problem 11</h3>
-<blockquote>
+</div><h3 id="problem-11" class="headerLink">
+    <a href="#problem-11" class="header-mark"></a>Problem 11</h3><blockquote>
 <p>Implement <code>do_mu_form</code> in <code>scheme_forms.py</code> to evaluate the <code>mu</code> special form. A <code>mu</code> expression evaluates to a <code>MuProcedure</code>. Most of the <code>MuProcedure</code> class (defined in <code>scheme_classes.py</code>) has been provided for you.</p>
 </blockquote>
 <p>The key to this problem is understanding dynamic scoping. We can make a child frame and evaluate the <code>MuProcedure</code> and it should work as expected.</p>
@@ -532,9 +578,9 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">MuProcedure</span><span class="p">(</span><span class="n">formals</span><span class="p">,</span> <span class="n">expressions</span><span class="o">.</span><span class="n">rest</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="part-3-special-forms">Part 3. Special Forms</h2>
-<h3 id="problem-12">Problem 12</h3>
-<blockquote>
+</div><h2 id="part-3-special-forms" class="headerLink">
+    <a href="#part-3-special-forms" class="header-mark"></a>Part 3. Special Forms</h2><h3 id="problem-12" class="headerLink">
+    <a href="#problem-12" class="header-mark"></a>Problem 12</h3><blockquote>
 <p>Implement <code>do_and_form</code> and <code>do_or_form</code> so that <code>and</code> and <code>or</code> expressions are evaluated correctly. The logical forms <code>and</code> and <code>or</code> are <em>short-circuiting</em></p>
 </blockquote>
 <p>I write <code>do_and_form</code> and <code>do_or_form</code> recursively:</p>
@@ -598,8 +644,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">front</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-13">Problem 13</h3>
-<blockquote>
+</div><h3 id="problem-13" class="headerLink">
+    <a href="#problem-13" class="header-mark"></a>Problem 13</h3><blockquote>
 <p>Fill in the missing parts of <code>do_cond_form</code> so that it correctly implements <code>cond</code>, returning the value of the first result sub-expression corresponding to a true predicate, or the result sub-expression corresponding to <code>else</code>.</p>
 </blockquote>
 <p>Just do as the problem description says.</p>
@@ -625,8 +671,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">        <span class="o">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-14">Problem 14</h3>
-<blockquote>
+</div><h3 id="problem-14" class="headerLink">
+    <a href="#problem-14" class="header-mark"></a>Problem 14</h3><blockquote>
 <p>Implement <code>make_let_frame</code> in <code>scheme_forms.py</code>, which returns a child frame of <code>env</code> that binds the symbol in each element of <code>bindings</code> to the value of its corresponding expression. The <code>bindings</code> Scheme list contains pairs that each contain a symbol and a corresponding expression.</p>
 </blockquote>
 <p>Check each <code>binding</code> and use the <code>Pair</code> to collection the <code>names</code> and <code>values</code>.</p>
@@ -670,8 +716,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">make_child_frame</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-15">Problem 15</h3>
-<blockquote>
+</div><h3 id="problem-15" class="headerLink">
+    <a href="#problem-15" class="header-mark"></a>Problem 15</h3><blockquote>
 <p>Implement the <code>enumerate</code> procedure, which takes in a list of values and returns a list of two-element lists, where the first element is the index of the value, and the second element is the value itself.</p>
 </blockquote>
 <p>We can implement the <code>enumerate</code> procedure recursively by writing a helper function called <code>helper</code>:</p>
@@ -703,8 +749,8 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="problem-16">Problem 16</h3>
-<blockquote>
+</div><h3 id="problem-16" class="headerLink">
+    <a href="#problem-16" class="header-mark"></a>Problem 16</h3><blockquote>
 <p>Implement the <code>merge</code> procedure, which takes in a comparator function <code>inorder?</code> and two lists that are sorted, and combines the two lists into a single sorted list. A comparator defines an ordering by comparing two values and returning a true value if and only if the two values are ordered. Here, sorted means sorted according to the comparator</p>
 </blockquote>
 <p>A classic interview problem: merge two sorted lists. We just need to compare the <em>head</em> of each list and recursively call <code>merge</code> in the right arguments form</p>
@@ -730,44 +776,70 @@ if (!doNotTrack) {
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/course/">Course</a>
-                </span><span><a href="/en/tags/python/">Python</a>
-                </span><span><a href="/en/tags/scheme/">Scheme</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
+</div></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
                 <span>Updated on 2023-04-21</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)" data-hashtags="Course,Python,Scheme"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-hashtag="Course"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/solving-dynamic-programming-problems-using-srtbot/" class="prev" rel="prev" title="Solving DP problems by SRTBOT Framework"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/sicp-exercise-1-34/" class="next" rel="next" title="SICP Exercise 1.34">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-</div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
-
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)" data-hashtags="Course,Python,Scheme"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-hashtag="Course"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/" data-title="Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Solution of Proj4. Scheme Interpreter of CS61A (2021-Fall)&#34;, &#34;https://martinlwx.github.io/en/proj4-scheme-interpreter-of-cs61a-of-ucb-fa21/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/course/">Course</a>,&nbsp;<a href="/en/tags/python/">Python</a>,&nbsp;<a href="/en/tags/scheme/">Scheme</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/solving-dynamic-programming-problems-using-srtbot/" class="prev" rel="prev" title="Solving DP problems by SRTBOT Framework"><i class="fas fa-angle-left fa-fw"></i>Solving DP problems by SRTBOT Framework</a>
+            <a href="/en/sicp-exercise-1-34/" class="next" rel="next" title="SICP Exercise 1.34">SICP Exercise 1.34<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

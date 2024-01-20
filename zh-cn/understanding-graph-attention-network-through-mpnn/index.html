@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>用 MPNN 框架解读 GAT - MartinLwx&#39;s Blog</title><meta name="description" content="用 MPNN 框架解读图神经网络中的 GAT"><meta property="og:title" content="用 MPNN 框架解读 GAT" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>用 MPNN 框架解读 GAT - MartinLwx&#39;s Blog</title><meta name="Description" content="用 MPNN 框架解读图神经网络中的 GAT"><meta property="og:title" content="用 MPNN 框架解读 GAT" />
 <meta property="og:description" content="用 MPNN 框架解读图神经网络中的 GAT" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="用 MPNN 框架解读 GAT"/>
 <meta name="twitter:description" content="用 MPNN 框架解读图神经网络中的 GAT"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/sicp-exercise-2-27/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/git-bundle-tutorial/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/zh-cn\/understanding-graph-attention-network-through-mpnn\/"
-        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  2174 ,
-        "url": "https:\/\/martinlwx.github.io\/zh-cn\/understanding-graph-attention-network-through-mpnn\/","datePublished": "2023-05-21T15:20:50+08:00","dateModified": "2023-05-21T15:20:50+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/"
+        },"genre": "posts","keywords": "GNN, Deep-Learning, Paper","wordcount":  2256 ,
+        "url": "https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/","datePublished": "2023-05-21T15:20:50+08:00","dateModified": "2023-05-21T15:20:50+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "用 MPNN 框架解读图神经网络中的 GAT"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/">English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/" selected>简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="选择语言" id="language-select-desktop" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/">English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/zh-cn/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="选择语言">简体中文<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/">English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/" selected>简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="选择语言" onchange="location = this.value;"><option value="/en/understanding-graph-attention-network-through-mpnn/">English</option><option value="/zh-cn/understanding-graph-attention-network-through-mpnn/" selected>简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">用 MPNN 框架解读 GAT</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/zh-cn/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">出版于  <a href="/zh-cn/categories/gnn/"><i class="fa-regular fa-folder fa-fw"></i>GNN</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 2174 字</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#什么是-mpnn-框架">什么是 MPNN 框架</a></li>
     <li><a href="#什么是-gat">什么是 GAT</a>
@@ -152,8 +155,41 @@ if (!doNotTrack) {
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="什么是-mpnn-框架">什么是 MPNN 框架</h2>
-<p>Justin Gilmer 提出了 MPNN（Message Passing Neural Network）框架<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ，用于描述被用来做图上的监督学习的图神经网络模型。我发现这是一个很好用的框架，可以很好理解不同的 GNN 模型是如何工作的，方便快速弄清楚不同的 GNN 模型之间的差别。我们考虑图 $G$ 上的一个节点 $v$，它的向量表示 $h_v$ 的更新方式如下：
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">用 MPNN 框架解读 GAT</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/gnn/"><i class="far fa-folder fa-fw"></i>GNN</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-05-21">2023-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2256 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是-mpnn-框架">什么是 MPNN 框架</a></li>
+    <li><a href="#什么是-gat">什么是 GAT</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#step-1-对节点做线性变换">Step 1. 对节点做线性变换</a></li>
+            <li><a href="#step-2-计算注意力">Step 2. 计算注意力</a>
+              <ul>
+                <li><a href="#多头注意力">多头注意力</a></li>
+              </ul>
+            </li>
+            <li><a href="#step-3-聚合邻居消息">Step 3. 聚合邻居消息</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#实现">实现</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="什么是-mpnn-框架" class="headerLink">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-mpnn-%e6%a1%86%e6%9e%b6" class="header-mark"></a>什么是 MPNN 框架</h2><p>Justin Gilmer 提出了 MPNN（Message Passing Neural Network）框架<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ，用于描述被用来做图上的监督学习的图神经网络模型。我发现这是一个很好用的框架，可以很好理解不同的 GNN 模型是如何工作的，方便快速弄清楚不同的 GNN 模型之间的差别。我们考虑图 $G$ 上的一个节点 $v$，它的向量表示 $h_v$ 的更新方式如下：
 $$m_v^{t+1}=\sum_{u\in \mathcal{N}(v)}M_t(h_v^t,h_u^t,e_{vu})$$
 $$h_v^{t+1}=U_t(h_v^t,m_v^{t+1})$$</p>
 <p>其中</p>
@@ -169,15 +205,15 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 <ul>
 <li>$R$ 为图读出函数，输入是图上所有节点的向量表示，输出为一个特征向量用于图级别的分类任务</li>
 </ul>
-<h2 id="什么是-gat">什么是 GAT</h2>
-<blockquote>
-<p>🧐 我发现将论文的公式和具体的代码联系起来总是能够帮助理解，因此下面关于 GAT 公式的讲解我会在用 MPNN 框架的基础上，同时附上相关的代码（用 <code>...</code> 表示其他省略的部分）。代码来自于 DGL 官方提供的 GAT 模块的<a href="https://docs.dgl.ai/en/latest/_modules/dgl/nn/pytorch/conv/gatconv.html#GATConv" target="_blank" rel="noopener noreffer">源码</a></p>
+<h2 id="什么是-gat" class="headerLink">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-gat" class="header-mark"></a>什么是 GAT</h2><blockquote>
+<p>🧐 我发现将论文的公式和具体的代码联系起来总是能够帮助理解，因此下面关于 GAT 公式的讲解我会在用 MPNN 框架的基础上，同时附上相关的代码（用 <code>...</code> 表示其他省略的部分）。代码来自于 DGL 官方提供的 GAT 模块的<a href="https://docs.dgl.ai/en/latest/_modules/dgl/nn/pytorch/conv/gatconv.html#GATConv" target="_blank" rel="noopener noreferrer">源码</a></p>
 </blockquote>
 <blockquote>
 <p>🧐 GAT 可以方便堆叠多层，下面的讨论都是从<strong>某一层 $l$<strong>的</strong>某个</strong>节点 $v$ 的角度来谈的</p>
 </blockquote>
-<h4 id="step-1-对节点做线性变换">Step 1. 对节点做线性变换</h4>
-<p>$$h_v^{l}=W^lh_v^{l}$$</p>
+<h4 id="step-1-对节点做线性变换" class="headerLink">
+    <a href="#step-1-%e5%af%b9%e8%8a%82%e7%82%b9%e5%81%9a%e7%ba%bf%e6%80%a7%e5%8f%98%e6%8d%a2" class="header-mark"></a>Step 1. 对节点做线性变换</h4><p>$$h_v^{l}=W^lh_v^{l}$$</p>
 <p>设每个节点的向量表示的长度为 $F$，在第一步中，<strong>对图上每个结点</strong>的向量先做一个线性变换，其中 $W\in\mathcal{R}^{F&rsquo;\times F}$, 因此每个节点的向量都更新长度为 $F&rsquo;$。为了区分不同层的向量，用上角标 $l$ 表示这是第 $l$ 层的。注意<strong>在第 $l$ 层中，所有节点共用同一个权重矩阵 $W$</strong></p>
 <blockquote>
 <p>📒 <strong>注意后面的 $h_v^l$ 或者 $h_u^l$ 都是经过线性变换之后的</strong></p>
@@ -245,8 +281,8 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意，上面代码中的 <code>h_src</code> 会出来两个一样的 <code>feat_src</code> 和 <code>feat_dst</code> 是因为 DGL 采用了数学上等价但是计算效率会更高的实现。后面会解释</p>
-<h4 id="step-2-计算注意力">Step 2. 计算注意力</h4>
-<p>$$e_{vu}^l=LeakyReLU\Big((a^l)^T[h_v^{l}||h_u^{l}]\Big)$$</p>
+<h4 id="step-2-计算注意力" class="headerLink">
+    <a href="#step-2-%e8%ae%a1%e7%ae%97%e6%b3%a8%e6%84%8f%e5%8a%9b" class="header-mark"></a>Step 2. 计算注意力</h4><p>$$e_{vu}^l=LeakyReLU\Big((a^l)^T[h_v^{l}||h_u^{l}]\Big)$$</p>
 <p>$$\alpha_{vu}^l=Softmax_u(e_{vu}^l)$$</p>
 <p>第二步就是要计算中心节点 $v$ 和它的所有邻居节点之间的注意力了。在上面的公式中：</p>
 <ul>
@@ -258,8 +294,8 @@ $$\hat y=R({h_v^T|v\in G})$$</p>
 <blockquote>
 <p>🤔️ 步骤一和步骤二对应 MPNN 框架的 $m_v^{t+1}$ 的计算</p>
 </blockquote>
-<h5 id="多头注意力">多头注意力</h5>
-<p>正如 Transformer 中有多头注意力一样，GAT 的作者同样在节点更新的时候采用了多头注意力的机制：
+<h5 id="多头注意力" class="headerLink">
+    <a href="#%e5%a4%9a%e5%a4%b4%e6%b3%a8%e6%84%8f%e5%8a%9b" class="header-mark"></a>多头注意力</h5><p>正如 Transformer 中有多头注意力一样，GAT 的作者同样在节点更新的时候采用了多头注意力的机制：
 $$h_v^{l+1}= ||^{K^l} \sigma(\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,l)}W^{(k,l)}h_u^{l})$$</p>
 <p>记号越来越复杂了，但是仔细思索一番还是可以理清楚的，上角标 $(k,l)$ 的意思是第 $l$ 层的第 $k$ 个头。其中 $K^l$ 为第 $l$ 层“头”的数量。上面的公式的意思就是每个“头”会计算出一个向量表示，然后不同“头”之间的会拼接起来</p>
 <div class="highlight"><div class="chroma">
@@ -373,71 +409,97 @@ $$a^T[h_v||h_u]=a_l^Th_v+a_r^Th_u$$
 <li>不需要存储 $[h_v||h_u]$ 这个中间变量了（DGL 会将消息存储为边的属性）</li>
 <li>加法可以用 DGL 优化过的 <code>fn.u_add_v</code> 函数</li>
 </ul>
-<h4 id="step-3-聚合邻居消息">Step 3. 聚合邻居消息</h4>
-<p>最后节点更新的方式就是计算邻居的向量表示的加权和（基于前面算好的注意力）：
+<h4 id="step-3-聚合邻居消息" class="headerLink">
+    <a href="#step-3-%e8%81%9a%e5%90%88%e9%82%bb%e5%b1%85%e6%b6%88%e6%81%af" class="header-mark"></a>Step 3. 聚合邻居消息</h4><p>最后节点更新的方式就是计算邻居的向量表示的加权和（基于前面算好的注意力）：
 $$h_v^{l+1}=\sigma(\sum_{u\in \mathcal{N}(i)}\alpha_{vu}W^{l}h_u^{l})$$</p>
 <blockquote>
 <p>🤔️ 上面就对应 MPNN 框架中的 $h_v^{t+1}$ 的计算，注意 GAT 算 $h_t^{l+1}$ 的时候并不会用到自己上一层表示 $h_t^l$。同时 GAT 的提出是用于解决图上的节点分类问题，因此也没有图读出的操作。</p>
 </blockquote>
 <p>在 GAT 的论文中，作者是要将 GAT 用于节点级别的分类任务<sup id="fnref1:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。假设我们堆叠了 $L$ 层的 GAT 之后，在最后一层如果还采用拼接的方式显然是不合理的。因此作者在最后一层 GAT 中，是取多个头的平均值<strong>之后才</strong>应用了激活函数，这里的激活函数如果采用 Softmax，就可以直接做节点分类了<sup id="fnref2:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。公式如下所示:
 $$final\ embedding\ of\ h_v= \sigma\Big(\frac{1}{K^L}\sum_{k=1}^{K^L}\sum_{u\in\mathcal{N}(i)}\alpha_{vu}^{(k,L)}W^{(k,L)}h_u^{L}\Big)$$</p>
-<h2 id="实现">实现</h2>
-<blockquote>
-<p>🤔️ 图神经网络的流行框架之一 <a href="https://www.dgl.ai/" target="_blank" rel="noopener noreffer">DGL</a> 的设计就是基于 MPNN 框架，不过他们的公式会稍有不同，他们还有一个聚合函数 $\rho$，用于决定一个节点如何聚合从邻居那边收到的所有信息。<strong>我认为他们的公式更具有泛化性，能够适用于更多种情况</strong>。他们还贴心地写了关于如何使用 DGL 的 MPNN 相关函数的<a href="https://docs.dgl.ai/en/latest/guide/message.html" target="_blank" rel="noopener noreffer">教程</a>，推荐一看👍👍👍</p>
+<h2 id="实现" class="headerLink">
+    <a href="#%e5%ae%9e%e7%8e%b0" class="header-mark"></a>实现</h2><blockquote>
+<p>🤔️ 图神经网络的流行框架之一 <a href="https://www.dgl.ai/" target="_blank" rel="noopener noreferrer">DGL</a> 的设计就是基于 MPNN 框架，不过他们的公式会稍有不同，他们还有一个聚合函数 $\rho$，用于决定一个节点如何聚合从邻居那边收到的所有信息。<strong>我认为他们的公式更具有泛化性，能够适用于更多种情况</strong>。他们还贴心地写了关于如何使用 DGL 的 MPNN 相关函数的<a href="https://docs.dgl.ai/en/latest/guide/message.html" target="_blank" rel="noopener noreferrer">教程</a>，推荐一看👍👍👍</p>
 </blockquote>
-<p>至于 GAT 的实现，DGL 不仅提供了 <a href="https://docs.dgl.ai/en/latest/generated/dgl.nn.pytorch.conv.GATConv.html#dgl.nn.pytorch.conv.GATConv" target="_blank" rel="noopener noreffer">GAT 模块</a>，而且还写了一篇不错的用自带的 <code>message_func</code> 和 <code>reduce_func</code> 手动实现 GAT 的<a href="https://docs.dgl.ai/en/latest/tutorials/models/1_gnn/9_gat.html" target="_blank" rel="noopener noreffer">教程</a>。一个完整的 GAT 任务训练脚本可以看<a href="https://github.com/dmlc/dgl/blob/master/examples/core/gat/train.py" target="_blank" rel="noopener noreffer">这里</a></p>
-<h2 id="总结">总结</h2>
-<p>以上就是如何用 MPNN 框架解释 GAT 的方法，其中加上了 DGL 的源码分析进行解释，用注意力计算节点之间的关系看起来是一个很自然的思路，可以看成是对 GCN 的一种泛化。GAT 能够很好学习到图的局部结构表示，而且计算注意力的方式可以并行，是十分高效的🍻🍻🍻</p>
-<h2 id="参考">参考</h2>
-<div class="footnotes" role="doc-endnotes">
+<p>至于 GAT 的实现，DGL 不仅提供了 <a href="https://docs.dgl.ai/en/latest/generated/dgl.nn.pytorch.conv.GATConv.html#dgl.nn.pytorch.conv.GATConv" target="_blank" rel="noopener noreferrer">GAT 模块</a>，而且还写了一篇不错的用自带的 <code>message_func</code> 和 <code>reduce_func</code> 手动实现 GAT 的<a href="https://docs.dgl.ai/en/latest/tutorials/models/1_gnn/9_gat.html" target="_blank" rel="noopener noreferrer">教程</a>。一个完整的 GAT 任务训练脚本可以看<a href="https://github.com/dmlc/dgl/blob/master/examples/core/gat/train.py" target="_blank" rel="noopener noreferrer">这里</a></p>
+<h2 id="总结" class="headerLink">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>以上就是如何用 MPNN 框架解释 GAT 的方法，其中加上了 DGL 的源码分析进行解释，用注意力计算节点之间的关系看起来是一个很自然的思路，可以看成是对 GCN 的一种泛化。GAT 能够很好学习到图的局部结构表示，而且计算注意力的方式可以并行，是十分高效的🍻🍻🍻</p>
+<h2 id="参考" class="headerLink">
+    <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p>Gilmer J, Schoenholz S S, Riley P F, et al. Neural message passing for quantum chemistry[C]//International conference on machine learning. PMLR, 2017: 1263-1272. <a href="https://arxiv.org/abs/1704.01212" target="_blank" rel="noopener noreffer">arXiv</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Gilmer J, Schoenholz S S, Riley P F, et al. Neural message passing for quantum chemistry[C]//International conference on machine learning. PMLR, 2017: 1263-1272. <a href="https://arxiv.org/abs/1704.01212" target="_blank" rel="noopener noreferrer">arXiv</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p>Veličković P, Cucurull G, Casanova A, et al. Graph attention networks[J]. arXiv preprint arXiv:1710.10903, 2017. <a href="https://arxiv.org/abs/1710.10903" target="_blank" rel="noopener noreffer">arXiv</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Veličković P, Cucurull G, Casanova A, et al. Graph attention networks[J]. arXiv preprint arXiv:1710.10903, 2017. <a href="https://arxiv.org/abs/1710.10903" target="_blank" rel="noopener noreferrer">arXiv</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/zh-cn/tags/gnn/">GNN</a>
-                </span><span><a href="/zh-cn/tags/deep-learning/">Deep-Learning</a>
-                </span><span><a href="/zh-cn/tags/paper/">Paper</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2023-05-21</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT" data-hashtags="GNN,Deep-Learning,Paper"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-hashtag="GNN"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/zh-cn/sicp-exercise-2-27/" class="prev" rel="prev" title="SICP 练习 2.27"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/zh-cn/git-bundle-tutorial/" class="next" rel="next" title="Git Bundle 指南">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/zh-cn/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-05-21</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT" data-hashtags="GNN,Deep-Learning,Paper"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-hashtag="GNN"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/" data-title="用 MPNN 框架解读 GAT" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;用 MPNN 框架解读 GAT&#34;, &#34;https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/zh-cn/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/gnn/">GNN</a>,&nbsp;<a href="/zh-cn/tags/deep-learning/">Deep-Learning</a>,&nbsp;<a href="/zh-cn/tags/paper/">Paper</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/sicp-exercise-2-27/" class="prev" rel="prev" title="SICP 练习 2.27"><i class="fas fa-angle-left fa-fw"></i>SICP 练习 2.27</a>
+            <a href="/zh-cn/git-bundle-tutorial/" class="next" rel="next" title="Git Bundle 指南">Git Bundle 指南<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

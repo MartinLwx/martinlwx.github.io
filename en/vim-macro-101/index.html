@@ -1,10 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Vim Macro 101 - MartinLwx&#39;s Blog</title><meta name="description" content="How to use vim&#39;s macro system"><meta property="og:title" content="Vim Macro 101" />
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Vim Macro 101 - MartinLwx&#39;s Blog</title><meta name="Description" content="How to use vim&#39;s macro system"><meta property="og:title" content="Vim Macro 101" />
 <meta property="og:description" content="How to use vim&#39;s macro system" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/vim-macro-101/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
@@ -15,12 +18,14 @@
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Vim Macro 101"/>
 <meta name="twitter:description" content="How to use vim&#39;s macro system"/>
 <meta name="application-name" content="MartinLwx&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://martinlwx.github.io/en/vim-macro-101/" /><link rel="prev" href="https://martinlwx.github.io/en/how-to-use-antlr4-to-make-semantic-actions/" /><link rel="next" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css">
-        <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin>
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/vim-macro-101/" /><link rel="prev" href="https://martinlwx.github.io/en/how-to-use-antlr4-to-make-semantic-actions/" /><link rel="next" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,58 +33,62 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/martinlwx.github.io\/en\/vim-macro-101\/"
-        },"genre": "posts","keywords": "Vim","wordcount":  929 ,
-        "url": "https:\/\/martinlwx.github.io\/en\/vim-macro-101\/","datePublished": "2022-07-02T10:40:38+08:00","dateModified": "2023-01-18T10:40:38+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/vim-macro-101/"
+        },"genre": "posts","keywords": "Vim","wordcount":  921 ,
+        "url": "https://martinlwx.github.io/en/vim-macro-101/","datePublished": "2022-07-02T10:40:38+08:00","dateModified": "2023-01-18T10:40:38+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
             },"description": "How to use vim's macro system"
     }
-    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': false });
-}
-</script>
-</head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    </script></head>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/vim-macro-101/" selected>English</option><option value="/zh-cn/vim-macro-101/">简体中文</option></select>
-                    </span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/vim-macro-101/" selected>English</option><option value="/zh-cn/vim-macro-101/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
-                    </span><a class="menu-item" href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a><a href="#" onclick="return false;" class="menu-item theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
         </div>
     </div>
 </header><header class="mobile" id="header-mobile">
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog">MartinLwx&#39;s blog</a>
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -88,48 +97,42 @@ if (!doNotTrack) {
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                     <div class="search mobile" id="search-mobile">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
-                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
-                            <i class="fa-solid fa-search fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
                         </a>
-                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="Clear">
-                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
                         </a>
                         <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
                         </span>
                     </div>
-                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fa-brands fa-github fa-fw'></i></a><div class="menu-item"><a href="/index.xml" title="RSS"><i class="fa-solid fa-rss fa-fw" title="RSS"></i> </a>
-                <span>&nbsp;|&nbsp;</span><a href="#" onclick="return false;" class="theme-switch" title="Switch Theme">
-                    <i class="fa-solid fa-adjust fa-fw"></i>
-                </a>
-            </div><span class="menu-item language" title="Select Language">English<i class="fa-solid fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/vim-macro-101/" selected>English</option><option value="/zh-cn/vim-macro-101/">简体中文</option></select>
-                </span></div>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/vim-macro-101/" selected>English</option><option value="/zh-cn/vim-macro-101/">简体中文</option></select>
+                </a></div>
     </div>
-</header><div class="search-dropdown desktop">
+</header>
+<div class="search-dropdown desktop">
     <div id="search-dropdown-desktop"></div>
 </div>
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
-</div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">Contents</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Vim Macro 101</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/en/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>MartinLwx</a></span>&nbsp;<span class="post-category">published in <a href="/en/categories/vim/"><i class="fa-regular fa-folder fa-fw"></i>Vim</a></span></div>
-                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-02">2022-07-02</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;929 words</span>&nbsp;
-                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;5 minutes</span>&nbsp;</div>
-            </div>
-            
-            <hr><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
     <li><a href="#what-is-macro-in-vim">What is macro in Vim?</a></li>
@@ -154,22 +157,57 @@ if (!doNotTrack) {
     <li><a href="#wrap-up">Wrap up</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="intro">Intro</h2>
-<p>In the process of learning Vim, the most enlightening sentence for me is :</p>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vim Macro 101</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/vim/"><i class="far fa-folder fa-fw"></i>Vim</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-02">2022-07-02</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-01-18">2023-01-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;921 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#what-is-macro-in-vim">What is macro in Vim?</a></li>
+    <li><a href="#macro-how">Macro-how?</a>
+      <ul>
+        <li><a href="#how-to-record-a-macro">How to record a macro</a></li>
+        <li><a href="#how-to-inspect-a-macro">How to inspect a macro</a></li>
+        <li><a href="#how-to-execute-a-macro">How to execute a macro</a>
+          <ul>
+            <li><a href="#within-a-file">Within a file</a></li>
+            <li><a href="#a-bunch-of-files">A bunch of files</a></li>
+          </ul>
+        </li>
+        <li><a href="#how-to-modify-a-macro">How to modify a macro</a>
+          <ul>
+            <li><a href="#simple-case">Simple case</a></li>
+            <li><a href="#complex-case">Complex case</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#wrap-up">Wrap up</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>In the process of learning Vim, the most enlightening sentence for me is :</p>
 <blockquote>
 <p><strong>Vim is a kind of <em>programming language</em></strong></p>
 </blockquote>
-<p>I once tried to learn Vim a long time ago. However, the keystroke combinations are very difficult to memorize in my opinion. So I later gave up learning Vim and switched to a normal text editor. My view of Vim changed when I took this course: <em><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreffer">Missing semester</a></em>. I started to regard Vim as a kind of programming language rather than just a text editor. Then I find that <strong>the combinations of various operations of Vim are the syntax of programming language</strong>.</p>
+<p>I once tried to learn Vim a long time ago. However, the keystroke combinations are very difficult to memorize in my opinion. So I later gave up learning Vim and switched to a normal text editor. My view of Vim changed when I took this course: <em><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">Missing semester</a></em>. I started to regard Vim as a kind of programming language rather than just a text editor. Then I find that <strong>the combinations of various operations of Vim are the syntax of programming language</strong>.</p>
 <p>It seems that I am talking about something unrelated to this blog post. That&rsquo;s not true. As programmers, we often avoid doing repetitive tasks by programming. Different people have different favorites. Vim is one of the options you probably do not know.</p>
 <blockquote>
 <p>I assume you have a basic understanding of basic Vim usage  : )</p>
 </blockquote>
-<h2 id="what-is-macro-in-vim">What is macro in Vim?</h2>
-<p>We know that we can use <code>.</code> to repeat the last change. However, what if we want to apply many changes? Macro comes to the rescue. :)</p>
+<h2 id="what-is-macro-in-vim" class="headerLink">
+    <a href="#what-is-macro-in-vim" class="header-mark"></a>What is macro in Vim?</h2><p>We know that we can use <code>.</code> to repeat the last change. However, what if we want to apply many changes? Macro comes to the rescue. :)</p>
 <p>By using macro, we can record our operations and then store them in a register which can be executed later. If you check the content of the corresponding register, you may find that it is just a sequence of characters.</p>
-<h2 id="macro-how">Macro-how?</h2>
-<h3 id="how-to-record-a-macro">How to record a macro</h3>
-<p><strong>Steps to follow</strong>:</p>
+<h2 id="macro-how" class="headerLink">
+    <a href="#macro-how" class="header-mark"></a>Macro-how?</h2><h3 id="how-to-record-a-macro" class="headerLink">
+    <a href="#how-to-record-a-macro" class="header-mark"></a>How to record a macro</h3><p><strong>Steps to follow</strong>:</p>
 <ol>
 <li>
 <p>In normal mode, press <code>q&lt;register&gt;</code>.</p>
@@ -185,8 +223,8 @@ if (!doNotTrack) {
 <p>Press <code>q</code> again to quit the recording.</p>
 </li>
 </ol>
-<h3 id="how-to-inspect-a-macro">How to inspect a macro</h3>
-<p>I previously mentioned that the macro is just a sequence of characters stored in a specific register. We can use the following command to inspect the content:</p>
+<h3 id="how-to-inspect-a-macro" class="headerLink">
+    <a href="#how-to-inspect-a-macro" class="header-mark"></a>How to inspect a macro</h3><p>I previously mentioned that the macro is just a sequence of characters stored in a specific register. We can use the following command to inspect the content:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -200,9 +238,9 @@ if (!doNotTrack) {
 <li><code>^[</code> means <code>&lt;ESC&gt;</code></li>
 <li><code>&lt;80&gt;kb</code> means <code>BAKESPACE</code></li>
 </ul>
-<h3 id="how-to-execute-a-macro">How to execute a macro</h3>
-<h4 id="within-a-file">Within a file</h4>
-<ul>
+<h3 id="how-to-execute-a-macro" class="headerLink">
+    <a href="#how-to-execute-a-macro" class="header-mark"></a>How to execute a macro</h3><h4 id="within-a-file" class="headerLink">
+    <a href="#within-a-file" class="header-mark"></a>Within a file</h4><ul>
 <li><code>@&lt;register&gt;</code>: execute the macro in <code>&lt;register&gt;</code></li>
 <li><code>@@</code>: execute the last executed macro</li>
 </ul>
@@ -211,73 +249,101 @@ if (!doNotTrack) {
 <li>e.g. <em><code>100@@</code> means executing the last executed macro 100 times</em></li>
 </ul>
 <p>Calculating what the value of <code>[COUNT]</code> should be is tedious. Luckily, we can set it to a large value. The exceeding part will be ignored.</p>
-<h4 id="a-bunch-of-files">A bunch of files</h4>
-<p>Things got complicated when you tried to modify multiple files. Opening each file and applying a macro repeatedly would be unreasonable. It is a violation of the DRY(Don&rsquo;t repeat yourself) principle.</p>
+<h4 id="a-bunch-of-files" class="headerLink">
+    <a href="#a-bunch-of-files" class="header-mark"></a>A bunch of files</h4><p>Things got complicated when you tried to modify multiple files. Opening each file and applying a macro repeatedly would be unreasonable. It is a violation of the DRY(Don&rsquo;t repeat yourself) principle.</p>
 <p>Vim allows us to open multiple files at the same time and edit them one by one. What&rsquo;s more, we can apply our recorded macro to all files with a single command.</p>
 <p>For example, you may want to edit all the <code>txt</code> files in the current directory. Typing <code>vim *.txt</code> in your terminal will open all these files. At first glance, it looks like you are editing a file, except that if you try to type <code>:x</code> to save and exit you will get an error! The naive way is modifying the file content and then typing <code>:wn</code> to save the changes and go to the next file. Now I will tell you how to do this more cleverly.</p>
 <ol>
 <li>Record your macro first then drop the changes by typing <code>:edit!</code> in the 1-st file because we will change all files including the 1-st file later. Without this cancellation, the 1st file will be modified twice.</li>
 <li>In normal mode, type <code>:bufdo execute &quot;normal @&lt;register&gt;&quot; | update</code>.</li>
 </ol>
-<p>More details can be found <a href="https://vim.fandom.com/wiki/Run_a_command_in_multiple_buffers" target="_blank" rel="noopener noreffer">here</a></p>
-<h3 id="how-to-modify-a-macro">How to modify a macro</h3>
-<h4 id="simple-case">Simple case</h4>
-<p>If you are recording a quite long macro and you press <code>q</code> unexpectedly, you definitely do not want to start from the beginning. Vim has a feature to save us from this trouble.</p>
+<p>More details can be found <a href="https://vim.fandom.com/wiki/Run_a_command_in_multiple_buffers" target="_blank" rel="noopener noreferrer">here</a></p>
+<h3 id="how-to-modify-a-macro" class="headerLink">
+    <a href="#how-to-modify-a-macro" class="header-mark"></a>How to modify a macro</h3><h4 id="simple-case" class="headerLink">
+    <a href="#simple-case" class="header-mark"></a>Simple case</h4><p>If you are recording a quite long macro and you press <code>q</code> unexpectedly, you definitely do not want to start from the beginning. Vim has a feature to save us from this trouble.</p>
 <p>In Vim, if we press <code>q&lt;REIGSTER&gt;</code>(<code>&lt;REGISTER&gt;</code> means <code>A-Z</code>) in normal mode. Everything we typed now will be appended to the corresponding <code>register</code>. <em>For example, we may have recorded macro in register <code>a</code>, then we can press <code>qA</code> to append operations to this marco</em>. That is how we continue recording a half-finished macro.</p>
-<h4 id="complex-case">Complex case</h4>
-<p>What if we want to change the operations in the middle rather than appending them? The secret is that we can just treat the macro as a text sequence. After editing, we can store it back:</p>
+<h4 id="complex-case" class="headerLink">
+    <a href="#complex-case" class="header-mark"></a>Complex case</h4><p>What if we want to change the operations in the middle rather than appending them? The secret is that we can just treat the macro as a text sequence. After editing, we can store it back:</p>
 <ol>
 <li>Press <code>G</code> to jump to the last line, then type <code>:put &lt;register&gt;</code>. The content of the <code>register</code> will appear in the next line.</li>
 <li>Just edit this mysterious text sequence.</li>
 <li>After you have edited the content, you can type <code>:d &lt;register&gt;</code> to put back the content(make sure your cursor is still in this line).</li>
 </ol>
 <p>e.g. <em>The following gif shows the procedure of modifying a macro. I have a dumb macro in the register <code>y</code> which can append <code> world</code> in the current line. I change it to append <code> hello world</code> instead.</em></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/img/modify_macro.gif"
-        data-srcset="/img/modify_macro.gif, /img/modify_macro.gif 1.5x, /img/modify_macro.gif 2x"
-        data-sizes="auto"
+<p><figure><img
+        
+        loading="lazy"
+        src="/img/modify_macro.gif"
+        srcset="/img/modify_macro.gif, /img/modify_macro.gif 1.5x, /img/modify_macro.gif 2x"
+        sizes="auto"
         alt="/img/modify_macro.gif"
-        title="/img/modify_macro.gif" /></p>
-<h2 id="wrap-up">Wrap up</h2>
-<p>This is a simple tutorial about the macro in Vim, which is just the tip of the iceberg in Vim. Only when you master Vim do you make the most of it. It would be great if this blog got you interested in learning Vim. Hope this tutorial will be helpful 😉</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/en/tags/vim/">Vim</a>
-                </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>Updated on 2023-01-18</span>
-            </div><div class="post-info-mod"></div>
-        </div><div class="post-info-share">
-            <span><a href="#" onclick="return false;" title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101" data-hashtags="Vim"><i class="fa-brands fa-square-x-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-hashtag="Vim"><i class="fa-brands fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101"><i class="fa-brands fa-hacker-news fa-fw"></i></a><a href="#" onclick="return false;" title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101"><i class="fa-brands fa-line fa-fw"></i></a><a href="#" onclick="return false;" title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101"><i class="fa-brands fa-weibo fa-fw"></i></a></span>
-        </div></div><div class="post-nav"><a href="/en/how-to-use-antlr4-to-make-semantic-actions/" class="prev" rel="prev" title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/en/what-is-the-heap-and-stack/" class="next" rel="next" title="What is stack and heap">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
-</div><div id="comments" class="single-card"><div id="utterances"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
-            </noscript></div></article></div>
-            </main>
-            <footer class="footer"><div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.2">Hugo</a> | Theme - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
-        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/en/">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        title="/img/modify_macro.gif" ></figure></p>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><p>This is a simple tutorial about the macro in Vim, which is just the tip of the iceberg in Vim. Only when you master Vim do you make the most of it. It would be great if this blog got you interested in learning Vim. Hope this tutorial will be helpful 😉</p>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.min.js?version=1.0.2', { scope: '/' })
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Registered');
-        }, err => console.error('MartinLwx\u0027s Blog\u00A0Service Worker registration failed: ', err));
 
-    navigator.serviceWorker
-        .ready
-        .then(() => {
-            console.info('MartinLwx\u0027s Blog\u00A0Service Worker Ready');
-        });
-}
-</script>
-</footer>
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-01-18</span>
+            </div>
+            <div class="post-info-license"></div>
         </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101" data-hashtags="Vim"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-hashtag="Vim"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/vim-macro-101/" data-title="Vim Macro 101" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Vim Macro 101&#34;, &#34;https://martinlwx.github.io/en/vim-macro-101/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
-                <i class="fa-solid fa-chevron-up fa-fw"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
-                <i class="fa-solid fa-comment-alt fa-fw"></i>
-            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":null,"lightTheme":"github-light","repo":"MartinLwx/martinlwx.github.io"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/en/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/vim/">Vim</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/how-to-use-antlr4-to-make-semantic-actions/" class="prev" rel="prev" title="How to use the semantic actions to generate the symbol tables in ANTLR4"><i class="fas fa-angle-left fa-fw"></i>How to use the semantic actions to generate the symbol tables in ANTLR4</a>
+            <a href="/en/what-is-the-heap-and-stack/" class="next" rel="next" title="What is stack and heap">What is stack and heap<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>
