@@ -1,0 +1,638 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Neovim Setup for OCaml - MartinLwx&#39;s Blog</title><meta name="Description" content="Neovim Setup for OCaml"><meta property="og:title" content="Neovim Setup for OCaml" />
+<meta property="og:description" content="Neovim Setup for OCaml" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-23T12:55:46+08:00" />
+<meta property="article:modified_time" content="2024-01-23T12:55:46+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Neovim Setup for OCaml"/>
+<meta name="twitter:description" content="Neovim Setup for OCaml"/>
+<meta name="application-name" content="MartinLwx&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" /><link rel="prev" href="https://martinlwx.github.io/en/llm-inference-optimization-kv-cache/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Neovim Setup for OCaml",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://martinlwx.github.io/en/neovim-setup-for-ocaml/"
+        },"genre": "posts","keywords": "Nvim, OCaml","wordcount":  1233 ,
+        "url": "https://martinlwx.github.io/en/neovim-setup-for-ocaml/","datePublished": "2024-01-23T12:55:46+08:00","dateModified": "2024-01-23T12:55:46+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "Neovim Setup for OCaml"
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/neovim-setup-for-ocaml/" selected>English</option><option value="/zh-cn/neovim-setup-for-ocaml/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/neovim-setup-for-ocaml/" selected>English</option><option value="/zh-cn/neovim-setup-for-ocaml/">简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#install-ocaml">Install OCaml</a></li>
+    <li><a href="#ocaml-lsp-configurations">OCaml LSP configurations</a></li>
+    <li><a href="#ocaml-formatter-configurations">OCaml Formatter configurations</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Neovim Setup for OCaml</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/vim/"><i class="far fa-folder fa-fw"></i>Vim</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-01-23">2024-01-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-01-23">2024-01-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1233 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#install-ocaml">Install OCaml</a></li>
+    <li><a href="#ocaml-lsp-configurations">OCaml LSP configurations</a></li>
+    <li><a href="#ocaml-formatter-configurations">OCaml Formatter configurations</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>In <a href="https://martinlwx.github.io/en/config-neovim-from-scratch/" rel="">previous post</a>, I elaborated on how to set up Neovim from scratch. However, I didn&rsquo;t answer the following questions:</p>
+<ol>
+<li>What if an LSP does not support formatting, how to configure Neovim to support a third-party code formatting tool?</li>
+<li>How to change configuration files when adding a new programming language?</li>
+</ol>
+<p>Recently I was learning OCaml, I thought it would be a good chance to answer the questions.</p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">I <em>assume</em> you have already read my <a href="https://martinlwx.github.io/en/config-neovim-from-scratch/" target="_blank" rel="noopener noreferrer">previous post</a>, so I will omit some details here.</div>
+        </div>
+    </div>
+<h2 id="install-ocaml" class="headerLink">
+    <a href="#install-ocaml" class="header-mark"></a>Install OCaml</h2><div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">If you are not using a Mac, you may refer to the <a href="https://ocaml.org/docs/installing-ocaml" target="_blank" rel="noopener noreferrer">official instructions</a> for more details.</div>
+        </div>
+    </div>
+<p>It is quite handy to install OCaml on a Mac with <a href="https://brew.sh/" target="_blank" rel="noopener noreferrer">Homebrew</a>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ brew install opam
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>According to the output of Homebrew, we need to perform additional configurations and modify <code>~/.zshrc</code>(for Zsh users) or <code>~/.bashrc</code>(for Bash users).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ opam init
+</span></span><span class="line"><span class="cl"><span class="c1"># press `y` to confirm</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To make the modifications work, run the following command in your terminal</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ <span class="nb">source</span> ~/.zshrc
+</span></span><span class="line"><span class="cl"><span class="c1"># $ source ~/.bashrc # if you use bash</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Finally, we can use this command to check if everything goes right</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ opam switch
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The output will be like</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#   switch   compiler                   description
+</span></span><span class="line"><span class="cl">-&gt;  5.0.0    ocaml-base-compiler.5.0.0  5.0.0
+</span></span><span class="line"><span class="cl">    default  ocaml.4.14.0               default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Similar to <a href="https://ipython.org/" target="_blank" rel="noopener noreferrer">IPython</a> for Python, the OCaml offers a REPL tool called <a href="https://opam.ocaml.org/blog/about-utop/" target="_blank" rel="noopener noreferrer">utop</a>. We can install this to practice programming OCaml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ opam install utop dune
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Just try the utop REPL yourself :)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ utop
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The output would be like</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="err">─────────────────────────────────────────────────────────┬─────────────────────────────────────────────────────────────┬──────────────────────────────────────────────────────────</span>
+</span></span><span class="line"><span class="cl">                                                         <span class="err">│</span> <span class="n">Welcome</span> <span class="n">to</span> <span class="n">utop</span> <span class="n">version</span> <span class="mf">2.13</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">using</span> <span class="n">OCaml</span> <span class="n">version</span> <span class="mf">5.0</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span><span class="o">!</span> <span class="err">│</span>
+</span></span><span class="line"><span class="cl">                                                         <span class="err">└─────────────────────────────────────────────────────────────┘</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Type</span> <span class="c1">#utop_help for help about using utop.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">─</span><span class="p">(</span> <span class="mi">10</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">26</span> <span class="p">)</span><span class="err">─</span><span class="o">&lt;</span> <span class="n">command</span> <span class="mi">0</span> <span class="o">&gt;</span><span class="err">────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span><span class="p">{</span> <span class="n">counter</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span><span class="err">─</span>
+</span></span><span class="line"><span class="cl"><span class="n">utop</span> <span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="err">┌──────────────┬──────────────┬───────────────┬─────┬───────────┬────┬───┬──────────┬─────┬───────────┬──────┬────────────┬───────┬───────────┬──────────────┬──────────┬────────┐</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span><span class="n">Afl_instrument</span><span class="err">│</span><span class="n">Alias_analysis</span><span class="err">│</span><span class="n">Allocated_const</span><span class="err">│</span><span class="n">Annot</span><span class="err">│</span><span class="n">Applicative</span><span class="err">│</span><span class="n">Arch</span><span class="err">│</span><span class="n">Arg</span><span class="err">│</span><span class="n">Arg_helper</span><span class="err">│</span><span class="ne">Array</span><span class="err">│</span><span class="n">ArrayLabels</span><span class="err">│</span><span class="n">Asmgen</span><span class="err">│</span><span class="n">Asmlibrarian</span><span class="err">│</span><span class="n">Asmlink</span><span class="err">│</span><span class="n">Asmpackager</span><span class="err">│</span><span class="n">Assert_failure</span><span class="err">│</span><span class="n">Ast_helper</span><span class="err">│</span><span class="n">Ast_inva</span><span class="err">│</span>
+</span></span><span class="line"><span class="cl"><span class="err">└──────────────┴──────────────┴───────────────┴─────┴───────────┴────┴───┴──────────┴─────┴───────────┴──────┴────────────┴───────┴───────────┴──────────────┴──────────┴────────┘</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ocaml-lsp-configurations" class="headerLink">
+    <a href="#ocaml-lsp-configurations" class="header-mark"></a>OCaml LSP configurations</h2><div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>If you follow my previous post, then the file hierarch of your setup will be like</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nvim
+</span></span><span class="line"><span class="cl">├── init.lua
+</span></span><span class="line"><span class="cl">└── lua
+</span></span><span class="line"><span class="cl">    ├── colorscheme.lua
+</span></span><span class="line"><span class="cl">    ├── config
+</span></span><span class="line"><span class="cl">    │   └── nvim-cmp.lua
+</span></span><span class="line"><span class="cl">    ├── keymaps.lua
+</span></span><span class="line"><span class="cl">    ├── lsp.lua
+</span></span><span class="line"><span class="cl">    ├── options.lua
+</span></span><span class="line"><span class="cl">    └── plugins.lua
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+        </div>
+    </div>
+<p>Previously, we leveraged <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a> to set up LSPs. To add a new LSP for a specific programming language, we can also use this. Steps to follow:</p>
+<ol>
+<li>Open Neovim and type <code>:Mason</code>, found <code>ocaml-lsp</code> in the <code>(2) LSP</code> section. Press <code>i</code> when the cursor stays on the line.</li>
+<li>Open the configurations file for LSP(<code>lsp.lua</code> in my configurations), add the following lua code</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">lspconfig.ocamllsp</span><span class="p">.</span><span class="n">setup</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="n">on_attach</span> <span class="o">=</span> <span class="n">on_attach</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>Warning<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">You may have your configuration files and do not follow my <a href="https://martinlwx.github.io/en/config-neovim-from-scratch/" target="_blank" rel="noopener noreferrer">previous post</a>. So adding the aforementioned Lua code may not work for you. However, you can check the full configuration <a href="https://github.com/martinlwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">here</a> to understand how it works and adapt to your configurations.</div>
+        </div>
+    </div>
+<p>After modifying <code>lsp.lua</code>, we can type <code>:PackerCompile</code> to regenerate configurations and then <em>restart</em> Neovim.</p>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>Warning<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Similar to <a href="https://rust-analyzer.github.io/" target="_blank" rel="noopener noreferrer">rust-analyzer</a>, we can only use <code>ocaml-lsp</code> <em>in a project</em> but not a single file.</div>
+        </div>
+    </div>
+<p>Now you can create a new <a href="https://github.com/ocaml/dune" target="_blank" rel="noopener noreferrer">dune</a> project to see if LSP works.</p>
+<h2 id="ocaml-formatter-configurations" class="headerLink">
+    <a href="#ocaml-formatter-configurations" class="header-mark"></a>OCaml Formatter configurations</h2><p>The <code>ocaml-lsp</code> LSP does not support formatting OCaml code. If you try to format an OCaml code, you will get an error message:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[LSP] Format request failed, no matching language servers.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now, I will talk about how to set up a formatter for OCaml.</p>
+<p>You may have noticed that the Mason tool also offers Linter and Formatter. The formatter for OCaml is <a href="https://github.com/ocaml-ppx/ocamlformat" target="_blank" rel="noopener noreferrer">ocamlformat</a>. So We can install it just like we install an LSP.</p>
+<p>However, <a href="https://github.com/ocaml-ppx/ocamlformat" target="_blank" rel="noopener noreferrer">ocamlformat</a> is a <em>CLI tool</em> which can not be integrated into Neovim. Luckily, we have <a href="https://github.com/nvimtools/none-ls.nvim" target="_blank" rel="noopener noreferrer">none-ls</a> plugin, which can expose linter, formatter, and other CLI tools <em>as LSP</em> for Neovim.</p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><a href="https://github.com/nvimtools/none-ls.nvim" target="_blank" rel="noopener noreferrer">none-ls.nvim</a> is maintained by the community because its predecessor <a href="https://github.com/jose-elias-alvarez/null-ls.nvim" target="_blank" rel="noopener noreferrer">null-ls.nvim</a> has been <a href="https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1621" target="_blank" rel="noopener noreferrer">archived</a></div>
+        </div>
+    </div>
+<p>To make it easier, we can use the <a href="https://github.com/jay-babu/mason-null-ls.nvim" target="_blank" rel="noopener noreferrer">mason-null-ls.nvim</a> plugin, developed by the same author of <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a>. Open <code>plugins.lua</code> file and append these Lua codes. After saving the changes you should see the Packer.nvim try to install the new plugins.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">use</span><span class="p">({</span> <span class="s2">&#34;nvim-lua/plenary.nvim&#34;</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">use</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;jay-babu/mason-null-ls.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">after</span> <span class="o">=</span> <span class="s2">&#34;plenary.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">requires</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;nvimtools/none-ls.nvim&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="n">config</span> <span class="o">=</span> <span class="s">[[require(&#39;config.mason-null-ls&#39;)]]</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then, create a new file called <code>mason-null-ls.lua</code> in <code>config</code> folder and put the following code</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">mason_ok</span><span class="p">,</span> <span class="n">mason</span> <span class="o">=</span> <span class="n">pcall</span><span class="p">(</span><span class="n">require</span><span class="p">,</span> <span class="s2">&#34;mason&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="ow">not</span> <span class="n">mason_ok</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">	<span class="kr">return</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">null_ls_ok</span><span class="p">,</span> <span class="n">null_ls</span> <span class="o">=</span> <span class="n">pcall</span><span class="p">(</span><span class="n">require</span><span class="p">,</span> <span class="s2">&#34;null-ls&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="ow">not</span> <span class="n">null_ls_ok</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">	<span class="kr">return</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">mason_null_ls_ok</span><span class="p">,</span> <span class="n">mason_null_ls</span> <span class="o">=</span> <span class="n">pcall</span><span class="p">(</span><span class="n">require</span><span class="p">,</span> <span class="s2">&#34;mason-null-ls&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="ow">not</span> <span class="n">mason_null_ls_ok</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">	<span class="kr">return</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">mason.setup</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">mason_null_ls.setup</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- A list of sources to install if they&#39;re not already installed.</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- This setting has no relation with the `automatic_installation` setting.</span>
+</span></span><span class="line"><span class="cl">	<span class="n">ensure_installed</span> <span class="o">=</span> <span class="p">{},</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Run `require(&#34;null-ls&#34;).setup`.</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Will automatically install masons tools based on selected sources in `null-ls`.</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Can also be an exclusion list.</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Example: `automatic_installation = { exclude = { &#34;rust_analyzer&#34;, &#34;solargraph&#34; } }`</span>
+</span></span><span class="line"><span class="cl">	<span class="n">automatic_installation</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Sources found installed in mason will automatically be set up for null-ls.</span>
+</span></span><span class="line"><span class="cl">	<span class="n">automatic_setup</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">-- Hint: see https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTIN_CONFIG.md</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">--       to see what sources are available</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">-- Hint: see https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTIN_CONFIG.md</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">--       to check what we can configure for each source</span>
+</span></span><span class="line"><span class="cl">		<span class="n">ocamlformat</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">source_name</span><span class="p">,</span> <span class="n">methods</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="n">null_ls.register</span><span class="p">(</span><span class="n">null_ls.builtins</span><span class="p">.</span><span class="n">formatting.ocamlformat</span><span class="p">.</span><span class="n">with</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">				<span class="c1">-- Add more arguments to a source&#39;s defaults</span>
+</span></span><span class="line"><span class="cl">				<span class="c1">-- Default: { &#34;--enable-outside-detected-project&#34;, &#34;--name&#34;, &#34;$FILENAME&#34;, &#34;-&#34; }</span>
+</span></span><span class="line"><span class="cl">				<span class="c1">-- Type `ocamlformat --help` in your terminal to check more args</span>
+</span></span><span class="line"><span class="cl">				<span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;--if-then-else&#34;</span><span class="p">,</span> <span class="s2">&#34;vertical&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}))</span>
+</span></span><span class="line"><span class="cl">		<span class="kr">end</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">null_ls.setup</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Tip<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>When you set <code>automatic_setup = true</code>, the mason-null-ls will help you configure the installed formatter automatically. If you want to configure a specific formatter, you should make some changes in <code>handlers</code>.</p>
+<p><strong>FAQs</strong>：</p>
+<ol>
+<li>How to find the default configurations of a formatter? See <a href="https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md" target="_blank" rel="noopener noreferrer">here</a></li>
+<li>How to configure <code>handlers</code>? See <a href="https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTIN_CONFIG.md" target="_blank" rel="noopener noreferrer">here</a></li>
+<li>How to know <em>other</em> configurations of a formatter? See the official formatter page. For example, In the README file of the <a href="https://github.com/ocaml-ppx/ocamlformat" target="_blank" rel="noopener noreferrer">ocamlformat</a>, it says we can type <code>ocamlformat --help</code> to see more options.</li>
+</ol>
+</div>
+        </div>
+    </div>
+<p>Finally, we also need to change the <code>lsp.lua</code> file. The original liens related to code formmating looks like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&#34;n&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;space&gt;f&#34;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.format</span><span class="p">({</span> <span class="n">async</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now we are using none-ls to do formatting. So we need to set the <code>filter</code> argument as follows</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&#34;n&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;space&gt;f&#34;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.format</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="n">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- Only request null-ls for formatting</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filter</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">return</span> <span class="n">client.name</span> <span class="o">==</span> <span class="s2">&#34;null-ls&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">end</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Save the changes and use <code>:PackerCompile</code> to regenerate configurations. <em>Restart</em> Neovim to see if it works.</p>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><p>Now let&rsquo;s summarize how to set up Neovim for a new programming language. If you also use <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a>, <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig</a>, <a href="https://github.com/nvimtools/none-ls.nvim" target="_blank" rel="noopener noreferrer">none-ls.nvim</a> and <a href="https://github.com/jay-babu/mason-null-ls.nvim" target="_blank" rel="noopener noreferrer">mason-null-ls.nvim</a>, you can follow the instructions to setup:</p>
+<ol>
+<li>Read the official pages and install the programming language&rsquo;s environment on your machine.</li>
+<li>Open Neovim, type <code>:Mason</code>, and install the corresponding LSP and Formatter</li>
+<li>Open the <code>lsp.lua</code> file and configure LSP</li>
+<li>Open the <code>mason-null-ls.lua</code> file to configure <code>handlers</code> if you want to get more control over your formatter</li>
+</ol>
+<p>For things that are not clearly stated in this post, you can view my <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">dotfiles configurations</a> repo to learn more information.</p></div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-01-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" data-title="Neovim Setup for OCaml" data-hashtags="Nvim,OCaml"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" data-hashtag="Nvim"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" data-title="Neovim Setup for OCaml"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" data-title="Neovim Setup for OCaml"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" data-title="Neovim Setup for OCaml"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" data-title="Neovim Setup for OCaml" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Neovim Setup for OCaml&#34;, &#34;https://martinlwx.github.io/en/neovim-setup-for-ocaml/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/nvim/">Nvim</a>,&nbsp;<a href="/en/tags/ocaml/">OCaml</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/llm-inference-optimization-kv-cache/" class="prev" rel="prev" title="LLM inference optimization - KV Cache"><i class="fas fa-angle-left fa-fw"></i>LLM inference optimization - KV Cache</a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

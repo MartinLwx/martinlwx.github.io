@@ -34,7 +34,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/config-neovim-from-scratch/"
-        },"genre": "posts","keywords": "Nvim","wordcount":  3299 ,
+        },"genre": "posts","keywords": "Nvim","wordcount":  3392 ,
         "url": "https://martinlwx.github.io/en/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -160,7 +160,7 @@
         </li>
       </ul>
     </li>
-    <li><a href="#wrapping-up">Wrapping up</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
@@ -168,7 +168,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/vim/"><i class="far fa-folder fa-fw"></i>Vim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3299 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;16 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3392 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -202,11 +202,24 @@
         </li>
       </ul>
     </li>
-    <li><a href="#wrapping-up">Wrapping up</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="versions-info" class="headerLink">
+            </div><div class="content" id="content"><!-- LSP & 总结已经更改了强调风格 2024-01-23 -->
+<!-- LSP & 总结已经用 Grammarly 重新检查了 2024-01-23 -->
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p><strong>Further reading</strong></p>
+<ul>
+<li>How to set up Neovim for <em>a new programming langauge</em> and get more control over code formatting, please refer to the <a href="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" target="_blank" rel="noopener noreferrer">next post</a></li>
+</ul></div>
+        </div>
+    </div>
+<h2 id="versions-info" class="headerLink">
     <a href="#versions-info" class="header-mark"></a>Versions info</h2><p>I use a Macbook pro-2020 Intel Edition with macOS 13.2. This is my <code>Nvim</code> edition:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -239,7 +252,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="why-neovim" class="headerLink">
-    <a href="#why-neovim" class="header-mark"></a>Why Neovim</h2><p>After using <code>Vim</code> for one year, I find myself having trouble in configure <code>~/.vimrc</code>. The syntax of Vimscript is not my liking, leading me to switch <code>Neovim(Nvim)</code>. <strong>Rather than</strong> migrating my old <code>~/.vimrc</code>. I decided to start from scratch and take this opportunity to re-evaluate my previous Vim configuration. I aim to replace my plugins with the latest SOTA(State-of-the-art) alternatives. <del>It&rsquo;s been some time since I last edited my <code>~/.vimrc</code></del></p>
+    <a href="#why-neovim" class="header-mark"></a>Why Neovim</h2><p>After using <code>Vim</code> for one year, I find myself having trouble in configure <code>~/.vimrc</code>. The syntax of Vimscript is not my liking, leading me to switch <code>Neovim(Nvim)</code>. <em>Rather than</em> migrating my old <code>~/.vimrc</code>. I decided to start from scratch and take this opportunity to re-evaluate my previous Vim configuration. I aim to replace my plugins with the latest SOTA(State-of-the-art) alternatives. <del>It&rsquo;s been some time since I last edited my <code>~/.vimrc</code></del></p>
 <p>In my opinion, it&rsquo;s essential to understand the meaning behind each option and statement in the configuration file. That&rsquo;s the approach I took in this post. My goal is to make the configuration files self-contained and easily understandable. To achieve this, I aim to provide clear explanations for each setting and include comments to enhance readability.</p>
 <blockquote>
 <p>💡 Please note that I may have missed some options. However, as a reminder, you can always access the help docs in the <code>Nvim</code> by typing <code>:h &lt;name&gt;</code> to get more information</p>
@@ -251,7 +264,7 @@
     <a href="#the-basics" class="header-mark"></a>The basics</h2><h3 id="lua" class="headerLink">
     <a href="#lua" class="header-mark"></a>Lua</h3><p>In my <code>Nvim</code> configuration, I will use the Lua programming language as much as possible. Thus, it&rsquo;s recommended that the reader familiarize themselves with Lua. Take a look at <a href="https://learnxinyminutes.com/docs/lua/" target="_blank" rel="noopener noreferrer">Learn Lua in Y minutes</a></p>
 <h3 id="configurations-files-paths" class="headerLink">
-    <a href="#configurations-files-paths" class="header-mark"></a>Configurations files paths</h3><p>The configuration directory for <code>Nvim</code> is located at <code>~/.config/nvim</code>. On Linux/Mac, <code>Nvim</code> will read <code>~/.config/nvim/init.lua</code> when it starts up. <strong>Theoretically</strong>, we can put everything inside this single file. It&rsquo;s a bad practice though. To keep things organized, I prefer to break it down into smaller, more manageable parts.</p>
+    <a href="#configurations-files-paths" class="header-mark"></a>Configurations files paths</h3><p>The configuration directory for <code>Nvim</code> is located at <code>~/.config/nvim</code>. On Linux/Mac, <code>Nvim</code> will read <code>~/.config/nvim/init.lua</code> when it starts up. <em>Theoretically</em>, we can put everything inside this single file. It&rsquo;s a bad practice though. To keep things organized, I prefer to break it down into smaller, more manageable parts.</p>
 <p>If you follow this post to configure your <code>Nvim</code>, your <code>~/.config/nvim</code> should look like this⬇️</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -279,9 +292,9 @@
 </span></span><span class="line"><span class="cl">    └── plugins.lua
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><strong>The explanations</strong></p>
+</div><p>The explanations</p>
 <ul>
-<li><code>init.lua</code> is the entry point. <strong>We will &ldquo;import&rdquo; other <code>*.lua</code> files in <code>init.lua</code></strong>
+<li><code>init.lua</code> is the entry point. We will &ldquo;import&rdquo; other <code>*.lua</code> files in <code>init.lua</code>
 <ul>
 <li><code>colorscheme.lua</code> for the theme</li>
 <li><code>keymaps.lua</code> for key mappings</li>
@@ -290,11 +303,11 @@
 <li><code>plugins.lua</code> for third-party plugins</li>
 </ul>
 </li>
-<li>Put the configurations of third-party plugins in this <code>config</code> folder. <em>For example, <code>nvim-cmp.lua</code> for the <code>nvim-cmp</code> plugin</em></li>
+<li>Put the configurations of third-party plugins in this <code>config</code> folder. For example, <code>nvim-cmp.lua</code> for the <code>nvim-cmp</code> plugin</li>
 <li><code>lua</code> folder. When we call <code>require</code> to import a module in Lua, it will search this folder.
 <ul>
-<li><strong>Replace the path separator <code>/</code> with <code>.</code>, and remove the suffix - <code>.lua</code></strong>. That&rsquo;s how you get the parameter of <code>require</code></li>
-<li><em>For example, to import <code>nvim-cmp.lua</code>, you should write <code>require('config.nvim-cmp')</code></em></li>
+<li><strong>Replace</strong> the path separator <code>/</code> with <code>.</code>, and <strong>remove</strong> the suffix - <code>.lua</code>. That&rsquo;s how you get the parameter of <code>require</code></li>
+<li>For example, to import <code>nvim-cmp.lua</code>, you should write <code>require('config.nvim-cmp')</code></li>
 </ul>
 </li>
 </ul>
@@ -363,7 +376,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>💡 <strong>Please note that after making any modifications to the <code>*.lua</code> files, you need to restart the <code>Nvim</code> to see the changes take effect. I will assume that you restart your <code>Nvim</code> after each section</strong></p>
+<p>💡 Please note that after making any modifications to the <code>*.lua</code> files, you need to <em>restart</em> the <code>Nvim</code> to see the changes take effect. I will assume that you restart your <code>Nvim</code> after each section</p>
 </blockquote>
 <h3 id="options-configuration" class="headerLink">
     <a href="#options-configuration" class="header-mark"></a>Options configuration</h3><p>The features:</p>
@@ -539,7 +552,7 @@
 <li>&hellip;</li>
 </ul>
 <blockquote>
-<p>💡 <strong>The syntax of adding a third-party package is <code>use ...</code></strong></p>
+<p>💡 The syntax of adding a third-party package is <code>use ...</code></p>
 </blockquote>
 <p>Create <code>~/.config/nvim/lua/plugins.lua</code> and paste the following code. At the moment, I <strong>haven&rsquo;t added any third-party packages</strong>. The template code will do these for us:</p>
 <ol>
@@ -547,7 +560,7 @@
 <li>After modifying the <code>plugins.lua</code> file and saving it, Packer.nvim will automatically update and configure the plugins. You should see <strong>a popped window on the right side of the <code>Nvim</code></strong> indicating the status of the plugin updates.</li>
 </ol>
 <blockquote>
-<p>💡 You do not need to memorize all the commands available in Packer.nvim, as the template will handle the majority of the work for you. It&rsquo;s worth mentioning that if you failed to update and configure because of the network issue, you can press <code>&lt;R&gt;</code> in the popped window to re-sync. Once the Packer.nvim syncs successfully, you can <strong>restart</strong> your <code>Nvim</code> to see the changes.</p>
+<p>💡 You do not need to memorize all the commands available in Packer.nvim, as the template will handle the majority of the work for you. It&rsquo;s worth mentioning that if you failed to update and configure because of the network issue, you can press <code>&lt;R&gt;</code> in the popped window to re-sync. Once the Packer.nvim syncs successfully, you can <em>restart</em> your <code>Nvim</code> to see the changes.</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -662,7 +675,7 @@
 </div>
 </div><p>If you see a black window with no content when opening <code>Nvim</code>, just wait for a moment as Packer.nvim is in the process of installing itself☕️</p>
 <h3 id="colorscheme" class="headerLink">
-    <a href="#colorscheme" class="header-mark"></a>Colorscheme</h3><p>My favorite theme - <a href="https://github.com/tanvirtin/monokai.nvim" target="_blank" rel="noopener noreferrer">monokai</a>. Add this plugin in <code>plugins.lua</code></p>
+    <a href="#colorscheme" class="header-mark"></a>Colorscheme</h3><p>My favorite theme - <a href="https://github.com/tanvirtin/monokai.nvim" target="_blank" rel="noopener noreferrer">monokai.nvim</a>. Add this plugin in <code>plugins.lua</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -933,9 +946,9 @@
 <p>🎙️ You can use basic completion now ~</p>
 </blockquote>
 <h4 id="lsp" class="headerLink">
-    <a href="#lsp" class="header-mark"></a>LSP</h4><p>To turn <code>Nvim</code> into an IDE, it is necessary to rely on LSP<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. It is cumbersome to install and configure LSP one by one manually, as different LSPs have different installation steps, and it is inconvenient for future management. That&rsquo;s where tools like <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason</a> and <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig</a> come in to make our lives easier🥰</p>
+    <a href="#lsp" class="header-mark"></a>LSP</h4><p>To turn <code>Nvim</code> into an IDE, it is necessary to rely on LSP<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. It is cumbersome to install and configure LSP one by one manually, as different LSPs have different installation steps, and it is inconvenient for future management. That&rsquo;s where tools like <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a> and <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig.nvim</a> come in to make our lives easier🥰</p>
 <blockquote>
-<p>❗️ Note that the order of <code>mason.nvim</code>, <code>mason-lspconfig.nvim</code> and the <code>nvim-lspconfig</code> is crucial. <strong>There is a specific ordering requirement between these three plugins and their configurations</strong>. So it&rsquo;s recommended to follow the code provided</p>
+<p>❗️ Note that the order of <code>mason.nvim</code>, <code>mason-lspconfig.nvim</code> and the <code>nvim-lspconfig</code> is crucial. There is <em>a specific ordering requirement</em> among these three plugins and their configurations. So it&rsquo;s recommended to follow the code provided</p>
 </blockquote>
 <p>Modify the <code>plugins.lua</code> file:</p>
 <div class="highlight"><div class="chroma">
@@ -990,10 +1003,14 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>💡 <strong>Add whatever LSP you like in the <code>ensure_installed</code></strong>, the complete list can be found in <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>. <em>I personally use the three programming languages <code>python/go/rust</code>, and because we use Lua to configure <code>Nvim</code>, we also added <code>lua_ls</code> here</em></p>
+<p>💡 Add whatever LSP you like in the <code>ensure_installed</code>, the complete list can be found in <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>. I use the three programming languages <code>python/go/rust</code>, and because we use Lua to configure <code>Nvim</code>, we also added <code>lua_ls</code> here</p>
 </blockquote>
-<p>After restarting <code>Nvim</code>, you should be able to see in the status bar below that Mason is installing the LSP we specified above (<strong>Note that <code>Nvim</code> cannot be closed at this time</strong>). By typing <code>:Mason</code> in <code>Nvim</code> we can check the installation progress</p>
-<p>After successfully installing LSP, we should use <code>nvim-lspconfig</code> plug-in to configure (because the configuration code is relatively long, the configuration of <code>pylsp</code> is only shown below, and the configuration of other languages is similar). Add the following code to the <code>nvim/lua/lsp.lua</code> file</p>
+<p>Once you&rsquo;ve restarted <code>Nvim</code>, take a look at the status bar below. You should notice Mason is busy installing the specified LSPs (Keep in mind that Nvim <em>should not</em> be closed during this process). To track the installation progress, enter <code>:Mason</code> in <code>Nvim</code>. While you wait, you can type <code>g?</code> to get additional information about the Mason plugin.</p>
+<p>After successfully installing LSP, we can use the <code>nvim-lspconfig</code> plug-in to configure LSPs now. Because the configuration code is relatively long, I only show the configurations for <code>pylsp</code>. The latest file can be found <a href="https://github.com/MartinLwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">here</a>.</p>
+<blockquote>
+<p>💡 Each LSP may have its options to configure, check the corresponding GitHub repo to get more info, or you can just set <code>on_attach = on_attach</code>.</p>
+</blockquote>
+<p>Add the following code to the <code>nvim/lua/lsp.lua</code> file</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1041,6 +1058,12 @@
 </span><span class="lnt">43
 </span><span class="lnt">44
 </span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
@@ -1081,11 +1104,17 @@
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;rn&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.rename</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;ca&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.code_action</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;gr&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.references</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;f&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.format</span> <span class="p">{</span> <span class="n">async</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">}</span> <span class="kr">end</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&#34;n&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;space&gt;f&#34;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.format</span><span class="p">({</span> <span class="n">async</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- Configure each language</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- How to add LSP for a specific language?</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 1. use `:Mason` to install corresponding LSP</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 2. add configuration below</span>
 </span></span><span class="line"><span class="cl"><span class="n">lspconfig.pylsp</span><span class="p">.</span><span class="n">setup</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="n">on_attach</span> <span class="o">=</span> <span class="n">on_attach</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">on_attach</span> <span class="o">=</span> <span class="n">on_attach</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
@@ -1102,11 +1131,11 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The key-binding here is quite similar to what we did in <code>nvim-cmp</code>. Refer to the manual as you wish.</p>
-<p>Now we got a lightweight IDE🎉🎉🎉</p>
-<h2 id="wrapping-up" class="headerLink">
-    <a href="#wrapping-up" class="header-mark"></a>Wrapping up</h2><p>With this configuration, we successfully turned <code>Nvim</code> into a lightweight IDE, which supports code highlighting, code completion, syntax checking, and other functionalities. And it is <strong>completely open source and free</strong>🥰</p>
-<p>I realized that even after trying different code editors and IDEs, I always found myself searching for Vim support. So I chose to turn <code>Nvim</code> into an IDE, and host the configuration files on my <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">martinlwx/dotfiles</a>. In this way, I can easily clone my configuration files to any new machine and <strong>have a consistent programming experience across machines.</strong></p>
-<p>Polishing tools requires effort and time. In order to understand the purpose of each option, I had to search for various materials. However, despite the challenges, <strong>I firmly believe that it&rsquo;s worth it</strong>. Understanding your tools allows you to further extend and customize them. This article has aimed to present a simple and straightforward configuration, but there are still many beautification and customization things that can be done, including many excellent third-party plug-ins that have not been mentioned yet. The exploration and discovery are left to the readers</p>
+<p>Now we have a lightweight IDE🎉🎉🎉</p>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><p>With this configuration, we successfully turned <code>Nvim</code> into a lightweight IDE, which supports code highlighting, code completion, syntax checking, and other functionalities. It is <em>completely open source and free</em>.</p>
+<p>I realized that even after trying different code editors and IDEs, I always found myself searching for Vim support. So I chose to turn <code>Nvim</code> into an IDE and host the configuration files on my <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">martinlwx/dotfiles</a>. In this way, I can easily clone my configuration files to any new machine and have a <em>consistent</em> programming experience across machines.</p>
+<p>Polishing tools requires effort and time. To understand the purpose of each option, I had to search for various materials. However, despite the challenges, I firmly believe that it&rsquo;s <em>worth it</em>. Understanding your tools allows you to further extend and customize them. This article aims to present a simple and straightforward configuration, but there are still many beautification and customization things that can be done, including many excellent third-party plug-ins that have not been mentioned yet. The exploration and discovery are left to the readers</p>
 <h2 id="refs" class="headerLink">
     <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>

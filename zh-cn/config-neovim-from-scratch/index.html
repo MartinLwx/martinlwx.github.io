@@ -34,7 +34,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/"
-        },"genre": "posts","keywords": "Nvim","wordcount":  4994 ,
+        },"genre": "posts","keywords": "Nvim","wordcount":  5192 ,
         "url": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -168,7 +168,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/vim/"><i class="far fa-folder fa-fw"></i>Vim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4994 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5192 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -206,7 +206,19 @@
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="版本信息" class="headerLink">
+            </div><div class="content" id="content"><!-- LSP & 总结已经更改了强调风格-->
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>信息<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p><strong>进一步阅读</strong>:</p>
+<ul>
+<li>如何为一门新的编程语言配置 Neovim ，以及支持第三方代码格式化工具，见<a href="https://martinlwx.github.io/zh-cn/neovim-setup-for-ocaml/" target="_blank" rel="noopener noreferrer">下篇文章</a></li>
+</ul></div>
+        </div>
+    </div>
+<h2 id="版本信息" class="headerLink">
     <a href="#%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af" class="header-mark"></a>版本信息</h2><p>我使用的是 Macbook pro 2020 Intel 版本，系统版本为 macOS 13.2。我的 <code>Nvim</code> 版本信息如下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -660,7 +672,7 @@
 </div>
 </div><p>此时你重启 <code>Nvim</code> 会发现黑屏没显示，这是因为 Packer.nvim 在安装自己，静待片刻即可☕️</p>
 <h3 id="主题配置" class="headerLink">
-    <a href="#%e4%b8%bb%e9%a2%98%e9%85%8d%e7%bd%ae" class="header-mark"></a>主题配置</h3><p>我喜欢的主题是 <a href="https://github.com/tanvirtin/monokai.nvim" target="_blank" rel="noopener noreferrer">monokai</a>，在 <code>plugins.lua</code> 里面加上</p>
+    <a href="#%e4%b8%bb%e9%a2%98%e9%85%8d%e7%bd%ae" class="header-mark"></a>主题配置</h3><p>我喜欢的主题是 <a href="https://github.com/tanvirtin/monokai.nvim" target="_blank" rel="noopener noreferrer">monokai.nvim</a>，在 <code>plugins.lua</code> 里面加上</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -931,9 +943,9 @@
 <p>🎙️ 到这为止，重新启动 <code>Nvim</code> 后应该能够用初步的自动补全功能了～</p>
 </blockquote>
 <h4 id="lsp" class="headerLink">
-    <a href="#lsp" class="header-mark"></a>LSP</h4><p>要把 <code>Nvim</code> 变成 IDE 就势必要借助于 LSP<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，自己安装和配置 LSP 是比较繁琐的。不同的 LSP 安装方法不同，也不方便后续管理。这就是 <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason</a> 和配套的 <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig</a> 这两个插件大放异彩的地方🥰</p>
+    <a href="#lsp" class="header-mark"></a>LSP</h4><p>要把 <code>Nvim</code> 变成 IDE 就势必要借助于 LSP<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，自己安装和配置 LSP 是比较繁琐的。不同的 LSP 安装方法不同，也不方便后续管理。这就是 <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a> 和配套的 <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig.nvim</a> 这两个插件大放异彩的地方🥰</p>
 <blockquote>
-<p>❗️ 注意，<code>mason.nvim</code> 和 <code>mason-lspconfig.nvim</code> 和前面我们已经添加的 <code>nvim-lspconfig</code> <strong>这三个插件之间的安装和配置是有顺序要求的</strong>。推荐直接照搬我下面的就好了</p>
+<p>❗️ 注意，<code>mason.nvim</code> 和 <code>mason-lspconfig.nvim</code> 和前面我们已经添加的 <code>nvim-lspconfig</code> 这三个插件之间的安装和配置是<em>有顺序要求的</em>。推荐直接照搬我下面的就好了</p>
 </blockquote>
 <p>首先修改 <code>plugins.lua</code> 文件，增加上面这两个插件</p>
 <div class="highlight"><div class="chroma">
@@ -988,10 +1000,14 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>💡 <strong>我们想要用什么语言的 LSP 就在 <code>ensure_installed</code> 里面加上</strong>，完整的列表可以看 <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>。<em>我个人常用的就 <code>python/go/rust</code> 这三个编程语言，而因为我们都用 Lua 语言来配置 <code>Nvim</code>，所以也加上了 <code>lua_ls</code></em></p>
+<p>💡 我们想要用什么语言的 LSP 就在 <code>ensure_installed</code> 里面加上，完整的列表可以看 <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>。我个人常用的就 <code>python/go/rust</code> 这三个编程语言，而因为我们都用 Lua 语言来配置 <code>Nvim</code>，所以也加上了 <code>lua_ls</code></p>
 </blockquote>
-<p>重启 <code>Nvim</code> 之后你应该可以在下面的状态栏看到 Mason 正在下载安装上面我们指定的 LSP（<strong>注意此时不能关闭 <code>Nvim</code></strong>），可以输入 <code>:Mason</code> 查看安装进度</p>
-<p>在成功安装 LSP 之后，我们就可以用 <code>nvim-lspconfig</code> 插件进行配置（因为配置的代码比较长，下面只展示了 <code>pylsp</code> 的配置，其他语言的配置大同小异），编辑 <code>~/.config/nvim/lua/lsp.lua</code> 文件新增如下内容</p>
+<p>重启 <code>Nvim</code> 之后你应该可以在下面的状态栏看到 Mason 正在下载安装上面我们指定的 LSP（<strong>注意此时不能关闭 <code>Nvim</code></strong>），可以输入 <code>:Mason</code> 查看安装进度。在你等待安装的过程中，可以输入 <code>g?</code> 查看更多帮助信息了解如何使用 <code>mason</code> 插件</p>
+<p>在成功安装 LSP 之后，我们就可以用 <code>nvim-lspconfig</code> 插件进行配置了。因为配置的代码比较长，下面只展示了 <code>pylsp</code> 的配置，其他语言的配置大同小异。如果有疑惑，可以查看该文件的<a href="https://github.com/MartinLwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">最新版本</a></p>
+<blockquote>
+<p>💡 每个 LSP 都存在自己可以配置的选项，你可以自己去对应 LSP 的 GitHub 仓库查阅更多信息。如果要用默认配置的话，基本上每一个新的语言都只需要设置 <code>on_attach = on_attach</code></p>
+</blockquote>
+<p>编辑 <code>~/.config/nvim/lua/lsp.lua</code> 文件新增如下内容</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1039,6 +1055,12 @@
 </span><span class="lnt">43
 </span><span class="lnt">44
 </span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
@@ -1079,11 +1101,17 @@
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;rn&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.rename</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;ca&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.code_action</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;gr&#39;</span><span class="p">,</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.references</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;space&gt;f&#39;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span> <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.format</span> <span class="p">{</span> <span class="n">async</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">}</span> <span class="kr">end</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vim.keymap</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&#34;n&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;space&gt;f&#34;</span><span class="p">,</span> <span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vim.lsp</span><span class="p">.</span><span class="n">buf.format</span><span class="p">({</span> <span class="n">async</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">end</span><span class="p">,</span> <span class="n">bufopts</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">-- Configure each language</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- How to add LSP for a specific language?</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 1. use `:Mason` to install corresponding LSP</span>
+</span></span><span class="line"><span class="cl"><span class="c1">-- 2. add configuration below</span>
 </span></span><span class="line"><span class="cl"><span class="n">lspconfig.pylsp</span><span class="p">.</span><span class="n">setup</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="n">on_attach</span> <span class="o">=</span> <span class="n">on_attach</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">on_attach</span> <span class="o">=</span> <span class="n">on_attach</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
@@ -1102,9 +1130,9 @@
 </div><p>上面的按键绑定的意思是很直观的，这里就不多解释</p>
 <p>大功告成🎉🎉🎉</p>
 <h2 id="总结" class="headerLink">
-    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>这样配置下来，我们成功把 <code>Nvim</code> 变成了一个轻量级的 IDE，它支持代码高亮、代码补全、语法检查等功能，而且是<strong>完全开源免费的</strong>，虽然还有些简陋，但已经是可以用的了🥰</p>
-<p>我发现自从学了 Vim 之后，我总在其他各种代码编辑器、IDE 看是不是支持 Vim。大多数情况下，他们对 Vim 的支持都不是很让人满意，还<strong>容易有快捷键冲突等问题</strong>。因此我选择将 <code>Nvim</code> 变成 IDE，并将配置文件托管在我的 <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">martinlwx/dotfiles</a> 上。这样在新的机器上只要安装好 <code>Nvim</code> 并克隆配置静待片刻之后，就<strong>可以在不同的机器上获得一样的编程体验</strong></p>
-<p>打磨定制化工具是需要付出一定精力的。为了理解每个选项都在干啥，我不得不查找各种资料。但<strong>我仍相信这是值得的</strong>，<strong>理解你的工具利于你做扩展和定制化</strong>。本文已经尽可能采用了比较简单的配置，还有很多美化、私人定制化的内容可以配置，更别提其他很多优秀的第三方插件都还没有提及，这些就留给读者自己去探索发现了</p>
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>这样配置下来，我们成功把 <code>Nvim</code> 变成了一个轻量级的 IDE，它支持代码高亮、代码补全、语法检查等功能，而且是<em>完全开源免费的</em>，虽然还有些简陋，但已经是可以用的了🥰</p>
+<p>我发现自从学了 Vim 之后，我总在其他各种代码编辑器、IDE 看是不是支持 Vim。大多数情况下，他们对 Vim 的支持都不是很让人满意，还容易有快捷键冲突等问题。因此我选择将 <code>Nvim</code> 变成 IDE，并将配置文件托管在我的 <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">Martinlwx/dotfiles</a> 上。这样在新的机器上只要安装好 <code>Nvim</code> 并克隆配置静待片刻之后，就可以在不同的机器上获得<em>一样的</em>编程体验</p>
+<p>打磨定制化工具是需要付出一定精力的。为了理解每个选项都在干啥，我不得不查找各种资料。但我仍相信这是<em>值得的</em>，<em>理解</em>你的工具利于你做扩展和定制化。本文已经尽可能采用了比较简单的配置，还有很多美化、私人定制化的内容可以配置，更别提其他很多优秀的第三方插件都还没有提及，这些就留给读者自己去探索发现了</p>
 <h2 id="参考" class="headerLink">
     <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
 <hr>
