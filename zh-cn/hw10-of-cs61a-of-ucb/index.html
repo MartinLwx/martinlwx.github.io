@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/hw10-of-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-02T13:36:13+08:00" />
-<meta property="article:modified_time" content="2022-03-02T13:36:13+08:00" />
+<meta property="article:modified_time" content="2024-01-29T13:36:13+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Hw10 - CS61A of UCB(2021-Fall)"/>
@@ -34,8 +34,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/hw10-of-cs61a-of-ucb/"
-        },"genre": "posts","keywords": "Course, BNF, Mysql","wordcount":  1437 ,
-        "url": "https://martinlwx.github.io/zh-cn/hw10-of-cs61a-of-ucb/","datePublished": "2022-03-02T13:36:13+08:00","dateModified": "2022-03-02T13:36:13+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "Course, BNF, Mysql","wordcount":  1431 ,
+        "url": "https://martinlwx.github.io/zh-cn/hw10-of-cs61a-of-ucb/","datePublished": "2022-03-02T13:36:13+08:00","dateModified": "2024-01-29T13:36:13+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -154,7 +154,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/course/"><i class="far fa-folder fa-fw"></i>Course</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1437 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-01-29">2024-01-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1431 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -243,11 +243,8 @@
 <p>这次要加上的功能是 <code>?-?</code> 和 <code>[]</code> 的功能, 具体怎么做同样在问题描述里面给出了. 这里讲一下注意的点:</p>
 <ul>
 <li><code>range</code> 的 <code>-</code> 左右两边要是对应的, 所以 <code>character &quot;-&quot; character</code> 这种写法是错的</li>
-<li>因为在 <code>[]</code> 里 <code>range</code> 和 <code>character</code> 出现的顺序是任意的, 我们可以用 <code>*</code>, 这两种都有可能在 <code>[]</code> 中的开头或者结尾位置
-<ul>
+<li>在 <code>[]</code> 里, 要么是 <code>range</code>, 要么是 <code>character</code>, 可以用 <code>(range|character)</code> 表示，后面用 <code>*</code> 表示 <em>any number</em></li>
 <li><code>[]</code> 本身也是合法的正则表达式, 所以要放在 <code>?regex</code> 里面</li>
-</ul>
-</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -278,7 +275,7 @@
 </span></span><span class="line"><span class="cl">pipe: regex &#34;|&#34; regex
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">range: NUMBER &#34;-&#34; NUMBER | LETTER &#34;-&#34; LETTER
-</span></span><span class="line"><span class="cl">class: &#34;[&#34; range* character* range* character* &#34;]&#34;
+</span></span><span class="line"><span class="cl">class: &#34;[&#34; (range|character)* &#34;]&#34;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">character: LETTER | NUMBER
 </span></span><span class="line"><span class="cl">word: WORD
@@ -308,7 +305,13 @@
 <p>Hint: these three quantifiers share many similarities. Consider defining additional expressions in this question!</p>
 </blockquote>
 </blockquote>
-<p>可以发现这三个 <code>_quant</code> 都是 <code>group</code> 或者 <code>character</code> 或者 <code>class</code>开头, 所以我们可以定义一个 <code>?tmp: class | group | character</code>, 这样后面就会比较好些了, 同时可以定义一个 <code>?quants: plus_quant | star_quant | num_quant</code>, 放在 <code>?regex</code> 里会比较方便</p>
+<p>可以发现这三个 <code>_quant</code> 都是 <code>group</code> 或者 <code>character</code> 或者 <code>class</code>开头, 所以这里可以定义一个 <code>?tmp: class | group | character</code> 避免重复. 同时定义 <code>?quants: plus_quant | star_quant | num_quant</code>, 放在 <code>?regex</code> 里</p>
+<p>这里 <code>num_quant</code> 需要枚举下面这几种情况</p>
+<ul>
+<li><code>{NUMBER, NUMBER}</code> or <code>{NUMBER}</code> -&gt; <code>(NUMBER (&quot;,&quot;, NUMBER)?)</code></li>
+<li><code>{NUMBER,}</code> -&gt; <code>(NUMBER &quot;,&quot;)</code></li>
+<li><code>{,NUMBER}</code> -&gt; <code>(&quot;,&quot; NUMBER)</code></li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -347,7 +350,7 @@
 </span></span><span class="line"><span class="cl">?tmp: class | group | character
 </span></span><span class="line"><span class="cl">plus_quant: tmp &#34;+&#34;
 </span></span><span class="line"><span class="cl">star_quant: tmp &#34;*&#34;
-</span></span><span class="line"><span class="cl">num_quant: tmp &#34;{&#34; ((NUMBER &#34;,&#34; NUMBER) | (NUMBER &#34;,&#34; NUMBER?) | (&#34;,&#34; NUMBER)) &#34;}&#34;
+</span></span><span class="line"><span class="cl">num_quant: tmp &#34;{&#34; ((NUMBER (&#34;,&#34; NUMBER)?) | (NUMBER &#34;,&#34;) | (&#34;,&#34; NUMBER)) &#34;}&#34;
 </span></span><span class="line"><span class="cl">?quants: plus_quant | star_quant | num_quant
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">character: LETTER | NUMBER
@@ -434,7 +437,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-02</span>
+                <span>更新于 2024-01-29</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -475,7 +478,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

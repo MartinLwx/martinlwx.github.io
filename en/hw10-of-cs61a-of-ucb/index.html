@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/hw10-of-cs61a-of-ucb/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-02T13:36:13+08:00" />
-<meta property="article:modified_time" content="2022-03-02T13:36:13+08:00" />
+<meta property="article:modified_time" content="2024-01-29T13:36:13+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Hw10 - CS61A of UCB(2021-Fall)"/>
@@ -34,8 +34,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/hw10-of-cs61a-of-ucb/"
-        },"genre": "posts","keywords": "Course, BNF, Mysql","wordcount":  1179 ,
-        "url": "https://martinlwx.github.io/en/hw10-of-cs61a-of-ucb/","datePublished": "2022-03-02T13:36:13+08:00","dateModified": "2022-03-02T13:36:13+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "Course, BNF, Mysql","wordcount":  1184 ,
+        "url": "https://martinlwx.github.io/en/hw10-of-cs61a-of-ucb/","datePublished": "2022-03-02T13:36:13+08:00","dateModified": "2024-01-29T13:36:13+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -154,7 +154,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/course/"><i class="far fa-folder fa-fw"></i>Course</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1179 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-01-29">2024-01-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1184 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -243,11 +243,8 @@
 <p>The details:</p>
 <ul>
 <li><code>range</code> : <code>character &quot;-&quot; character</code> is wrong ❌. For example, <code>[0-z]</code> is illegal.</li>
-<li>Because the order in which <code>range</code> and <code>character</code> appear in <code>[]</code> is arbitrary, we can use <code>*</code>, both of which may be at the beginning or end of <code>[]</code>
-<ul>
+<li>The <code>class</code> expression contains <em>either</em> <code>range</code> or <code>character</code>, which can be described as <code>(range|character)</code>. Then we add <code>*</code> to indicate <em>any number</em></li>
 <li><code>class</code> itself is also a valid regular expression, so it should be placed inside <code>?regex</code></li>
-</ul>
-</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -278,7 +275,7 @@
 </span></span><span class="line"><span class="cl">pipe: regex &#34;|&#34; regex
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">range: NUMBER &#34;-&#34; NUMBER | LETTER &#34;-&#34; LETTER
-</span></span><span class="line"><span class="cl">class: &#34;[&#34; range* character* range* character* &#34;]&#34;
+</span></span><span class="line"><span class="cl">class: &#34;[&#34; (range|character)* &#34;]&#34;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">character: LETTER | NUMBER
 </span></span><span class="line"><span class="cl">word: WORD
@@ -308,7 +305,8 @@
 <p>Hint: these three quantifiers share many similarities. Consider defining additional expressions in this question!</p>
 </blockquote>
 </blockquote>
-<p>We can make a <code>?tmp: class | group | character</code> to represent the similarities. Also, we can define <code>?quants: plus_quant | star_quant | num_quant</code></p>
+<p>We can make a <code>?tmp: class | group | character</code> to represent the similarities. Also, we can define <code>?quants: plus_quant | star_quant | num_quant</code> and put it in <code>?regex</code>.</p>
+<p><em>Trick</em>: use <code>(NUMBER (&quot;,&quot; NUMBER)?)</code> to represent <code>{NUMBER}</code> or <code>{NUMBER,NUMBER}</code> patterns.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -347,7 +345,7 @@
 </span></span><span class="line"><span class="cl">?tmp: class | group | character
 </span></span><span class="line"><span class="cl">plus_quant: tmp &#34;+&#34;
 </span></span><span class="line"><span class="cl">star_quant: tmp &#34;*&#34;
-</span></span><span class="line"><span class="cl">num_quant: tmp &#34;{&#34; ((NUMBER &#34;,&#34; NUMBER) | (NUMBER &#34;,&#34; NUMBER?) | (&#34;,&#34; NUMBER)) &#34;}&#34;
+</span></span><span class="line"><span class="cl">num_quant: tmp &#34;{&#34; ((NUMBER (&#34;,&#34; NUMBER)?) | (NUMBER &#34;,&#34;) | (&#34;,&#34; NUMBER)) &#34;}&#34;
 </span></span><span class="line"><span class="cl">?quants: plus_quant | star_quant | num_quant
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">character: LETTER | NUMBER
@@ -433,7 +431,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-03-02</span>
+                <span>Updated on 2024-01-29</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -474,7 +472,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.121.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
