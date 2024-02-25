@@ -554,10 +554,10 @@
 <p>新建 <code>~/.config/nvim/lua/plugins.lua</code> 文件并放入如下内容。下面的模板只完成了 Packer.vim 自身的安装，<strong>还没有指定其他第三方插件</strong>。这个模板的功能主要是</p>
 <ol>
 <li>初次启动的时候自动安装 <code>Packer.nvim</code></li>
-<li>当我们保存对这个文件（<code>plugins.lua</code>）文件的修改的时候，Packer.nvim 会自动帮我们自动更新插件和帮我们做好配置。你可以<strong>看到<code>Nvim</code> 右边看到多了一个窗口显示进度</strong></li>
+<li>当我们保存对这个文件（<code>plugins.lua</code>）文件的修改的时候，<code>Packer.nvim</code> 会自动帮我们自动更新插件和帮我们做好配置。你可以<strong>看到<code>Nvim</code> 右边看到多了一个窗口显示进度</strong></li>
 </ol>
 <blockquote>
-<p>💡 Packer.nvim 还支持了不少命令，不过你不需要把他们都记住。因为这个模板会<strong>自动帮我们处理好</strong>。值得一提的是<strong>如果因为网络问题安装失败</strong>的话，在它弹出的窗口里面按照提示按下大写的 <code>R</code> 就会自动重新下载。在 Packer.nvim 提示全都安装成功后，<strong>重启</strong> <code>Nvim</code> 就生效了</p>
+<p>💡 <code>Packer.nvim</code> 还支持了不少命令，不过你不需要把他们都记住。因为这个模板会<strong>自动帮我们处理好</strong>。值得一提的是<strong>如果因为网络问题安装失败</strong>的话，在它弹出的窗口里面按照提示按下大写的 <code>R</code> 就会自动重新下载。在 <code>Packer.nvim</code> 提示全都安装成功后，<strong>重启</strong> <code>Nvim</code> 就生效了</p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -670,7 +670,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;plugins&#39;</span><span class="p">)</span>        
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>此时你重启 <code>Nvim</code> 会发现黑屏没显示，这是因为 Packer.nvim 在安装自己，静待片刻即可☕️</p>
+</div><p>此时你重启 <code>Nvim</code> 会发现黑屏没显示，这是因为 <code>Packer.nvim</code> 在安装自己，静待片刻即可☕️</p>
 <h3 id="主题配置" class="headerLink">
     <a href="#%e4%b8%bb%e9%a2%98%e9%85%8d%e7%bd%ae" class="header-mark"></a>主题配置</h3><p>我喜欢的主题是 <a href="https://github.com/tanvirtin/monokai.nvim" target="_blank" rel="noopener noreferrer">monokai.nvim</a>，在 <code>plugins.lua</code> 里面加上</p>
 <div class="highlight"><div class="chroma">
@@ -685,7 +685,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>保存更改待 Packer.nvim 下载插件完成之后，新建并编辑 <code>~/.config/nvim/colorscheme.lua</code> 文件</p>
+</div><p>保存更改待 <code>Packer.nvim</code> 下载插件完成之后，新建并编辑 <code>~/.config/nvim/lua/colorscheme.lua</code> 文件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -725,7 +725,7 @@
 <p>首先，第一个要用到的插件是 <a href="https://github.com/hrsh7th/nvim-cmp" target="_blank" rel="noopener noreferrer">nvim-cmp</a>，它可以管理各种补全候选项来源，然后展示在补全菜单里面，还支持我们对外观等进行定制化。</p>
 <p>我们先新建 <code>~/.config/nvim/lua/config/nvim-cmp.lua</code> 文件配置 <code>nvim-cmp</code></p>
 <blockquote>
-<p>💡 这里首先选择写 <code>nvim-cmp</code> 的配置文件然后再在 <code>plugins.lua</code> 文件里面用 <code>use</code> 添加插件。这样可以保证 Packer.nvim 安装 nvim-cmp 的相关插件读取 <code>nvim-cmp.lua</code> 配置文件的时候不会报错。<strong>下面的配置文件暂时看不懂也没有关系，我会对其进行解释</strong></p>
+<p>💡 这里首先选择写 <code>nvim-cmp</code> 的配置文件然后再在 <code>plugins.lua</code> 文件里面用 <code>use</code> 添加插件。这样可以保证 <code>Packer.nvim</code> 安装 nvim-cmp 的相关插件读取 <code>nvim-cmp.lua</code> 配置文件的时候不会报错。<strong>下面的配置文件暂时看不懂也没有关系，我会对其进行解释</strong></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -923,7 +923,7 @@
 <li><code>cmp.setup</code> 函数的参数是一个 Lua 的 Table，用于设置各个选项（下面会解释）。后面你会发现很多第三方插件都用 <code>setup</code> 传入一个 Lua table 的方式进行配置，<strong>这个是 <code>Nvim</code> 的 Lua 插件的惯例</strong></li>
 <li>不要被上面的这么多插件吓到，<code>nvim-cmp</code> 为主，其他 <code>cmp-...</code> 的插件是用于在候选项来源和 <code>nvim-cmp</code> 之间交互</li>
 <li><code>LuaSnip</code> 是 code snippet 引擎，因为<code>nvim-cmp</code> 要求我们必须指定<strong>至少一个</strong> code snippet 引擎来源所以才加上，你暂时用不到当它不存在也没有关系</li>
-<li>Packer.nvim 支持用 <code>config = ...</code> 指定对应插件被加载之后要运行的代码，<em>所以 <code>config = [[require('config.nvim-cmp')]]</code> 的意思是导入了 <code>config</code> 文件夹里面的 <code>nvim-cmp.lua</code> 文件，这个设计参考了<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></em></li>
+<li><code>Packer.nvim</code> 支持用 <code>config = ...</code> 指定对应插件被加载之后要运行的代码，<em>所以 <code>config = [[require('config.nvim-cmp')]]</code> 的意思是导入了 <code>config</code> 文件夹里面的 <code>nvim-cmp.lua</code> 文件，这个设计参考了<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></em></li>
 </ul>
 <h4 id="nvim-cmp-里面的按键映射" class="headerLink">
     <a href="#nvim-cmp-%e9%87%8c%e9%9d%a2%e7%9a%84%e6%8c%89%e9%94%ae%e6%98%a0%e5%b0%84" class="header-mark"></a>nvim-cmp 里面的按键映射</h4><p>按键映射用的是 <code>mapping = ...</code> ，每个按键绑定的格式是 <code>['&lt;key-binding&gt;'] = cmp.mapping.xxx,</code>，不同的 <code>cmp.mapping.xxx</code> 的含义可以用 <code>:h</code> 查看。<strong>如果你想要用其他的按键，只要修改 <code>[...]</code> 里面的按键即可</strong></p>
@@ -1198,7 +1198,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.122.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
@@ -1211,7 +1211,7 @@
             <i class="fas fa-comment fa-fw"></i>
         </a>
     </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
             window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
             gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
         </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
