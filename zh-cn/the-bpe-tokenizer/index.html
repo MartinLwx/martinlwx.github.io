@@ -12,8 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/the-bpe-tokenizer/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-08-24T22:06:37+08:00" />
-<meta property="article:modified_time" content="2023-08-24T22:06:37+08:00" />
-
+<meta property="article:modified_time" content="2024-03-20T10:06:37+08:00" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="BPE 分词解密 - 实现方法与示例讲解"/>
 <meta name="twitter:description" content="介绍了 BPE 算法用来分词的原理"/>
@@ -34,8 +33,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/the-bpe-tokenizer/"
-        },"genre": "posts","keywords": "NLP","wordcount":  2952 ,
-        "url": "https://martinlwx.github.io/zh-cn/the-bpe-tokenizer/","datePublished": "2023-08-24T22:06:37+08:00","dateModified": "2023-08-24T22:06:37+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "NLP","wordcount":  3037 ,
+        "url": "https://martinlwx.github.io/zh-cn/the-bpe-tokenizer/","datePublished": "2023-08-24T22:06:37+08:00","dateModified": "2024-03-20T10:06:37+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -150,7 +149,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/nlp/"><i class="far fa-folder fa-fw"></i>NLP</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-08-24">2023-08-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-08-24">2023-08-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2952 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-08-24">2023-08-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-03-20">2024-03-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3037 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -179,39 +178,39 @@
 </ul>
 <p>先看 Char level 分词，顾名思义，就是把文本拆分成一个个字符单独表示，<em>比如 <code>highest -&gt; h, i, g, h, e, s, t</code></em>，一个显然的好处是，Vocab 不会太大，Vocab 的大小为字符集的大小，也不会遇到 Out-of-vocabulary(OOV) 的问题，但是<strong>字符本身并没有传达太多的语义</strong>，而且<strong>分词之后会有太多的 token</strong>，<em>光是一个 highest 就可以得到 7 个 token，难以想象很长的文本分出来会有多少个</em>😨</p>
 <p>再看 Word level 分词，Word level 分词一般通过空格或者标点符号来把文本分成一个个单词，这样分词之后的 token 数量就不会太多，<em>比如 <code>Today is a good day</code> -&gt; <code>Today, is, a, good, day</code></em>。但 Word level 分词也有问题，<em>比如英文中的 <code>high, higher, highest</code> 这三个单词显然语义相似，因为另外两个只是比较级，但是 Word level 分词会把他们看成 3 个单独的单词</em></p>
-<p>🤔️ 那么是否存在一种折中的办法，使得我们<em>大概率</em>不会遇到 OOV 的问题；分词得到的 token 数量又不能太多；而且分词能够考虑到复合词、时态变化、单复数呢？这就是 Subword level 做的事情，<em>仍然是刚才的例子，根据英语的词根原理的话，我们可以把 <code>higher</code> 划分为 <code>high, er</code>，<code>highest</code> 划分为 <code>highest</code></em>，所以 <strong>Subword level 分词就是把一个单词用多个子词表示</strong>，今天要介绍的 BPE 就属于 Subword level 的一种</p>
-<p>BPE 的全称是 <strong>B</strong>yte <strong>P</strong>air <strong>E</strong>ncoding，这里有个细节值得思考，<strong>什么是 Byte pair</strong>？ASCII 编码的话任何字符都是 1 byte，但如果是 utf-8 编码呢？一个字符不一定是 1 byte，它可以是 3 bytes 也可以是 4 bytes，🤔️ 那如果 BPE 用在 utf-8 的文本里面，byte pair 又是什么东西？所以我感觉这里是有点歧义性的，因此<strong>更好的理解方式也许是，byte pair 其实是 char pair，这里的 char 是 utf-8 的 char</strong></p>
+<p>🤔️ 那么是否存在一种折中的办法，使得我们<em>大概率</em>不会遇到 OOV 的问题；分词得到的 token 数量又不能太多；而且分词能够考虑到复合词、时态变化、单复数呢？这就是 Subword level 做的事情，<em>仍然是刚才的例子，根据英语的词根原理的话，我们可以把 <code>higher</code> 划分为 <code>high, er</code>，<code>highest</code> 划分为 <code>high, est</code></em>，所以 <strong>Subword level 分词就是把一个单词用多个子词表示</strong>，今天要介绍的 BPE 就属于 Subword level 的一种</p>
+<p>BPE 的全称是 <strong>B</strong>yte <strong>P</strong>air <strong>E</strong>ncoding，这里有个细节值得思考，<strong>什么是 Byte pair</strong>？ASCII 编码的话任何字符都是 1 byte，但如果是 utf-8 编码呢？一个字符不一定是 1 byte，它可以是 3 bytes 也可以是 4 bytes，🤔️ 那如果 BPE 用在 utf-8 的文本里面，byte pair 又是什么东西？所以我感觉这里是有点歧义性的，因此<strong>更恰当的理解方式也许是，byte pair 其实是 char pair，这里的 char 是 utf-8 的 char</strong></p>
 <h3 id="bpe-训练流程" class="headerLink">
-    <a href="#bpe-%e8%ae%ad%e7%bb%83%e6%b5%81%e7%a8%8b" class="header-mark"></a>BPE 训练流程</h3><p>然后开始正式介绍 BPE 算法的训练流程，假设我们手头有一堆文档 $D$</p>
+    <a href="#bpe-%e8%ae%ad%e7%bb%83%e6%b5%81%e7%a8%8b" class="header-mark"></a>BPE 训练流程</h3><p>接下来正式介绍 BPE 分词算法的训练流程，假设我们手头有一堆文档 $D={d_1,d_2,&hellip;}$</p>
 <ol>
-<li>把每个文档 $d$ 变成一个个单词，<em>比如你可以简单用空格分词就好</em></li>
-<li>统计每个单词 $w$ 在所有文档中的出现频率，并得到初始的字符集 <code>alphabet</code> 作为一开始的 Vocab（包括后面的 <code>&lt;/w&gt;</code>）</li>
-<li>先将每个单词划分为一个个 utf-8 char，称为一个划分，<em>比如 <code>highest -&gt; h, i, g, h, e, s, t</code></em></li>
-<li>然后，在每个单词的划分最后面加上 <code>&lt;/w&gt;</code>，<em>那么现在 <code>highest -&gt; h, i, g, h, e, s, t, &lt;/w&gt;</code></em></li>
-<li>重复下面步骤直到满足两个条件中的任意一个：1）Vocab 达到上限。2）达到最大迭代次数
+<li>把每个文档 $d$ 变成单词列表，比如你可以简单用空格分词</li>
+<li>统计每个单词 $w$ 在<em>所有</em>文档 $D$ 中的出现频率，并计算初始字符集 <code>alphabet</code> 作为一开始的 Vocab（包括后面的 <code>&lt;/w&gt;</code>），字符集的意思就是<em>所有</em>文档 $D$ 中<em>不同</em>的字符集合</li>
+<li>先将每个单词划分为一个个 utf-8 char，称为一个划分，比如 <code>highest -&gt; h, i, g, h, e, s, t</code></li>
+<li>然后，在每个单词的划分最后面加上 <code>&lt;/w&gt;</code>，那么现在 <code>highest -&gt; h, i, g, h, e, s, t, &lt;/w&gt;</code></li>
+<li>重复下面步骤直到满足两个条件中的<em>任意</em>一个：1）Vocab 达到上限。2）达到最大迭代次数
 <ol>
-<li>找到<strong>最经常一起出现的 pair</strong>，并记录这个合并规则放在 merge table 里面，同时把合并之后的结果放到 Vocab 里面</li>
-<li>更新所有单词的划分，<em>假设我们发现 <code>(h, i)</code> 最经常一起出现，那么 <code>highest -&gt; hi, g, h, e, s, t, &lt;/w&gt;</code></em></li>
+<li>找到<strong>最经常一起出现的 pair</strong>，并记录这个合并规则，放在 merge table 里面，同时把合并之后的结果放到 Vocab 里面</li>
+<li>更新所有单词的划分，假设我们发现 <code>(h, i)</code> 最经常一起出现，那么 <code>hi</code> 就会被添加到 Vocab 里面，同时修改划分方式为：<code>highest -&gt; hi, g, h, e, s, t, &lt;/w&gt;</code></li>
 </ol>
 </li>
 </ol>
 <p>你可能会有下面 3 个疑惑：</p>
 <ol>
-<li>为什么要统计词频？因为统计词频会让找最经常出现的 pair 更简单</li>
-<li>为什么要加 <code>&lt;/w&gt;</code>？因为我们希望能够还原输入，因此需要做个标记表示这是单词之间的边界</li>
+<li>为什么要统计词频？因为统计词频会让找最经常出现的 pair 这件事变得简单</li>
+<li>为什么要加 <code>&lt;/w&gt;</code>？因为我们希望能够<em>还原输入</em>，因此需要做个标记表示这是单词之间的<em>边界</em></li>
 <li>如果多个 pair 的词频一样怎么处理？这个不同实现可能不一样，但在我看来<em>应该</em>关系不大</li>
 </ol>
 <blockquote>
-<p>💡 由此你可以发现，BPE 算法合并最经常一起出现的 pair 的时候，并不会跨越单词</p>
+<p>💡 从算法流程可以看到，BPE 分词算法合并最经常一起出现的 pair 的时候，并不会跨越单词</p>
 </blockquote>
 <h3 id="bpe-应用流程" class="headerLink">
     <a href="#bpe-%e5%ba%94%e7%94%a8%e6%b5%81%e7%a8%8b" class="header-mark"></a>BPE 应用流程</h3><p>在 BPE 完成训练之后，我们会得到一个 merge table，也会得到一个 Vocab，假设现在要处理文本 <code>s</code></p>
 <ol>
-<li>和训练的时候采用一样的方法，先把 <code>s</code> 拆分成一个个单词，每个单词拆分为一个个 utf-8 char</li>
+<li>和训练的时候采用一样的方法，先把 <code>s</code> 拆分成单词列表，每个单词拆分为一个个 utf-8 char，记得每个单词的划分最后要加上 <code>&lt;/w&gt;</code></li>
 <li>遍历 merge table，并检查每个合并规则是否可以用来更新每个单词的划分，可以的话就合并更新</li>
 </ol>
 <blockquote>
-<p>💡 这里有个细节，我们提取的 merge rule 其实是按照出现的频率降序，那么我们<strong>按顺序遍历 merge table 就已经<em>隐含</em>了「优先合并最经常出现的 pair」这件事了，注意体会</strong></p>
+<p>💡 这里有个细节：之前我们是找<em>最经常一起出现的 pair</em> 并记录这个合并规则。所以<em>按序遍历</em> merge table 就已经<em>隐含</em>了「优先合并最经常出现的 pair」这件事了，注意体会~</p>
 </blockquote>
 <h3 id="bpe-例子" class="headerLink">
     <a href="#bpe-%e4%be%8b%e5%ad%90" class="header-mark"></a>BPE 例子</h3><p>停留在算法不提供例子的话，经常还是会云里雾里，所以现在来结合一个例子看 BPE 是如何工作的</p>
@@ -224,7 +223,7 @@
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;highest&#34;</span><span class="p">,</span> <span class="s2">&#34;higher&#34;</span><span class="p">,</span> <span class="s2">&#34;lower&#34;</span><span class="p">,</span> <span class="s2">&#34;lowest&#34;</span><span class="p">,</span> <span class="s2">&#34;cooler&#34;</span><span class="p">,</span> <span class="s2">&#34;coolest&#34;</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>这里跳过统计词频，因为每一个都是 1。先把每个单词变成一个个 utf-8 字符然后加上 <code>&lt;/w&gt;</code></em></p>
+</div><p>这里跳过统计词频，因为每一个都是 1。先把每个单词变成一个个 utf-8 字符然后加上 <code>&lt;/w&gt;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -247,7 +246,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>可以看到 <code>(e, s)</code> 总共出现了 3 次，是最多次的，然后根据这个重新划分。注意这里 <code>(e, r)</code> 其实也有一样的出现频率，所以选 <code>(e, r)</code> 合并也是可以的</em></p>
+</div><p>可以看到 <code>(e, s)</code> 总共出现了 3 次，是最多次的，将 <code>es</code> 添加到 Vocab 里面，然后重新划分。注意这里 <code>(e, r)</code> 其实也有一样的出现频率，所以选 <code>(e, r)</code> 合并也是可以的</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -270,7 +269,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>接下来发现最多的是 <code>(es, t)</code>，更新划分</em></p>
+</div><p>接下来发现最多的是 <code>(es, t)</code>，更新划分</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -293,7 +292,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>接下来发现最多的是 <code>(est, &lt;/w&gt;)</code>，更新划分</em></p>
+</div><p>接下来发现最多的是 <code>(est, &lt;/w&gt;)</code>，更新划分</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -316,7 +315,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>接下来发现最多的是 <code>(e, r)</code>，更新划分</em></p>
+</div><p>接下来发现最多的是 <code>(e, r)</code>，更新划分</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -339,7 +338,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>接下来发现最多的是 <code>(er, &lt;/w&gt;)</code>，更新划分</em></p>
+</div><p>接下来发现最多的是 <code>(er, &lt;/w&gt;)</code>，更新划分</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -362,9 +361,9 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>后面还可以继续迭代更新，这里就不展开了，相信上面的例子已经够清楚了。而且到这一步，我们已经得到了 <code>er, est</code> 这两个有意义的后缀</em></p>
+</div><p>后面还可以继续迭代更新，这里就不展开了，相信上面的例子已经够清楚了。而且到这一步，我们已经得到了 <code>er, est</code> 这两个有意义的后缀 :)</p>
 <h3 id="bpe-的-huggingface-实现" class="headerLink">
-    <a href="#bpe-%e7%9a%84-huggingface-%e5%ae%9e%e7%8e%b0" class="header-mark"></a>BPE 的 Huggingface 实现</h3><p>Huggingface 提供的 API 还挺简单的，*<em>可以注意到 <code>CharBPETokenizer</code> 的 <code>Char</code>，也证明了前面我说的</em></p>
+    <a href="#bpe-%e7%9a%84-huggingface-%e5%ae%9e%e7%8e%b0" class="header-mark"></a>BPE 的 Huggingface 实现</h3><p>Huggingface 提供的 API 还挺简单的，可以注意到 <code>CharBPETokenizer</code> 的 <code>Char</code>，也证明了前面我说的——BPE 是按照 char pair 来的</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -392,8 +391,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="手动实现-bpe" class="headerLink">
-    <a href="#%e6%89%8b%e5%8a%a8%e5%ae%9e%e7%8e%b0-bpe" class="header-mark"></a>手动实现 BPE</h3><p><strong>最好理解一个算法的办法永远都是尝试自己实现一个</strong>。我这里按照前面描述的算法流程实现了一个 <code>BPE</code> 类，如果初始化的时候设置 <code>debug=False</code> 就可以看到整个 BPE 是如何更新的</p>
-<p><em>首先来看构造函数和用来训练的 <code>train</code> 方法</em></p>
+    <a href="#%e6%89%8b%e5%8a%a8%e5%ae%9e%e7%8e%b0-bpe" class="header-mark"></a>手动实现 BPE</h3><p>最好理解一个算法的办法永远都是<em>尝试自己实现一个</em>。我这里按照前面描述的算法流程实现了一个 <code>BPE</code> 类，如果初始化的时候设置 <code>debug=True</code> 就可以看到整个 BPE 是如何更新的</p>
+<p>首先来看构造函数和用来训练的 <code>train</code> 方法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -548,7 +547,7 @@
 </span></span><span class="line"><span class="cl">            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>流程还是挺清晰的，核心的几个函数实现如下</em></p>
+</div><p>流程还是挺清晰的，核心的几个函数实现如下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -621,7 +620,7 @@
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">pairs_freq</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>最后我们就可以写一个 <code>tokenize</code> 函数</em></p>
+</div><p>最后我们就可以写一个 <code>tokenize</code> 函数</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -674,7 +673,7 @@
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="p">[])</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>尝试用自己写的 BPE 对刚才的 <code>corpus</code> 进行分词</em></p>
+</div><p>尝试用自己写的 BPE 对刚才的 <code>corpus</code> 进行分词</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -708,15 +707,15 @@
 </div>
 </div><p>🤔️ 说明代码写对了，而且多亏了 <code>&lt;/w&gt;</code>，我们可以很清楚看到单词之间的边界，也可以还原出本来的输入</p>
 <h3 id="总结" class="headerLink">
-    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h3><p>BPE 算法简单而且很好用，<strong>但是当深入到实现的时候，你发现会有不少细节问题，但正是因为接触到这些细节才使得对 BPE 的理解更加深刻</strong></p>
-<p>这里可以讨论一下 BPE 的局限性，那就是你会发现<strong>把文档变成一个个单词我们这里用的是空格划分</strong>，但是像中文的话，空格并不是单词之间的边界，这就会让事情变得比较棘手了起来</p>
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h3><p>BPE 算法简单而且很好用，<strong>但是当深入到实现的时候，你发现会有不少细节问题，但正是因为接触到这些细节才使得对 BPE 的理解更加深刻</strong>🍺</p>
+<p>这里可以讨论一下 BPE 的局限性，那就是你会发现<strong>把文档变成一个个单词我们这里用的是空格划分</strong>，但是像中文的话，空格并不是单词之间的边界，这就不大好办了</p>
 </div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2023-08-24</span>
+                <span>更新于 2024-03-20</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -757,7 +756,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.8">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

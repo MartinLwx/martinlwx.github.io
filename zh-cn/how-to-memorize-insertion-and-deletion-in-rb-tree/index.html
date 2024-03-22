@@ -13,7 +13,6 @@
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-07-01T17:12:40+08:00" />
 <meta property="article:modified_time" content="2023-07-01T17:12:40+08:00" />
-
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="如何记忆红黑树的操作"/>
 <meta name="twitter:description" content="介绍了如何在 2-3-4 树上思考红黑树的插入和删除操作，减轻记忆负担"/>
@@ -215,9 +214,9 @@
 </ul>
 <p>通过节点映射关系，我们可以将 2-3-4 树上的节点转化为对应的红黑树结构，反之依然。<strong>注意他们都是黑色节点开始</strong>，后面我们会多次用到这个映射表</p>
 <figure><img src="/img/rbtree_node_mappings.png"
-         alt="左边是 2-3-4 树的 2-node, 3-node, 4-node，右边是对应的红黑树结构"/><figcaption>
-            <p>左边是 2-3-4 树的 2-node, 3-node, 4-node，右边是对应的红黑树结构</p>
-        </figcaption>
+    alt="左边是 2-3-4 树的 2-node, 3-node, 4-node，右边是对应的红黑树结构"><figcaption>
+      <p>左边是 2-3-4 树的 2-node, 3-node, 4-node，右边是对应的红黑树结构</p>
+    </figcaption>
 </figure>
 
 <h2 id="新增节点操作" class="headerLink">
@@ -242,19 +241,19 @@
 </blockquote>
 <h3 id="新增节点的父节点是黑色节点" class="headerLink">
     <a href="#%e6%96%b0%e5%a2%9e%e8%8a%82%e7%82%b9%e7%9a%84%e7%88%b6%e8%8a%82%e7%82%b9%e6%98%af%e9%bb%91%e8%89%b2%e8%8a%82%e7%82%b9" class="header-mark"></a>新增节点的父节点是黑色节点</h3><p>一个简单情况是，新插入的红色节点的父节点是黑色，此时满足要求仍然是红黑树，不需要任何改动</p>
-<figure><img src="/img/rbtree_insertion_parent_is_black.png"/>
+<figure><img src="/img/rbtree_insertion_parent_is_black.png">
 </figure>
 
 <h3 id="新增节点的父节点是红色节点而且不存在-uncle-节点" class="headerLink">
     <a href="#%e6%96%b0%e5%a2%9e%e8%8a%82%e7%82%b9%e7%9a%84%e7%88%b6%e8%8a%82%e7%82%b9%e6%98%af%e7%ba%a2%e8%89%b2%e8%8a%82%e7%82%b9%e8%80%8c%e4%b8%94%e4%b8%8d%e5%ad%98%e5%9c%a8-uncle-%e8%8a%82%e7%82%b9" class="header-mark"></a>新增节点的父节点是红色节点而且不存在 uncle 节点</h3><p>接下来，让我们考虑稍微复杂点的情况，新增节点的父节点是红色节点，红黑树不允许这样的情况出现。此时它可能有也可能没有 unlce 节点，让我们先考虑它没有 uncle 节点的情况，可以很轻松画出下面几种可能的形式</p>
-<figure><img src="/img/rbtree_insertion_parent_is_red_similar_cases.png"/>
+<figure><img src="/img/rbtree_insertion_parent_is_red_similar_cases.png">
 </figure>
 
 <p>注意这几种都是等价的，下面我只展示上图第一个例子是如何操作的</p>
 <blockquote>
 <p>💡 后面当我们讨论其他情况的时候，他们也可能会存在等价形式，但其实方法都大同小异，我会每次挑其中一个讲</p>
 </blockquote>
-<figure><img src="/img/rbtree_insertion_no_uncle.png"/>
+<figure><img src="/img/rbtree_insertion_no_uncle.png">
 </figure>
 
 <p><em>根据之前提到的节点映射关系，插入前的红黑树正好对应 2-3-4 树上的 3-node，然后我们在红黑树中插入节点 <code>1</code>，与此同时，我们在 3-node 上也进行插入操作，得到了一个 4-node，4-node 符合 2-3-4 树要求，所以也不需要分裂节点，此时再根据节点映射关系转化为红黑树</em></p>
@@ -262,17 +261,17 @@
 <h3 id="新增节点的父节点是红色节点而且存在-uncle-节点" class="headerLink">
     <a href="#%e6%96%b0%e5%a2%9e%e8%8a%82%e7%82%b9%e7%9a%84%e7%88%b6%e8%8a%82%e7%82%b9%e6%98%af%e7%ba%a2%e8%89%b2%e8%8a%82%e7%82%b9%e8%80%8c%e4%b8%94%e5%ad%98%e5%9c%a8-uncle-%e8%8a%82%e7%82%b9" class="header-mark"></a>新增节点的父节点是红色节点而且存在 uncle 节点</h3><p>现在让我们来考虑它有 uncle 节点的情况，它<strong>可能为黑色，也可能为红色</strong></p>
 <p>先来看看如果 <strong>uncle 节点为黑色</strong>的其中一种可能情况</p>
-<figure><img src="/img/rbtree_insertion_with_black_uncle.png"/>
+<figure><img src="/img/rbtree_insertion_with_black_uncle.png">
 </figure>
 
 <p><em>根据节点的映射关系，我们可以把红黑树的 <code>2, 5</code> 映射为 2-3-4 树上的 3-node，而红黑树上的 <code>7</code> 就映射为一个 2-node，在红黑树上插入 <code>1</code>，因此也在 <code>2, 5</code> 这个 3-node 上插入 <code>1</code>，得到的 <code>1, 2, 5</code> 根据节点映射关系，映射为一个黑色节点加两个红色孩子节点，而 <code>7</code> 则映射为一个黑色节点</em></p>
 <p>那如果 <strong>uncle 节点是红色</strong>呢？<em>比如像下面这样</em></p>
-<figure><img src="/img/rbtree_insertion_with_red_uncle.png"/>
+<figure><img src="/img/rbtree_insertion_with_red_uncle.png">
 </figure>
 
 <p>这个会稍微复杂一些，因为在等价的 2-3-4 树插入 <code>1</code> 之后我们<strong>需要对 <code>1, 2, 5, 7</code> 进行分裂操作</strong>，也就是将图上的节点 <code>5</code> 插入到父节点中，<em>因为不知道父节点什么情况，因此节点 <code>5</code> 两边用省略号表示</em>，<strong>在 2-3-4 树中往父节点插入一个节点意味着可能导致父节点也 overflow，最坏的情况我们是需要这样一路一直修改回去</strong></p>
 <p>另外注意一个问题，这里插入的新节点的<strong>祖先（grandparent）节点应该是红色节点</strong>，<em>例子中的节点 <code>5</code> 就是新增节点 <code>1</code> 的祖先节点</em>。这样才能保证<strong>从任一节点到其每个叶子节点的路径都包含相同数量的的黑色节点</strong>，但是有个例外，那就是祖先节点是红黑树的根节点的时候，那么它就应该是黑色，下图清晰展示了这 2 种可能</p>
-<figure><img src="/img/rbtree_insertion_grandparent_color.png"/>
+<figure><img src="/img/rbtree_insertion_grandparent_color.png">
 </figure>
 
 <h2 id="删除节点操作" class="headerLink">
@@ -293,7 +292,7 @@
 <blockquote>
 <p>💡 黄色节点表示不知道颜色或者是不关心它什么颜色</p>
 </blockquote>
-<figure><img src="/img/rbtree_deletion_with_red_child.png"/>
+<figure><img src="/img/rbtree_deletion_with_red_child.png">
 </figure>
 
 <p><em>删除黑色的 <code>z</code>，然后用它的红色右孩子 <code>y</code> 代替 <code>z</code></em></p>
@@ -302,13 +301,13 @@
 <blockquote>
 <p>💡 “double black” 对于红黑树而言，意味着我们要让这边有 2 个黑色节点；对于 2-3-4 树而言，那就对应 2-3-4 树中删除 2-node 的 key之后引发的 <strong>underflow</strong></p>
 </blockquote>
-<figure><img src="/img/rbtree_deletion_double_black.png"/>
+<figure><img src="/img/rbtree_deletion_double_black.png">
 </figure>
 
 <p><em>删除黑色的 <code>z</code>，然后用它的黑色右孩子 <code>y</code> 代替 <code>z</code>，标记 <code>y</code> 为 “double black” 节点</em></p>
 <p>接下来我们要<strong>根据「“double black” 的兄弟节点」来分情况推导</strong></p>
 <h4 id="如果兄弟节点是黑色而且有一个红色孩子" class="headerLink">
-    <a href="#%e5%a6%82%e6%9e%9c%e5%85%84%e5%bc%9f%e8%8a%82%e7%82%b9%e6%98%af%e9%bb%91%e8%89%b2%e8%80%8c%e4%b8%94%e6%9c%89%e4%b8%80%e4%b8%aa%e7%ba%a2%e8%89%b2%e5%ad%a9%e5%ad%90" class="header-mark"></a>如果兄弟节点是黑色而且有「一个红色孩子」</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_red.png"/>
+    <a href="#%e5%a6%82%e6%9e%9c%e5%85%84%e5%bc%9f%e8%8a%82%e7%82%b9%e6%98%af%e9%bb%91%e8%89%b2%e8%80%8c%e4%b8%94%e6%9c%89%e4%b8%80%e4%b8%aa%e7%ba%a2%e8%89%b2%e5%ad%a9%e5%ad%90" class="header-mark"></a>如果兄弟节点是黑色而且有「一个红色孩子」</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_red.png">
 </figure>
 
 <p><em>在上面的例子，转化为等价的 2-3-4 树上的删除节点操作，在 2-3-4 树中遇到这种情况需要执行 transfer 操作，因为兄弟节点 <code>6, 7</code> 是一个 3-node，还有得借。transfer 操作也就是父节点的 key 移动到被删除的节点的位置，然后兄弟节点的最小的 key 移动到父节点填补空缺</em></p>
@@ -319,7 +318,7 @@
 <p>💡 注意这里节点 <code>6</code> 的颜色就是本来节点 <code>5</code> 的颜色</p>
 </blockquote>
 <h4 id="如果兄弟节点是黑色而且有两个黑色孩子" class="headerLink">
-    <a href="#%e5%a6%82%e6%9e%9c%e5%85%84%e5%bc%9f%e8%8a%82%e7%82%b9%e6%98%af%e9%bb%91%e8%89%b2%e8%80%8c%e4%b8%94%e6%9c%89%e4%b8%a4%e4%b8%aa%e9%bb%91%e8%89%b2%e5%ad%a9%e5%ad%90" class="header-mark"></a>如果兄弟节点是黑色而且有「两个黑色孩子」</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_black_children.png"/>
+    <a href="#%e5%a6%82%e6%9e%9c%e5%85%84%e5%bc%9f%e8%8a%82%e7%82%b9%e6%98%af%e9%bb%91%e8%89%b2%e8%80%8c%e4%b8%94%e6%9c%89%e4%b8%a4%e4%b8%aa%e9%bb%91%e8%89%b2%e5%ad%a9%e5%ad%90" class="header-mark"></a>如果兄弟节点是黑色而且有「两个黑色孩子」</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_black_children.png">
 </figure>
 
 <p><em>在上面的例子，转化为等价的 2-3-4 树上的删除节点操作，在 2-3-4 树中遇到这种情况需要执行 fusion 操作，因为兄弟节点 <code>7</code> 是一个 2-node，没得借。fusion 操作就是从父节点那边借一个 key 下来，然后和兄弟节点合并，成为一个 3-node，也就是图上的 <code>5, 7</code></em></p>
@@ -336,7 +335,7 @@
 <p>💡 注意，如果兄弟节点是红色，他们的共同父节点肯定是黑色，因为红黑树不允许有 2 个连续的红色节点</p>
 </blockquote>
 <p>这个可以通过取巧的办法来转化为前面情况：</p>
-<figure><img src="/img/rbtree_deletion_black_uncle_with_red_children.png"/>
+<figure><img src="/img/rbtree_deletion_black_uncle_with_red_children.png">
 </figure>
 
 <p><em>现在节点 <code>4</code> 的兄弟节点就是黑色节点了，转化为前面的情况，可以按照前面的办法处理</em></p>
@@ -408,7 +407,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.8">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

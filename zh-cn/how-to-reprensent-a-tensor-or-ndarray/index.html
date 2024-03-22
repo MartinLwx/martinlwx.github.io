@@ -13,7 +13,6 @@
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-07-14T15:26:16+08:00" />
 <meta property="article:modified_time" content="2023-07-14T15:26:16+08:00" />
-
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Pytorch 张量的 strides 格式是什么"/>
 <meta name="twitter:description" content="介绍了 Pytorch 的张量的 strides 格式原理"/>
@@ -283,7 +282,7 @@
 <blockquote>
 <p>我做了下面这张图片，希望能够帮助你理解 :)</p>
 </blockquote>
-<figure><img src="/img/2D_tensor_strides.png" width="resize"/>
+<figure><img src="/img/2D_tensor_strides.png" width="resize">
 </figure>
 
 <p>🧐 那么如何得到 $N$ 维张量的 strides 数组？假设要求解的是 <code>strides[k]</code> 即第 $k$ 个维度的 stride，我们知道它的语义是「在第 $k$ 维上移动“一个单位”需要在内存上跳过多少个元素」，<strong>如果这个张量的底层存储在内存上是连续存储（紧凑格式）</strong>，那就是 「$k+1,k+2,&hellip;,N-1$ 维度的大小的乘积」，如果 $k=N-1$，那么 <code>strides[N - 1] = 1</code></p>
@@ -753,7 +752,7 @@ $$strides[k]=\prod_{i=k+1}^{N-1}shape[i]$$</p>
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.8">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

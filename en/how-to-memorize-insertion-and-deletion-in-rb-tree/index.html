@@ -13,7 +13,6 @@
 <meta property="og:url" content="https://martinlwx.github.io/en/how-to-memorize-insertion-and-deletion-in-rb-tree/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-07-01T17:12:40+08:00" />
 <meta property="article:modified_time" content="2023-07-01T17:12:40+08:00" />
-
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="How to memorize the Red-black tree"/>
 <meta name="twitter:description" content="A simple introduction of how the 2-3-4 tree and the Red-black tree is related, and how to memorize the Red-black with the help of 2-3-4 tree"/>
@@ -215,9 +214,9 @@
 </ul>
 <p>The node mappings tell us how to map a node in a 2-3-4 tree to nodes in the corresponding Red-black tree and vice versa. Note that all the structures of a Red-black in the following image start from a black node. We will use the node mappings extensively later.</p>
 <figure><img src="/img/rbtree_node_mappings.png"
-         alt="LHS: 2/3/4-node, RHS: the corresponding node structures"/><figcaption>
-            <p>LHS: 2/3/4-node, RHS: the corresponding node structures</p>
-        </figcaption>
+    alt="LHS: 2/3/4-node, RHS: the corresponding node structures"><figcaption>
+      <p>LHS: 2/3/4-node, RHS: the corresponding node structures</p>
+    </figcaption>
 </figure>
 
 <h2 id="insertion" class="headerLink">
@@ -242,19 +241,19 @@
 </blockquote>
 <h3 id="its-parent-node-is-black" class="headerLink">
     <a href="#its-parent-node-is-black" class="header-mark"></a>Its parent node is black</h3><p>A trivial case woudl be, the newly insertion node&rsquo;s parent node is black. By the definition of the Red-black tree, we know we don&rsquo;t need to change anything</p>
-<figure><img src="/img/rbtree_insertion_parent_is_black.png"/>
+<figure><img src="/img/rbtree_insertion_parent_is_black.png">
 </figure>
 
 <h3 id="its-parent-node-is-red-and-it-has-no-uncle-node" class="headerLink">
     <a href="#its-parent-node-is-red-and-it-has-no-uncle-node" class="header-mark"></a>Its parent node is red and it has no uncle node</h3><p>Next, let&rsquo;s consider a slightly more complex scenario where the parent node of the newly inserted node is red. Red-black trees do not allow such a situation to occur. In this case, the newly inserted node may or may not have an uncle node. Let&rsquo;s first consider the scenario where it does not have an uncle node. We can easily draw the following possible forms:</p>
-<figure><img src="/img/rbtree_insertion_parent_is_red_similar_cases.png"/>
+<figure><img src="/img/rbtree_insertion_parent_is_red_similar_cases.png">
 </figure>
 
 <p>Please note that all of these forms are equivalent. Below, I will demonstrate how to operate the first example shown in the above diagram</p>
 <blockquote>
 <p>💡 In the subsequent discussions of other scenarios, they may also have equivalent forms. However, the methods are generally similar, so I will pick one example to explain each time.</p>
 </blockquote>
-<figure><img src="/img/rbtree_insertion_no_uncle.png"/>
+<figure><img src="/img/rbtree_insertion_no_uncle.png">
 </figure>
 
 <p><em>Based on the node mappings mentioned earlier, the Red-black tree before insertion corresponds exactly to a 3-node on the 2-3-4 tree. Then, we insert the node <code>1</code> into the Red-black tree. At the same time, we perform the insertion operation on the 3-node, resulting in a 4-node. The 4-node satisfies the requirements of a 2-3-4 tree, so there is no need to split the node. At this point, we can transform it back into a Red-black tree based on the node mappings</em></p>
@@ -262,17 +261,17 @@
 <h3 id="its-parent-node-is-red-and-it-has-an-uncle-node" class="headerLink">
     <a href="#its-parent-node-is-red-and-it-has-an-uncle-node" class="header-mark"></a>Its parent node is red and it has an uncle node</h3><p>Now let&rsquo;s consider a more complex scenario where <strong>the uncle node exists</strong>, which can be <strong>either black or red</strong></p>
 <p>Let&rsquo;s first take a look at one of the possible cases <strong>when the uncle node is black</strong></p>
-<figure><img src="/img/rbtree_insertion_with_black_uncle.png"/>
+<figure><img src="/img/rbtree_insertion_with_black_uncle.png">
 </figure>
 
 <p><em>Based on the node mappings, we can map the <code>2, 5</code> nodes in the Red-black tree to a 3-node on the 2-3-4 tree, while the <code>7</code> node on the Red-black tree maps to a 2-node. When we insert <code>1</code> into the Red-black tree, we also insert <code>1</code> into the 3-node consisting of <code>2</code> and <code>5</code>. The resulting <code>1, 2, 5</code> is mapped to a black node with two red children according to the rules. The <code>7</code> node is mapped as a black node</em></p>
 <p>But what if <strong>the uncle node is red</strong>? For example, in the case shown below.</p>
-<figure><img src="/img/rbtree_insertion_with_red_uncle.png"/>
+<figure><img src="/img/rbtree_insertion_with_red_uncle.png">
 </figure>
 
 <p>This case will be slightly more complex. Because after inserting <code>1</code> into the equivalent 2-3-4 tree, we <strong>need to perform a split operation on <code>1, 2, 5, 7</code></strong>. This means that we need to insert the node <code>5</code> into the parent node. *Since we don&rsquo;t know the specific state of the parent node, the ellipses(<code>...</code>) are used to represent the nodes on both sides of <code>5</code>. <strong>Inserting a node into the parent node in the 2-3-4 tree may also cause the parent node to overflow, and in the worst case, we need to modify all the way back</strong></p>
 <p>Additionally, it&rsquo;s important to note that <strong>the grandparent node of the newly inserted node should be red</strong>. <em>In the example, node <code>5</code> is the grandparent of the newly inserted node <code>1</code></em>. This ensures that every path from any node to its leaf nodes contains the same number of black nodes. However, there is one exception, which is when the grandparent node is the root node of the Red-black tree. In that case, it should be black. The following diagram clearly shows these two possibilities.</p>
-<figure><img src="/img/rbtree_insertion_grandparent_color.png"/>
+<figure><img src="/img/rbtree_insertion_grandparent_color.png">
 </figure>
 
 <h2 id="deletion" class="headerLink">
@@ -293,7 +292,7 @@
 <blockquote>
 <p>💡 The yellow node represents the unknown color or is irrelevant</p>
 </blockquote>
-<figure><img src="/img/rbtree_deletion_with_red_child.png"/>
+<figure><img src="/img/rbtree_deletion_with_red_child.png">
 </figure>
 
 <p><em>Delete the black <code>z</code> and replace <code>z</code> with red <code>y</code></em></p>
@@ -302,13 +301,13 @@
 <blockquote>
 <p>💡 In the context of a Red-black tree, &ldquo;double black&rdquo; means that we need two black nodes on this side. In the context of a 2-3-4 tree, it corresponds to an underflow situation after you delete a key in a 2-node</p>
 </blockquote>
-<figure><img src="/img/rbtree_deletion_double_black.png"/>
+<figure><img src="/img/rbtree_deletion_double_black.png">
 </figure>
 
 <p><em>Delete the black <code>z</code> and replace <code>z</code> with black <code>y</code>, and mark <code>y</code> as &ldquo;double black&rdquo;</em></p>
 <p>Now we need to talk about the different cases based on the sibling node of this &ldquo;double black&rdquo; node</p>
 <h4 id="if-the-sibling-node-is-black-and-it-has-a-red-child" class="headerLink">
-    <a href="#if-the-sibling-node-is-black-and-it-has-a-red-child" class="header-mark"></a>If the sibling node is black and it has a red child</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_red.png"/>
+    <a href="#if-the-sibling-node-is-black-and-it-has-a-red-child" class="header-mark"></a>If the sibling node is black and it has a red child</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_red.png">
 </figure>
 
 <p><em>In the above example, when we transform it into an equivalent 2-3-4 tree deletion operation, we encounter a situation in the 2-3-4 tree where a transfer operation is required because the sibling nodes <code>6, 7</code> is a 3-node, and we need to borrow a key from them. The transfer operation involves moving the key from the parent node to the position of the deleted node, and then moving the minimum key from the sibling node to the parent node to fill the gap</em></p>
@@ -319,7 +318,7 @@
 <p>💡 Note that the color of node <code>6</code> is the same as the original color of node <code>5</code></p>
 </blockquote>
 <h4 id="if-the-sibling-node-is-black-and-it-has-two-black-children" class="headerLink">
-    <a href="#if-the-sibling-node-is-black-and-it-has-two-black-children" class="header-mark"></a>If the sibling node is black and it has two black children</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_black_children.png"/>
+    <a href="#if-the-sibling-node-is-black-and-it-has-two-black-children" class="header-mark"></a>If the sibling node is black and it has two black children</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_black_children.png">
 </figure>
 
 <p><em>In the above example, when we transform it into an equivalent 2-3-4 tree deletion operation, we encounter a situation in the 2-3-4 tree where a fusion operation is required because the sibling node <code>7</code> is a 2-node and cannot lend a key. The fusion operation involves borrowing a key from the parent node and merging it with the sibling node to form a 3-node - <code>5, 7</code></em></p>
@@ -336,7 +335,7 @@
 <p>💡 Note that if the sibling node is red, then the parent should be a black node, as a Red-black tree does not allow two consecutive red nodes</p>
 </blockquote>
 <p>This situation can be cleverly transformed into one of the previous cases</p>
-<figure><img src="/img/rbtree_deletion_black_uncle_with_red_children.png"/>
+<figure><img src="/img/rbtree_deletion_black_uncle_with_red_children.png">
 </figure>
 
 <p><em>Now the node <code>4</code>&rsquo;s sibling node is black</em></p>
@@ -407,7 +406,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.8">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

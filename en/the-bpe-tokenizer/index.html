@@ -12,8 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/the-bpe-tokenizer/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-08-24T22:06:37+08:00" />
-<meta property="article:modified_time" content="2023-08-24T22:06:37+08:00" />
-
+<meta property="article:modified_time" content="2024-03-20T10:06:37+08:00" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="BPE Tokenization Demystified: Implementation and Examples"/>
 <meta name="twitter:description" content="An introduction of the BPE tokenizer"/>
@@ -34,8 +33,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/the-bpe-tokenizer/"
-        },"genre": "posts","keywords": "NLP","wordcount":  2060 ,
-        "url": "https://martinlwx.github.io/en/the-bpe-tokenizer/","datePublished": "2023-08-24T22:06:37+08:00","dateModified": "2023-08-24T22:06:37+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "NLP","wordcount":  2088 ,
+        "url": "https://martinlwx.github.io/en/the-bpe-tokenizer/","datePublished": "2023-08-24T22:06:37+08:00","dateModified": "2024-03-20T10:06:37+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -150,7 +149,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/nlp/"><i class="far fa-folder fa-fw"></i>NLP</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-08-24">2023-08-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-08-24">2023-08-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2060 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;10 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-08-24">2023-08-24</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-03-20">2024-03-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2088 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;10 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -182,23 +181,23 @@
 <p>🤔️ Is there a better way such that we most likely avoid the OOV problem, have a reasonable number of tokens after tokenizing, and also consider compound words, tense variations, etc.? This is where subword level tokenization comes into play. Using the same example as before, a subword tokenizer will most likely tokenize it as <code>high, er</code>, <code>high, est</code>. Therefore, <strong>the subword level tokenization involves representing a word using multiple subwords</strong>. The method I&rsquo;m introducing today, BPE (<strong>B</strong>yte-<strong>P</strong>air <strong>E</strong>ncoding), belongs to the subword level category.</p>
 <p>There is one <em>subtle</em> thing to think about - <strong>What does the byte in the byte pair mean</strong>? We know that every char is 1 byte if we are using the ASCII encoding. However, what if we are using utf-8 encoding? A char may be 1 ~ 4 bytes. 🤔️ So, <strong>if BPE is applied to utf-8 text, what does a byte pair refer to</strong>? Thus, I feel there&rsquo;s a bit of ambiguity here. Therefore, <strong>a better way to understand it might be that a byte pair is essentially a char pair, where char here refers to a utf-8 character</strong>.</p>
 <h3 id="bpe-training-phase" class="headerLink">
-    <a href="#bpe-training-phase" class="header-mark"></a>BPE training phase</h3><p>Now let&rsquo;s figure out how the BPE tokenizer got trained. Let&rsquo;s assume that we have some documents $D$</p>
+    <a href="#bpe-training-phase" class="header-mark"></a>BPE training phase</h3><p>Now let&rsquo;s figure out how the BPE tokenizer got trained. Let&rsquo;s assume that we have some documents $D={d_1,d_2,&hellip;}$</p>
 <ol>
-<li>For each $d$, we will transform the documents into word list <em>in some way</em>. <em>For instance, you may choose to split the document by whitespace to get words</em>.</li>
-<li>Count the word freq for each word $w$ in $D$, and we can also get the alphabet of $D$ as the initial vocab(plus the <code>&lt;/w&gt;</code>)</li>
-<li>For each word, transform the word into a utf-8 char list. We call it a split. <em>For example, <code>highest -&gt; h, i, g, h, e, s, t</code></em></li>
-<li>Append <code>&lt;/w&gt;</code> to each utf-8 list. <em>e.g. <code>highest -&gt; h, i, g, h, e, s, t, &lt;/w&gt;</code></em></li>
-<li>Repeat the following steps until any one of the two conditions is met: 1) Vocab reaches the upper limit. 2) Reach the maximum number of iterations
+<li>For each $d$, we will transform the documents into word list <em>in some way</em>. For instance, you may choose to split the document by whitespace to get words</li>
+<li>Count the word freq for each word $w$ in $D$, and we can also get the alphabet of $D$ as the initial vocab(plus the <code>&lt;/w&gt;</code>). The alphabet contains all the <em>unique</em> utf-8 char in all documents $D$</li>
+<li>For each word, transform the word into a utf-8 char list. We call it a split. For example, <code>highest -&gt; h, i, g, h, e, s, t</code></li>
+<li>Append <code>&lt;/w&gt;</code> to each utf-8 list. e.g. <code>highest -&gt; h, i, g, h, e, s, t, &lt;/w&gt;</code></li>
+<li>Repeat the following steps until <em>any</em> one of the two conditions is met: 1) Vocab reaches the upper limit. 2) Reach the maximum number of iterations
 <ol>
 <li>Find <strong>the most frequent pair</strong>, add it to a merge table, and add the merged result to the vocab</li>
-<li>Update all splits of all words. <em>For example, the most frequent pair may be <code>(h, i)</code> in our previous example, then we will do <code>highest -&gt; hi, g, h, e, s, t, &lt;/w&gt;</code></em></li>
+<li>Update all splits of all words. For example, the most frequent pair may be <code>(h, i)</code> in our previous example, then we will add <code>hi</code> to the Vocab and change the split <code>highest -&gt; hi, g, h, e, s, t, &lt;/w&gt;</code></li>
 </ol>
 </li>
 </ol>
 <p>You may have 3 puzzles:</p>
 <ol>
-<li>Why word frequency? Because we want to find the most frequent pair easily</li>
-<li>Why append <code>&lt;/w&gt;</code>? Because we want to reconstruct the input later, we use <code>&lt;/w&gt;</code> to mark that it is the end of a word</li>
+<li>Why word frequency? Because we want to find the most frequent pair <em>easily</em></li>
+<li>Why append <code>&lt;/w&gt;</code>? Because we want to <em>reconstruct</em> the input later, we use <code>&lt;/w&gt;</code> to mark that it is the end of a word</li>
 <li>What if we have multiple pairs with the same frequency? How to handle this may vary in different implementations, but <em>shouldn&rsquo;t</em> have much impact in my opinion.</li>
 </ol>
 <blockquote>
@@ -207,11 +206,11 @@
 <h3 id="how-to-use-a-trained-bpe" class="headerLink">
     <a href="#how-to-use-a-trained-bpe" class="header-mark"></a>How to use a trained BPE?</h3><p>After we trained a BPE tokenizer, we will obtain a merge table and a vocab. Assuming that we now need to tokenize the text <code>s</code></p>
 <ol>
-<li>Use the same method as during training, start by splitting <code>s</code> into individual words, with each word further divided into utf-8 char.</li>
+<li>Use the same method as during training, start by splitting <code>s</code> into individual words, with each word further divided into utf-8 char. Remember to append <code>&lt;/w&gt;</code> in each split</li>
 <li>Iterate through the merge table and check if each merge rule can be applied to update the split of each word.</li>
 </ol>
 <blockquote>
-<p>💡 An important detail here is that the merge rules we extracted are sorted in descending order of frequency. Thus, by sequentially traversing the merge table, we are <em>implicitly</em> incorporating the notion of prioritizing the merging of the most frequently occurring pairs.</p>
+<p>💡 An important detail here is that the merge rules we extracted are sorted in descending order of frequency. Thus, by <em>sequentially</em> traversing the merge table, we are <em>implicitly</em> incorporating the notion of prioritizing the merging of the most frequently occurring pairs.</p>
 </blockquote>
 <h3 id="bpe-example" class="headerLink">
     <a href="#bpe-example" class="header-mark"></a>BPE example</h3><p>Let&rsquo;s use a motivating example to see how BPE got trained.</p>
@@ -224,7 +223,7 @@
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;highest&#34;</span><span class="p">,</span> <span class="s2">&#34;higher&#34;</span><span class="p">,</span> <span class="s2">&#34;lower&#34;</span><span class="p">,</span> <span class="s2">&#34;lowest&#34;</span><span class="p">,</span> <span class="s2">&#34;cooler&#34;</span><span class="p">,</span> <span class="s2">&#34;coolest&#34;</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>We do not need to compute the word frequency here in that each word appears exactly once. First, let&rsquo;s transformer each word into utf-8 chars and append <code>&lt;/w&gt;</code></em></p>
+</div><p>We do not need to compute the word frequency here in that each word appears exactly once. First, let&rsquo;s transformer each word into utf-8 chars and append <code>&lt;/w&gt;</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -247,7 +246,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>We can find that the most frequently occurring pair is <code>(e, s)</code>. Thus, we use this merge rule to update the splits. Note that we can also choose <code>(e, r)</code> because they have the same frequency</em></p>
+</div><p>We can find that the most frequently occurring pair is <code>(e, s)</code>. Thus, we use this merge rule to update the splits. Note that we can also choose <code>(e, r)</code> because they have the same frequency</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -270,7 +269,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>This time, the most frequently occurring pair is <code>(es, t)</code>. We follow the same procedure and update the splits</em></p>
+</div><p>This time, the most frequently occurring pair is <code>(es, t)</code>. We follow the same procedure and update the splits</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -293,7 +292,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>The most frequently occurring is <code>(est, &lt;/w&gt;)</code></em></p>
+</div><p>The most frequently occurring is <code>(est, &lt;/w&gt;)</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -316,7 +315,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>The most frequently occurring is <code>(e, r)</code></em></p>
+</div><p>The most frequently occurring is <code>(e, r)</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -339,7 +338,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>The most frequently occurring is <code>(er, &lt;/w&gt;)</code></em></p>
+</div><p>The most frequently occurring is <code>(er, &lt;/w&gt;)</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -362,9 +361,9 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>I believe the example above is quite clear enough. We can find that the BPE tokenizer finds two meaningful suffixes <code>er</code> and <code>est</code></em></p>
+</div><p>I believe the example above is quite clear enough. We can find that the BPE tokenizer finds two meaningful suffixes <code>er</code> and <code>est</code> :)</p>
 <h3 id="bpe-tokenizer-in-huggingface" class="headerLink">
-    <a href="#bpe-tokenizer-in-huggingface" class="header-mark"></a>BPE tokenizer in Huggingface</h3><p>The API provided by the Huggingface is quite simple. <em>You may notice that it uses <code>Char</code> in the class name, which confirms what I mentioned earlier</em></p>
+    <a href="#bpe-tokenizer-in-huggingface" class="header-mark"></a>BPE tokenizer in Huggingface</h3><p>The API provided by the Huggingface is quite simple. You may notice that it uses <code>Char</code> in the class name, which confirms what I mentioned earlier.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -392,8 +391,8 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="implemene-a-bpe-tokenizer" class="headerLink">
-    <a href="#implemene-a-bpe-tokenizer" class="header-mark"></a>Implemene a BPE tokenizer</h3><p>The best way to understand how an algorithm works is to always try to implement one. Here I implement a <code>BPE</code> class which follows the algorithm described earlier. If you initialize with <code>debug=False</code>, you can observe how the entire BPE update process works</p>
-<p><em>First, let&rsquo;s check the constructor and the <code>train</code> method</em></p>
+    <a href="#implemene-a-bpe-tokenizer" class="header-mark"></a>Implemene a BPE tokenizer</h3><p>The best way to understand how an algorithm works is to always try to implement one. Here I implement a <code>BPE</code> class which follows the algorithm described earlier. If you initialize with <code>debug=True</code>, you can observe how the entire BPE update process works</p>
+<p>First, let&rsquo;s check the constructor and the <code>train</code> method</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -548,7 +547,7 @@
 </span></span><span class="line"><span class="cl">            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>The implementations of the key functions are as follows</em></p>
+</div><p>The implementations of the key functions are as follows</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -621,7 +620,7 @@
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">pairs_freq</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>Now we can implement a <code>tokenize</code> method</em></p>
+</div><p>Now we can implement a <code>tokenize</code> method</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -674,7 +673,7 @@
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="p">[])</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><em>Try to tokenize the <code>corpus</code> mentioned earlier using our hand crafted <code>BPE</code> tokenizer</em></p>
+</div><p>Try to tokenize the <code>corpus</code> mentioned earlier using our hand crafted <code>BPE</code> tokenizer</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -716,7 +715,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-08-24</span>
+                <span>Updated on 2024-03-20</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -757,7 +756,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.8">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

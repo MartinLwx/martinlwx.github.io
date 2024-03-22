@@ -13,7 +13,6 @@
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-10-12T16:38:18+08:00" />
 <meta property="article:modified_time" content="2023-10-12T16:38:18+08:00" />
-
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="LLM 推理加速 - KV Cache"/>
 <meta name="twitter:description" content="介绍了 LLM 推理加速的方法之一 - KV Cache"/>
@@ -192,7 +191,7 @@ $$</p>
 </blockquote>
 <p>在运用了 KV Cache 之后，除了第一轮以外的每一轮，我们<strong>都只需要关注输入的最后一个 token</strong>，用这个 token 计算得到它的 query, key, value 向量，然后拿着这三个新向量和之前<strong>所有缓存的 key/value 向量</strong>计算自注意力</p>
 <p><em>我画了一个示意图来帮助理解开启 KV Cache 之后发生了什么，考虑 LLM 从无到有开始生成 4 个 token，其中蓝色的部分表示 KV Cache 里面缓存的值；红色则表示没有被缓存</em></p>
-<figure><img src="/img/kv_cache_4_steps.png"/>
+<figure><img src="/img/kv_cache_4_steps.png">
 </figure>
 
 <h2 id="kv-cache-的效率分析" class="headerLink">
@@ -265,7 +264,7 @@ $$</p>
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.8">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

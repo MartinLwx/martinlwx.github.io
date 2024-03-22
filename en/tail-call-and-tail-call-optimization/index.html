@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>Tail call and Tail-call Optimization (TCO) - MartinLwx&#39;s Blog</title><meta name="Description" content="A simple introduction of tail call and tail call optimization"><meta property="og:title" content="Tail call and Tail-call Optimization (TCO)" />
+<meta property="og:description" content="A simple introduction of tail call and tail call optimization" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-03-22T12:13:53+08:00" />
+<meta property="article:modified_time" content="2024-03-22T12:13:53+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Tail call and Tail-call Optimization (TCO)"/>
+<meta name="twitter:description" content="A simple introduction of tail call and tail call optimization"/>
+<meta name="application-name" content="MartinLwx&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" /><link rel="prev" href="https://martinlwx.github.io/en/learn-to-use-text-objects-in-vim/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Tail call and Tail-call Optimization (TCO)",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/"
+        },"genre": "posts","keywords": "OCaml, Programming-Languages, Performance-Engineering","wordcount":  834 ,
+        "url": "https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/","datePublished": "2024-03-22T12:13:53+08:00","dateModified": "2024-03-22T12:13:53+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "A simple introduction of tail call and tail call optimization"
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/en/posts/"> Posts </a><a class="menu-item" href="/en/tags/"> Tags </a><a class="menu-item" href="/en/categories/"> Categories </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="Select Language" id="language-select-desktop" onchange="location = this.value;"><option value="/en/tail-call-and-tail-call-optimization/" selected>English</option><option value="/zh-cn/tail-call-and-tail-call-optimization/">简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Switch Theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/en/posts/" title="">Posts</a><a class="menu-item" href="/en/tags/" title="">Tags</a><a class="menu-item" href="/en/categories/" title="">Categories</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Switch Theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="Select Language">English<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="Select Language" onchange="location = this.value;"><option value="/en/tail-call-and-tail-call-optimization/" selected>English</option><option value="/zh-cn/tail-call-and-tail-call-optimization/">简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contents</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#tail-call--tail-recursion">Tail call &amp; Tail-recursion</a>
+      <ul>
+        <li><a href="#tail-call-optimization-tco">Tail-call Optimization (TCO)</a></li>
+      </ul>
+    </li>
+    <li><a href="#make-recursion-tail-recursion">Make recursion tail-recursion</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Tail call and Tail-call Optimization (TCO)</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/programming-languages/"><i class="far fa-folder fa-fw"></i>Programming-Languages</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-03-22">2024-03-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-03-22">2024-03-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;834 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#tail-call--tail-recursion">Tail call &amp; Tail-recursion</a>
+      <ul>
+        <li><a href="#tail-call-optimization-tco">Tail-call Optimization (TCO)</a></li>
+      </ul>
+    </li>
+    <li><a href="#make-recursion-tail-recursion">Make recursion tail-recursion</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
+    <li><a href="#refs">Refs</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="tail-call--tail-recursion" class="headerLink">
+    <a href="#tail-call--tail-recursion" class="header-mark"></a>Tail call &amp; Tail-recursion</h2><p>Assume that function <code>A</code> calls function <code>B</code>. We call function <code>A</code> <em>Caller</em> and function <code>B</code> <em>Callee</em>.</p>
+<p>The tail call refers to when the Caller <em>only needs to</em> wait for the return value of the Callee, as <em>everything else</em> has already been completed<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>If this is a recursive function call(e.g. the Caller and Callee are the same function), then the function is said to be tail-recursive.</p>
+<h3 id="tail-call-optimization-tco" class="headerLink">
+    <a href="#tail-call-optimization-tco" class="header-mark"></a>Tail-call Optimization (TCO)</h3><p>According to the mechanism of the function call, a stack frame will be created to store some useful information such as the return address. What if the function call is a tail-call? Could you find any optimization chance?</p>
+<p>By the definition of tail call, we know that the Caller has done everything and just needs to keep waiting. Most of the information of the Caller is no longer needed. Then we can <em>reuse</em> the stack frame of the Caller instead of creating a new one. That&rsquo;s exactly what the tail call optimization (TCO) does<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<p>The benefit of TCO is that the overhead of creating new stack frames is <em>avoided</em>. We can <em>safely</em> use tail-recursion without worrying about the famous stack overflow issue, as long as the programming language supports TCO, and it&rsquo;s enabled.</p>
+<h2 id="make-recursion-tail-recursion" class="headerLink">
+    <a href="#make-recursion-tail-recursion" class="header-mark"></a>Make recursion tail-recursion</h2><div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">I use OCaml to demonstrate the ideas because it supports TCO.</div>
+        </div>
+    </div>
+<p>To get the benefits of TCO, we need to learn how to rewrite <em>any</em> naive recursion function to a tail-recursion. One of the popular ways is the accumulator pattern.</p>
+<p>Steps to follow<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<ul>
+<li>Create a helper function which usually has two parameters
+<ul>
+<li>The data to be processed</li>
+<li>The accumulated value</li>
+</ul>
+</li>
+<li>The base case of the helper function is: returning the accumulated value</li>
+<li>The base case of the original recursive function changes to calling the helper function</li>
+</ul>
+<p>Let&rsquo;s use a classic recursive function which calculates the factorial as an example. First, create a new project with <a href="https://github.com/ocaml/dune" target="_blank" rel="noopener noreferrer">dune</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ dune init project tco
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then we can easily write a naive recursive function in ./tco/bin/main.ml` as follows</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="line"><span class="cl"><span class="k">let</span> <span class="k">rec</span> <span class="n">factorial</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">match</span> <span class="n">n</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">    <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">1</span> 
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It&rsquo;s obvious that this function is not tail-recursive. The reason is that we <em>still</em> need to multiply the return value of <code>factorial (n - 1)</code> by <code>n</code>.</p>
+<p>Now we can rewrite this function to a tail-recursive function using the accumulator pattern.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="line"><span class="cl"><span class="k">let</span> <span class="n">factorial_tco</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">let</span> <span class="k">rec</span> <span class="n">helper</span> <span class="n">cur</span> <span class="n">acc</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">    <span class="k">match</span> <span class="n">cur</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">acc</span> <span class="c">(* Return the accumulated value *)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">helper</span> <span class="o">[@</span><span class="n">tailcall</span><span class="o">])</span> <span class="o">(</span><span class="n">cur</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="n">acc</span> <span class="o">*</span> <span class="n">cur</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span>
+</span></span><span class="line"><span class="cl">  <span class="n">helper</span> <span class="n">n</span> <span class="n">1</span>  <span class="c">(* Call the helper function *)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Tip<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">We can use the <code>[@tailcall]</code> annotation to ensure a function call is a tail call, otherwise, the compiler will throw a warning.</div>
+        </div>
+    </div>
+<p>To benchmark the two implementations, we can use the <a href="https://github.com/janestreet/core_bench" target="_blank" rel="noopener noreferrer">core_bench</a> tool. Let&rsquo;s first install the required packages</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ opam install core_bench
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After the installation, we need to change the configuration file <code>./tco/bin/dune</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">executable</span>
+</span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">public_name</span> <span class="nv">tco</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">name</span> <span class="nv">main</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">libraries</span> <span class="nv">tco</span> <span class="nv">core</span> <span class="nv">core_bench</span> <span class="nv">core_unix.command_unix</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now, we can add the performance testing code in <code>./tco/bin/main.ml</code> as follows</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="line"><span class="cl"><span class="k">open</span> <span class="nc">Core</span>
+</span></span><span class="line"><span class="cl"><span class="k">open</span> <span class="nc">Core_bench</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="k">rec</span> <span class="n">factorial</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">match</span> <span class="n">n</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">1</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="n">factorial_tco</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">let</span> <span class="k">rec</span> <span class="n">helper</span> <span class="n">cur</span> <span class="n">acc</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">    <span class="k">match</span> <span class="n">cur</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">acc</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">helper</span> <span class="o">[@</span><span class="n">tailcall</span><span class="o">])</span> <span class="o">(</span><span class="n">cur</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="n">acc</span> <span class="o">*</span> <span class="n">cur</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span>
+</span></span><span class="line"><span class="cl">  <span class="n">helper</span> <span class="n">n</span> <span class="n">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">(* Benchmark *)</span>
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="n">bench</span> <span class="bp">()</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="nn">Bench</span><span class="p">.</span><span class="n">make_command</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>
+</span></span><span class="line"><span class="cl">      <span class="nn">Bench</span><span class="p">.</span><span class="nn">Test</span><span class="p">.</span><span class="n">create</span> <span class="o">~</span><span class="n">name</span><span class="o">:</span><span class="s2">&#34;factorial&#34;</span> <span class="o">(</span><span class="k">fun</span> <span class="bp">()</span> <span class="o">-&gt;</span> <span class="n">factorial</span> <span class="n">10000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nn">Bench</span><span class="p">.</span><span class="nn">Test</span><span class="p">.</span><span class="n">create</span> <span class="o">~</span><span class="n">name</span><span class="o">:</span><span class="s2">&#34;factorial_tco&#34;</span> <span class="o">(</span><span class="k">fun</span> <span class="bp">()</span> <span class="o">-&gt;</span> <span class="n">factorial_tco</span> <span class="n">10000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">]</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|&gt;</span> <span class="nn">Command_unix</span><span class="p">.</span><span class="n">run</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">bench</span> <span class="bp">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Build then run</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ dune build
+</span></span><span class="line"><span class="cl">$ dune <span class="nb">exec</span> tco
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The output of performance testing in my MacBook M3 Air is:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Estimated testing time 20s (2 benchmarks x 10s). Change using &#39;-quota&#39;.
+</span></span><span class="line"><span class="cl">┌───────────────┬──────────┬────────────┐
+</span></span><span class="line"><span class="cl">│ Name          │ Time/Run │ Percentage │
+</span></span><span class="line"><span class="cl">├───────────────┼──────────┼────────────┤
+</span></span><span class="line"><span class="cl">│ factorial     │  40.42us │    100.00% │
+</span></span><span class="line"><span class="cl">│ factorial_tco │  10.06us │     24.90% │
+</span></span><span class="line"><span class="cl">└───────────────┴──────────┴────────────┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The performance gain of TCO is quite impressive 🚀</p>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>Warning<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">The exact values of the output may vary depending on the hardware. However, the performance gain should be obvious. The deeper the recursion is, the more performance you will gain. You can change the <code>10000</code> to other values to explore the differences.</div>
+        </div>
+    </div>
+<h2 id="wrap-up" class="headerLink">
+    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><p>In my opinion, the TCO stores the accumulated value in a specific parameter which avoids the overhead of creating new stack frames. We gain the performance boost but lose the beauty of recursion. I would suggest that only try to rewrite recursive functions to tail-recursive functions as needed.</p>
+<h2 id="refs" class="headerLink">
+    <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.coursera.org/learn/programming-languages/lecture/YZic1/tail-recursion" target="_blank" rel="noopener noreferrer">Tail Recursion | Coursera</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.coursera.org/learn/programming-languages/lecture/4f7Tw/accumulators-for-tail-recursion" target="_blank" rel="noopener noreferrer">Accumulators for Tail Recursion | Coursera</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://www.coursera.org/learn/programming-languages/lecture/NyJkW/perspective-on-tail-recursion" target="_blank" rel="noopener noreferrer">Perspective on Tail Recursion | Coursera</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-03-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" data-title="Tail call and Tail-call Optimization (TCO)" data-hashtags="OCaml,Programming-Languages,Performance-Engineering"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" data-hashtag="OCaml"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" data-title="Tail call and Tail-call Optimization (TCO)"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" data-title="Tail call and Tail-call Optimization (TCO)"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" data-title="Tail call and Tail-call Optimization (TCO)"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/" data-title="Tail call and Tail-call Optimization (TCO)" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Tail call and Tail-call Optimization (TCO)&#34;, &#34;https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/en/tags/ocaml/">OCaml</a>,&nbsp;<a href="/en/tags/programming-languages/">Programming-Languages</a>,&nbsp;<a href="/en/tags/performance-engineering/">Performance-Engineering</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/en/learn-to-use-text-objects-in-vim/" class="prev" rel="prev" title="Learn to use text-object in Vim&amp;Neovim"><i class="fas fa-angle-left fa-fw"></i>Learn to use text-object in Vim&amp;Neovim</a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Back to Top">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

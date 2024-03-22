@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>尾调用与尾调用优化 - MartinLwx&#39;s Blog</title><meta name="Description" content="对尾调用以及尾调用优化的简单介绍，并通过 OCaml 的代码研究了是否开启尾调用优化的性能开销"><meta property="og:title" content="尾调用与尾调用优化" />
+<meta property="og:description" content="对尾调用以及尾调用优化的简单介绍，并通过 OCaml 的代码研究了是否开启尾调用优化的性能开销" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-03-22T12:13:53+08:00" />
+<meta property="article:modified_time" content="2024-03-22T12:13:53+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="尾调用与尾调用优化"/>
+<meta name="twitter:description" content="对尾调用以及尾调用优化的简单介绍，并通过 OCaml 的代码研究了是否开启尾调用优化的性能开销"/>
+<meta name="application-name" content="MartinLwx&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/learn-to-use-text-objects-in-vim/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "尾调用与尾调用优化",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/"
+        },"genre": "posts","keywords": "OCaml, Programming-Languages, Performance-Engineering","wordcount":  1648 ,
+        "url": "https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/","datePublished": "2024-03-22T12:13:53+08:00","dateModified": "2024-03-22T12:13:53+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "对尾调用以及尾调用优化的简单介绍，并通过 OCaml 的代码研究了是否开启尾调用优化的性能开销"
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="选择语言" id="language-select-desktop" onchange="location = this.value;"><option value="/en/tail-call-and-tail-call-optimization/">English</option><option value="/zh-cn/tail-call-and-tail-call-optimization/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="选择语言" onchange="location = this.value;"><option value="/en/tail-call-and-tail-call-optimization/">English</option><option value="/zh-cn/tail-call-and-tail-call-optimization/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#尾调用--尾递归">尾调用 &amp; 尾递归</a>
+      <ul>
+        <li><a href="#尾调用优化tco">尾调用优化（TCO）</a></li>
+      </ul>
+    </li>
+    <li><a href="#将普通递归函数改写为尾递归函数">将普通递归函数改写为尾递归函数</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">尾调用与尾调用优化</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/programming-languages/"><i class="far fa-folder fa-fw"></i>Programming-Languages</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-03-22">2024-03-22</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-03-22">2024-03-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1648 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#尾调用--尾递归">尾调用 &amp; 尾递归</a>
+      <ul>
+        <li><a href="#尾调用优化tco">尾调用优化（TCO）</a></li>
+      </ul>
+    </li>
+    <li><a href="#将普通递归函数改写为尾递归函数">将普通递归函数改写为尾递归函数</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="尾调用--尾递归" class="headerLink">
+    <a href="#%e5%b0%be%e8%b0%83%e7%94%a8--%e5%b0%be%e9%80%92%e5%bd%92" class="header-mark"></a>尾调用 &amp; 尾递归</h2><p>假设函数 <code>A</code> 调用了函数 <code>B</code>，我们称函数 <code>A</code> 为 <em>Caller</em>，函数 <code>B</code> 为 <em>Callee</em>。</p>
+<p>尾调用（Tail-call）指的是：Caller <em>最后只需要</em>返回 Callee 这个函数调用的计算结果，其他运算<em>都</em>执行完成了<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>如果 Callee 就是 Caller 自己，即出现了尾调用 + 递归调用的情况，那么这个函数就符合尾递归（Tail-recursive）的特点，暂且称其为尾递归函数</p>
+<h3 id="尾调用优化tco" class="headerLink">
+    <a href="#%e5%b0%be%e8%b0%83%e7%94%a8%e4%bc%98%e5%8c%96tco" class="header-mark"></a>尾调用优化（TCO）</h3><p>根据函数调用的原理，本来函数 <code>A</code> 调用函数 <code>B</code> 的时候，我们需要为函数 <code>B</code> 创建一个 stack frame，然后压入到函数调用栈中，后续需要根据 stack frame 里面的函数返回地址进行返回。但如果这是一个尾调用，我们<em>何必多此一举</em>呢？反正函数 <code>A</code> 已经执行了它所有的计算过程，只需要等待尾调用的函数 <code>B</code> 的返回结果并将其返回即可</p>
+<p>尾调用优化（Tail-call Optimization，TCO）的思想就是这样的：如果是尾调用，就不创建新的 stack frame，而是<em>复用</em> Caller 的 stack frame 就好了 <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<p>那么，尾调用优化的好处是什么呢？显然，尾递归函数的时间开销和空间开销大大降低了，我们可以<em>放心</em>地随意用尾递归而不会用担心栈溢出的问题，只要对应的编程语言支持尾调用优化并开启即可</p>
+<h2 id="将普通递归函数改写为尾递归函数" class="headerLink">
+    <a href="#%e5%b0%86%e6%99%ae%e9%80%9a%e9%80%92%e5%bd%92%e5%87%bd%e6%95%b0%e6%94%b9%e5%86%99%e4%b8%ba%e5%b0%be%e9%80%92%e5%bd%92%e5%87%bd%e6%95%b0" class="header-mark"></a>将普通递归函数改写为尾递归函数</h2><div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>信息<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">下面采用 OCaml 编写代码，因为它支持尾调用优化~ 如果你会其他函数式编程语言看懂它应该也没问题 :)</div>
+        </div>
+    </div>
+<p>但并不是所有的递归函数都是尾递归函数，因此，我们还需要知道如何将<em>任意</em>一个递归函数改写为尾递归函数，一个比较流行的方式是 Accumulator 模式</p>
+<p>具体步骤如下 <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<ul>
+<li>创建一个辅助函数 <code>helper</code>，一般而言它会有 2 个参数
+<ul>
+<li>当前正在处理的数据</li>
+<li>当前已经“累计的值”</li>
+</ul>
+</li>
+<li>辅助函数 <code>helper</code> 的 base case 变为：返回最后“累计的值”</li>
+<li>原本递归函数的 base case 变为：调用辅助函数 <code>helper</code></li>
+</ul>
+<p>用经典的求解阶乘程序为例，首先用 <a href="https://github.com/ocaml/dune" target="_blank" rel="noopener noreferrer">dune</a> 创建一个项目</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ dune init project tco
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在 <code>./tco/bin/main.ml</code> 里面写下求阶乘的递归函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="line"><span class="cl"><span class="k">let</span> <span class="k">rec</span> <span class="n">factorial</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">match</span> <span class="n">n</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">    <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">1</span> 
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>显然，它不是一个尾递归函数，这是因为：我们计算完 <code>factorial (n - 1)</code> 的时候，还需要把它乘以 <code>n</code> 才能返回，所以，它并不符合<em>最后只需要</em>返回函数调用的结果这个要求</p>
+<p>现在我们将这个函数改写为尾递归函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="line"><span class="cl"><span class="k">let</span> <span class="n">factorial_tco</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">let</span> <span class="k">rec</span> <span class="n">helper</span> <span class="n">cur</span> <span class="n">acc</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">    <span class="k">match</span> <span class="n">cur</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">acc</span> <span class="c">(* 返回“计算出来的值” *)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">helper</span> <span class="o">[@</span><span class="n">tailcall</span><span class="o">])</span> <span class="o">(</span><span class="n">cur</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="n">acc</span> <span class="o">*</span> <span class="n">cur</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span>
+</span></span><span class="line"><span class="cl">  <span class="n">helper</span> <span class="n">n</span> <span class="n">1</span>  <span class="c">(* 调用辅助函数 *)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">在 OCaml 里面，可以在调用函数的时候用 <code>[@tailcall]</code> 标注确保是尾调用，否则编译的时候会弹出警告，用法就是 <code>(fun_call[@tailcall])</code></div>
+        </div>
+    </div>
+<p>为了测试 2 个不同的实现的性能差异，我们可以用 <a href="https://github.com/janestreet/core_bench" target="_blank" rel="noopener noreferrer">core_bench</a> 工具。首先，先安装必要的库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ opam install core_bench
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来修改配置文件，将 <code>./tco/bin/dune</code> 修改为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">executable</span>
+</span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">public_name</span> <span class="nv">tco</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">name</span> <span class="nv">main</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="p">(</span><span class="nv">libraries</span> <span class="nv">tco</span> <span class="nv">core</span> <span class="nv">core_bench</span> <span class="nv">core_unix.command_unix</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后增加关于性能测试的代码，最后 <code>./tco/bin/main.ml</code> 文件长下面这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ocaml" data-lang="ocaml"><span class="line"><span class="cl"><span class="k">open</span> <span class="nc">Core</span>
+</span></span><span class="line"><span class="cl"><span class="k">open</span> <span class="nc">Core_bench</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="k">rec</span> <span class="n">factorial</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">match</span> <span class="n">n</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">1</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="n">factorial_tco</span> <span class="n">n</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="k">let</span> <span class="k">rec</span> <span class="n">helper</span> <span class="n">cur</span> <span class="n">acc</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">    <span class="k">match</span> <span class="n">cur</span> <span class="k">with</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">0</span> <span class="o">|</span> <span class="n">1</span> <span class="o">-&gt;</span> <span class="n">acc</span>
+</span></span><span class="line"><span class="cl">    <span class="o">|</span> <span class="n">cur</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">helper</span> <span class="o">[@</span><span class="n">tailcall</span><span class="o">])</span> <span class="o">(</span><span class="n">cur</span> <span class="o">-</span> <span class="n">1</span><span class="o">)</span> <span class="o">(</span><span class="n">acc</span> <span class="o">*</span> <span class="n">cur</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">in</span>
+</span></span><span class="line"><span class="cl">  <span class="n">helper</span> <span class="n">n</span> <span class="n">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">(* Benchmark *)</span>
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="n">bench</span> <span class="bp">()</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">  <span class="nn">Bench</span><span class="p">.</span><span class="n">make_command</span>
+</span></span><span class="line"><span class="cl">    <span class="o">[</span>
+</span></span><span class="line"><span class="cl">      <span class="nn">Bench</span><span class="p">.</span><span class="nn">Test</span><span class="p">.</span><span class="n">create</span> <span class="o">~</span><span class="n">name</span><span class="o">:</span><span class="s2">&#34;factorial&#34;</span> <span class="o">(</span><span class="k">fun</span> <span class="bp">()</span> <span class="o">-&gt;</span> <span class="n">factorial</span> <span class="n">10000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nn">Bench</span><span class="p">.</span><span class="nn">Test</span><span class="p">.</span><span class="n">create</span> <span class="o">~</span><span class="n">name</span><span class="o">:</span><span class="s2">&#34;factorial_tco&#34;</span> <span class="o">(</span><span class="k">fun</span> <span class="bp">()</span> <span class="o">-&gt;</span> <span class="n">factorial_tco</span> <span class="n">10000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">]</span>
+</span></span><span class="line"><span class="cl">  <span class="o">|&gt;</span> <span class="nn">Command_unix</span><span class="p">.</span><span class="n">run</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">bench</span> <span class="bp">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来构建项目并执行即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ dune build
+</span></span><span class="line"><span class="cl">$ dune <span class="nb">exec</span> tco
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在我的 MacBook M3 Air 上的输出结果如下所示</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Estimated testing time 20s (2 benchmarks x 10s). Change using &#39;-quota&#39;.
+</span></span><span class="line"><span class="cl">┌───────────────┬──────────┬────────────┐
+</span></span><span class="line"><span class="cl">│ Name          │ Time/Run │ Percentage │
+</span></span><span class="line"><span class="cl">├───────────────┼──────────┼────────────┤
+</span></span><span class="line"><span class="cl">│ factorial     │  40.42us │    100.00% │
+</span></span><span class="line"><span class="cl">│ factorial_tco │  10.06us │     24.90% │
+</span></span><span class="line"><span class="cl">└───────────────┴──────────┴────────────┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到，开启尾调用优化的递归函数的时间开销是原来的 1/4 而已🚀</p>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>警告<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">因为测试机器的不同，你的输出结果跟我的会有所差别，但是是否开启尾调用优化的性能差异应该还是很明显的。另外，尾调用优化的效果还跟递归函数的调用深度有关系，如果将 <code>10000</code> 改成 <code>10</code> 就可以看到性能差距不是那么明显了</div>
+        </div>
+    </div>
+<h2 id="总结" class="headerLink">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>以上就是关于「尾调用」&amp;「尾调用优化」的全部内容，说白了，尾调用优化就是将计算的结果<em>暂时</em>存储在函数的参数里面，从而避免了不断创建 stack frame 的开销。性能上是提升了但是代码也不那么优美了。所以，建议还是正常写递归函数，当出现性能瓶颈的时候再改写为尾递归函数~</p>
+<h2 id="参考" class="headerLink">
+    <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.coursera.org/learn/programming-languages/lecture/YZic1/tail-recursion" target="_blank" rel="noopener noreferrer">Tail Recursion | Coursera</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://www.coursera.org/learn/programming-languages/lecture/4f7Tw/accumulators-for-tail-recursion" target="_blank" rel="noopener noreferrer">Accumulators for Tail Recursion | Coursera</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://www.coursera.org/learn/programming-languages/lecture/NyJkW/perspective-on-tail-recursion" target="_blank" rel="noopener noreferrer">Perspective on Tail Recursion | Coursera</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-03-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" data-title="尾调用与尾调用优化" data-hashtags="OCaml,Programming-Languages,Performance-Engineering"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" data-hashtag="OCaml"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" data-title="尾调用与尾调用优化"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" data-title="尾调用与尾调用优化"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" data-title="尾调用与尾调用优化"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" data-title="尾调用与尾调用优化" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;尾调用与尾调用优化&#34;, &#34;https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/ocaml/">OCaml</a>,&nbsp;<a href="/zh-cn/tags/programming-languages/">Programming-Languages</a>,&nbsp;<a href="/zh-cn/tags/performance-engineering/">Performance-Engineering</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/learn-to-use-text-objects-in-vim/" class="prev" rel="prev" title="学习使用 Vim&amp;Neovim 的 text-object"><i class="fas fa-angle-left fa-fw"></i>学习使用 Vim&amp;Neovim 的 text-object</a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>

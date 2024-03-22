@@ -13,7 +13,6 @@
 <meta property="og:url" content="https://martinlwx.github.io/en/lora-finetuning/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-09-14T22:57:06+08:00" />
 <meta property="article:modified_time" content="2023-09-14T22:57:06+08:00" />
-
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="LoRA fine-tuning"/>
 <meta name="twitter:description" content="An introduction of the LoRA fine-tuning"/>
@@ -34,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/lora-finetuning/"
-        },"genre": "posts","keywords": "Paper, Internal, Deep-Learning","wordcount":  1585 ,
+        },"genre": "posts","keywords": "Paper, Internal, Deep-Learning","wordcount":  1604 ,
         "url": "https://martinlwx.github.io/en/lora-finetuning/","datePublished": "2023-09-14T22:57:06+08:00","dateModified": "2023-09-14T22:57:06+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -144,7 +143,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/ml-dl/"><i class="far fa-folder fa-fw"></i>ML-DL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-09-14">2023-09-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-09-14">2023-09-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1585 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-09-14">2023-09-14</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-09-14">2023-09-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1604 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -159,22 +158,24 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="whats-lora" class="headerLink">
-    <a href="#whats-lora" class="header-mark"></a>What&rsquo;s LoRA</h2><figure><img src="/img/lora.jpg"/>
+    <a href="#whats-lora" class="header-mark"></a>What&rsquo;s LoRA</h2><figure><img src="/img/lora.jpg">
 </figure>
 
-<p>Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM <strong>but</strong> inserting trainable modules. Today, I will introduce the LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<p>The idea behind LoRA is quite simple. If you are familiar with deep learning, you should know that the parameters are updated by the gradient descent. Let&rsquo;s consider a weight matrix $\mathbf W_0\in\mathcal{R}^{d\times d}$(the subscript 0 here means it&rsquo;s the initial value), we can use $\Delta \mathbf W$ to denote the <strong>relative change</strong> to the initial value when it has been trained. After training, the parameters of this matrix will be</p>
+<p>Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM <em>but</em> inserting trainable modules. Today, I will introduce the LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>The idea behind LoRA is quite simple. If you are familiar with deep learning, you should know that the parameters are updated by the gradient descent. Let&rsquo;s consider a weight matrix $\mathbf W_0\in\mathcal{R}^{d\times d}$(the subscript 0 here means it&rsquo;s the initial value), we can use $\Delta \mathbf W$ to denote the <em>relative change</em> to the initial value when it has been trained. After training, the parameters of this matrix will be</p>
 <p>$$\mathbf W_0+\Delta \mathbf W$$</p>
-<p>The problem that LoRA aims to solve is whether it is possible to determine the $\Delta \mathbf W$ without altering $\mathbf W_0$ and with minimal computation cost. This is achievable because researchers have found that the intrinsic rank of a learned LLM model is low. Therefore, the authors hypothesize that the weight change($\Delta \mathbf W$) during model adaption also has a low intrinsic rank, which allows us to perform a low-rank decomposition of $\Delta\mathbf W$. Experimental results have shown that this assumption holds, and LoRA fine-tuning achieves promising results<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The low-rank decomposition is as follows</p>
+<p>The problem that LoRA aims to solve is whether it is possible to determine the $\Delta \mathbf W$ <em>without</em> altering $\mathbf W_0$ and with minimal computation cost. This is achievable because researchers have found that the intrinsic rank of a learned LLM model is low. Therefore, the authors hypothesize that the weight change($\Delta \mathbf W$) during model adaption also has a low intrinsic rank, which allows us to perform a low-rank decomposition of $\Delta\mathbf W$. Experimental results have shown that this assumption holds, and LoRA fine-tuning achieves promising results<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The low-rank decomposition is as follows</p>
 <p>$$\Delta \mathbf W=\mathbf B\mathbf A$$</p>
 <p>where $\mathbf B\in\mathcal{R}^{d\times r}$，$\mathbf A\in\mathcal{R}^{r\times d}$, the matrix $\mathbf B$ is initialized with zero and the matrix $\mathbf A$ is initialized with a random Gaussian. This ensures that at the beginning of training, the LoRA module has no impact on the original model.</p>
 <p>If the input is $\mathbf x$, then the computation will be</p>
 <p>$$\mathbf W_0\mathbf x+\frac{\alpha}{r}\Delta \mathbf W\mathbf x=\mathbf W_0\mathbf x+\frac{\alpha}{r}\mathbf B\mathbf A\mathbf x$$</p>
 <p>The $\alpha$ here is a scaling factor, and $r$ is the value of low-rank</p>
-<p>During <strong>training</strong>, only $\mathbf B$ and $\mathbf A$ are updated by the gradient descent. During <strong>inference</strong>, we can combint $\mathbf W_0$ with $\mathbf B\mathbf A$. <strong>This is a significant advantage of LoRA: it does not introduce inference latency</strong>👍</p>
-<p>Additionally, we can calculate the change in the number of learnable parameters when using LoRA. For the matrix $\mathbf W_0$</p>
-<p>$$d\times d\rightarrow 2\times d\times r$$</p>
-<p>Here, $r&laquo;d$, significantly reduces the number of parameters, making LoRA a <strong>parameter-efficient</strong> fine-tuning method. 👍</p>
+<p>During <em>training</em>, only $\mathbf B$ and $\mathbf A$ are updated by the gradient descent. During <em>inference</em>, we can combine $\mathbf W_0$ with $\mathbf B\mathbf A$ <em>just like</em> the LoRA module does not exist. It is a significant advantage of LoRA: it does not introduce inference latency👍</p>
+<p>Additionally, we can calculate the change in the number of learnable parameters when using LoRA.</p>
+<p>$$
+(\mathbf W_0+\frac{\alpha}{r}\Delta\mathbf W)\mathbf x=\mathbf W_0\mathbf x+\frac{\alpha}{r}\Delta \mathbf W\mathbf x=\mathbf W_0\mathbf x+\frac{\alpha}{r}\mathbf B\mathbf A\mathbf x
+$$</p>
+<p>The learnable parameters we need to train are significantly reduced because $r&laquo;d$, which makes LoRA a <em>parameter-efficient</em> fine-tuning method. 👍</p>
 <p><strong>Two questions remaining - where should LoRA be applied in the transformer architecture? what is the optimal value for <code>r</code></strong>?</p>
 <ul>
 <li>In section 7.1 of the paper, the authors found that <strong>applying LoRA to both the $\mathbf W_q$ and $\mathbf W_v$ yields the best result</strong><sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
@@ -224,7 +225,7 @@
 </span></span><span class="line"><span class="cl"><span class="c1">#      || trainable%: 0.2368893467652883</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>After training, we can <strong>save the model</strong> by using <code>model.save_pretrained(output_dir)</code>, where <code>output_dir</code> means the path to save. <em>If we check the <code>output_dir</code> folder, you will find that we only saved the incremental PEFT weights rather than the whole model weights</em></p>
+</div><p>After training, we can <em>save the model</em> by using <code>model.save_pretrained(output_dir)</code>, where <code>output_dir</code> means the path to save. If we check the <code>output_dir</code> folder, you will find that we only saved the incremental PEFT weights rather than the whole model weights</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -239,7 +240,7 @@
 </span></span><span class="line"><span class="cl">└── adapter_model.bin
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>To <strong>load the model and the LoRA module</strong>, we can leverage this <em>magic</em> API :)</p>
+</div><p>To <em>load the model and the LoRA module</em>, we can leverage this <em>magic</em> API :)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -759,7 +760,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.123.8">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
