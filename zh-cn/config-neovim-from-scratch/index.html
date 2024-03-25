@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/"
-        },"genre": "posts","keywords": "Vim-Neovim","wordcount":  5192 ,
+        },"genre": "posts","keywords": "Vim-Neovim","wordcount":  5189 ,
         "url": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -167,7 +167,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/vim-neovim/"><i class="far fa-folder fa-fw"></i>Vim-Neovim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5192 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5189 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -1001,8 +1001,7 @@
 </div><blockquote>
 <p>💡 我们想要用什么语言的 LSP 就在 <code>ensure_installed</code> 里面加上，完整的列表可以看 <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>。我个人常用的就 <code>python/go/rust</code> 这三个编程语言，而因为我们都用 Lua 语言来配置 <code>Nvim</code>，所以也加上了 <code>lua_ls</code></p>
 </blockquote>
-<p>重启 <code>Nvim</code> 之后你应该可以在下面的状态栏看到 Mason 正在下载安装上面我们指定的 LSP（<strong>注意此时不能关闭 <code>Nvim</code></strong>），可以输入 <code>:Mason</code> 查看安装进度。在你等待安装的过程中，可以输入 <code>g?</code> 查看更多帮助信息了解如何使用 <code>mason</code> 插件</p>
-<p>在成功安装 LSP 之后，我们就可以用 <code>nvim-lspconfig</code> 插件进行配置了。因为配置的代码比较长，下面只展示了 <code>pylsp</code> 的配置，其他语言的配置大同小异。如果有疑惑，可以查看该文件的<a href="https://github.com/MartinLwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">最新版本</a></p>
+<p>配置好 <code>mason-lspconfig</code> 之后，接下来就可以配置 <code>nvim-lspconfig</code> 了。因为配置的代码比较长，下面只展示了 <code>pylsp</code> 的配置，其他语言的配置大同小异。如果有疑惑，可以查看该文件的<a href="https://github.com/MartinLwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">最新版本</a></p>
 <blockquote>
 <p>💡 每个 LSP 都存在自己可以配置的选项，你可以自己去对应 LSP 的 GitHub 仓库查阅更多信息。如果要用默认配置的话，基本上每一个新的语言都只需要设置 <code>on_attach = on_attach</code></p>
 </blockquote>
@@ -1115,7 +1114,8 @@
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>最后在 <code>init.lua</code> 文件里面加上</p>
+</div><p>上面的按键绑定的意思是很直观的，这里就不多解释啦</p>
+<p>最后在 <code>init.lua</code> 文件里面加上</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1126,7 +1126,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;lsp&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>上面的按键绑定的意思是很直观的，这里就不多解释</p>
+</div><p>重启 <code>Nvim</code> 之后，你应该可以在下面的状态栏看到 Mason 正在下载并安装前面我们指定的 LSP（<strong>注意此时不能关闭 <code>Nvim</code></strong>），可以输入 <code>:Mason</code> 查看安装进度。在你等待安装的过程中，可以输入 <code>g?</code> 查看更多帮助信息了解如何使用 <code>mason</code> 插件</p>
 <p>大功告成🎉🎉🎉</p>
 <h2 id="总结" class="headerLink">
     <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>这样配置下来，我们成功把 <code>Nvim</code> 变成了一个轻量级的 IDE，它支持代码高亮、代码补全、语法检查等功能，而且是<em>完全开源免费的</em>，虽然还有些简陋，但已经是可以用的了🥰</p>
@@ -1197,7 +1197,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">

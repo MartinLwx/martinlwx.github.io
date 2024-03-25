@@ -33,7 +33,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/config-neovim-from-scratch/"
-        },"genre": "posts","keywords": "Vim-Neovim","wordcount":  3392 ,
+        },"genre": "posts","keywords": "Vim-Neovim","wordcount":  3388 ,
         "url": "https://martinlwx.github.io/en/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -167,7 +167,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/vim-neovim/"><i class="far fa-folder fa-fw"></i>Vim-Neovim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3392 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;16 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;3388 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;16 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -1004,8 +1004,7 @@
 </div><blockquote>
 <p>💡 Add whatever LSP you like in the <code>ensure_installed</code>, the complete list can be found in <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>. I use the three programming languages <code>python/go/rust</code>, and because we use Lua to configure <code>Nvim</code>, we also added <code>lua_ls</code> here</p>
 </blockquote>
-<p>Once you&rsquo;ve restarted <code>Nvim</code>, take a look at the status bar below. You should notice Mason is busy installing the specified LSPs (Keep in mind that Nvim <em>should not</em> be closed during this process). To track the installation progress, enter <code>:Mason</code> in <code>Nvim</code>. While you wait, you can type <code>g?</code> to get additional information about the Mason plugin.</p>
-<p>After successfully installing LSP, we can use the <code>nvim-lspconfig</code> plug-in to configure LSPs now. Because the configuration code is relatively long, I only show the configurations for <code>pylsp</code>. The latest file can be found <a href="https://github.com/MartinLwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">here</a>.</p>
+<p>After configuring the <code>mason-lspconfig</code>, we can now configure <code>nvim-lspconfig</code> now. Because the configuration code is relatively long, I only show the configurations for <code>pylsp</code>. The latest file can be found <a href="https://github.com/MartinLwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">here</a>.</p>
 <blockquote>
 <p>💡 Each LSP may have its options to configure, check the corresponding GitHub repo to get more info, or you can just set <code>on_attach = on_attach</code>.</p>
 </blockquote>
@@ -1118,7 +1117,8 @@
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Append a line in <code>init.lua</code></p>
+</div><p>The key-binding here is quite similar to what we did in <code>nvim-cmp</code>. Refer to the manual as you wish.</p>
+<p>Append a line in <code>init.lua</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1129,7 +1129,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;lsp&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>The key-binding here is quite similar to what we did in <code>nvim-cmp</code>. Refer to the manual as you wish.</p>
+</div><p>Once you&rsquo;ve restarted <code>Nvim</code>, take a look at the status bar below. You should notice Mason is busy installing the specified LSPs (Keep in mind that Nvim <em>should not</em> be closed during this process). To track the installation progress, enter <code>:Mason</code> in <code>Nvim</code>. While you wait, you can type <code>g?</code> to get additional information about the Mason plugin.</p>
 <p>Now we have a lightweight IDE🎉🎉🎉</p>
 <h2 id="wrap-up" class="headerLink">
     <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><p>With this configuration, we successfully turned <code>Nvim</code> into a lightweight IDE, which supports code highlighting, code completion, syntax checking, and other functionalities. It is <em>completely open source and free</em>.</p>
@@ -1200,7 +1200,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
