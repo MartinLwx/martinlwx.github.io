@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-02-08T15:01:42+08:00" />
-<meta property="article:modified_time" content="2023-02-15T13:38:42+08:00" />
+<meta property="article:modified_time" content="2024-04-04T22:00:42+08:00" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="从零开始配置 Neovim(Nvim)"/>
 <meta name="twitter:description" content="从零开始配置 Neovim 为一个轻量级的 IDE"/>
@@ -33,8 +33,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/"
-        },"genre": "posts","keywords": "Vim-Neovim","wordcount":  5189 ,
-        "url": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2023-02-15T13:38:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "Vim-Neovim","wordcount":  4823 ,
+        "url": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2024-04-04T22:00:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -167,7 +167,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/vim-neovim/"><i class="far fa-folder fa-fw"></i>Vim-Neovim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-02-15">2023-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5189 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-04">2024-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4823 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -211,40 +211,41 @@
             <i class="icon fas fa-info-circle fa-fw"></i>信息<i class="details-icon fas fa-angle-right fa-fw"></i>
         </div>
         <div class="details-content">
-            <div class="admonition-content"><p><strong>进一步阅读</strong>:</p>
+            <div class="admonition-content"><p><strong>更新</strong>：</p>
+<ul>
+<li><em>2024-04-04</em>，重写部分章节，Package Manager 从 <a href="https://github.com/wbthomason/packer.nvim" target="_blank" rel="noopener noreferrer">packer.nvim</a> 换成了 <a href="https://github.com/folke/lazy.nvim" target="_blank" rel="noopener noreferrer">lazy.nvim</a> &#x1f917;。
+<ul>
+<li>如果之前跟着本篇教程采用 <code>packer.nvim</code> 进行安装的话，可以参考我迁移的时候的 <a href="https://github.com/MartinLwx/dotfiles/commit/63f21a50a1bc2b48d4ca3f7a9c6d1ea77505ea58" target="_blank" rel="noopener noreferrer">commit</a>，修改完之后记得用 <code>:checkhealth lazy</code> 检查下，因为还需要删除 <code>packer.nvim</code> 的一些旧文件</li>
+</ul>
+</li>
+</ul>
+<p><strong>进一步阅读</strong>:</p>
 <ul>
 <li>如何为一门新的编程语言配置 Neovim ，以及支持第三方代码格式化工具，见<a href="https://martinlwx.github.io/zh-cn/neovim-setup-for-ocaml/" target="_blank" rel="noopener noreferrer">下篇文章</a></li>
-</ul></div>
+</ul>
+</div>
         </div>
     </div>
 <h2 id="版本信息" class="headerLink">
-    <a href="#%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af" class="header-mark"></a>版本信息</h2><p>我使用的是 Macbook pro 2020 Intel 版本，系统版本为 macOS 13.2。我的 <code>Nvim</code> 版本信息如下</p>
+    <a href="#%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af" class="header-mark"></a>版本信息</h2><p>我使用的是 Macbook pro 2020 Intel 版本，系统版本为 macOS 14.3.1。我的 <code>Nvim</code> 版本信息如下</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">NVIM v0.8.3
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">NVIM v0.9.5
 </span></span><span class="line"><span class="cl">Build type: Release
-</span></span><span class="line"><span class="cl">LuaJIT 2.1.0-beta3
-</span></span><span class="line"><span class="cl">Compiled by brew@Ventura
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Features: +acl +iconv +tui
-</span></span><span class="line"><span class="cl">See &#34;:help feature-compile&#34;
+</span></span><span class="line"><span class="cl">LuaJIT 2.1.1710088188
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">   system vimrc file: &#34;$VIM/sysinit.vim&#34;
-</span></span><span class="line"><span class="cl">  fall-back for $VIM: &#34;/usr/local/Cellar/neovim/0.8.3/share/nvim&#34;
+</span></span><span class="line"><span class="cl">  fall-back for $VIM: &#34;/usr/local/Cellar/neovim/0.9.5/share/nvim&#34;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Run :checkhealth for more info
 </span></span></code></pre></td></tr></table>
@@ -537,27 +538,16 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>💡 <code>...</code> 表示我们省略了其他部分的代码（为了节省博客的篇幅）</p>
+<p>💡 <code>...</code> 表示省略了其他部分的代码（为了节省博客的篇幅）</p>
 </blockquote>
 <h3 id="安装插件管理器" class="headerLink">
-    <a href="#%e5%ae%89%e8%a3%85%e6%8f%92%e4%bb%b6%e7%ae%a1%e7%90%86%e5%99%a8" class="header-mark"></a>安装插件管理器</h3><p>一个强大的 <code>Nvim</code> 离不开插件的支持。我选用的是当下最为流行，而且完全用 Lua 语言编写的 <a href="https://github.com/wbthomason/packer.nvim" target="_blank" rel="noopener noreferrer">Packer.nvim</a>。它支持如下许多特性：</p>
+    <a href="#%e5%ae%89%e8%a3%85%e6%8f%92%e4%bb%b6%e7%ae%a1%e7%90%86%e5%99%a8" class="header-mark"></a>安装插件管理器</h3><p>一个强大的 <code>Nvim</code> 离不开插件的支持。我选用的是当下最为流行 <a href="https://github.com/folke/lazy.nvim" target="_blank" rel="noopener noreferrer">lazy.nvim</a>。它支持如下许多特性：</p>
 <ul>
-<li>支持配置第三方插件的依赖</li>
-<li>支持 Lazy loading</li>
-<li>支持设置插件安装之后的钩子函数</li>
+<li>正确处理不同插件之间的依赖</li>
+<li>支持定制 Lazy loading，比如基于 Event、Filetype 等</li>
 <li>&hellip;</li>
 </ul>
-<blockquote>
-<p>💡 <strong>在 <code>Packer.nvim</code> 配置里面指定第三方插件很简单，用 <code>use ...</code> 即可</strong></p>
-</blockquote>
-<p>新建 <code>~/.config/nvim/lua/plugins.lua</code> 文件并放入如下内容。下面的模板只完成了 Packer.vim 自身的安装，<strong>还没有指定其他第三方插件</strong>。这个模板的功能主要是</p>
-<ol>
-<li>初次启动的时候自动安装 <code>Packer.nvim</code></li>
-<li>当我们保存对这个文件（<code>plugins.lua</code>）文件的修改的时候，<code>Packer.nvim</code> 会自动帮我们自动更新插件和帮我们做好配置。你可以<strong>看到<code>Nvim</code> 右边看到多了一个窗口显示进度</strong></li>
-</ol>
-<blockquote>
-<p>💡 <code>Packer.nvim</code> 还支持了不少命令，不过你不需要把他们都记住。因为这个模板会<strong>自动帮我们处理好</strong>。值得一提的是<strong>如果因为网络问题安装失败</strong>的话，在它弹出的窗口里面按照提示按下大写的 <code>R</code> 就会自动重新下载。在 <code>Packer.nvim</code> 提示全都安装成功后，<strong>重启</strong> <code>Nvim</code> 就生效了</p>
-</blockquote>
+<p>新建 <code>~/.config/nvim/lua/plugins.lua</code> 文件并放入如下内容。下面的模板只完成了 <code>lazy.nvim</code> 自身的安装，<strong>还没有指定其他第三方插件</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -574,91 +564,28 @@
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="c1">-- Install Packer automatically if it&#39;s not installed(Bootstraping)</span>
-</span></span><span class="line"><span class="cl"><span class="c1">-- Hint: string concatenation is done by `..`</span>
-</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">ensure_packer</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">vim.fn</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">install_path</span> <span class="o">=</span> <span class="n">fn.stdpath</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span> <span class="o">..</span> <span class="s1">&#39;/site/pack/packer/start/packer.nvim&#39;</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">if</span> <span class="n">fn.empty</span><span class="p">(</span><span class="n">fn.glob</span><span class="p">(</span><span class="n">install_path</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">        <span class="n">fn.system</span><span class="p">({</span> <span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;clone&#39;</span><span class="p">,</span> <span class="s1">&#39;--depth&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;https://github.com/wbthomason/packer.nvim&#39;</span><span class="p">,</span> <span class="n">install_path</span> <span class="p">})</span>
-</span></span><span class="line"><span class="cl">        <span class="n">vim.cmd</span> <span class="s">[[packadd packer.nvim]]</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">return</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">end</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="kc">false</span>
+<pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">lazypath</span> <span class="o">=</span> <span class="n">vim.fn</span><span class="p">.</span><span class="n">stdpath</span><span class="p">(</span><span class="s2">&#34;data&#34;</span><span class="p">)</span> <span class="o">..</span> <span class="s2">&#34;/lazy/lazy.nvim&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">vim.uv</span> <span class="ow">or</span> <span class="n">vim.loop</span><span class="p">).</span><span class="n">fs_stat</span><span class="p">(</span><span class="n">lazypath</span><span class="p">)</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">  <span class="n">vim.fn</span><span class="p">.</span><span class="n">system</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;git&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;clone&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;--filter=blob:none&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://github.com/folke/lazy.nvim.git&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;--branch=stable&#34;</span><span class="p">,</span> <span class="c1">-- latest stable release</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lazypath</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
-</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">packer_bootstrap</span> <span class="o">=</span> <span class="n">ensure_packer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">vim.opt</span><span class="p">.</span><span class="n">rtp</span><span class="p">:</span><span class="n">prepend</span><span class="p">(</span><span class="n">lazypath</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">-- Reload configurations if we modify plugins.lua</span>
-</span></span><span class="line"><span class="cl"><span class="c1">-- Hint</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--     &lt;afile&gt; - replaced with the filename of the buffer being manipulated</span>
-</span></span><span class="line"><span class="cl"><span class="n">vim.cmd</span><span class="p">(</span><span class="s">[[
-</span></span></span><span class="line"><span class="cl"><span class="s">  augroup packer_user_config
-</span></span></span><span class="line"><span class="cl"><span class="s">    autocmd!
-</span></span></span><span class="line"><span class="cl"><span class="s">    autocmd BufWritePost plugins.lua source &lt;afile&gt; | PackerSync
-</span></span></span><span class="line"><span class="cl"><span class="s">  augroup end
-</span></span></span><span class="line"><span class="cl"><span class="s">]]</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">-- Install plugins here - `use ...`</span>
-</span></span><span class="line"><span class="cl"><span class="c1">-- Packer.nvim hints</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--     after = string or list,           -- Specifies plugins to load before this plugin. See &#34;sequencing&#34; below</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--     config = string or function,      -- Specifies code to run after this plugin is loaded</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--     requires = string or list,        -- Specifies plugin dependencies. See &#34;dependencies&#34;.</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--     ft = string or list,              -- Specifies filetypes which load this plugin.</span>
-</span></span><span class="line"><span class="cl"><span class="c1">--     run = string, function, or table, -- Specify operations to be run after successful installs/updates of a plugin</span>
-</span></span><span class="line"><span class="cl"><span class="kr">return</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;packer&#39;</span><span class="p">).</span><span class="n">startup</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">use</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Packer can manage itself</span>
-</span></span><span class="line"><span class="cl">        <span class="n">use</span> <span class="s1">&#39;wbthomason/packer.nvim&#39;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">---------------------------------------</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- NOTE: PUT YOUR THIRD PLUGIN HERE --</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">---------------------------------------</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Automatically set up your configuration after cloning packer.nvim</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Put this at the end after all plugins</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">if</span> <span class="n">packer_bootstrap</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">            <span class="n">require</span><span class="p">(</span><span class="s1">&#39;packer&#39;</span><span class="p">).</span><span class="n">sync</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">end</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s2">&#34;lazy&#34;</span><span class="p">).</span><span class="n">setup</span><span class="p">({})</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后在 <code>init.lua</code> 文件里面再次加上一行导入这个文件</p>
+</div><blockquote>
+<p>💡 在 <code>lazy.nvim</code> 指定第三方插件很简单，只需要在 <code>require(&quot;lazy&quot;).setup({ ... })</code> 的 <code>...</code> 里面声明插件</p>
+</blockquote>
+<p>然后在 <code>init.lua</code> 文件里面再次加上一行导入这个文件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -669,22 +596,27 @@
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;plugins&#39;</span><span class="p">)</span>        
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>此时你重启 <code>Nvim</code> 会发现黑屏没显示，这是因为 <code>Packer.nvim</code> 在安装自己，静待片刻即可☕️</p>
+</div><p>此时你重启 <code>Nvim</code> 会发现黑屏没显示，这是因为 <code>lazy.nvim</code> 在安装自己，静待片刻即可☕️。等待 Dashboard 出现之后，可以输入 <code>:Lazy</code> 试试，如果看到了弹出了 <code>lazy.nvim</code> 的窗口，那就安装成功了🎉</p>
+<blockquote>
+<p>💡 <em>Tip</em>：用 <code>:q</code> 退出 <code>lazy.nvim</code> 的窗口</p>
+</blockquote>
 <h3 id="主题配置" class="headerLink">
-    <a href="#%e4%b8%bb%e9%a2%98%e9%85%8d%e7%bd%ae" class="header-mark"></a>主题配置</h3><p>我喜欢的主题是 <a href="https://github.com/tanvirtin/monokai.nvim" target="_blank" rel="noopener noreferrer">monokai.nvim</a>，在 <code>plugins.lua</code> 里面加上</p>
+    <a href="#%e4%b8%bb%e9%a2%98%e9%85%8d%e7%bd%ae" class="header-mark"></a>主题配置</h3><p>我喜欢的主题是 <a href="https://github.com/tanvirtin/monokai.nvim" target="_blank" rel="noopener noreferrer">monokai.nvim</a>，在 <code>plugins.lua</code> 进行修改</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="s1">&#39;tanvirtin/monokai.nvim&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s2">&#34;lazy&#34;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;tanvirtin/monokai.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>保存更改待 <code>Packer.nvim</code> 下载插件完成之后，新建并编辑 <code>~/.config/nvim/lua/colorscheme.lua</code> 文件</p>
+</div><p>保存更改并<em>重启</em>就可以看到 <code>lazy.nvim</code> 在帮我们安装插件了，新建并编辑 <code>~/.config/nvim/lua/colorscheme.lua</code> 文件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -707,7 +639,7 @@
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这里用到的 <code>pcall</code> 是 Lua 里面的 protected call，会返回一个 <code>bool</code> 变量表示是否执行成功（跟 Golang 的 <code>err</code> 功能类似）。这里采用 <code>pcall</code> 而不是直接在 <code>init.lua</code> 文件里面加上 <code>vim.cmd('colorscheme monokai_pro')</code> 是为了避免主题没有安装的话打开 <code>Nvim</code> 看到一大堆报错信息<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+</div><p>这里用到的 <code>pcall</code> 是 Lua 里面的 protected call，它会返回一个 <code>bool</code> 变量表示是否执行成功（跟 Go 语言的 <code>err</code> 功能类似）。这里采用 <code>pcall</code> 而不是直接在 <code>init.lua</code> 文件里面加上 <code>vim.cmd('colorscheme monokai_pro')</code> 是为了避免主题没有安装的情况下打开 <code>Nvim</code> 看到一大堆报错信息<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 <p>最后在 <code>init.lua</code> 文件里面导入就行</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -723,9 +655,6 @@
     <a href="#%e8%87%aa%e5%8a%a8%e8%a1%a5%e5%85%a8%e6%8c%87%e5%8d%97" class="header-mark"></a>自动补全指南</h3><p>自己手动配置自动补全功能的话会比较繁琐，所以我们最好是借助于一些插件来帮忙，下面我讲讲<strong>我摸索出来的最简单配置方法</strong></p>
 <p>首先，第一个要用到的插件是 <a href="https://github.com/hrsh7th/nvim-cmp" target="_blank" rel="noopener noreferrer">nvim-cmp</a>，它可以管理各种补全候选项来源，然后展示在补全菜单里面，还支持我们对外观等进行定制化。</p>
 <p>我们先新建 <code>~/.config/nvim/lua/config/nvim-cmp.lua</code> 文件配置 <code>nvim-cmp</code></p>
-<blockquote>
-<p>💡 这里首先选择写 <code>nvim-cmp</code> 的配置文件然后再在 <code>plugins.lua</code> 文件里面用 <code>use</code> 添加插件。这样可以保证 <code>Packer.nvim</code> 安装 nvim-cmp 的相关插件读取 <code>nvim-cmp.lua</code> 配置文件的时候不会报错。<strong>下面的配置文件暂时看不懂也没有关系，我会对其进行解释</strong></p>
-</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -890,7 +819,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后我们修改 <code>plugins.lua</code> 文件添加插件</p>
+</div><p>然后我们修改 <code>plugins.lua</code> 文件添加相关的插件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -903,26 +832,58 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;neovim/nvim-lspconfig&#39;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;hrsh7th/nvim-cmp&#39;</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="s">[[require(&#39;config.nvim-cmp&#39;)]]</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;hrsh7th/cmp-nvim-lsp&#39;</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="s1">&#39;nvim-cmp&#39;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;hrsh7th/cmp-buffer&#39;</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="s1">&#39;nvim-cmp&#39;</span> <span class="p">}</span> <span class="c1">-- buffer auto-completion</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;hrsh7th/cmp-path&#39;</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="s1">&#39;nvim-cmp&#39;</span> <span class="p">}</span> <span class="c1">-- path auto-completion</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;hrsh7th/cmp-cmdline&#39;</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="s1">&#39;nvim-cmp&#39;</span> <span class="p">}</span> <span class="c1">-- cmdline auto-completion</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="s1">&#39;L3MON4D3/LuaSnip&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="s1">&#39;saadparwaiz1/cmp_luasnip&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s2">&#34;lazy&#34;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Vscode-like pictograms</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s2">&#34;onsails/lspkind.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">event</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;VimEnter&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">-- Auto-completion engine</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s2">&#34;hrsh7th/nvim-cmp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;lspkind.nvim&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="n">config</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="n">require</span><span class="p">(</span><span class="s2">&#34;config.nvim-cmp&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="kr">end</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span> <span class="s2">&#34;hrsh7th/cmp-nvim-lsp&#34;</span><span class="p">,</span> <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;nvim-cmp&#34;</span> <span class="p">}</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span> <span class="s2">&#34;hrsh7th/cmp-buffer&#34;</span><span class="p">,</span> <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;nvim-cmp&#34;</span> <span class="p">}</span> <span class="p">},</span> <span class="c1">-- buffer auto-completion</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span> <span class="s2">&#34;hrsh7th/cmp-path&#34;</span><span class="p">,</span> <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;nvim-cmp&#34;</span> <span class="p">}</span> <span class="p">},</span> <span class="c1">-- path auto-completion</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span> <span class="s2">&#34;hrsh7th/cmp-cmdline&#34;</span><span class="p">,</span> <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;nvim-cmp&#34;</span> <span class="p">}</span> <span class="p">},</span> <span class="c1">-- cmdline auto-completion</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Code snippet engine</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s2">&#34;L3MON4D3/LuaSnip&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">version</span> <span class="o">=</span> <span class="s2">&#34;v2.*&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><strong>解释如下</strong></p>
 <ul>
 <li><code>cmp.setup</code> 函数的参数是一个 Lua 的 Table，用于设置各个选项（下面会解释）。后面你会发现很多第三方插件都用 <code>setup</code> 传入一个 Lua table 的方式进行配置，<strong>这个是 <code>Nvim</code> 的 Lua 插件的惯例</strong></li>
-<li>不要被上面的这么多插件吓到，<code>nvim-cmp</code> 为主，其他 <code>cmp-...</code> 的插件是用于在候选项来源和 <code>nvim-cmp</code> 之间交互</li>
-<li><code>LuaSnip</code> 是 code snippet 引擎，因为<code>nvim-cmp</code> 要求我们必须指定<strong>至少一个</strong> code snippet 引擎来源所以才加上，你暂时用不到当它不存在也没有关系</li>
-<li><code>Packer.nvim</code> 支持用 <code>config = ...</code> 指定对应插件被加载之后要运行的代码，<em>所以 <code>config = [[require('config.nvim-cmp')]]</code> 的意思是导入了 <code>config</code> 文件夹里面的 <code>nvim-cmp.lua</code> 文件，这个设计参考了<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></em></li>
+<li><code>LuaSnip</code> 是 code snippet 引擎，因为<code>nvim-cmp</code> 要求我们必须指定<strong>至少一个</strong> code snippet 引擎来源。你暂时用不到当它不存在也没有关系</li>
+<li><code>lazy.nvim</code> 支持用 <code>config = function() ... end</code> 指定对应插件被加载之后要运行的代码，这里我们是让 Lua 导入前面写好的 <code>nvim-cmp.lua</code> 配置文件</li>
+<li>不要被上面的这么多插件吓到，<code>nvim-cmp</code> 为主，其他 <code>cmp-...</code> 的插件是用于在候选项来源和 <code>nvim-cmp</code> 之间交互，<code>lspkind.nvim</code> 是美化用的</li>
 </ul>
 <h4 id="nvim-cmp-里面的按键映射" class="headerLink">
     <a href="#nvim-cmp-%e9%87%8c%e9%9d%a2%e7%9a%84%e6%8c%89%e9%94%ae%e6%98%a0%e5%b0%84" class="header-mark"></a>nvim-cmp 里面的按键映射</h4><p>按键映射用的是 <code>mapping = ...</code> ，每个按键绑定的格式是 <code>['&lt;key-binding&gt;'] = cmp.mapping.xxx,</code>，不同的 <code>cmp.mapping.xxx</code> 的含义可以用 <code>:h</code> 查看。<strong>如果你想要用其他的按键，只要修改 <code>[...]</code> 里面的按键即可</strong></p>
@@ -939,14 +900,11 @@
 <li><code>format = function(...)</code> 设置了不同的候选项的来源显示，在 <code>sources = ...</code> 里面声明来源</li>
 </ul>
 <blockquote>
-<p>🎙️ 到这为止，重新启动 <code>Nvim</code> 后应该能够用初步的自动补全功能了～</p>
+<p>🎙️ 到这为止，重新启动 <code>Nvim</code> 后，等待插件安装完成后应该就能够用初步的自动补全功能了～</p>
 </blockquote>
 <h4 id="lsp" class="headerLink">
-    <a href="#lsp" class="header-mark"></a>LSP</h4><p>要把 <code>Nvim</code> 变成 IDE 就势必要借助于 LSP<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，自己安装和配置 LSP 是比较繁琐的。不同的 LSP 安装方法不同，也不方便后续管理。这就是 <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a> 和配套的 <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig.nvim</a> 这两个插件大放异彩的地方🥰</p>
-<blockquote>
-<p>❗️ 注意，<code>mason.nvim</code> 和 <code>mason-lspconfig.nvim</code> 和前面我们已经添加的 <code>nvim-lspconfig</code> 这三个插件之间的安装和配置是<em>有顺序要求的</em>。推荐直接照搬我下面的就好了</p>
-</blockquote>
-<p>首先修改 <code>plugins.lua</code> 文件，增加上面这两个插件</p>
+    <a href="#lsp" class="header-mark"></a>LSP</h4><p>要把 <code>Nvim</code> 变成 IDE 就势必要借助于 LSP<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，自己安装和配置 LSP 是比较繁琐的。不同的 LSP 安装方法不同，也不方便后续管理。<a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a> 和配套的 <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig.nvim</a> 这两个插件很好解决了这个问题 &#x1f917;</p>
+<p>首先修改 <code>plugins.lua</code> 文件，增加对应的插件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -954,13 +912,19 @@
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;williamboman/mason.nvim&#39;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span> <span class="p">{</span> <span class="s1">&#39;williamboman/mason-lspconfig.nvim&#39;</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1">-- use { &#39;neovim/nvim-lspconfig&#39; }            -- previous installed</span>
-</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s2">&#34;lazy&#34;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- LSP manager</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;williamboman/mason.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;williamboman/mason-lspconfig.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;neovim/nvim-lspconfig&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>新建一个 <code>~/.config/nvim/lua/lsp.lua</code> 文件并编辑，首先配置 <code>mason</code> 和 <code>mason-lspconfig</code></p>
@@ -994,12 +958,12 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;mason-lspconfig&#39;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">-- A list of servers to automatically install if they&#39;re not already installed</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ensure_installed</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;pylsp&#39;</span><span class="p">,</span> <span class="s1">&#39;gopls&#39;</span><span class="p">,</span> <span class="s1">&#39;lua_ls&#39;</span><span class="p">,</span> <span class="s1">&#39;rust_analyzer&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ensure_installed</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;pylsp&#39;</span><span class="p">,</span> <span class="s1">&#39;lua_ls&#39;</span><span class="p">,</span> <span class="s1">&#39;rust_analyzer&#39;</span> <span class="p">},</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>💡 我们想要用什么语言的 LSP 就在 <code>ensure_installed</code> 里面加上，完整的列表可以看 <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>。我个人常用的就 <code>python/go/rust</code> 这三个编程语言，而因为我们都用 Lua 语言来配置 <code>Nvim</code>，所以也加上了 <code>lua_ls</code></p>
+<p>💡 我们想要用什么语言的 LSP 就在 <code>ensure_installed</code> 里面加上，完整的列表可以看 <a href="https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md" target="_blank" rel="noopener noreferrer">server_configurations</a>。我个人常用的就 <code>python/rust</code> 这两个编程语言，而因为我们都用 Lua 语言来配置 <code>Nvim</code>，所以也加上了 <code>lua_ls</code></p>
 </blockquote>
 <p>配置好 <code>mason-lspconfig</code> 之后，接下来就可以配置 <code>nvim-lspconfig</code> 了。因为配置的代码比较长，下面只展示了 <code>pylsp</code> 的配置，其他语言的配置大同小异。如果有疑惑，可以查看该文件的<a href="https://github.com/MartinLwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">最新版本</a></p>
 <blockquote>
@@ -1058,7 +1022,6 @@
 </span><span class="lnt">48
 </span><span class="lnt">49
 </span><span class="lnt">50
-</span><span class="lnt">51
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
@@ -1111,7 +1074,6 @@
 </span></span><span class="line"><span class="cl"><span class="n">lspconfig.pylsp</span><span class="p">.</span><span class="n">setup</span><span class="p">({</span>
 </span></span><span class="line"><span class="cl">	<span class="n">on_attach</span> <span class="o">=</span> <span class="n">on_attach</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>上面的按键绑定的意思是很直观的，这里就不多解释啦</p>
@@ -1126,11 +1088,11 @@
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;lsp&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>重启 <code>Nvim</code> 之后，你应该可以在下面的状态栏看到 Mason 正在下载并安装前面我们指定的 LSP（<strong>注意此时不能关闭 <code>Nvim</code></strong>），可以输入 <code>:Mason</code> 查看安装进度。在你等待安装的过程中，可以输入 <code>g?</code> 查看更多帮助信息了解如何使用 <code>mason</code> 插件</p>
+</div><p>重启 <code>Nvim</code> 之后，你应该可以在下面的状态栏看到 <code>Mason</code> 正在下载并安装前面我们指定的 LSP（<strong>注意此时不能关闭 <code>Nvim</code></strong>），可以输入 <code>:Mason</code> 查看安装进度。在你等待安装的过程中，可以输入 <code>g?</code> 查看更多帮助信息了解如何使用 <code>mason</code> 插件</p>
 <p>大功告成🎉🎉🎉</p>
 <h2 id="总结" class="headerLink">
-    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>这样配置下来，我们成功把 <code>Nvim</code> 变成了一个轻量级的 IDE，它支持代码高亮、代码补全、语法检查等功能，而且是<em>完全开源免费的</em>，虽然还有些简陋，但已经是可以用的了🥰</p>
-<p>我发现自从学了 Vim 之后，我总在其他各种代码编辑器、IDE 看是不是支持 Vim。大多数情况下，他们对 Vim 的支持都不是很让人满意，还容易有快捷键冲突等问题。因此我选择将 <code>Nvim</code> 变成 IDE，并将配置文件托管在我的 <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">Martinlwx/dotfiles</a> 上。这样在新的机器上只要安装好 <code>Nvim</code> 并克隆配置静待片刻之后，就可以在不同的机器上获得<em>一样的</em>编程体验</p>
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>这样配置下来，我们成功把 <code>Nvim</code> 变成了一个轻量级的 IDE，它支持代码高亮、代码补全、语法检查等功能，而且是<em>完全开源免费的</em>，虽然还有些简陋，但已经是可以用的了 &#x1f917;</p>
+<p>我发现自从学了 Vim 之后，我总在其他各种代码编辑器、IDE 看是不是支持 Vim。大多数情况下，它们对 Vim 的支持都不是很让人满意，还容易有快捷键冲突等问题。因此我选择将 <code>Nvim</code> 变成 IDE，并将配置文件托管在我的 <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">Martinlwx/dotfiles</a> 上。这样在新的机器上只要安装好 <code>Nvim</code> 并克隆配置，静待片刻之后就可以在不同的机器上获得<em>一样的</em>编程体验</p>
 <p>打磨定制化工具是需要付出一定精力的。为了理解每个选项都在干啥，我不得不查找各种资料。但我仍相信这是<em>值得的</em>，<em>理解</em>你的工具利于你做扩展和定制化。本文已经尽可能采用了比较简单的配置，还有很多美化、私人定制化的内容可以配置，更别提其他很多优秀的第三方插件都还没有提及，这些就留给读者自己去探索发现了</p>
 <h2 id="参考" class="headerLink">
     <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
@@ -1143,10 +1105,7 @@
 <p><a href="https://www.youtube.com/watch?v=Ow03haHO1NE&amp;list=RDCMUCS97tchJDq17Qms3cux8wcA&amp;index=4" target="_blank" rel="noopener noreferrer">Adding a colorscheme/theme</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="https://github.com/jdhao/nvim-config" target="_blank" rel="noopener noreferrer">jdhao/nvim-config</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:4">
-<p><a href="https://en.wikipedia.org/wiki/Language_Server_Protocol" target="_blank" rel="noopener noreferrer">Language Server Protocol - Wiki</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Language_Server_Protocol" target="_blank" rel="noopener noreferrer">Language Server Protocol - Wiki</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -1156,7 +1115,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2023-02-15</span>
+                <span>更新于 2024-04-04</span>
             </div>
             <div class="post-info-license"></div>
         </div>

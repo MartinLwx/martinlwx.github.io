@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://martinlwx.github.io/en/neovim-setup-for-ocaml/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-01-23T12:55:46+08:00" />
-<meta property="article:modified_time" content="2024-01-23T12:55:46+08:00" />
+<meta property="article:modified_time" content="2024-04-04T22:00:42+08:00" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Neovim Setup for OCaml"/>
 <meta name="twitter:description" content="Neovim Setup for OCaml"/>
@@ -33,8 +33,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/neovim-setup-for-ocaml/"
-        },"genre": "posts","keywords": "Vim-Neovim, OCaml","wordcount":  1233 ,
-        "url": "https://martinlwx.github.io/en/neovim-setup-for-ocaml/","datePublished": "2024-01-23T12:55:46+08:00","dateModified": "2024-01-23T12:55:46+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "Vim-Neovim, OCaml","wordcount":  1269 ,
+        "url": "https://martinlwx.github.io/en/neovim-setup-for-ocaml/","datePublished": "2024-01-23T12:55:46+08:00","dateModified": "2024-04-04T22:00:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -144,7 +144,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/vim-neovim/"><i class="far fa-folder fa-fw"></i>Vim-Neovim</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-01-23">2024-01-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-01-23">2024-01-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1233 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-01-23">2024-01-23</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-04">2024-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1269 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -346,7 +346,7 @@
             <div class="admonition-content">You may have your configuration files and do not follow my <a href="https://martinlwx.github.io/en/config-neovim-from-scratch/" target="_blank" rel="noopener noreferrer">previous post</a>. So adding the aforementioned Lua code may not work for you. However, you can check the full configuration <a href="https://github.com/martinlwx/dotfiles/blob/main/nvim/lua/lsp.lua" target="_blank" rel="noopener noreferrer">here</a> to understand how it works and adapt to your configurations.</div>
         </div>
     </div>
-<p>After modifying <code>lsp.lua</code>, we can type <code>:PackerCompile</code> to regenerate configurations and then <em>restart</em> Neovim.</p>
+<p>After modifying <code>lsp.lua</code>, we can <em>restart</em> Neovim to make the configurations take effect.</p>
 <div class="details admonition warning open">
         <div class="details-summary admonition-title">
             <i class="icon fas fa-exclamation-triangle fa-fw"></i>Warning<i class="details-icon fas fa-angle-right fa-fw"></i>
@@ -377,29 +377,51 @@
             <div class="admonition-content"><a href="https://github.com/nvimtools/none-ls.nvim" target="_blank" rel="noopener noreferrer">none-ls.nvim</a> is maintained by the community because its predecessor <a href="https://github.com/jose-elias-alvarez/null-ls.nvim" target="_blank" rel="noopener noreferrer">null-ls.nvim</a> has been <a href="https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1621" target="_blank" rel="noopener noreferrer">archived</a></div>
         </div>
     </div>
-<p>To make it easier, we can use the <a href="https://github.com/jay-babu/mason-null-ls.nvim" target="_blank" rel="noopener noreferrer">mason-null-ls.nvim</a> plugin, developed by the same author of <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a>. Open <code>plugins.lua</code> file and append these Lua codes. After saving the changes you should see the Packer.nvim try to install the new plugins.</p>
+<p>To make it easier, we can use the <a href="https://github.com/jay-babu/mason-null-ls.nvim" target="_blank" rel="noopener noreferrer">mason-null-ls.nvim</a> plugin, developed by the same author of <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a>. Open <code>plugins.lua</code> file and append these Lua codes. After saving the changes and restarting Neovim you should see <code>lazy.nvim</code> is installing these plugins.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="p">...</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span><span class="p">({</span> <span class="s2">&#34;nvim-lua/plenary.nvim&#34;</span> <span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="n">use</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;jay-babu/mason-null-ls.nvim&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">after</span> <span class="o">=</span> <span class="s2">&#34;plenary.nvim&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">requires</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;nvimtools/none-ls.nvim&#34;</span> <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="n">config</span> <span class="o">=</span> <span class="s">[[require(&#39;config.mason-null-ls&#39;)]]</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s2">&#34;lazy&#34;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">-- Add hooks to LSP to support Linter &amp;&amp; Formatter</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s2">&#34;jay-babu/mason-null-ls.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">event</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;BufReadPre&#34;</span><span class="p">,</span> <span class="s2">&#34;BufNewFile&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;williamboman/mason.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="s2">&#34;nvimtools/none-ls.nvim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="n">config</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">-- Note:</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">--     the default search path for `require` is ~/.config/nvim/lua</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">--     use a `.` as a path seperator</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">--     the suffix `.lua` is not needed</span>
+</span></span><span class="line"><span class="cl">			<span class="n">require</span><span class="p">(</span><span class="s2">&#34;config.mason-null-ls&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="kr">end</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then, create a new file called <code>mason-null-ls.lua</code> in <code>config</code> folder and put the following code</p>
@@ -560,14 +582,14 @@
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Save the changes and use <code>:PackerCompile</code> to regenerate configurations. <em>Restart</em> Neovim to see if it works.</p>
+</div><p>Save the changes and <em>restart</em> Neovim to see if it works.</p>
 <h2 id="wrap-up" class="headerLink">
     <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><p>Now let&rsquo;s summarize how to set up Neovim for a new programming language. If you also use <a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a>, <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig</a>, <a href="https://github.com/nvimtools/none-ls.nvim" target="_blank" rel="noopener noreferrer">none-ls.nvim</a> and <a href="https://github.com/jay-babu/mason-null-ls.nvim" target="_blank" rel="noopener noreferrer">mason-null-ls.nvim</a>, you can follow the instructions to setup:</p>
 <ol>
 <li>Read the official pages and install the programming language&rsquo;s environment on your machine.</li>
 <li>Open Neovim, type <code>:Mason</code>, and install the corresponding LSP and Formatter</li>
 <li>Open the <code>lsp.lua</code> file and configure LSP</li>
-<li>Open the <code>mason-null-ls.lua</code> file to configure <code>handlers</code> if you want to get more control over your formatter</li>
+<li>Open the <code>mason-null-ls.lua</code> file to configure <code>handlers</code></li>
 </ol>
 <p>For things that are not clearly stated in this post, you can view my <a href="https://github.com/MartinLwx/dotfiles" target="_blank" rel="noopener noreferrer">dotfiles configurations</a> repo to learn more information.</p></div>
 
@@ -575,7 +597,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2024-01-23</span>
+                <span>Updated on 2024-04-04</span>
             </div>
             <div class="post-info-license"></div>
         </div>
