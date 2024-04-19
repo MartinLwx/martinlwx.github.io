@@ -7,15 +7,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title>Python 3.5 的解包操作符 - MartinLwx&#39;s Blog</title><meta name="Description" content="Python 中的解包操作符的简单介绍"><meta property="og:title" content="Python 3.5 的解包操作符" />
-<meta property="og:description" content="Python 中的解包操作符的简单介绍" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://martinlwx.github.io/zh-cn/unpacking-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-12-05T23:16:33+08:00" />
-<meta property="article:modified_time" content="2022-12-05T23:16:33+08:00" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="Python 3.5 的解包操作符"/>
-<meta name="twitter:description" content="Python 中的解包操作符的简单介绍"/>
+    <title>Python 3.5 的解包操作符 - MartinLwx&#39;s Blog</title><meta name="Description" content="Python 中的解包操作符的简单介绍"><meta property="og:url" content="https://martinlwx.github.io/zh-cn/unpacking-in-python/">
+  <meta property="og:site_name" content="MartinLwx&#39;s Blog">
+  <meta property="og:title" content="Python 3.5 的解包操作符">
+  <meta property="og:description" content="Python 中的解包操作符的简单介绍">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-12-05T23:16:33+08:00">
+    <meta property="article:modified_time" content="2022-12-05T23:16:33+08:00">
+    <meta property="article:tag" content="Python">
+    <meta property="og:image" content="https://martinlwx.github.io/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"><meta name="twitter:title" content="Python 3.5 的解包操作符">
+<meta name="twitter:description" content="Python 中的解包操作符的简单介绍">
 <meta name="application-name" content="MartinLwx&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
 
@@ -33,7 +38,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/unpacking-in-python/"
-        },"genre": "posts","keywords": "Python","wordcount":  1089 ,
+        },"genre": "posts","keywords": "Python","wordcount":  1040 ,
         "url": "https://martinlwx.github.io/zh-cn/unpacking-in-python/","datePublished": "2022-12-05T23:16:33+08:00","dateModified": "2022-12-05T23:16:33+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -148,7 +153,7 @@
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-12-05">2022-12-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-12-05">2022-12-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1089 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-12-05">2022-12-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-12-05">2022-12-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1040 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -167,10 +172,7 @@
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><blockquote>
-<p>这一篇博客一开始是写在 jupyter notebook 里面而后转成 markdown 的。如果想要访问和运行本来的 notebook，请查阅这个<a href="https://github.com/MartinLwx/oh_my_python" target="_blank" rel="noopener noreferrer">仓库</a></p>
-</blockquote>
-<h2 id="引言" class="headerLink">
+            </div><div class="content" id="content"><h2 id="引言" class="headerLink">
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>今天我想要聊聊 Python 中用于解包（Unpacking）的两个操作符号——<code>*</code> 和 <code>**</code></p>
 <h2 id="基本用法" class="headerLink">
     <a href="#%e5%9f%ba%e6%9c%ac%e7%94%a8%e6%b3%95" class="header-mark"></a>基本用法</h2><p><code>*</code> 最为常见的用法是用来表示乘法。但我们也可以将 <code>*</code> 用于任意一个可迭代对象（iterable object）<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>上，表示我们想要提取里面所有的值</p>
@@ -179,7 +181,7 @@
 </blockquote>
 <h3 id="starred-assignmentexpression" class="headerLink">
     <a href="#starred-assignmentexpression" class="header-mark"></a>Starred assignment/expression</h3><p>随着 Python 3.0 的发布，Python 支持使用 <code>*</code> 来解包任意可迭代对象<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。这个被称之为 Starred assignment，也叫做 Starred expressions。我也有看到称之为 parallel assignment 的。</p>
-<p>我们可以在 <code>=</code> 左边声明一个特殊的变量表示捕获*所有变量**。看下面这个直观的例子：</p>
+<p>我们可以在 <code>=</code> 左边声明一个特殊的变量表示捕获<em>所有变量</em>。看下面这个直观的例子：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -207,7 +209,7 @@
 <p>不过它也有一些局限：</p>
 <ul>
 <li>我们不能仅仅在 <code>=</code> 左边使用一个 <code>*foo</code> 当成唯一的被赋值目标。<code>=</code> 左侧必须是一个 list 或者是 tuple</li>
-<li>如果 <code>=</code> 右边的值不够用于解包的话，程序就会报错</li>
+<li>如果 <code>=</code> 右边的值的数量不够用于解包的话，程序就会报错</li>
 </ul>
 <p>下面的例子证明了这两点：</p>
 <div class="highlight"><div class="chroma">
@@ -297,7 +299,7 @@ ValueError: not enough values to unpack (expected at least 2, got 1)
 </div><pre><code>{'a': 3, 'b': 2}
 </code></pre>
 <blockquote>
-<p>📒当我们在函数调用里面使用 <code>**</code> 的时候，需要注意个问题：我们<strong>需要确保没有重复的 key</strong></p>
+<p>📒当我们在函数调用里面使用 <code>**</code> 的时候，需要注意一个问题：我们<strong>需要确保没有重复的 key</strong></p>
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -421,7 +423,7 @@ SyntaxError: iterable unpacking cannot be used in comprehension
         </section>
     </div>
 
-    <div class="post-nav"><a href="/zh-cn/f-strings-in-python/" class="prev" rel="prev" title="f-strings in Python 3.6"><i class="fas fa-angle-left fa-fw"></i>f-strings in Python 3.6</a>
+    <div class="post-nav"><a href="/zh-cn/f-strings-in-python/" class="prev" rel="prev" title="Python3.6 的 f-strings"><i class="fas fa-angle-left fa-fw"></i>Python3.6 的 f-strings</a>
             <a href="/zh-cn/type-hints-in-python/" class="next" rel="next" title="Python 的类型提示：是什么以及为什么">Python 的类型提示：是什么以及为什么<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="giscus"></div><noscript>
@@ -429,7 +431,7 @@ SyntaxError: iterable unpacking cannot be used in comprehension
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.125.1">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
@@ -442,7 +444,7 @@ SyntaxError: iterable unpacking cannot be used in comprehension
             <i class="fas fa-comment fa-fw"></i>
         </a>
     </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"O4EMEES3VS","algoliaIndex":"index.zh-cn","algoliaSearchKey":"36fdaa364fae083332d0c8709026bd62","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
             window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
             gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
         </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>

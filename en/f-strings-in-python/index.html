@@ -7,15 +7,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title>The f-strings in Python 3.6 - MartinLwx&#39;s Blog</title><meta name="Description" content="A simple tutorial for the f-strings in python 3.6"><meta property="og:title" content="The f-strings in Python 3.6" />
-<meta property="og:description" content="A simple tutorial for the f-strings in python 3.6" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://martinlwx.github.io/en/f-strings-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-11-16T22:15:03+08:00" />
-<meta property="article:modified_time" content="2022-11-16T22:15:03+08:00" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="The f-strings in Python 3.6"/>
-<meta name="twitter:description" content="A simple tutorial for the f-strings in python 3.6"/>
+    <title>The f-strings in Python3.6 - MartinLwx&#39;s Blog</title><meta name="Description" content="A simple tutorial for the f-strings in python 3.6"><meta property="og:url" content="https://martinlwx.github.io/en/f-strings-in-python/">
+  <meta property="og:site_name" content="MartinLwx&#39;s Blog">
+  <meta property="og:title" content="The f-strings in Python3.6">
+  <meta property="og:description" content="A simple tutorial for the f-strings in python 3.6">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-11-16T22:15:03+08:00">
+    <meta property="article:modified_time" content="2024-04-19T15:15:00+08:00">
+    <meta property="article:tag" content="Python">
+    <meta property="og:image" content="https://martinlwx.github.io/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"><meta name="twitter:title" content="The f-strings in Python3.6">
+<meta name="twitter:description" content="A simple tutorial for the f-strings in python 3.6">
 <meta name="application-name" content="MartinLwx&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
 
@@ -28,13 +33,13 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "The f-strings in Python 3.6",
+        "headline": "The f-strings in Python3.6",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/f-strings-in-python/"
-        },"genre": "posts","keywords": "Python","wordcount":  1266 ,
-        "url": "https://martinlwx.github.io/en/f-strings-in-python/","datePublished": "2022-11-16T22:15:03+08:00","dateModified": "2022-11-16T22:15:03+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "Python","wordcount":  1222 ,
+        "url": "https://martinlwx.github.io/en/f-strings-in-python/","datePublished": "2022-11-16T22:15:03+08:00","dateModified": "2024-04-19T15:15:00+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -134,37 +139,43 @@
         <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
-    <li><a href="#syntax-rules">Syntax rules</a>
+    <li><a href="#syntax-rules">Syntax rules</a></li>
+    <li><a href="#usage">Usage</a>
       <ul>
-        <li><a href="#text"><code>&lt;text&gt;</code></a></li>
-        <li><a href="#expression"><code>{&lt;expression&gt;}</code></a></li>
-        <li><a href="#option"><code>&lt;option...&gt;</code></a>
+        <li><a href="#basic-usage">Basic usage</a></li>
+        <li><a href="#different-string-representation">Different string representation</a></li>
+        <li><a href="#padding--alignment">Padding &amp; Alignment</a>
           <ul>
-            <li><a href="#optional-s-r-or-a"><code>&lt;optional !s, !r, or !a&gt;</code></a></li>
-            <li><a href="#optionalformat_specifier"><code>&lt;optional:format_specifier&gt;</code></a>
+            <li>
               <ul>
-                <li><a href="#fillalign"><code>[[fill]align]</code></a></li>
-                <li><a href="#sign"><code>[sign]</code></a></li>
-                <li><a href="#z"><code>[z]</code></a></li>
-                <li><a href="#-and-type"><code>[#]</code> and <code>[type]</code></a></li>
-                <li><a href="#0width"><code>[0][width]</code></a></li>
-                <li><a href="#grouping_option"><code>[grouping_option]</code></a></li>
-                <li><a href="#precision"><code>[.precision]</code></a></li>
+                <li><a href="#sign">Sign</a></li>
               </ul>
             </li>
           </ul>
         </li>
+        <li><a href="#the-precision-of-float-point-numbers">The precision of float-point numbers</a>
+          <ul>
+            <li>
+              <ul>
+                <li><a href="#the--00-issue">The <code>-0.0</code> issue</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#other-number-representation">Other number representation</a></li>
+        <li><a href="#thousands-separator">Thousands separator</a></li>
+        <li><a href="#trick">Trick</a></li>
       </ul>
     </li>
-    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">The f-strings in Python 3.6</h1><div class="post-meta">
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">The f-strings in Python3.6</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-16">2022-11-16</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-11-16">2022-11-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1266 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-16">2022-11-16</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-19">2024-04-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1222 words&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -173,42 +184,55 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#intro">Intro</a></li>
-    <li><a href="#syntax-rules">Syntax rules</a>
+    <li><a href="#syntax-rules">Syntax rules</a></li>
+    <li><a href="#usage">Usage</a>
       <ul>
-        <li><a href="#text"><code>&lt;text&gt;</code></a></li>
-        <li><a href="#expression"><code>{&lt;expression&gt;}</code></a></li>
-        <li><a href="#option"><code>&lt;option...&gt;</code></a>
+        <li><a href="#basic-usage">Basic usage</a></li>
+        <li><a href="#different-string-representation">Different string representation</a></li>
+        <li><a href="#padding--alignment">Padding &amp; Alignment</a>
           <ul>
-            <li><a href="#optional-s-r-or-a"><code>&lt;optional !s, !r, or !a&gt;</code></a></li>
-            <li><a href="#optionalformat_specifier"><code>&lt;optional:format_specifier&gt;</code></a>
+            <li>
               <ul>
-                <li><a href="#fillalign"><code>[[fill]align]</code></a></li>
-                <li><a href="#sign"><code>[sign]</code></a></li>
-                <li><a href="#z"><code>[z]</code></a></li>
-                <li><a href="#-and-type"><code>[#]</code> and <code>[type]</code></a></li>
-                <li><a href="#0width"><code>[0][width]</code></a></li>
-                <li><a href="#grouping_option"><code>[grouping_option]</code></a></li>
-                <li><a href="#precision"><code>[.precision]</code></a></li>
+                <li><a href="#sign">Sign</a></li>
               </ul>
             </li>
           </ul>
         </li>
+        <li><a href="#the-precision-of-float-point-numbers">The precision of float-point numbers</a>
+          <ul>
+            <li>
+              <ul>
+                <li><a href="#the--00-issue">The <code>-0.0</code> issue</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#other-number-representation">Other number representation</a></li>
+        <li><a href="#thousands-separator">Thousands separator</a></li>
+        <li><a href="#trick">Trick</a></li>
       </ul>
     </li>
-    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><blockquote>
-<p>This post is originally written in jupyter notebook and then convert to markdown. To get the original notebook files. Please check the <a href="https://github.com/MartinLwx/oh_my_python" target="_blank" rel="noopener noreferrer">repo</a></p>
-</blockquote>
+            </div><div class="content" id="content"><div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>Info<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p><strong>Updates</strong>：</p>
+<ul>
+<li><em>2024-04-19</em>: This post is completely rewritten for better reference.</li>
+</ul></div>
+        </div>
+    </div>
 <h2 id="intro" class="headerLink">
     <a href="#intro" class="header-mark"></a>Intro</h2><p>String formatting can be regarded as one of the most common activities in daily programming. We often need to output various strings and precisely control their format.</p>
-<p>In some outdated Python tutorials, you may see the use of <code>%</code> to format strings. However, after Python 3.6, f-strings have become the optimal choice for formatting strings.</p>
-<p>The advantages include:</p>
+<p>You may still see the usage of <code>%</code> to format strings in some <em>outdated</em> Python tutorials. However, the f-strings have become the optimal choice for formatting strings since Python3.6. The main advantages in my opinion are:</p>
 <ol>
-<li><strong>Expressions can be embedded</strong> in the string literals conveniently</li>
-<li><strong>More human-readable</strong></li>
+<li><em>Expressions can be embedded</em> in the string literals conveniently</li>
+<li><em>More human-readable</em></li>
 </ol>
 <p><em>The following simple comparison shows the advantages of f-strings in readability</em>:</p>
 <div class="highlight"><div class="chroma">
@@ -235,21 +259,44 @@
 </div>
 </div><pre><code>'My name is Martin'
 </code></pre>
-<p>We implemented the same string output in different ways.</p>
-<p>Without any effort, we can find that the f-strings here are to output the name (this requires you to use meaningful variables names, such as <code>name</code> here). On the contrary, it is slightly unnatural to look at the <code>%</code> format string. <strong>We first saw it use <code>%s</code> as a placeholder, then we need to go to the right to find out which variable it refers to</strong>.</p>
-<p>The example here is too short to show the real power of f-strings. Just trying to imagine that we are reading a long format string written in <code>%</code> syntax, we will need to look it back and forth to figure out what it means. Not just about reading the code, if you write a long format string by yourself, you have to check whether the order of the placeholders and variables is consistent, which is undoubtedly a burden. 😫</p>
+<p>We implemented the same string output in two different ways.</p>
+<p>Without any effort, we can find that the f-strings here are to output the name (this requires you to use meaningful variable names, such as <code>name</code> here). On the contrary, it is slightly unnatural to look at the <code>%</code> format string. <em>We first saw it use <code>%s</code> as a placeholder, then we need to go to the right to find out which variable it refers to</em>.</p>
+<p>The example here is too short to show the real power of f-strings. Just trying to imagine that we are reading a long format string written in <code>%</code> syntax, we will need to look it <em>back and forth</em> to figure out what it means. Not just about reading the code, if you write a long format string by yourself, you have to check whether the order of the placeholders and variables is consistent, which is undoubtedly a burden. 😫</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">The minimal version of Python which supports f-strings is Python3.6.</div>
+        </div>
+    </div>
 <h2 id="syntax-rules" class="headerLink">
-    <a href="#syntax-rules" class="header-mark"></a>Syntax rules</h2><p>The syntax rules of f-strings are quite simple. I will just borrow the definition from<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
-<p><code>f'&lt;text&gt;{&lt;expression&gt;&lt;optional !s, !r, or !a&gt; &lt;optional:format_specifier&gt; }&lt;text&gt;...'</code></p>
-<p>In general, it can be summarized as <code>f&quot;...&quot;</code> or <code>f'...'</code>.</p>
-<p>Like regular strings in python, we can choose to use single quotes <code>''</code> or double quotes <code>&quot;&quot;</code> to enclose the content of the string. Triple quotes - <code>&quot;&quot;&quot;...&quot;&quot;&quot;</code> is also available.</p>
-<p>As for the other parts, we divide them into several subsections:</p>
-<h3 id="text" class="headerLink">
-    <a href="#text" class="header-mark"></a><code>&lt;text&gt;</code></h3><p>It means the string literals. The simplest usage scenario is a string without any expressions, which makes f-strings behave like regular strings. <em>like <code>f&quot;Hello world&quot;</code></em>. <del>It would be an overkill if we just use f-strings to represent regular strings</del></p>
-<h3 id="expression" class="headerLink">
-    <a href="#expression" class="header-mark"></a><code>{&lt;expression&gt;}</code></h3><p>Let&rsquo;s consider the simplest form: <code>{expression}</code> without any option parts (<code>&lt;option...&gt;</code> in aforementioned grammar)</p>
-<p>The <code>{&lt;expression&gt;}</code> shows how to embed an expression in f-strings: just put it inside {}. Here is a simple example:</p>
+    <a href="#syntax-rules" class="header-mark"></a>Syntax rules</h2><p>To create a f-string, we first add the leading <code>f</code> before <code>&quot;...&quot;</code> or <code>'...'</code>.</p>
 <div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;...&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># or f&#39;...&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then, we can use <code>{expression}</code> inside the quotes. Python will evaluate this <code>expression</code> for us and print its corresponding value.</p>
+<p>If we want to get <em>more control</em> over the output, we can use the <code>format_specifier</code>, which contains various <em>optional</em> parts for different purposes.</p>
+<p>From the perspective of grammar, the syntax rule of f-strings is</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;...</span><span class="si">{</span><span class="n">expression</span><span class="si">:</span><span class="s2">format_specifier</span><span class="si">}</span><span class="s2">...&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now let&rsquo;s figure out how to use f-strings in various scenarios</p>
+<h2 id="usage" class="headerLink">
+    <a href="#usage" class="header-mark"></a>Usage</h2><h3 id="basic-usage" class="headerLink">
+    <a href="#basic-usage" class="header-mark"></a>Basic usage</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -261,39 +308,40 @@
 </div>
 </div><pre><code>'3 + 5 = 8'
 </code></pre>
-<p>Using <code>{}</code> as a placeholder naturally leads to a question-what if we want to output <code>{}</code> in the string.</p>
-<p>The answer is also very simple, we only need to use this format: <code>{{expression}}</code></p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Tip<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Using <code>{}</code> as a placeholder naturally leads to a question: what if we want to display <code>{}</code> in the string? The answer is very simple, we just need to add another <code>{}</code>, i.e. <code>{{}}</code></div>
+        </div>
+    </div>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># &#39;hello&#39; is an expression too. </span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Note that we need to use different quote syntax inside {}</span>
-</span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="se">{{</span><span class="s2">&#39;hello&#39;</span><span class="se">}}</span><span class="s2">&#34;</span>   
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="se">{{}}</span><span class="s2">&#34;</span>   
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>&quot;{'hello'}&quot;
+</div><pre><code>'{}'
 </code></pre>
 <p>It is also worth mentioning that <code>:</code> and <code>!</code> and <code>\</code> <strong>are not allowed in <code>expression</code></strong></p>
-<p>These characters rarely appear in <code>expression</code> though. One usage scenario of <code>\</code> is to escape quotes. However, we could just use a different type of quote inside the <code>expression</code>. As for <code>:</code>, a use case would be defining a lambda function in <code>expression</code><sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. In this situation, we only need to enclose the lambda expression within <code>()</code>:</p>
+<p>These characters rarely appear in <code>expression</code> though. One usage scenario of <code>\</code> is to escape quotes. However, we could just use a different type of quote inside the <code>expression</code>. As for <code>:</code>, a use case would be defining a lambda function in <code>expression</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. In this situation, we only need to enclose the lambda expression <em>within</em> <code>()</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># note that we need to add () around the lambda expression</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Note that we need to add () around the lambda expression</span>
 </span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span> 
 </span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>'4'
 </code></pre>
-<h3 id="option" class="headerLink">
-    <a href="#option" class="header-mark"></a><code>&lt;option...&gt;</code></h3><h4 id="optional-s-r-or-a" class="headerLink">
-    <a href="#optional-s-r-or-a" class="header-mark"></a><code>&lt;optional !s, !r, or !a&gt;</code></h4><p>These are used to perform <strong>type conversion</strong> on <code>&lt;expression&gt;</code></p>
+<h3 id="different-string-representation" class="headerLink">
+    <a href="#different-string-representation" class="header-mark"></a>Different string representation</h3><p>In Python, objects generally have two types of string representations, corresponding to the <code>__str__</code> and <code>__repr__</code> methods, where the former is typically user-facing and more readable, while the latter is typically developer-facing and aids in debugging programs. The f-strings allowes us to specify which one to use.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -306,23 +354,22 @@
 </span></span><span class="line"><span class="cl"><span class="p">{</span><span class="n">foo</span><span class="err">!</span><span class="n">a</span><span class="p">}</span>     <span class="c1"># similarily，call ascii(foo) first</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>In fact, these three are redundant<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. It is just for minimizing the differences with <code>str.format()</code></p>
-<h4 id="optionalformat_specifier" class="headerLink">
-    <a href="#optionalformat_specifier" class="header-mark"></a><code>&lt;optional:format_specifier&gt;</code></h4><p>This part is to define how <code>expression</code> should be displayed, <em>for example, control the precision of decimals, or do string alignment, etc.</em>.</p>
-<p>Below I will briefly talk about some of them. For more detailed explanations, please refer to<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<blockquote>
-<p>Note that this <code>format_specifier</code> begins with <code>:</code> (this explains why we are not allowed use <code>:</code> in <code>expression</code>)</p>
-</blockquote>
-<p>The grammar of <code>format_specifier</code>:</p>
-<p><code>[[fill]align][sign][z][#][0][width][,][grouping_option][.precision][type]</code></p>
-<blockquote>
-<p>In grammar, the <code>[...]</code> symbol means it is optional</p>
-</blockquote>
-<h5 id="fillalign" class="headerLink">
-    <a href="#fillalign" class="header-mark"></a><code>[[fill]align]</code></h5><p>This part is used to pad(specify a character with <code>fill</code>) the <code>expression</code> and do alignments. The <code>fill</code> here can be any character(defaults to a space).</p>
-<blockquote>
-<p>Note: We need to set minumul width by <code>[width]</code> when we declare <code>[[fill]align]</code></p>
-</blockquote>
+</div><h3 id="padding--alignment" class="headerLink">
+    <a href="#padding--alignment" class="header-mark"></a>Padding &amp; Alignment</h3><p>The padding and alignment involve the following issues:</p>
+<ul>
+<li>Which character should we use? Here, we use <code>fill</code> to represent that.</li>
+<li>To what length should it be padded? Here, we use <code>width</code> to represent that.</li>
+<li>How should it be aligned? Here, we use <code>align</code> to represent that.</li>
+</ul>
+<p>The general format_specifier for padding and alignment is <code>[[fill]align][width]</code>.</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">In grammar specification, the <code>[]</code> indicates that this part is optional.</div>
+        </div>
+    </div>
 <p>The various ways of alignment options:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -338,7 +385,8 @@
 </span></span><span class="line"><span class="cl"><span class="o">=</span>        <span class="c1"># only valid for numeric types, pad between sign and digits</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>For example</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -379,7 +427,7 @@
 </div><pre><code>'-*******1'
 </code></pre>
 <h5 id="sign" class="headerLink">
-    <a href="#sign" class="header-mark"></a><code>[sign]</code></h5><p>It decides how the sign will be represented and is only valid for numerical values.</p>
+    <a href="#sign" class="header-mark"></a>Sign</h5><p>It decides how the sign should be represented and is only valid for numerical values.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -420,8 +468,34 @@
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">assert</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">1</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">1</span><span class="si">:</span><span class="s2">-</span><span class="si">}</span><span class="s2">&#34;</span>   <span class="c1"># because it&#39;s the default behavior</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h5 id="z" class="headerLink">
-    <a href="#z" class="header-mark"></a><code>[z]</code></h5><p>After Python 3.11, we can use <code>z</code> to handle negative zero(i.e. <code>-0.</code>). According to the PEP<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>, programmars usually will suppress negative zero.</p>
+</div><h3 id="the-precision-of-float-point-numbers" class="headerLink">
+    <a href="#the-precision-of-float-point-numbers" class="header-mark"></a>The precision of float-point numbers</h3><p>We can use <code>.nf</code> to keep <code>n</code> decimal places for float-point numbers, which is somewhat similar to C/C++&rsquo;s <code>printf</code>. For example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="mf">1.23456</span>
+</span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'1.2'
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="mf">1.23456</span>
+</span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'1.235'
+</code></pre>
+<h5 id="the--00-issue" class="headerLink">
+    <a href="#the--00-issue" class="header-mark"></a>The <code>-0.0</code> issue</h5><p>We can use <code>z</code> to handle negative zero (i.e. <code>-0.</code>) since Python3.11. According to the PEP<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, programmers usually will suppress negative zero.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -446,13 +520,8 @@
 </div>
 </div><pre><code>'0.0'
 </code></pre>
-<h5 id="-and-type" class="headerLink">
-    <a href="#-and-type" class="header-mark"></a><code>[#]</code> and <code>[type]</code></h5><p><code>[#]</code> is only valid for integer, float, and complex types.</p>
-<ul>
-<li>integer: add the respective prefix for the different base(radix)</li>
-<li>float and complex: always add a decimal-point even if no digits follow it</li>
-</ul>
-<p>How to interpret the numbers in the different bases(radixes)? It&rsquo;s the <code>[type]</code>&rsquo;s job:</p>
+<h3 id="other-number-representation" class="headerLink">
+    <a href="#other-number-representation" class="header-mark"></a>Other number representation</h3><p>In Python, we can use the built-in functions to get the representation in other bases including <code>bin</code> and <code>oct</code>. You may attempt to use <code>{bin(a)}</code> to get the binary representation output of <code>a</code>. However, the f-strings offers a more elegant way to handle this</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -469,7 +538,25 @@
 </span></span><span class="line"><span class="cl"><span class="n">X</span>        <span class="c1"># base 16, upper-case letters</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>Tip<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Adding a <code>#</code> character will add the corresponding prefix (e.g. <code>0b</code>)</div>
+        </div>
+    </div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">15</span><span class="si">:</span><span class="s2">b</span><span class="si">}</span><span class="s2">&#34;</span>      <span class="c1"># represent 15 in base 2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'1111'
+</code></pre>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -489,60 +576,8 @@
 </div>
 </div><pre><code>'0XF'
 </code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">3</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'3'
-</code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">3</span><span class="si">:</span><span class="s2">#.0f</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'3.'
-</code></pre>
-<h5 id="0width" class="headerLink">
-    <a href="#0width" class="header-mark"></a><code>[0][width]</code></h5><p>we set the minimal width by setting the <code>width</code>. If we also add the prefix <code>0</code> here, it means we will use <code>0</code> to pad the rest part.</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">123</span><span class="si">:</span><span class="s2">5</span><span class="si">}</span><span class="s2">&#34;</span>     <span class="c1"># width 5</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'  123'
-</code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">123</span><span class="si">:</span><span class="s2">05</span><span class="si">}</span><span class="s2">&#34;</span>    <span class="c1"># width 5 with leading 0</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'00123'
-</code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mf">123.1</span><span class="si">:</span><span class="s2">5</span><span class="si">}</span><span class="s2">&#34;</span>   <span class="c1"># Note: the width includes the decimal point char</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'123.1'
-</code></pre>
-<h5 id="grouping_option" class="headerLink">
-    <a href="#grouping_option" class="header-mark"></a><code>[grouping_option]</code></h5><p>Specify the thousands separators. Two options available<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup><sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>：</p>
+<h3 id="thousands-separator" class="headerLink">
+    <a href="#thousands-separator" class="header-mark"></a>Thousands separator</h3><p>Specify the thousands separators. Two options available<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup><sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>：</p>
 <ul>
 <li><code>_</code></li>
 <li><code>,</code></li>
@@ -588,38 +623,50 @@
 </div>
 </div><pre><code>'1_234.56789'
 </code></pre>
-<h5 id="precision" class="headerLink">
-    <a href="#precision" class="header-mark"></a><code>[.precision]</code></h5><p>How many digits should be displayed after the <code>.</code>?</p>
+<h3 id="trick" class="headerLink">
+    <a href="#trick" class="header-mark"></a>Trick</h3><p>We can use <code>{expression=}</code> for self-documenting expression since Python3.8<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>.</p>
+<p>How could it be helpful? As a <em>print debugger</em>, I usually print values of variables to debug a Python program. It&rsquo;s kind of annoying that every time I need to write the variable name <em>twice</em>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mf">123.456</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;left=</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">, right=</span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>'123.46'
+</div><pre><code>'left=3, right=5'
+</code></pre>
+<p>Now we can write</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">left</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">right</span><span class="si">=}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'left=3, right=5'
 </code></pre>
 <h2 id="wrap-up" class="headerLink">
-    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><p>When I start to learn python a long time ago, most of the tutorials says we should use <code>%</code> to format strings. After <code>str.format</code> appears, it became a better choice and outdated the <code>%</code> syntax. F-strings, released with python 3.6, has become the best practice now.🚀 It meets the zen of python - <em>There should be one– and preferably only one –obvious way to do it</em></p>
+    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><p>When I started to learn Python a long time ago, most of the tutorials said we should use <code>%</code> to format strings. After <code>str.format</code> appeared, it became a better choice and outdated the <code>%</code> syntax. F-strings, released with Python3.6, has become the best practice now.🚀 It meets the zen of Python - <em>There should be one– and preferably only one –obvious way to do it</em></p>
 <h2 id="refs" class="headerLink">
     <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://peps.python.org/pep-0498/" target="_blank" rel="noopener noreferrer">PEP 498 – Literal String Interpolation</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0498/" target="_blank" rel="noopener noreferrer">PEP 498 – Literal String Interpolation</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://docs.python.org/3/library/string.html#format-specification-mini-language" target="_blank" rel="noopener noreferrer">Format Specifications</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0682/" target="_blank" rel="noopener noreferrer">PEP 682 – Format Specifier for Signed Zero</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="https://peps.python.org/pep-0682/" target="_blank" rel="noopener noreferrer">PEP 682 – Format Specifier for Signed Zero</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0378/" target="_blank" rel="noopener noreferrer">PEP 378 – Format Specifier for Thousands Separator</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:4">
-<p><a href="https://peps.python.org/pep-0378/" target="_blank" rel="noopener noreferrer">PEP 378 – Format Specifier for Thousands Separator</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0515/" target="_blank" rel="noopener noreferrer">PEP 515. Underscores in Numeric Literals</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:5">
-<p><a href="https://peps.python.org/pep-0515/" target="_blank" rel="noopener noreferrer">PEP 515. Underscores in Numeric Literals</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://docs.python.org/3/whatsnew/3.8.html#f-strings-support-for-self-documenting-expressions-and-debugging" target="_blank" rel="noopener noreferrer">https://docs.python.org/3/whatsnew/3.8.html#f-strings-support-for-self-documenting-expressions-and-debugging</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -629,13 +676,13 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-11-16</span>
+                <span>Updated on 2024-04-19</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
-            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python 3.6" data-hashtags="Python"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-hashtag="Python"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python 3.6"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python 3.6"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python 3.6"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python 3.6" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python3.6" data-hashtags="Python"><span class="fab fa-twitter fa-fw"></span></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-hashtag="Python"><span class="fab fa-facebook-square fa-fw"></span></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python3.6"><span class="fab fa-hacker-news fa-fw"></span></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python3.6"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python3.6"><span class="fab fa-weibo fa-fw"></span></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/f-strings-in-python/" data-title="The f-strings in Python3.6" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
         function shareOnMastodon(title, link) {
             const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
             const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
@@ -651,7 +698,7 @@
             window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
         }
     </script>
-    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;The f-strings in Python 3.6&#34;, &#34;https://martinlwx.github.io/en/f-strings-in-python/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;The f-strings in Python3.6&#34;, &#34;https://martinlwx.github.io/en/f-strings-in-python/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
         </div>
     </div>
 
@@ -670,7 +717,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.125.1">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
@@ -683,7 +730,7 @@
             <i class="fas fa-comment fa-fw"></i>
         </a>
     </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/en/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"No results found","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"O4EMEES3VS","algoliaIndex":"my_blog","algoliaSearchKey":"36fdaa364fae083332d0c8709026bd62","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
             window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
             gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
         </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>

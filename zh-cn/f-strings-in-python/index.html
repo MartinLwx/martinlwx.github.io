@@ -7,15 +7,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" />
-    <title>f-strings in Python 3.6 - MartinLwx&#39;s Blog</title><meta name="Description" content="Python 3.6 引入的 f-strings 的简单介绍"><meta property="og:title" content="f-strings in Python 3.6" />
-<meta property="og:description" content="Python 3.6 引入的 f-strings 的简单介绍" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://martinlwx.github.io/zh-cn/f-strings-in-python/" /><meta property="og:image" content="https://martinlwx.github.io/logo.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-11-16T22:15:00+08:00" />
-<meta property="article:modified_time" content="2022-11-16T22:15:00+08:00" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://martinlwx.github.io/logo.png" /><meta name="twitter:title" content="f-strings in Python 3.6"/>
-<meta name="twitter:description" content="Python 3.6 引入的 f-strings 的简单介绍"/>
+    <title>Python3.6 的 f-strings - MartinLwx&#39;s Blog</title><meta name="Description" content="Python3.6 引入的 f-strings 的简单介绍"><meta property="og:url" content="https://martinlwx.github.io/zh-cn/f-strings-in-python/">
+  <meta property="og:site_name" content="MartinLwx&#39;s Blog">
+  <meta property="og:title" content="Python3.6 的 f-strings">
+  <meta property="og:description" content="Python3.6 引入的 f-strings 的简单介绍">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+  <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-11-16T22:15:00+08:00">
+    <meta property="article:modified_time" content="2024-04-19T15:15:00+08:00">
+    <meta property="article:tag" content="Python">
+    <meta property="og:image" content="https://martinlwx.github.io/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://martinlwx.github.io/logo.png"><meta name="twitter:title" content="Python3.6 的 f-strings">
+<meta name="twitter:description" content="Python3.6 引入的 f-strings 的简单介绍">
 <meta name="application-name" content="MartinLwx&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
 
@@ -28,18 +33,18 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "f-strings in Python 3.6",
+        "headline": "Python3.6 的 f-strings",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/f-strings-in-python/"
-        },"genre": "posts","keywords": "Python","wordcount":  2224 ,
-        "url": "https://martinlwx.github.io/zh-cn/f-strings-in-python/","datePublished": "2022-11-16T22:15:00+08:00","dateModified": "2022-11-16T22:15:00+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords": "Python","wordcount":  2187 ,
+        "url": "https://martinlwx.github.io/zh-cn/f-strings-in-python/","datePublished": "2022-11-16T22:15:00+08:00","dateModified": "2024-04-19T15:15:00+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx"
-            },"description": "Python 3.6 引入的 f-strings 的简单介绍"
+            },"description": "Python3.6 引入的 f-strings 的简单介绍"
     }
     </script></head>
 
@@ -134,37 +139,29 @@
         <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
-    <li><a href="#语法规则">语法规则</a>
+    <li><a href="#语法规则">语法规则</a></li>
+    <li><a href="#各种使用场景">各种使用场景</a>
       <ul>
-        <li><a href="#text"><code>&lt;text&gt;</code></a></li>
-        <li><a href="#expression"><code>{&lt;expression&gt;}</code></a></li>
-        <li><a href="#option"><code>&lt;option...&gt;</code></a>
-          <ul>
-            <li><a href="#optional-s-r-or-a"><code>&lt;optional !s, !r, or !a&gt;</code></a></li>
-            <li><a href="#optionalformat_specifier"><code>&lt;optional:format_specifier&gt;</code></a>
-              <ul>
-                <li><a href="#fillalign"><code>[[fill]align]</code></a></li>
-                <li><a href="#sign"><code>[sign]</code></a></li>
-                <li><a href="#z"><code>[z]</code></a></li>
-                <li><a href="#-和-type"><code>[#]</code> 和 <code>[type]</code></a></li>
-                <li><a href="#0width"><code>[0][width]</code></a></li>
-                <li><a href="#grouping_option"><code>[grouping_option]</code></a></li>
-                <li><a href="#precision"><code>[.precision]</code></a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+        <li><a href="#基本使用">基本使用</a></li>
+        <li><a href="#不同表示">不同表示</a></li>
+        <li><a href="#补齐与对齐">补齐与对齐</a></li>
+        <li><a href="#符号位的显示">符号位的显示</a></li>
+        <li><a href="#浮点数精度">浮点数精度</a></li>
+        <li><a href="#-00-的问题">-0.0 的问题</a></li>
+        <li><a href="#不同进制的表示">不同进制的表示</a></li>
+        <li><a href="#千分位分隔符">千分位分隔符</a></li>
+        <li><a href="#trick">Trick</a></li>
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">f-strings in Python 3.6</h1><div class="post-meta">
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Python3.6 的 f-strings</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
                 </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-16">2022-11-16</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-11-16">2022-11-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2224 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-16">2022-11-16</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-04-19">2024-04-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2187 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -173,41 +170,41 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#引言">引言</a></li>
-    <li><a href="#语法规则">语法规则</a>
+    <li><a href="#语法规则">语法规则</a></li>
+    <li><a href="#各种使用场景">各种使用场景</a>
       <ul>
-        <li><a href="#text"><code>&lt;text&gt;</code></a></li>
-        <li><a href="#expression"><code>{&lt;expression&gt;}</code></a></li>
-        <li><a href="#option"><code>&lt;option...&gt;</code></a>
-          <ul>
-            <li><a href="#optional-s-r-or-a"><code>&lt;optional !s, !r, or !a&gt;</code></a></li>
-            <li><a href="#optionalformat_specifier"><code>&lt;optional:format_specifier&gt;</code></a>
-              <ul>
-                <li><a href="#fillalign"><code>[[fill]align]</code></a></li>
-                <li><a href="#sign"><code>[sign]</code></a></li>
-                <li><a href="#z"><code>[z]</code></a></li>
-                <li><a href="#-和-type"><code>[#]</code> 和 <code>[type]</code></a></li>
-                <li><a href="#0width"><code>[0][width]</code></a></li>
-                <li><a href="#grouping_option"><code>[grouping_option]</code></a></li>
-                <li><a href="#precision"><code>[.precision]</code></a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+        <li><a href="#基本使用">基本使用</a></li>
+        <li><a href="#不同表示">不同表示</a></li>
+        <li><a href="#补齐与对齐">补齐与对齐</a></li>
+        <li><a href="#符号位的显示">符号位的显示</a></li>
+        <li><a href="#浮点数精度">浮点数精度</a></li>
+        <li><a href="#-00-的问题">-0.0 的问题</a></li>
+        <li><a href="#不同进制的表示">不同进制的表示</a></li>
+        <li><a href="#千分位分隔符">千分位分隔符</a></li>
+        <li><a href="#trick">Trick</a></li>
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><blockquote>
-<p>这一篇博客一开始是写在 jupyter notebook 里面而后转成 markdown 的。如果想要访问和运行本来的 notebook，请查阅这个<a href="https://github.com/MartinLwx/oh_my_python" target="_blank" rel="noopener noreferrer">仓库</a></p>
-</blockquote>
+            </div><div class="content" id="content"><div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>信息<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p><strong>更新</strong>：</p>
+<ul>
+<li><em>2024-04-19</em>，重写全文，根据使用场景分类，方便作为 cheatsheet</li>
+</ul></div>
+        </div>
+    </div>
 <h2 id="引言" class="headerLink">
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>字符串格式化绝对可以算得上日常生活中最为常用的功能之一，我们经常需要输出各种字符串还需要精确控制其格式</p>
-<p>在一些过时的 Python 教程上，还可以看到使用 <code>%</code> 来格式化字符串。但其实在 Python 3.6 之后，f-strings 已经成了格式化字符串的最优解，优点包括：</p>
+<p>在一些<em>过时</em>的 Python 教程上，还可以看到使用 <code>%</code> 来格式化字符串。但其实在 Python3.6 之后，f-strings 已经成了格式化字符串的最优解，优点包括：</p>
 <ol>
-<li>可以在字符串字面值（String literal）里面<strong>内嵌表达式</strong></li>
-<li><strong>可读性非常强</strong></li>
+<li>可以在字符串字面值（String literal）里面<em>内嵌表达式</em></li>
+<li><em>可读性非常强</em></li>
 </ol>
 <p><em>下面的简单对比就可以看出 f-strings 在可读性上的优势</em>：</p>
 <div class="highlight"><div class="chroma">
@@ -234,20 +231,49 @@
 </div>
 </div><pre><code>'My name is Martin'
 </code></pre>
-<p>在上面的例子中我们分别用两种方式实现了同样功能的字符串输出。</p>
-<p>看一眼 f-strings 就知道这个字符串是要输出名字（当然这要求你用的是有意义的变量，比如这里用的是 <code>name</code>）。而如果用旧的 <code>%</code> 字符串格式化字符串，则稍微显得不那么自然，<strong>我们首先会看到 <code>%s</code> 占位符，此时我们需要向右看才知道这里会放置什么变量</strong>。</p>
-<p>这里的例子不长所以没啥差别，但是如果用 <code>%</code> 格式化的字符串很长的话，看代码就会有割裂感，你的眼睛需要来回左右移动。而且这不仅仅是阅读代码上不大自然，如果是自己写很长的字符串，还得核对一遍占位符和变量的顺序是否一致，这无疑是一个负担。😫</p>
+<p>在上面的例子中我们分别用两种格式化字符串的方式实现了同样功能</p>
+<p>看一眼 f-strings 就知道这个字符串是要输出名字（当然这要求你用的是有意义的变量，比如这里用的是 <code>name</code>）。而如果用旧的 <code>%</code> 字符串格式化字符串，则稍微显得不那么自然，<strong>我们首先会看到 <code>%s</code> 占位符，此时我们需要向右看才知道这里会放置什么变量</strong></p>
+<p>这里的例子不长所以没啥差别，但是如果用 <code>%</code> 格式化的字符串很长的话，看代码就会有割裂感，你的眼睛需要<em>来回左右移动</em>。而且这不仅仅是阅读代码上不大自然，如果是自己写很长的字符串，还得核对一遍占位符和变量的顺序是否一致，这无疑是一个负担 😫</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">f-strings 对 Python 版本的最低要求是 3.6</div>
+        </div>
+    </div>
 <h2 id="语法规则" class="headerLink">
-    <a href="#%e8%af%ad%e6%b3%95%e8%a7%84%e5%88%99" class="header-mark"></a>语法规则</h2><p>f-strings 的语法规则很简单，下面我借用<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>里面的定义：</p>
-<p><code>f'&lt;text&gt;{&lt;expression&gt;&lt;optional !s, !r, or !a&gt; &lt;optional:format_specifier&gt; }&lt;text&gt;...'</code></p>
-<p>整体上来看可以将其归纳为 <code>f&quot;...&quot;</code> 或者 <code>f'...'</code> 这种形式。</p>
-<p>像普通的字符串那样，我们可以选择用单引号 <code>''</code> 或者双引号 <code>&quot;&quot;</code> 将字符串的内容括起来，当然 <code>&quot;&quot;&quot;...&quot;&quot;&quot;</code> 这种三个引号的也是 OK 的</p>
-<p>至于其他部分，我们分成几个小节进行讲解：</p>
-<h3 id="text" class="headerLink">
-    <a href="#text" class="header-mark"></a><code>&lt;text&gt;</code></h3><p>放置字符串字面值，最简单的使用场景是不带任何表达式的字符串，此时 f-strings 就退化成了普通字符串。<em>比如 <code>f&quot;Hello world&quot;</code></em>。<del>当然这完全没有必要用 f-strings</del></p>
-<h3 id="expression" class="headerLink">
-    <a href="#expression" class="header-mark"></a><code>{&lt;expression&gt;}</code></h3><p>我们先考虑最简单的情况： 不包含任何可选部分（即上面语法中的 <code>&lt;option...&gt;</code> ）的 <code>{expression}</code></p>
-<p>上面其实已经指明了如何在 f-strings 里面嵌入表达式：只要将其放在 <code>{}</code> 里面即可。<em>下面是一个简单的例子</em></p>
+    <a href="#%e8%af%ad%e6%b3%95%e8%a7%84%e5%88%99" class="header-mark"></a>语法规则</h2><p>f-strings 的语法规则很简单，简单来说，它只是在普通字符串（<code>&quot;...&quot;</code> or <code>'...'</code>) 的前面加上了 <code>f</code> 前缀，这样你就得到了一个 f-strings</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;...&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># or f&#39;...&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 f-strings 里面，我们可以放置形如 <code>{expression}</code> 的文本，它的意思是：Python 会帮我们对这个表达式求值，并进行格式化的输出</p>
+<p>当然，只是求值还不够，有时候我们想要进行各种控制</p>
+<ul>
+<li>浮点数的精度</li>
+<li>是否要显示正负数的 <code>+</code> 或者是 <code>-</code></li>
+<li>&hellip;</li>
+</ul>
+<p>而这些则是通过 <code>format_specifier</code> 进行控制，它包含了多个<em>可选</em>的配置项。从语法上看，<code>format_specifier</code> 接在 <code>expression</code> 后面，两者之间用 <code>:</code> 隔开，所以确切来说，f-strings 的语法规则是下面这样的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;...</span><span class="si">{</span><span class="n">expression</span><span class="si">:</span><span class="s2">format_specifier</span><span class="si">}</span><span class="s2">...&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面我们来按照<em>功能</em>进行分类，看看用 f-strings 我们都可以做些什么</p>
+<h2 id="各种使用场景" class="headerLink">
+    <a href="#%e5%90%84%e7%a7%8d%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" class="header-mark"></a>各种使用场景</h2><h3 id="基本使用" class="headerLink">
+    <a href="#%e5%9f%ba%e6%9c%ac%e4%bd%bf%e7%94%a8" class="header-mark"></a>基本使用</h3><p>我们先考虑最简单的情况：不包含任何 <code>format_specifier</code>。下面是一个简单的例子</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -260,39 +286,41 @@
 </div>
 </div><pre><code>'3 + 5 = 8'
 </code></pre>
-<p>用 <code>{}</code> 来充当占位符就很自然引申出一个问题——如果要在字符串里面输出 <code>{}</code> 这两个字符怎么办？</p>
-<p>答案也很简单，我们只要用 <code>{{expression}}</code> 这种格式即可</p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">用 <code>{}</code> 来充当占位符就很自然引申出一个问题——如果要在字符串里面输出 <code>{}</code> 这两个字符怎么办？答案也很简单，我们只要用 <code>{{}}</code> 即可</div>
+        </div>
+    </div>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># &#39;hello&#39; is an expression too. </span>
-</span></span><span class="line"><span class="cl"><span class="c1"># Note that we need to use different quote syntax inside {}</span>
-</span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="se">{{</span><span class="s2">&#39;hello&#39;</span><span class="se">}}</span><span class="s2">&#34;</span>   
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="se">{{}}</span><span class="s2">&#34;</span>   
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>&quot;{'hello'}&quot;
+</div><pre><code>'{}'
 </code></pre>
 <p>值得一提的还有，<strong><code>expression</code> 里面不允许出现 <code>:</code> 和 <code>!</code> 和 <code>\</code></strong></p>
-<p>实际上 <code>expression</code> 里面也很少会包含这几个字符。<code>\</code> 的一个使用场景是用来转义 <code>'</code> 或者 <code>&quot;</code>，但其实只要我们内外用的是不同的引号格式即可。至于 <code>:</code>，在 PEP<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 里面举例可能应用场景是 lambda 表达式，此时我们只需用一对括号将 lambda 表达式括起来即可：</p>
+<p>实际上 <code>expression</code> 里面也很少会包含这几个字符。<code>\</code> 的一个使用场景是用来转义 <code>'</code> 或者 <code>&quot;</code>，但其实只要我们内外用的是不同的引号格式即可</p>
+<p>至于 <code>:</code>，在 PEP498<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 里面举例可能应用场景是 lambda 表达式，此时我们只需用<em>一对括号</em>将 lambda 表达式括起来即可：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># note that we need to add () around the lambda expression</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Note that we need to add () around the lambda expression</span>
 </span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span> 
 </span></span></code></pre></td></tr></table>
 </div>
 </div><pre><code>'4'
 </code></pre>
-<h3 id="option" class="headerLink">
-    <a href="#option" class="header-mark"></a><code>&lt;option...&gt;</code></h3><h4 id="optional-s-r-or-a" class="headerLink">
-    <a href="#optional-s-r-or-a" class="header-mark"></a><code>&lt;optional !s, !r, or !a&gt;</code></h4><p>这几个是用来对 <code>&lt;expression&gt;</code> 做<strong>类型转换</strong>的</p>
+<h3 id="不同表示" class="headerLink">
+    <a href="#%e4%b8%8d%e5%90%8c%e8%a1%a8%e7%a4%ba" class="header-mark"></a>不同表示</h3><p>Python 对象一般会有 2 种字符串的表示，分别对应 <code>__str__</code> 和 <code>__repr__</code> 方法，其中前者一般是面向客户的，可读性较好；后者一般是面向开发者的，便于调试程序。f-strings 对此提供了支持，我们可以指定要用哪一种</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -305,23 +333,23 @@
 </span></span><span class="line"><span class="cl"><span class="p">{</span><span class="n">foo</span><span class="p">:</span><span class="err">!</span><span class="n">a</span><span class="p">}</span>     <span class="c1"># similarily，call ascii(foo) first</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这三个<strong>了解即可，一般也不会怎么用到</strong>，真要用的话还是<strong>自己直接调用对应的函数会比较直观</strong>，PEP 498<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 里面自己也说了这三个只是为了最小化和之前的 <code>str.format</code> 的差别</p>
-<h4 id="optionalformat_specifier" class="headerLink">
-    <a href="#optionalformat_specifier" class="header-mark"></a><code>&lt;optional:format_specifier&gt;</code></h4><p>这一部分就是对前面 <code>expression</code> 的值进行“修饰”，<em>比如我们想要控制小数的精度，或者做字符串对齐等等</em>。下面我会简单讲讲其中几个部分。更为详细的完整支持选项可以参考<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-<blockquote>
-<p>注意这个部分的开头用的是 <code>:</code>（这也一定程度上解释了为什么 Python 不允许 <code>expression</code> 里面出现 <code>:</code>）</p>
-</blockquote>
-<p>可以先看看 <code>format_specifier</code> 的语法描述：</p>
-<p><code>[[fill]align][sign][z][#][0][width][,][grouping_option][.precision][type]</code></p>
-<blockquote>
-<p>在语法里面，<code>[]</code> 表示是可选项</p>
-</blockquote>
-<h5 id="fillalign" class="headerLink">
-    <a href="#fillalign" class="header-mark"></a><code>[[fill]align]</code></h5><p>主要用来对字符串进行输出对齐，这里的 <code>fill</code> 可以是任意的字符（默认情况下是空格）用于填充剩下的部分</p>
-<blockquote>
-<p>注意：<code>[[fill]align]</code> 需要和 <code>width</code> 一起搭配使用，<strong>没有指定输出宽度的情况下是没有用的</strong></p>
-</blockquote>
-<p><code>align</code> 支持下面这几种对齐方式：</p>
+</div><h3 id="补齐与对齐" class="headerLink">
+    <a href="#%e8%a1%a5%e9%bd%90%e4%b8%8e%e5%af%b9%e9%bd%90" class="header-mark"></a>补齐与对齐</h3><p>补齐和对齐涉及到下面几个问题</p>
+<ul>
+<li>要用什么字符补齐？下面用 <code>fill</code> 表示</li>
+<li>要补齐到多长？下面用 <code>width</code> 表示</li>
+<li>要如何对齐？下面用 <code>align</code> 表示</li>
+</ul>
+<p>因此，补齐和对齐的语法规则是 <code>[[fill]align][width]</code></p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">在语法规则里面，<code>[]</code> 表示这是可选的部分</div>
+        </div>
+    </div>
+<p>其中 <code>align</code> 支持下面这几种对齐方式：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -336,7 +364,8 @@
 </span></span><span class="line"><span class="cl"><span class="o">=</span>        <span class="c1"># only valid for numeric types, pad between sign and digits</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><p>举例如下</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -376,8 +405,8 @@
 </div>
 </div><pre><code>'-*******1'
 </code></pre>
-<h5 id="sign" class="headerLink">
-    <a href="#sign" class="header-mark"></a><code>[sign]</code></h5><p>用于控制数值类型的符号位显示，支持下面这几种</p>
+<h3 id="符号位的显示" class="headerLink">
+    <a href="#%e7%ac%a6%e5%8f%b7%e4%bd%8d%e7%9a%84%e6%98%be%e7%a4%ba" class="header-mark"></a>符号位的显示</h3><p>支持下面这几种</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -418,8 +447,34 @@
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">assert</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">1</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">1</span><span class="si">:</span><span class="s2">-</span><span class="si">}</span><span class="s2">&#34;</span>   <span class="c1"># because it&#39;s the default behavior</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h5 id="z" class="headerLink">
-    <a href="#z" class="header-mark"></a><code>[z]</code></h5><p>在 Python 3.11 里面，增加了可选的 <code>z</code> 用来处理 <code>-0.</code>。因为调查显示<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，大多数情况下我们都不想得到 <code>-0.0</code> 这样的输出</p>
+</div><h3 id="浮点数精度" class="headerLink">
+    <a href="#%e6%b5%ae%e7%82%b9%e6%95%b0%e7%b2%be%e5%ba%a6" class="header-mark"></a>浮点数精度</h3><p>浮点数要保留 <code>n</code> 位小数我们就用 <code>.nf</code>，跟 C/C++ 的 <code>printf</code> 有点像，比如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="mf">1.23456</span>
+</span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'1.2'
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="mf">1.23456</span>
+</span></span><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'1.235'
+</code></pre>
+<h3 id="-00-的问题" class="headerLink">
+    <a href="#-00-%e7%9a%84%e9%97%ae%e9%a2%98" class="header-mark"></a>-0.0 的问题</h3><p>从 Python3.11 起，增加了可选的 <code>z</code> 用来处理 <code>-0.</code>。因为调查显示<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，大多数情况下我们都不想得到 <code>-0.0</code> 这样的输出</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -444,13 +499,8 @@
 </div>
 </div><pre><code>'0.0'
 </code></pre>
-<h5 id="-和-type" class="headerLink">
-    <a href="#-%e5%92%8c-type" class="header-mark"></a><code>[#]</code> 和 <code>[type]</code></h5><p><code>[#]</code> 只对 integer、float 和 complex 类型有效</p>
-<ul>
-<li>integer：会<strong>根据你选择输出的进制增加相应的前缀</strong>，<em>比如二进制就增加 <code>0b</code></em></li>
-<li>float 和 complex：<strong>总是输出小数点</strong>，就算小数点之后没有数字</li>
-</ul>
-<p>如何用不同的进制显示？这就是 <code>[type]</code> 的工作：</p>
+<h3 id="不同进制的表示" class="headerLink">
+    <a href="#%e4%b8%8d%e5%90%8c%e8%bf%9b%e5%88%b6%e7%9a%84%e8%a1%a8%e7%a4%ba" class="header-mark"></a>不同进制的表示</h3><p>Python 提供了几个方便的函数，比如 <code>bin</code>，<code>oct</code> 等来获得不同进制的表示，根据 f-strings 的定义，我们可以选择写出 <code>{bin(a)}</code> 来获得 <code>a</code> 的二进制的表示（其他进制的表示同理）。但 f-strings 其实已经帮你考虑到这点了，它默认支持如下的进制表示</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -467,7 +517,25 @@
 </span></span><span class="line"><span class="cl"><span class="n">X</span>        <span class="c1"># base 16, upper-case letters</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">可以加上 <code>#</code>，就会添加对应进制表示的前缀，比如 <code>0b</code> 等</div>
+        </div>
+    </div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">15</span><span class="si">:</span><span class="s2">b</span><span class="si">}</span><span class="s2">&#34;</span>      <span class="c1"># represent 15 in base 2</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'1111'
+</code></pre>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -487,65 +555,8 @@
 </div>
 </div><pre><code>'0XF'
 </code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">3</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'3'
-</code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">3</span><span class="si">:</span><span class="s2">#.0f</span><span class="si">}</span><span class="s2">&#34;</span>   
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'3.'
-</code></pre>
-<h5 id="0width" class="headerLink">
-    <a href="#0width" class="header-mark"></a><code>[0][width]</code></h5><p>width 是用来控制显示的最小长度，如果加上 <code>0</code>，那么就会在数值前面补 0</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">123</span><span class="si">:</span><span class="s2">5</span><span class="si">}</span><span class="s2">&#34;</span>     <span class="c1"># width 5</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'  123'
-</code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mi">123</span><span class="si">:</span><span class="s2">05</span><span class="si">}</span><span class="s2">&#34;</span>    <span class="c1"># width 5 with leading 0</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'00123'
-</code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mf">123.1</span><span class="si">:</span><span class="s2">5</span><span class="si">}</span><span class="s2">&#34;</span>   <span class="c1"># Note: the width includes the decimal point char</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><pre><code>'123.1'
-</code></pre>
-<h5 id="grouping_option" class="headerLink">
-    <a href="#grouping_option" class="header-mark"></a><code>[grouping_option]</code></h5><p>指定<strong>千分位分隔符</strong>，有两种选项<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup><sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>：</p>
-<ul>
-<li><code>_</code></li>
-<li><code>,</code></li>
-</ul>
-<p>在数字很大的时候，这两个千分位分隔符都会让可读性大大增强！</p>
+<h3 id="千分位分隔符" class="headerLink">
+    <a href="#%e5%8d%83%e5%88%86%e4%bd%8d%e5%88%86%e9%9a%94%e7%ac%a6" class="header-mark"></a>千分位分隔符</h3><p>在金融或者经济学里面，经常会用 <code>,</code> 作为千分位分隔符，f-strings 对此提供了支持，除此之外，还可以指定 <code>_</code> 作为千分位的分隔符<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup><sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -586,38 +597,50 @@
 </div>
 </div><pre><code>'1_234.56789'
 </code></pre>
-<h5 id="precision" class="headerLink">
-    <a href="#precision" class="header-mark"></a><code>[.precision]</code></h5><p>指定小数点之后要保留几位，会自动舍入</p>
+<h3 id="trick" class="headerLink">
+    <a href="#trick" class="header-mark"></a>Trick</h3><p>从 Python3.8 起，我们可以用 <code>{expression=}</code> 的形式，它会自动帮我们转换成 <code>expression={expression}</code><sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>，这有什么用呢？</p>
+<p>在调试 Python 程序的时候，我经常会写出如下的 f-strings 输出我关心的变量的值，但有点麻烦的是，我不得不写<em>两次</em>变量的名字</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="mf">123.456</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;left=</span><span class="si">{</span><span class="n">left</span><span class="si">}</span><span class="s2">, right=</span><span class="si">{</span><span class="n">right</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>'123.46'
+</div><pre><code>'left=3, right=5'
+</code></pre>
+<p>可以看到，里面存在一些<em>冗余</em>，因此，一个更好的方式是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">left</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">right</span><span class="si">=}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>'left=3, right=5'
 </code></pre>
 <h2 id="总结" class="headerLink">
-    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>在我刚开始学习 Python 的时候，当时的教程都是在用 <code>%</code> 来格式化输出，后来的推荐是 <code>str.format</code> 方法。而到了 f-string 随着 Python 3.6 发布之后，似乎统一了字符串输出的 Best practice，大家都在用这个。这也是符合 Python 设计哲学的——应该只有一种显而易见的方式做到一件事🚀</p>
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>在我刚开始学习 Python 的时候，当时的教程都是在用 <code>%</code> 来格式化输出，后来的推荐是 <code>str.format</code> 方法。而到了 f-string 随着 Python3.6 发布之后，似乎统一了字符串输出的 Best practice，大家都在用这个。这也是符合 Python 设计哲学的——应该只有<em>一种</em>显而易见的方式做到一件事🚀</p>
 <h2 id="参考" class="headerLink">
     <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://peps.python.org/pep-0498/" target="_blank" rel="noopener noreferrer">PEP 498. Literal String Interpolation</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0498/" target="_blank" rel="noopener noreferrer">PEP 498. Literal String Interpolation</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="https://docs.python.org/3/library/string.html#format-specification-mini-language" target="_blank" rel="noopener noreferrer">Format Specifications</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0682/" target="_blank" rel="noopener noreferrer">PEP 682. Format Specifier for Signed Zero</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="https://peps.python.org/pep-0682/" target="_blank" rel="noopener noreferrer">PEP 682. Format Specifier for Signed Zero</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0378/" target="_blank" rel="noopener noreferrer">PEP 378. Format Specifier for Thousands Separator</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:4">
-<p><a href="https://peps.python.org/pep-0378/" target="_blank" rel="noopener noreferrer">PEP 378. Format Specifier for Thousands Separator</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://peps.python.org/pep-0515/" target="_blank" rel="noopener noreferrer">PEP 515. Underscores in Numeric Literals</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:5">
-<p><a href="https://peps.python.org/pep-0515/" target="_blank" rel="noopener noreferrer">PEP 515. Underscores in Numeric Literals</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://docs.python.org/3/whatsnew/3.8.html#f-strings-support-for-self-documenting-expressions-and-debugging" target="_blank" rel="noopener noreferrer">https://docs.python.org/3/whatsnew/3.8.html#f-strings-support-for-self-documenting-expressions-and-debugging</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
@@ -627,13 +650,13 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-11-16</span>
+                <span>更新于 2024-04-19</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
-            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="f-strings in Python 3.6" data-hashtags="Python"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-hashtag="Python"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="f-strings in Python 3.6"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="f-strings in Python 3.6"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="f-strings in Python 3.6"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="f-strings in Python 3.6" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="Python3.6 的 f-strings" data-hashtags="Python"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-hashtag="Python"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="Python3.6 的 f-strings"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="Python3.6 的 f-strings"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="Python3.6 的 f-strings"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/f-strings-in-python/" data-title="Python3.6 的 f-strings" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
         function shareOnMastodon(title, link) {
             const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
             const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
@@ -649,7 +672,7 @@
             window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
         }
     </script>
-    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;f-strings in Python 3.6&#34;, &#34;https://martinlwx.github.io/zh-cn/f-strings-in-python/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;Python3.6 的 f-strings&#34;, &#34;https://martinlwx.github.io/zh-cn/f-strings-in-python/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
         </div>
     </div>
 
@@ -668,7 +691,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.124.1">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.125.1">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
@@ -681,7 +704,7 @@
             <i class="fas fa-comment fa-fw"></i>
         </a>
     </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
-        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/zh-cn/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":true,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":30,"threshold":0.1,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"O4EMEES3VS","algoliaIndex":"index.zh-cn","algoliaSearchKey":"36fdaa364fae083332d0c8709026bd62","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
             window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
             gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
         </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
