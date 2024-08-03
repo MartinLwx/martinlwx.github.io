@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title>使用 GitHub Actions 自动化 Hugo 博客部署 - MartinLwx&#39;s Blog</title><meta name="Description" content="利用 GitHub Actions 自动化 Hugo 博客的部署"><meta property="og:url" content="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/">
+  <meta property="og:site_name" content="MartinLwx&#39;s Blog">
+  <meta property="og:title" content="使用 GitHub Actions 自动化 Hugo 博客部署">
+  <meta property="og:description" content="利用 GitHub Actions 自动化 Hugo 博客的部署">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-29T23:35:53+08:00">
+    <meta property="article:modified_time" content="2024-07-29T23:35:53+08:00">
+    <meta property="article:tag" content="CI/CD">
+    <meta property="og:image" content="https://martinlwx.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://martinlwx.github.io/logo.png">
+  <meta name="twitter:title" content="使用 GitHub Actions 自动化 Hugo 博客部署">
+  <meta name="twitter:description" content="利用 GitHub Actions 自动化 Hugo 博客的部署">
+<meta name="application-name" content="MartinLwx&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/tail-call-and-tail-call-optimization/" />
+<link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/color.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "使用 GitHub Actions 自动化 Hugo 博客部署",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/"
+        },"genre": "posts","keywords": "CI\/CD","wordcount":  2382 ,
+        "url": "https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/","datePublished": "2024-07-29T23:35:53+08:00","dateModified": "2024-07-29T23:35:53+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "MartinLwx"
+            },"description": "利用 GitHub Actions 自动化 Hugo 博客的部署"
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark'); window.theme = theme;   window.isDark = window.theme !== 'light' }
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+        window.switchThemeEventSet = new Set()
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/zh-cn/posts/"> 所有文章 </a><a class="menu-item" href="/zh-cn/tags/"> 标签 </a><a class="menu-item" href="/zh-cn/categories/"> 分类 </a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" title="选择语言" id="language-select-desktop" onchange="location = this.value;"><option value="/en/use-github-actions-to-automated-hugo-build/">English</option><option value="/zh-cn/use-github-actions-to-automated-hugo-build/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="black">黑色</option>
+                        <option value="auto">跟随系统</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/zh-cn/posts/" title="">所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="">标签</a><a class="menu-item" href="/zh-cn/categories/" title="">分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" rel="noopener noreferrer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-select" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="black">黑色</option>
+                    <option value="auto">跟随系统</option>
+                </select>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" title="选择语言" onchange="location = this.value;"><option value="/en/use-github-actions-to-automated-hugo-build/">English</option><option value="/zh-cn/use-github-actions-to-automated-hugo-build/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#github-actions-中的概念">GitHub Actions 中的概念</a></li>
+    <li><a href="#编写-yaml-文件">编写 YAML 文件</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">使用 GitHub Actions 自动化 Hugo 博客部署</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><span class="author fas fa-user-circle fa-fw"></span><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/software-engineering/"><i class="far fa-folder fa-fw"></i>Software-Engineering</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-07-29">2024-07-29</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2024-07-29">2024-07-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2382 字&nbsp;<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#github-actions-中的概念">GitHub Actions 中的概念</a></li>
+    <li><a href="#编写-yaml-文件">编写 YAML 文件</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言" class="headerLink">
+    <a href="#%e5%89%8d%e8%a8%80" class="header-mark"></a>前言</h2><p>最近在学习 GitHub Actions，GitHub Actions 是 GitHub 提供的一个特性，可以用来<em>自动化</em>执行一些步骤。在软件开发中，最常见的需要<em>自动化</em>的场景可能就是构建了。对于编译型的编程语言（比如 C/C++）编写的软件，通常需要编写对应的构建的脚本，软件构建的过程涉及到：环境准备、依赖下载、启动构建等。不过，利用 GitHub Actions 来<em>自动化</em>软件构建过程并不是本文的主题。在我思考我可以将 GitHub Actions 用于何处的时候，我想到了：利用 GitHub Actions 来自动化 Hugo 博客的部署。因为 Hugo 博客的部署也涉及到不少一系列固定的步骤 :)</p>
+<h2 id="背景" class="headerLink">
+    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>我的 Hugo 博客包含了 2 个仓库</p>
+<ul>
+<li><em>public 仓库</em> - <a href="https://github.com/MartinLwx/martinlwx.github.io" target="_blank" rel="noopener noreferrer">martinlwx.github.io</a>，存放了生成的 Hugo 静态网站</li>
+<li><em>private 仓库</em>，该仓库存放了 Hugo 的配置文件，以及博客文章的原始 Markdown 文件。private 仓库下存在一个 <code>./public</code> 目录，是一个 git submodule，指向了前面提到的 public 仓库</li>
+</ul>
+<p>大概长下面这个样子</p>
+<pre class="mermaid">flowchart LR
+  private("Private repo") -->|git push| public("Public repo: martinlwx.github.io")
+</pre><p><div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>警告<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">如果你没有使用 <a href="https://www.algolia.com" target="_blank" rel="noopener noreferrer">Algolia</a> 的话，你就没有必要上传 <code>index.json</code> 文件</div>
+        </div>
+    </div>
+部署 Hugo 博客的流程是这样子的：先写好文章，然后用 Hugo 生成静态博客，然后将生成的 <code>index.json</code> 文件用 <a href="https://github.com/chrisdmacrae/atomic-algolia" target="_blank" rel="noopener noreferrer">atomic-algolia</a> 上传到 <a href="https://www.algolia.com" target="_blank" rel="noopener noreferrer">Algolia</a>，所以我之前编写了如下的 shell 脚本（取名为 <code>deploy.sh</code>）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Deploying hugo website...&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># delete all the files in public folder</span>
+</span></span><span class="line"><span class="cl">rm -rf public/*
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># build the website</span>
+</span></span><span class="line"><span class="cl">hugo -t DoIt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># upload index.json</span>
+</span></span><span class="line"><span class="cl">node push_algolia_json.js
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># deploy the website</span>
+</span></span><span class="line"><span class="cl"><span class="nv">msg</span><span class="o">=</span><span class="s2">&#34;rebuild site on </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$msg</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> public <span class="o">||</span> <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m  <span class="s2">&#34;</span><span class="nv">$msg</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">git push
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># backup private repo</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> .. <span class="o">||</span> <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;backup hugo on </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">git push
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Git push successfully!&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么，我就可以用如下的命令完成 Hugo 博客的部署</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ bash deploy.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="github-actions-中的概念" class="headerLink">
+    <a href="#github-actions-%e4%b8%ad%e7%9a%84%e6%a6%82%e5%bf%b5" class="header-mark"></a>GitHub Actions 中的概念</h2><p>在 GitHub Actions 里面，涉及到许多概念，包括 Workflow、Event、Job、Action、Step</p>
+<p>Workflow 里面可以包含一到多个 Job，每个 Job 里面则包含了多个 Step，每个 Step 可以运行 Shell 命令、Shell 脚本或者是执行 action，这里的 action 可以看成是别人写好的脚本，通常是一些复杂而重复的操作。通过复用别人的 action 我们就<em>极大程度</em>减轻了编写 Workflow 的工作量</p>
+<p>Workflow 通常被我们设置好的 Event 触发，Event 包括跟 git 有关的事件，比如 <code>git push</code>、收到 PR 请求等。触发之后 workflow 就会开始运行了。用图表示就是</p>
+<pre class="mermaid">timeline
+   Event: push
+        : pull request
+        : ...
+   Job1 : Step 1. Run action
+        : Step 2. Run action
+        : Step 3. Run action
+        : Step 4. Run action
+        : ...
+   Job2: Step 1. Run action
+       : Step 2. Run action
+       : Step 3. Run action
+       : Step 4. Run action
+       : ...
+</pre><p>我们可以用一个 YAML 文件来描述 Workflow，这个 YAML 文件会放到 git 仓库里面和源代码一起管理，详细的语法可以在<a href="https://docs.github.com/zh/actions/using-workflows/workflow-syntax-for-github-actions" target="_blank" rel="noopener noreferrer">官网</a>找到</p>
+<h2 id="编写-yaml-文件" class="headerLink">
+    <a href="#%e7%bc%96%e5%86%99-yaml-%e6%96%87%e4%bb%b6" class="header-mark"></a>编写 YAML 文件</h2><div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>信息<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">下面<em>假定</em>你已经对 GitHub Actions 的基本语法有一定的了解，这不是本文的重点 :)</div>
+        </div>
+    </div>
+<p>接下来，我们要尝试将前面提到的 Shell 脚本变成 GitHub Actions 对应的 YAML 文件（取名为 <code>build_and_deploy.yaml</code> 文件）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">hugo-deploy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">master</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">build-and-deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Check out this repo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">submodules</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;recursive&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Install Hugo CLI</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">hugo-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;latest&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">extended</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Install node.js</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/setup-node@v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;latest&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Install atomic-algolia</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm install atomic-algolia</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build the website with the DoIt theme</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo -t DoIt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Upload index.json for search</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">node push_algolia_json.js</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">deploy_key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.HUGO_PRIVATE_KEY }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">external_repository</span><span class="p">:</span><span class="w"> </span><span class="l">Martinlwx/martinlwx.github.io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_branch</span><span class="p">:</span><span class="w"> </span><span class="l">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<p>其中 <a href="https://github.com/actions/checkout" target="_blank" rel="noopener noreferrer">actions/checkout</a> 是一个别人写好的 action，可以用来将 git 仓库下载到本地，我的 private 仓库涉及到 2 个 git submodule</p>
+<ul>
+<li><a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer">DoIt</a>，我的博客主题</li>
+<li><a href="https://github.com/MartinLwx/martinlwx.github.io" target="_blank" rel="noopener noreferrer">public 仓库</a></li>
+</ul>
+<p>这里需要把他们都 clone 到本地，所以设置 <code>submodules: true</code>，<code>fetch-depth: 0</code> 则会在 clone 的时候将<em>所有的</em> commit 都 clone 下来</p>
+<hr>
+<p>接下来我们要安装 Hugo，虽然官网上给出了 <a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/#build-hugo-with-github-action" target="_blank" rel="noopener noreferrer">详细的步骤</a>，但是我觉得较为繁琐，于是我找到了 <a href="https://github.com/peaceiris/actions-hugo" target="_blank" rel="noopener noreferrer">actions-hugo</a>，该 action 可以自动帮我们下载并安装好 Hugo，<code>hugo-version: 'latest'</code> 则是让它每次都用最新版本的 Hugo。因为 <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer">DoIt</a> 使用了 admonition 等特性，所以还需要设置 <code>extended: true</code>，也就是使用 extended 版本的 Hugo</p>
+<hr>
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw"></i>警告<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">如果你没有使用 <a href="https://www.algolia.com" target="_blank" rel="noopener noreferrer">Algolia</a> 的话，你就没有必要安装 <code>node.js</code>，也没有必要安装 <a href="https://github.com/chrisdmacrae/atomic-algolia" target="_blank" rel="noopener noreferrer">atomic-algolia</a>，也没有必要进行 <code>index.json</code> 文件的上传</div>
+        </div>
+    </div>
+<p>安装 <code>node.js</code> 也是同样的道理，已经有别人写好的了，这里不再赘述</p>
+<p>在安装完 <code>node.js</code> 之后，用 <code>npm</code> 安装 <a href="https://github.com/chrisdmacrae/atomic-algolia" target="_blank" rel="noopener noreferrer">atomic-algolia</a>，这样后面就可以上传 <code>index.json</code> 文件了</p>
+<hr>
+<p>在上传 <code>index.json</code> 文件之前，我们需要先用 Hugo 生成静态博客，这样才能保证 <code>index.json</code> 文件是最新的。跟在本地生成 Hugo 静态博客一样，用 <code>hugo -t DoIt</code> 指定主题并生成即可</p>
+<hr>
+<p>生成 <code>index.json</code> 文件之后就可以用 <code>node push_algolia_json.js</code> 上传了，<code>push_algolia_json.js</code> 文件怎么写可以看 <a href="https://github.com/chrisdmacrae/atomic-algolia" target="_blank" rel="noopener noreferrer">atomic-algolia</a> 文档</p>
+<hr>
+<p>最后，就涉及到 Hugo 博客的部署了，<a href="https://github.com/peaceiris/actions-hugo" target="_blank" rel="noopener noreferrer">actions-hugo</a> 的同一个作者还写了另外一个 action <a href="https://github.com/peaceiris/actions-gh-pages" target="_blank" rel="noopener noreferrer">actions-gh-pages</a> 可以用来快速部署。这里情况稍微复杂一些，前面提到，我有 1 个 public 仓库和 1 个 private 仓库，这里要做的事情其实是要从 private 仓库部署到 public 仓库。根据 <a href="https://github.com/peaceiris/actions-gh-pages" target="_blank" rel="noopener noreferrer">actions-gh-pages</a> 的 <code>README.md</code> 文档，需要设置 <code>external_repository</code>，将其指向我的 <a href="https://github.com/MartinLwx/martinlwx.github.io" target="_blank" rel="noopener noreferrer">public 仓库</a>的路径，格式也很好懂。另外因为部署要跨 git 仓操作，所以需要设置 <code>deploy_key</code>，这意味着我们需要生成 ssh-key 并分别添加到不同的 git 仓库里，这是相对比较麻烦的一步</p>
+<pre class="mermaid">flowchart LR
+  private("`
+  Private repo
+  (use the *private* ssh-key as a *secret*)
+  `") -->|peaceiris/actions-gh-pages@v4| public("`
+  Public repo
+  (use the *public* ssh-key as a *deploy key*)
+  `")
+</pre><p>首先，用自己的电脑生成<em>配对</em>的 ssh-key</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="c1"># replace with your email here.</span>
+</span></span><span class="line"><span class="cl">$ ssh-keygen -t ed25519 -C martinlwx@163.com -f <span class="s2">&#34;hugo&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在<em>当前目录</em>，你就可以看到 <code>hugo</code> 和 <code>hugo.pub</code> 这两个文件了，接下来</p>
+<ol>
+<li>点开 <em>public 仓库</em>的 <code>Settings -&gt; Deploy keys -&gt; Add deploey key</code>，将 <code>hugo.pub</code> 的内容添加进去，这里 Title 取什么名字无关紧要，<em>要紧的是</em>设置 <code>Allow Write Access</code></li>
+<li>点开 <em>private 仓库</em>的 <code>Settings -&gt; Secrets and variables -&gt; Actions -&gt; Manage repository secret</code>，将 <code>hugo</code> 的内容添加进去，Title 可以取作 <code>HUGO_PRIVATE_KEY</code>，就可以在 <code>deploy_key</code> 字段里面引用 <code>${{ secrets.HUGO_PRIVATE_KEY }}</code></li>
+</ol>
+<p>剩下没有解释的几个配置项</p>
+<ul>
+<li><code>publish_branch: main</code>，看名字也很好懂，这里指的是部署的时候要部署到哪个分支，我的 <a href="https://github.com/MartinLwx/martinlwx.github.io" target="_blank" rel="noopener noreferrer">public 仓库</a> 只有 <code>main</code> 分支，所以就这么设置了</li>
+<li><code>publish_dir: ./public</code>，这里指的是你的 private 仓库生成 Hugo 静态博客的时候输出到什么文件夹，我的就是输出到 <code>./public</code> 文件夹</li>
+</ul>
+<p>上面的步骤都完成之后，在 private 仓库的根目录新建 <code>.github/workflows</code> 目录，并将如上的 YAML 保存在里面，<code>git add &amp; git push</code> 一下就好了。之后点开仓库的 <code>Actions</code> 就可以看到该 workflow 了，如下所示
+<figure><img src="/img/hugo-build-and-deploy.jpg">
+</figure>
+</p>
+<h2 id="总结" class="headerLink">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>在搭建完流水线之后，我发现我的工作量似乎变多了，本来 <code>bash deploy.sh</code> 就能搞定的事情，现在需要自己 <code>git add</code> 和 <code>git commit</code><del>（不过这也是因为之前的 commit message 是调用命令生成的）</del>。但不管怎么说，还是从中学习到了 GitHub Actions 的使用，自动化部署 Hugo 博客是一次有意思的 CI/CD 实践。希望本文能给屏幕前的你带来帮助 :)</p>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-07-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/" data-title="使用 GitHub Actions 自动化 Hugo 博客部署" data-hashtags="CI/CD"><span class="fab fa-twitter fa-fw"></span></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/" data-hashtag="CI/CD"><span class="fab fa-facebook-square fa-fw"></span></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/" data-title="使用 GitHub Actions 自动化 Hugo 博客部署"><span class="fab fa-hacker-news fa-fw"></span></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/" data-title="使用 GitHub Actions 自动化 Hugo 博客部署"><span data-svg-src="/lib/simple-icons/icons/line.min.svg"></span></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/" data-title="使用 GitHub Actions 自动化 Hugo 博客部署"><span class="fab fa-weibo fa-fw"></span></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/" data-title="使用 GitHub Actions 自动化 Hugo 博客部署" data-web><span class="fab fa-telegram-plane fa-fw"></span></button><script>
+        function shareOnMastodon(title, link) {
+            const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
+            const savedDomain = localStorage.getItem(SHARE_MASTODON_DOMAIN) ?? "mastodon.social";
+            const domain = prompt("Enter your Mastodon domain", savedDomain);
+            if (domain === null) {
+                return;
+            }
+            localStorage.setItem(SHARE_MASTODON_DOMAIN, domain)
+            const text = title + "\n\n" + link;
+            const url = new URL("https://" + domain)
+            url.pathname = "share"
+            url.searchParams.append('text', text)
+            window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
+        }
+    </script>
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;使用 GitHub Actions 自动化 Hugo 博客部署&#34;, &#34;https://martinlwx.github.io/zh-cn/use-github-actions-to-automated-hugo-build/&#34;)"><span class="fab fa-mastodon fa-fw"></span></button></div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/zh-cn/tags/ci/cd/">CI/CD</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/zh-cn/tail-call-and-tail-call-optimization/" class="prev" rel="prev" title="尾调用与尾调用优化"><i class="fas fa-angle-left fa-fw"></i>尾调用与尾调用优化</a></div>
+</div>
+<div id="comments"><div id="giscus"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
+            </noscript></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.131.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":25},"comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"O4EMEES3VS","algoliaIndex":"index.zh-cn","algoliaSearchKey":"36fdaa364fae083332d0c8709026bd62","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><script type="text/javascript" src="/js/theme.min.js" defer></script><script type="text/javascript" src="/js/giscus.min.js" defer></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-7RY6742J2F', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-7RY6742J2F" async></script></div>
+</body>
+
+</html>
