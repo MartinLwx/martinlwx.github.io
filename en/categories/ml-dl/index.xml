@@ -10,50 +10,61 @@
     <pubDate>Thu, 12 Oct 2023 18:29:31 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/llm-inference-optimization-kv-cache/</guid>
-    <description><![CDATA[BackgroundThe secret behind LLM is that it will generate tokens one by one based on all the previous tokens.
-Let&rsquo;s assume that we have already generated $t$ tokens, denoted by $x_{1:t}$. In the next iteration, the LLM will generate $x_{1:t+1}$. Note that the first $t$ tokens are the same.
-$$x_{1:t+1}=\text{LLM}(x_{1:t})$$
-The next iteration is similar.
-$$x_{1:t+2}=\text{LLM}(x_{1:t+1})$$
-In summary, in each iteration, we will use the output of the previous round as a new input for the LLM.]]></description>
+    <description><![CDATA[<h2 id="background" class="headerLink">
+    <a href="#background" class="header-mark" aria-label="Header mark for 'Background'"></a>Background</h2><p>The secret behind LLM is that it will generate tokens one by one based on all the previous tokens.</p>
+<p><em>Let&rsquo;s assume that we have already generated $t$ tokens, denoted by $x_{1:t}$. In the next iteration, the LLM will generate $x_{1:t+1}$. Note that the first $t$ tokens are the same</em>.</p>
+<p>$$x_{1:t+1}=\text{LLM}(x_{1:t})$$</p>
+<p><em>The next iteration is similar.</em></p>]]></description>
 </item><item>
     <title>LoRA fine-tuning</title>
     <link>https://martinlwx.github.io/en/lora-finetuning/</link>
     <pubDate>Thu, 14 Sep 2023 22:57:06 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/lora-finetuning/</guid>
-    <description><![CDATA[What&rsquo;s LoRA Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM but inserting trainable modules. Today, I will introduce the LoRA(Low-Rank Adaptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team1]]></description>
+    <description><![CDATA[<h2 id="whats-lora" class="headerLink">
+    <a href="#whats-lora" class="header-mark" aria-label="Header mark for 'What&rsquo;s LoRA'"></a>What&rsquo;s LoRA</h2><figure><img src="/img/lora.jpg">
+</figure>
+
+<p>Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM <em>but</em> inserting trainable modules. Today, I will introduce the LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
 </item><item>
     <title>A trick to calculating partial derivatives in machine learning</title>
     <link>https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/</link>
     <pubDate>Wed, 26 Jul 2023 00:31:50 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/</guid>
-    <description><![CDATA[IntroYou may have difficulties when trying to calculate the partial derivatives in machine learning like me. Even though I found a good reference cookbook that could be used to derive the gradients, I still got confused. Today, I want to share a practical technique I recently learned from this video: when calculating partial derivatives in machine learning, you can treat everything as if it were a scalar and then make the shapes match]]></description>
+    <description><![CDATA[<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>You may have difficulties when trying to calculate the partial derivatives in machine learning like me. Even though I found a good reference <a href="https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf" target="_blank" rel="noopener noreferrer">cookbook</a> that could be used to derive the gradients, I still got confused. Today, I want to share a practical technique I recently learned from this <a href="https://youtu.be/JLg1HkzDsKI" target="_blank" rel="noopener noreferrer">video</a>: <strong>when calculating partial derivatives in machine learning, you can treat everything <strong>as if</strong> it were a scalar and then make the shapes match</strong></p>]]></description>
 </item><item>
     <title>Demystifying Pytorch&#39;s Strides Format</title>
     <link>https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/</link>
     <pubDate>Fri, 14 Jul 2023 15:22:02 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/</guid>
-    <description><![CDATA[IntroEven though I have been using Numpy and Pytorch for a long time, I never really knew how they implemented the underlying tensors and why they are so efficient. Recently, while studying the course Deep Learning Systems, I finally got the opportunity to try implementing tensors on my own. After going through the process, my understanding of tensors is much better 🧐
-As a Pytorch user, is it necessary to understand the underlying tensor storage mechanism?]]></description>
+    <description><![CDATA[<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Even though I have been using Numpy and Pytorch for a long time, I never really knew how they implemented the underlying tensors and why they are <strong>so efficient</strong>. Recently, while studying the course <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a>, I finally got the opportunity to try implementing tensors on my own. After going through the process, my understanding of tensors is much better 🧐</p>]]></description>
 </item><item>
     <title>How to understand the backpropagation algorithm</title>
     <link>https://martinlwx.github.io/en/backpropagation-tutorial/</link>
     <pubDate>Tue, 04 Apr 2023 13:45:48 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/backpropagation-tutorial/</guid>
-    <description><![CDATA[Update: Backpropagation in matrix form could be found here
-IntroIn the field of deep learning, optimizing the network involves a crucial process of continuously updating the weights and bias items. This is achieved by implementing the gradient descent method, which progressively minimizes the loss function. At the heart of this process lies the backpropagation algorithm, which facilitates efficient computation of gradients across the network
-To better understand this concept, let us recall the formula for gradient descent.]]></description>
+    <description><![CDATA[<blockquote>
+<p>Update: Backpropagation in matrix form could be found <a href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" rel="">here</a></p>
+</blockquote>
+<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>In the field of deep learning, optimizing the network involves a crucial process of continuously updating the weights and bias items. This is achieved by implementing the gradient descent method, which progressively minimizes the loss function. At the heart of this process lies the backpropagation algorithm, which facilitates efficient computation of gradients across the network</p>]]></description>
 </item><item>
     <title>Linear Regression Model Guide - theory part</title>
     <link>https://martinlwx.github.io/en/linear-regression-model-guide-theory/</link>
     <pubDate>Wed, 15 Mar 2023 12:37:52 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/linear-regression-model-guide-theory/</guid>
-    <description><![CDATA[IntroductionRecently, I review the machine learning course of Andrew ng in Coursera. Surprisingly, I can still learn a lot, so I decided to write some posts👍.
-To talk about linear regression, we must first have a basic understanding of what is machine learning. What is machine learning? abstractly speaking, machine learning is learning a function: $$ f(input) = output $$ where $f$ refers to the specific machine learning model. Machine learning is a methodology for automatically mining the relationship between input and output.]]></description>
+    <description><![CDATA[<h2 id="introduction" class="headerLink">
+    <a href="#introduction" class="header-mark" aria-label="Header mark for 'Introduction'"></a>Introduction</h2><p>Recently, I review the machine learning course of Andrew ng in Coursera. Surprisingly, I can still learn a lot, so I decided to write some posts👍.</p>
+<p>To talk about linear regression, we must first have a basic understanding of what is machine learning. What is machine learning? abstractly speaking, <strong>machine learning is learning a function</strong>:
+$$
+f(input) = output
+$$
+where $f$ refers to the specific machine learning model. <strong>Machine learning is a methodology for automatically mining the relationship between input and output</strong>. Sometimes we find it hard to define a specific algorithm to solve some problems, and this is where machine learning shines, we can let it learn and summarize some patterns from data and make predictions. This is also where it differs from traditional algorithms (binary search, recursive, etc.). One has to admit that machine learning is fascinating by definition, and it <em>seems</em> to provide a viable framework for solving all intractable problems. It just so happens that many real-life problems are so hard that solving them with traditional algorithms is impossible.</p>]]></description>
 </item></channel>
 </rss>
