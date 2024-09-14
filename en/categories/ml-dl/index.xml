@@ -14,7 +14,9 @@
     <a href="#background" class="header-mark" aria-label="Header mark for 'Background'"></a>Background</h2><p>The secret behind LLM is that it will generate tokens one by one based on all the previous tokens.</p>
 <p><em>Let&rsquo;s assume that we have already generated $t$ tokens, denoted by $x_{1:t}$. In the next iteration, the LLM will generate $x_{1:t+1}$. Note that the first $t$ tokens are the same</em>.</p>
 <p>$$x_{1:t+1}=\text{LLM}(x_{1:t})$$</p>
-<p><em>The next iteration is similar.</em></p>]]></description>
+<p><em>The next iteration is similar.</em></p>
+<p>$$x_{1:t+2}=\text{LLM}(x_{1:t+1})$$</p>
+<p>In summary, in each iteration, we will <strong>use the output of the previous round</strong> as a new input for the LLM. Generally, this process will continue until the output reaches the maximum length we predefined or the LLM itself generates a special token, signifying the completion of the generating process.</p>]]></description>
 </item><item>
     <title>LoRA fine-tuning</title>
     <link>https://martinlwx.github.io/en/lora-finetuning/</link>
@@ -41,7 +43,8 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/how-to-reprensent-a-tensor-or-ndarray/</guid>
     <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Even though I have been using Numpy and Pytorch for a long time, I never really knew how they implemented the underlying tensors and why they are <strong>so efficient</strong>. Recently, while studying the course <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a>, I finally got the opportunity to try implementing tensors on my own. After going through the process, my understanding of tensors is much better 🧐</p>]]></description>
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Even though I have been using Numpy and Pytorch for a long time, I never really knew how they implemented the underlying tensors and why they are <strong>so efficient</strong>. Recently, while studying the course <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a>, I finally got the opportunity to try implementing tensors on my own. After going through the process, my understanding of tensors is much better 🧐</p>
+<p>As a Pytorch user, is it necessary to understand the underlying tensor storage mechanism? I believe <strong>it is essential</strong>. In most cases, understanding the underlying principles helps you grasp higher-level concepts better. For example, understanding the tensor storage mechanism can help you answer the following questions:</p>]]></description>
 </item><item>
     <title>How to understand the backpropagation algorithm</title>
     <link>https://martinlwx.github.io/en/backpropagation-tutorial/</link>
@@ -52,7 +55,8 @@
 <p>Update: Backpropagation in matrix form could be found <a href="https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/" rel="">here</a></p>
 </blockquote>
 <h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>In the field of deep learning, optimizing the network involves a crucial process of continuously updating the weights and bias items. This is achieved by implementing the gradient descent method, which progressively minimizes the loss function. At the heart of this process lies the backpropagation algorithm, which facilitates efficient computation of gradients across the network</p>]]></description>
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>In the field of deep learning, optimizing the network involves a crucial process of continuously updating the weights and bias items. This is achieved by implementing the gradient descent method, which progressively minimizes the loss function. At the heart of this process lies the backpropagation algorithm, which facilitates efficient computation of gradients across the network</p>
+<p>To better understand this concept, let us recall the formula for gradient descent. In this formula, we utilize the symbol $\theta$ to represent all the learnable parameters of the model, $J$ to represent the cost or loss function, and $\alpha$ to denote the learning rate. Thus, we can express the updating process as:</p>]]></description>
 </item><item>
     <title>Linear Regression Model Guide - theory part</title>
     <link>https://martinlwx.github.io/en/linear-regression-model-guide-theory/</link>

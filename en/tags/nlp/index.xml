@@ -14,7 +14,9 @@
     <a href="#background" class="header-mark" aria-label="Header mark for 'Background'"></a>Background</h2><p>The secret behind LLM is that it will generate tokens one by one based on all the previous tokens.</p>
 <p><em>Let&rsquo;s assume that we have already generated $t$ tokens, denoted by $x_{1:t}$. In the next iteration, the LLM will generate $x_{1:t+1}$. Note that the first $t$ tokens are the same</em>.</p>
 <p>$$x_{1:t+1}=\text{LLM}(x_{1:t})$$</p>
-<p><em>The next iteration is similar.</em></p>]]></description>
+<p><em>The next iteration is similar.</em></p>
+<p>$$x_{1:t+2}=\text{LLM}(x_{1:t+1})$$</p>
+<p>In summary, in each iteration, we will <strong>use the output of the previous round</strong> as a new input for the LLM. Generally, this process will continue until the output reaches the maximum length we predefined or the LLM itself generates a special token, signifying the completion of the generating process.</p>]]></description>
 </item><item>
     <title>BPE Tokenization Demystified: Implementation and Examples</title>
     <link>https://martinlwx.github.io/en/the-bpe-tokenizer/</link>
@@ -38,7 +40,9 @@
     <description><![CDATA[<h2 id="what-is-the-tf-idf-model" class="headerLink">
     <a href="#what-is-the-tf-idf-model" class="header-mark" aria-label="Header mark for 'What is the TF-IDF model'"></a>What is the TF-IDF model</h2><p>In previous <a href="https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/" rel="">post</a>, we talked about the bag-of-word model, which has many limitations. Today we take a step further to see if we can try to fix <strong>one of the limitations - Each word has the same importance</strong>.</p>
 <blockquote>
-<p>💡 The crux of the problem - <strong>How to define the word importance</strong>?</p>]]></description>
+<p>💡 The crux of the problem - <strong>How to define the word importance</strong>?</p>
+</blockquote>
+<p>One idea is: The more frequently a word appears <strong>within a single document</strong>, the more important it is <strong>for that document</strong>. <em>For instance, in an article discussing dogs, the word &ldquo;dog&rdquo; is likely to appear frequently, reflecting the document&rsquo;s main topic</em>.</p>]]></description>
 </item><item>
     <title>Bag-of-Word model</title>
     <link>https://martinlwx.github.io/en/an-introduction-of-bag-of-word-model/</link>
@@ -50,6 +54,8 @@
 $$
 f(\text{document}) = vector
 $$</p>
-<p>Today&rsquo;s topic is <strong>bag-of-word(BoW) model</strong>, which can transform a document into a vector representation.</p>]]></description>
+<p>Today&rsquo;s topic is <strong>bag-of-word(BoW) model</strong>, which can transform a document into a vector representation.</p>
+<blockquote>
+<p>💡 Although the BoW model is outdated in 2023, I still encourage you to learn from the history and think about some <strong>essential problems</strong>:</p>]]></description>
 </item></channel>
 </rss>
