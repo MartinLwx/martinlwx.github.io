@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -418,9 +416,9 @@
 <pre><code>5
 </code></pre>
 <blockquote>
-<p>📒 这里海象表达式需要加上 <code>()</code> 是为了避免造成混淆。毕竟在 <a href="https://peps.python.org/pep-0020/" target="_blank" rel="noopener noreferrer">Python设计哲学-Zen</a> 里面提到了一条：&ldquo;There should be one&ndash; and preferably only one &ndash;obvious way to do it.&quot;。如果不加 <code>()</code> 就能使用的话，开发者就会陷入到该用哪一个的困惑之中🤕️</p>
-</blockquote>
-<p>在 C/C++ 中，<code>=</code> 是 expression。如果你有相关的编程背景的话，你可能对下面的代码不陌生</p>
+  <p>📒 这里海象表达式需要加上 <code>()</code> 是为了避免造成混淆。毕竟在 <a href="https://peps.python.org/pep-0020/" target="_blank" rel="noopener noreferrer">Python设计哲学-Zen</a> 里面提到了一条：&ldquo;There should be one&ndash; and preferably only one &ndash;obvious way to do it.&quot;。如果不加 <code>()</code> 就能使用的话，开发者就会陷入到该用哪一个的困惑之中🤕️</p>
+
+</blockquote><p>在 C/C++ 中，<code>=</code> 是 expression。如果你有相关的编程背景的话，你可能对下面的代码不陌生</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1268,9 +1266,9 @@ NameError: name 'item' is not defined
 </code></pre>
 <h2 id="适用场景" class="headerLink">
     <a href="#%e9%80%82%e7%94%a8%e5%9c%ba%e6%99%af" class="header-mark" aria-label="Header mark for '适用场景'"></a>适用场景</h2><blockquote>
-<p>📒 结合参考了<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>的内容和平常的编程经验。感觉海象表达式最方便的还是：处理返回值可能为 <code>None</code> 的函数</p>
-</blockquote>
-<p>对于返回值可能为 <code>None</code> 的函数，以前经常是<strong>先用 <code>=</code> 赋值语句保存函数的返回结果</strong>。不为 <code>None</code> 的时候要使用返回值来进行下一步处理。此时代码看起来大概是这样：</p>
+  <p>📒 结合参考了<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>的内容和平常的编程经验。感觉海象表达式最方便的还是：处理返回值可能为 <code>None</code> 的函数</p>
+
+</blockquote><p>对于返回值可能为 <code>None</code> 的函数，以前经常是<strong>先用 <code>=</code> 赋值语句保存函数的返回结果</strong>。不为 <code>None</code> 的时候要使用返回值来进行下一步处理。此时代码看起来大概是这样：</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1485,9 +1483,9 @@ NameError: name 'item' is not defined
 </code></pre>
 <p>为了能在后面使用 <code>match.group()</code> 的时候 Python 解释器不会返回 <code>AttributeError: 'NoneType' object has no attribute 'group'</code> 错误，我们不得不用一个中间变量 <code>match</code> 暂时保存 <code>re.search</code> 的返回值对其进行检查，显得似乎有点冗余。我们无法直接将他们连起来：<code>re.search(DIGIT_PATTERN, text).group(0)</code></p>
 <blockquote>
-<p>📒 插点题外话：在 Rust 里面，可能返回 <code>None</code> 的返回类型是 <code>Option&lt;T&gt;</code>。我们可以使用 <code>?</code> 来处理这种情况，它会尝试提取里面的值，如果失败了就会尽早终止报错。所以在 Rust 里面，我们可以这样（假设 Rust 也有类似的 API）：<code>re.search(DIGIT_PATTERN, text)?.group(0)</code> 🍺</p>
-</blockquote>
-<p>另外一点是：可读性稍弱，当然这是个人的主观感受。有一点不舒服是：只有可能在 <code>match is not None</code> 的时候我们才会使用 <code>match</code> 变量，我们不会在 <code>else</code> 分支里面使用。但是如果很快地从上往下看代码的话，单独另起一行的 <code>match = ...</code> 就像是后面都可以使用一样🤣</p>
+  <p>📒 插点题外话：在 Rust 里面，可能返回 <code>None</code> 的返回类型是 <code>Option&lt;T&gt;</code>。我们可以使用 <code>?</code> 来处理这种情况，它会尝试提取里面的值，如果失败了就会尽早终止报错。所以在 Rust 里面，我们可以这样（假设 Rust 也有类似的 API）：<code>re.search(DIGIT_PATTERN, text)?.group(0)</code> 🍺</p>
+
+</blockquote><p>另外一点是：可读性稍弱，当然这是个人的主观感受。有一点不舒服是：只有可能在 <code>match is not None</code> 的时候我们才会使用 <code>match</code> 变量，我们不会在 <code>else</code> 分支里面使用。但是如果很快地从上往下看代码的话，单独另起一行的 <code>match = ...</code> 就像是后面都可以使用一样🤣</p>
 <p>此时我们<strong>可以选择用 <code>:=</code> 来绑定其返回值</strong></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1766,7 +1764,7 @@ NameError: name 'item' is not defined
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.135.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.136.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2024<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -224,18 +222,18 @@
             </div><div class="content" id="content"><h2 id="引言" class="headerLink">
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>也许你和我一样在求解机器学习的梯度时有各种困难，即使看着相关的 <a href="https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf" target="_blank" rel="noopener noreferrer">Cookbook</a> 一边推导依然是有困惑，今天我要分享的是最近<a href="https://youtu.be/JLg1HkzDsKI" target="_blank" rel="noopener noreferrer">学习到</a>的一个实用技巧：<strong>在机器学习中，求解偏导数的时候可以先全部看成标量处理，最后让维度匹配即可</strong></p>
 <blockquote>
-<p><strong>免责声明</strong>：运用如上的技巧并<strong>不保证</strong>梯度是正确的，可能维度是对的，但是梯度是错的，强调一下<strong>为了确保梯度计算正确请做好梯度检查</strong></p>
-</blockquote>
-<h2 id="应用" class="headerLink">
+  <p><strong>免责声明</strong>：运用如上的技巧并<strong>不保证</strong>梯度是正确的，可能维度是对的，但是梯度是错的，强调一下<strong>为了确保梯度计算正确请做好梯度检查</strong></p>
+
+</blockquote><h2 id="应用" class="headerLink">
     <a href="#%e5%ba%94%e7%94%a8" class="header-mark" aria-label="Header mark for '应用'"></a>应用</h2><blockquote>
-<p>💡 大写的黑色粗体字母表示矩阵，不加粗的字母都是标量</p>
-</blockquote>
-<h3 id="反向传播矩阵形式推导" class="headerLink">
+  <p>💡 大写的黑色粗体字母表示矩阵，不加粗的字母都是标量</p>
+
+</blockquote><h3 id="反向传播矩阵形式推导" class="headerLink">
     <a href="#%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad%e7%9f%a9%e9%98%b5%e5%bd%a2%e5%bc%8f%e6%8e%a8%e5%af%bc" class="header-mark" aria-label="Header mark for '反向传播矩阵形式推导'"></a>反向传播矩阵形式推导</h3><p>在之前的 <a href="https://martinlwx.github.io/zh-cn/backpropagation-tutorial/" rel="">反向传播推导</a> 过程中，我从标量角度来推导了反向传播，因为这个比较好理解，但如果你尝试<strong>实现</strong>反向传播或者是前向传播，你会发现都是用<strong>矩阵形式</strong>，我们总是把它变成矩阵乘法，因为矩阵乘法会快很多。因此需要弄清楚「反向传播的矩阵形式」是如何进行的，下面我将利用前面提到的技巧来进行推导</p>
 <blockquote>
-<p>为了公式简洁，下面省略了 bias 只考虑 weight</p>
-</blockquote>
-<p>考虑一个简单的 $L$ 层的 MLP 模型，用 $\mathbf Z^l$ 表示 $l$ 层的输出，特别的，将输入层也用 $\mathbf Z$ 表示，有
+  <p>为了公式简洁，下面省略了 bias 只考虑 weight</p>
+
+</blockquote><p>考虑一个简单的 $L$ 层的 MLP 模型，用 $\mathbf Z^l$ 表示 $l$ 层的输出，特别的，将输入层也用 $\mathbf Z$ 表示，有
 $$\mathbf Z^0=\mathbf X$$</p>
 <p>其中 $\mathbf X\in\mathcal{R}^{m\times d}$，$m$ 为样本数量，$d$ 为每个样本的特征长度</p>
 <p>模型 $f_\theta$ 的输出是 $$f_\theta(\mathbf X)=\mathbf Z^{L}$$
@@ -297,9 +295,9 @@ $$</p>
 $$</p>
 <p>利用 $\mathbf G^l$ 和 $\mathbf G^{l+1}$ 的关系，我们可以从 $\mathbf G^{l+1}$ 推导出 $\mathbf G^l$，然后也可以进一步计算 $\mathbf W^l$ 的梯度，也就是从后往前计算，这也就是反向传播的含义</p>
 <blockquote>
-<p>🤔️ 注意 $\mathbf G^l$ 的计算和 $\frac{\partial J}{\partial \mathbf W^l}$ 用到了 $\mathbf Z^{l-1}, \mathbf Z^{l}, \mathbf Z^{l+1}$，也就是不同层的激活函数的输出，这意味着<strong>在反向传播的时候我们需要缓存前向传播的值</strong>，缓存意味着需要消耗内存，所以这就是为啥模型越大，GPU 就需要更多的显存</p>
-</blockquote>
-<h3 id="线性回归矩阵形式梯度推导" class="headerLink">
+  <p>🤔️ 注意 $\mathbf G^l$ 的计算和 $\frac{\partial J}{\partial \mathbf W^l}$ 用到了 $\mathbf Z^{l-1}, \mathbf Z^{l}, \mathbf Z^{l+1}$，也就是不同层的激活函数的输出，这意味着<strong>在反向传播的时候我们需要缓存前向传播的值</strong>，缓存意味着需要消耗内存，所以这就是为啥模型越大，GPU 就需要更多的显存</p>
+
+</blockquote><h3 id="线性回归矩阵形式梯度推导" class="headerLink">
     <a href="#%e7%ba%bf%e6%80%a7%e5%9b%9e%e5%bd%92%e7%9f%a9%e9%98%b5%e5%bd%a2%e5%bc%8f%e6%a2%af%e5%ba%a6%e6%8e%a8%e5%af%bc" class="header-mark" aria-label="Header mark for '线性回归矩阵形式梯度推导'"></a>线性回归矩阵形式梯度推导</h3><p>之前在 <a href="https://martinlwx.github.io/zh-cn/linear-regression-model-guide-theory/" rel="">线性回归</a> 里面我们需要求解下面这个公式
 $$
 \begin{aligned}
@@ -383,7 +381,7 @@ $$\frac{1}{m}\mathbf X^T(\mathbf X\theta-\vec y)$$</p>
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.135.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.136.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2024<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

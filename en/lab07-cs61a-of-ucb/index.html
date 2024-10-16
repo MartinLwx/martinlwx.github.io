@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -252,9 +250,9 @@
     <a href="#accounts" class="header-mark" aria-label="Header mark for 'Accounts'"></a>Accounts</h2><hr>
 <h3 id="q2-retirement" class="headerLink">
     <a href="#q2-retirement" class="header-mark" aria-label="Header mark for 'Q2: Retirement'"></a>Q2: Retirement</h3><blockquote>
-<p>Add a <code>time_to_retire</code> method to the <code>Account</code> class. This method takes in an <code>amount</code> and returns how many years the holder would need to wait in order for the current <code>balance</code> to grow to at least <code>amount</code>, assuming that the bank adds <code>balance</code> times the <code>interest</code> rate to the total balance at the end of every year.</p>
-</blockquote>
-<p>The description tells us that: We will add our <code>balance</code> every year, so when may we retire? Both the math and code are simple.</p>
+  <p>Add a <code>time_to_retire</code> method to the <code>Account</code> class. This method takes in an <code>amount</code> and returns how many years the holder would need to wait in order for the current <code>balance</code> to grow to at least <code>amount</code>, assuming that the bank adds <code>balance</code> times the <code>interest</code> rate to the total balance at the end of every year.</p>
+
+</blockquote><p>The description tells us that: We will add our <code>balance</code> every year, so when may we retire? Both the math and code are simple.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -361,9 +359,9 @@
 </div>
 <h3 id="q3-freechecking" class="headerLink">
     <a href="#q3-freechecking" class="header-mark" aria-label="Header mark for 'Q3: FreeChecking'"></a>Q3: FreeChecking</h3><blockquote>
-<p>Implement the <code>FreeChecking</code> class, which is like the <code>Account</code> class from lecture except that it charges a withdraw fee after 2 withdrawals. If a withdrawal is unsuccessful, it still counts towards the number of free withdrawals remaining, but no fee for the withdrawal will be charged.</p>
-</blockquote>
-<p>We need to check an additional parameter(<code>free_withdrawals</code>) compare with <code>withdraw</code>, which indicates the number of times we can withdraw without being charged the fee. There are 2 points to note here:</p>
+  <p>Implement the <code>FreeChecking</code> class, which is like the <code>Account</code> class from lecture except that it charges a withdraw fee after 2 withdrawals. If a withdrawal is unsuccessful, it still counts towards the number of free withdrawals remaining, but no fee for the withdrawal will be charged.</p>
+
+</blockquote><p>We need to check an additional parameter(<code>free_withdrawals</code>) compare with <code>withdraw</code>, which indicates the number of times we can withdraw without being charged the fee. There are 2 points to note here:</p>
 <ol>
 <li>The number of <code>free_wighdrawals</code> will be reduced even if we fail to withdraw.</li>
 <li>The sum of the fee and the <code>amount</code> should be bigger than the <code>balance</code> so that we can withdraw successfully when we need to pay the fee.</li>
@@ -487,7 +485,7 @@
     <a href="#description" class="header-mark" aria-label="Header mark for 'Description'"></a>Description</h3><p>We will be implementing a card game in the lab. You can check the rules <a href="https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab07/#magic-the-lambda-ing" target="_blank" rel="noopener noreferrer">here</a></p>
 <h3 id="q4-making-cards" class="headerLink">
     <a href="#q4-making-cards" class="header-mark" aria-label="Header mark for 'Q4: Making Cards'"></a>Q4: Making Cards</h3><blockquote>
-<p>To play a card game, we&rsquo;re going to need to have cards, so let&rsquo;s make some! We&rsquo;re gonna implement the basics of the <code>Card</code> class first.</p>
+  <p>To play a card game, we&rsquo;re going to need to have cards, so let&rsquo;s make some! We&rsquo;re gonna implement the basics of the <code>Card</code> class first.</p>
 <p>First, implement the <code>Card</code> class constructor in <code>classes.py</code>. This constructor takes three arguments:</p>
 <ul>
 <li>a string as the <code>name</code> of the card</li>
@@ -496,8 +494,8 @@
 </ul>
 <p>Each <code>Card</code> instance should keep track of these values using instance attributes called <code>name</code>, <code>attack</code>, and <code>defense</code>.</p>
 <p>You should also implement the <code>power</code> method in <code>Card</code>, which takes in another card as an input and calculates the current card&rsquo;s power. Refer to the <a href="https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab07/#rules-of-the-game" target="_blank" rel="noopener noreferrer">Rules of the Game</a> if you&rsquo;d like a refresher on how power is calculated.</p>
-</blockquote>
-<p>We need to implement the constructor and the <code>power</code> functions.</p>
+
+</blockquote><p>We need to implement the constructor and the <code>power</code> functions.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -613,7 +611,7 @@
 </div>
 <h3 id="q5-making-a-player" class="headerLink">
     <a href="#q5-making-a-player" class="header-mark" aria-label="Header mark for 'Q5: Making a Player'"></a>Q5: Making a Player</h3><blockquote>
-<p>Now that we have cards, we can make a deck, but we still need players to actually use them. We&rsquo;ll now fill in the implementation of the <code>Player</code> class.</p>
+  <p>Now that we have cards, we can make a deck, but we still need players to actually use them. We&rsquo;ll now fill in the implementation of the <code>Player</code> class.</p>
 <p>A <code>Player</code> instance has three instance attributes:</p>
 <ul>
 <li><code>name</code> is the player&rsquo;s name. When you play the game, you can enter your name, which will be converted into a string to be passed to the constructor.</li>
@@ -623,10 +621,10 @@
 <p>Complete the implementation of the constructor for <code>Player</code> so that <code>self.hand</code> is set to a list of 5 cards drawn from the player&rsquo;s <code>deck</code>.</p>
 <p>Next, implement the <code>draw</code> and <code>play</code> methods in the <code>Player</code> class. The <code>draw</code> method draws a card from the deck and adds it to the player&rsquo;s hand. The <code>play</code> method removes and returns a card from the player&rsquo;s hand at the given index.</p>
 <blockquote>
-<p>Call <code>deck.draw()</code> when implementing <code>Player.__init__</code> and <code>Player.draw</code>. Don&rsquo;t worry about how this function works - leave it all to the abstraction!</p>
+  <p>Call <code>deck.draw()</code> when implementing <code>Player.__init__</code> and <code>Player.draw</code>. Don&rsquo;t worry about how this function works - leave it all to the abstraction!</p>
+
 </blockquote>
-</blockquote>
-<p>The tasks are as follow:</p>
+</blockquote><p>The tasks are as follow:</p>
 <p>We have 5 cards at the beginning of the game. We need to implement these:</p>
 <ol>
 <li>the constructor. We need to draw 5 cards from the <code>deck</code>. For the simplicity, we can use list comprehension here.</li>
@@ -750,12 +748,12 @@
 <h2 id="optional-questions" class="headerLink">
     <a href="#optional-questions" class="header-mark" aria-label="Header mark for 'Optional Questions'"></a>Optional Questions</h2><h3 id="q6-ais-defenders" class="headerLink">
     <a href="#q6-ais-defenders" class="header-mark" aria-label="Header mark for 'Q6: AIs: Defenders'"></a>Q6: AIs: Defenders</h3><blockquote>
-<p>Implement the <code>effect</code> method for AIs, which reduces the opponent card&rsquo;s attack by the opponent card&rsquo;s defense, and then doubles the opponent card&rsquo;s defense.</p>
+  <p>Implement the <code>effect</code> method for AIs, which reduces the opponent card&rsquo;s attack by the opponent card&rsquo;s defense, and then doubles the opponent card&rsquo;s defense.</p>
 <blockquote>
-<p><em>Note:</em> The opponent card&rsquo;s resulting attack value cannot be negative.</p>
+  <p><em>Note:</em> The opponent card&rsquo;s resulting attack value cannot be negative.</p>
+
 </blockquote>
-</blockquote>
-<p>Note that if the attack is less than zero, we need to set it to zero.</p>
+</blockquote><p>Note that if the attack is less than zero, we need to set it to zero.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -862,9 +860,9 @@
 </div>
 <h3 id="q7-tutors-flummox" class="headerLink">
     <a href="#q7-tutors-flummox" class="header-mark" aria-label="Header mark for 'Q7: Tutors: Flummox'"></a>Q7: Tutors: Flummox</h3><blockquote>
-<p>Implement the <code>effect</code> method for TAs, which swaps the attack and defense of the opponent&rsquo;s card.</p>
-</blockquote>
-<p>We should discard our cards <strong>without breaking the abstraction</strong>. So we can use <code>.play</code> and <code>.draw</code> methods here.</p>
+  <p>Implement the <code>effect</code> method for TAs, which swaps the attack and defense of the opponent&rsquo;s card.</p>
+
+</blockquote><p>We should discard our cards <strong>without breaking the abstraction</strong>. So we can use <code>.play</code> and <code>.draw</code> methods here.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -975,9 +973,9 @@
 </div>
 <h3 id="q8-tas-shift" class="headerLink">
     <a href="#q8-tas-shift" class="header-mark" aria-label="Header mark for 'Q8: TAs: Shift'"></a>Q8: TAs: Shift</h3><blockquote>
-<p>Implement the <code>effect</code> method for TAs, which swaps the attack and defense of the opponent&rsquo;s card.</p>
-</blockquote>
-<p>Just swap the attack and the defense</p>
+  <p>Implement the <code>effect</code> method for TAs, which swaps the attack and defense of the opponent&rsquo;s card.</p>
+
+</blockquote><p>Just swap the attack and the defense</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1080,9 +1078,9 @@
 </div>
 <h3 id="q9-the-instructor-arrives" class="headerLink">
     <a href="#q9-the-instructor-arrives" class="header-mark" aria-label="Header mark for 'Q9: The Instructor Arrives'"></a>Q9: The Instructor Arrives</h3><blockquote>
-<p>A new challenger has appeared! Implement the <code>effect</code> method for the Instructors, who add the opponent card&rsquo;s attack and defense to all cards in the player&rsquo;s deck and then removes <em>all</em> cards in the opponent&rsquo;s deck that have the same attack or defense as the opponent&rsquo;s card.</p>
+  <p>A new challenger has appeared! Implement the <code>effect</code> method for the Instructors, who add the opponent card&rsquo;s attack and defense to all cards in the player&rsquo;s deck and then removes <em>all</em> cards in the opponent&rsquo;s deck that have the same attack or defense as the opponent&rsquo;s card.</p>
 <blockquote>
-<p><em>Note:</em> If you mutate a list while iterating through it, you may run into trouble. Try iterating through a copy of the list instead. You can use slicing to make a copy of a list:</p>
+  <p><em>Note:</em> If you mutate a list while iterating through it, you may run into trouble. Try iterating through a copy of the list instead. You can use slicing to make a copy of a list:</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1184,9 +1182,9 @@
 </span></span><span class="line"><span class="cl">  &gt;&gt;&gt; copy is original
 </span></span><span class="line"><span class="cl">  False</span></span></code></pre>
 </div>
+
 </blockquote>
-</blockquote>
-<p>This one is a little more difficult compared with the other ones. The key of this question is how can we mutate the list while we iterate it. You may check <a href="https://stackoverflow.com/questions/1207406/how-to-remove-items-from-a-list-while-iterating" target="_blank" rel="noopener noreferrer">this</a></p>
+</blockquote><p>This one is a little more difficult compared with the other ones. The key of this question is how can we mutate the list while we iterate it. You may check <a href="https://stackoverflow.com/questions/1207406/how-to-remove-items-from-a-list-while-iterating" target="_blank" rel="noopener noreferrer">this</a></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1363,7 +1361,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.135.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.136.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2024<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

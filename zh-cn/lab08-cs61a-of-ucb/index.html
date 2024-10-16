@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -243,10 +241,10 @@
 </nav></div>
             </div><div class="content" id="content"><h3 id="q2-convert-link" class="headerLink">
     <a href="#q2-convert-link" class="header-mark" aria-label="Header mark for 'Q2: Convert Link'"></a>Q2: Convert Link</h3><blockquote>
-<p>Write a function <code>convert_link</code> that takes in a linked list and returns the sequence as a Python list. You may assume that the input list is shallow; that is none of the elements is another linked list.</p>
+  <p>Write a function <code>convert_link</code> that takes in a linked list and returns the sequence as a Python list. You may assume that the input list is shallow; that is none of the elements is another linked list.</p>
 <p>Try to find both an iterative and recursive solution for this problem!</p>
-</blockquote>
-<p>迭代的算法很简单, 我们只要创建一个 <code>result</code> list 来存储结果, 遍历链表的同时记住访问过的数即可</p>
+
+</blockquote><p>迭代的算法很简单, 我们只要创建一个 <code>result</code> list 来存储结果, 遍历链表的同时记住访问过的数即可</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -458,9 +456,9 @@
     <a href="#trees" class="header-mark" aria-label="Header mark for 'Trees'"></a>Trees</h2><hr>
 <h3 id="q4-square" class="headerLink">
     <a href="#q4-square" class="header-mark" aria-label="Header mark for 'Q4: Square'"></a>Q4: Square</h3><blockquote>
-<p>Write a function <code>label_squarer</code> that mutates a <code>Tree</code> with numerical labels so that each label is squared.</p>
-</blockquote>
-<p>遍历树的所有节点, 将它的 label 都改为 label 的平方</p>
+  <p>Write a function <code>label_squarer</code> that mutates a <code>Tree</code> with numerical labels so that each label is squared.</p>
+
+</blockquote><p>遍历树的所有节点, 将它的 label 都改为 label 的平方</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -569,9 +567,9 @@
 </div>
 <h3 id="q5-cumulative-mul" class="headerLink">
     <a href="#q5-cumulative-mul" class="header-mark" aria-label="Header mark for 'Q5: Cumulative Mul'"></a>Q5: Cumulative Mul</h3><blockquote>
-<p>Write a function <code>cumulative_mul</code> that mutates the Tree <code>t</code> so that each node&rsquo;s label becomes the product of its label and all labels in the subtrees rooted at the node.</p>
-</blockquote>
-<p>这一题的意思是: 我们要让每个节点的 label 等于它的所有孩子节点的 label 的乘积, 显然, 这是一个递归问题</p>
+  <p>Write a function <code>cumulative_mul</code> that mutates the Tree <code>t</code> so that each node&rsquo;s label becomes the product of its label and all labels in the subtrees rooted at the node.</p>
+
+</blockquote><p>这一题的意思是: 我们要让每个节点的 label 等于它的所有孩子节点的 label 的乘积, 显然, 这是一个递归问题</p>
 <p>base case 就是叶子结点, 此时返回叶子节点的 label. 递归分解问题就是遍历节点的每一个子树, 获得每个子节点返回值再乘以当前结点的 label.</p>
 <p>注意我这里用到了 <code>math.prod</code> 这个函数返回可迭代对象的连乘结果, 如果你也要这样使用, 你应该在文件的开头写 <code>import math</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -682,13 +680,13 @@
 </div>
 <h3 id="q6-add-leaves" class="headerLink">
     <a href="#q6-add-leaves" class="header-mark" aria-label="Header mark for 'Q6: Add Leaves'"></a>Q6: Add Leaves</h3><blockquote>
-<p>Implement <code>add_d_leaves</code>, a function that takes in a <code>Tree</code> instance <code>t</code> and a number <code>v</code>.</p>
+  <p>Implement <code>add_d_leaves</code>, a function that takes in a <code>Tree</code> instance <code>t</code> and a number <code>v</code>.</p>
 <p>We define the depth of a node in <code>t</code> to be the number of edges from the root to that node. The depth of root is therefore 0.</p>
 <p>For each node in the tree, you should add <code>d</code> leaves to it, where <code>d</code> is the depth of the node. Every added leaf should have a label of <code>v</code>. If the node at this depth has existing branches, you should add these leaves to the end of that list of branches.</p>
 <p>For example, you should be adding 1 leaf with label <code>v</code> to each node at depth 1, 2 leaves to each node at depth 2, and so on.</p>
 <p>Here is an example of a tree <code>t</code>(shown on the left) and the result after <code>add_d_leaves</code> is applied with <code>v</code> as 5.</p>
-</blockquote>
-<p>翻译一下这一道题的意思: 我们要根据结点在树中的高度(根结点高度为 0)来给结点添加子节点, 这里说的符合条件是 label 为 <code>v</code>. 高度为 <code>d</code> 就增加 <code>d</code> 个子节点.</p>
+
+</blockquote><p>翻译一下这一道题的意思: 我们要根据结点在树中的高度(根结点高度为 0)来给结点添加子节点, 这里说的符合条件是 label 为 <code>v</code>. 高度为 <code>d</code> 就增加 <code>d</code> 个子节点.</p>
 <p>这题第一个困难是要如何获取当前结点的高度, 因为有了高度我们才能知道要增加多少个子节点, 我们可以维护一个参数表示当前结点的高度. 每当我们往树的更深一层前进的时候我们就将它 <code>+1</code>.</p>
 <p>base case 就是在叶子结点, 我们根据它的高度增加子结点. 然后对于当前的节点, 我们需要对它的每个孩子节点重复这个步骤, 同时也要判断当前节点是否需要添加子节点</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -810,7 +808,7 @@
     <a href="#optional-questions" class="header-mark" aria-label="Header mark for 'Optional Questions'"></a>Optional Questions</h2><hr>
 <h3 id="q7-every-other" class="headerLink">
     <a href="#q7-every-other" class="header-mark" aria-label="Header mark for 'Q7: Every Other'"></a>Q7: Every Other</h3><blockquote>
-<p>Implement <code>every_other</code>, which takes a linked list <code>s</code>. It mutates <code>s</code> such that all of the odd-indexed elements (using 0-based indexing) are removed from the list. For example:</p>
+  <p>Implement <code>every_other</code>, which takes a linked list <code>s</code>. It mutates <code>s</code> such that all of the odd-indexed elements (using 0-based indexing) are removed from the list. For example:</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -916,10 +914,10 @@
 </div>
 <p>If <code>s</code> contains fewer than two elements, <code>s</code> remains unchanged.</p>
 <blockquote>
-<p>Do not return anything! <code>every_other</code> should mutate the original list.</p>
+  <p>Do not return anything! <code>every_other</code> should mutate the original list.</p>
+
 </blockquote>
-</blockquote>
-<p>我们可以用迭代的方法来处理这个问题, 首先要处理的是长度的问题, 如果链表的长度小于 2, 那么直接返回.</p>
+</blockquote><p>我们可以用迭代的方法来处理这个问题, 首先要处理的是长度的问题, 如果链表的长度小于 2, 那么直接返回.</p>
 <p>否则我们就维护两个指针指向当前位置和上一个访问的位置, 当我们要删除索引为奇数(索引从 0 开始)的点的时候就让上一个节点直接指向当前这个节点的下一个节点即可.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1033,9 +1031,9 @@
 </div>
 <h3 id="q8-prune-small" class="headerLink">
     <a href="#q8-prune-small" class="header-mark" aria-label="Header mark for 'Q8: Prune Small'"></a>Q8: Prune Small</h3><blockquote>
-<p>Complete the function <code>prune_small</code> that takes in a <code>Tree</code> <code>t</code> and a number <code>n</code> and prunes <code>t</code> mutatively. If <code>t</code> or any of its branches has more than <code>n</code> branches, the <code>n</code> branches with the smallest labels should be kept and any other branches should be <em>pruned</em>, or removed, from the tree.</p>
-</blockquote>
-<p>这一道题要我们裁剪这棵树, 具体要求是才见到每个节点最多 <code>n</code> 个子树, 如果超过了 <code>n</code> 就优先移除 label 比较大的, 其实这一道题已经为我们提供了代码, 只要挖空填写就好了.</p>
+  <p>Complete the function <code>prune_small</code> that takes in a <code>Tree</code> <code>t</code> and a number <code>n</code> and prunes <code>t</code> mutatively. If <code>t</code> or any of its branches has more than <code>n</code> branches, the <code>n</code> branches with the smallest labels should be kept and any other branches should be <em>pruned</em>, or removed, from the tree.</p>
+
+</blockquote><p>这一道题要我们裁剪这棵树, 具体要求是才见到每个节点最多 <code>n</code> 个子树, 如果超过了 <code>n</code> 就优先移除 label 比较大的, 其实这一道题已经为我们提供了代码, 只要挖空填写就好了.</p>
 <p>不难相处, 我们应该自顶向下(从根节点出发)裁剪, 所以第一个 <code>while</code> 循环要完成的动作是如果分支数 &gt; <code>n</code>, 那么找到最大的删掉</p>
 <p>而后面的 <code>for</code> 循环则是要让我们到子树中递归裁减</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -1199,7 +1197,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.135.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.136.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2024<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

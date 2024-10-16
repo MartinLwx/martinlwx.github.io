@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -286,10 +284,10 @@
     <a href="#phase-1-basic-gameplay" class="header-mark" aria-label="Header mark for 'Phase 1: Basic gameplay'"></a>Phase 1: Basic gameplay</h2><hr>
 <h3 id="problem-1-1-pt" class="headerLink">
     <a href="#problem-1-1-pt" class="header-mark" aria-label="Header mark for 'Problem 1 (1 pt)'"></a>Problem 1 (1 pt)</h3><blockquote>
-<p><strong>Part A</strong>: Currently, there is no cost for placing any type of <code>Ant</code>, and so there is no challenge to the game. The base class <code>Ant</code> has a <code>food_cost</code> of zero. Override this class attribute for <code>HarvesterAnt</code> and <code>ThrowerAnt</code> according to the &ldquo;Food Cost&rdquo; column in the table below.</p>
+  <p><strong>Part A</strong>: Currently, there is no cost for placing any type of <code>Ant</code>, and so there is no challenge to the game. The base class <code>Ant</code> has a <code>food_cost</code> of zero. Override this class attribute for <code>HarvesterAnt</code> and <code>ThrowerAnt</code> according to the &ldquo;Food Cost&rdquo; column in the table below.</p>
 <p><strong>Part B</strong>: Now that placing an <code>Ant</code> costs food, we need to be able to gather more food! To fix this issue, implement the <code>HarvesterAnt</code> class. A <code>HarvesterAnt</code> is a type of <code>Ant</code> that adds one food to the <code>gamestate.food</code> total as its <code>action</code>.</p>
-</blockquote>
-<p>Set the properties of <code>HarversterAnt</code> and <code>ThrowerAnt</code> according to the requirements of the description, and implement the <code>action</code> method of <code>HarvesterAnt</code>, so that it can give <code>food</code> + 1 each time it acts</p>
+
+</blockquote><p>Set the properties of <code>HarversterAnt</code> and <code>ThrowerAnt</code> according to the requirements of the description, and implement the <code>action</code> method of <code>HarvesterAnt</code>, so that it can give <code>food</code> + 1 each time it acts</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -409,14 +407,14 @@
 </div>
 <h3 id="problem-2-1-pt" class="headerLink">
     <a href="#problem-2-1-pt" class="header-mark" aria-label="Header mark for 'Problem 2 (1 pt)'"></a>Problem 2 (1 pt)</h3><blockquote>
-<p>In this problem, you&rsquo;ll complete <code>Place.__init__</code> by adding code that tracks entrances. Right now, a <code>Place</code> keeps track only of its <code>exit</code>. We would like a <code>Place</code> to keep track of its entrance as well. A <code>Place</code> needs to track only one <code>entrance</code>. Tracking entrances will be useful when an <code>Ant</code> needs to see what <code>Bee</code>s are in front of it in the tunnel.</p>
+  <p>In this problem, you&rsquo;ll complete <code>Place.__init__</code> by adding code that tracks entrances. Right now, a <code>Place</code> keeps track only of its <code>exit</code>. We would like a <code>Place</code> to keep track of its entrance as well. A <code>Place</code> needs to track only one <code>entrance</code>. Tracking entrances will be useful when an <code>Ant</code> needs to see what <code>Bee</code>s are in front of it in the tunnel.</p>
 <p>However, simply passing an entrance to a <code>Place</code> constructor will be problematic; we would need to have both the exit and the entrance before creating a <code>Place</code>! (It&rsquo;s a <a href="https://en.wikipedia.org/wiki/Chicken_or_the_egg" target="_blank" rel="noopener noreferrer">chicken or the egg</a> problem.) To get around this problem, we will keep track of entrances in the following way instead. <code>Place.__init__</code> should use this logic:</p>
 <ul>
 <li>A newly created <code>Place</code> always starts with its <code>entrance</code> as <code>None</code>.</li>
 <li>If the <code>Place</code> has an <code>exit</code>, then the <code>exit</code>&rsquo;s <code>entrance</code> is set to that <code>Place</code>.</li>
 </ul>
-</blockquote>
-<p>In fact, this colony is a bit like the structure of a doubly linked list in the data structure. Use <code>.exit</code> to go to the left and <code>.entrance</code> method to go to the right.</p>
+
+</blockquote><p>In fact, this colony is a bit like the structure of a doubly linked list in the data structure. Use <code>.exit</code> to go to the left and <code>.entrance</code> method to go to the right.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -532,18 +530,18 @@
 </div>
 <h3 id="problem-3-1-pt" class="headerLink">
     <a href="#problem-3-1-pt" class="header-mark" aria-label="Header mark for 'Problem 3 (1 pt)'"></a>Problem 3 (1 pt)</h3><blockquote>
-<p>In order for a <code>ThrowerAnt</code> to throw a leaf, it must know which bee to hit. The provided implementation of the <code>nearest_bee</code> method in the <code>ThrowerAnt</code> class only allows them to hit bees in the same <code>Place</code>. Your job is to fix it so that a <code>ThrowerAnt</code> will <code>throw_at</code> the nearest bee in front of it <strong>that is not still in the <code>Hive</code>.</strong> This includes bees that are in the same <code>Place</code> as a <code>ThrowerAnt</code></p>
+  <p>In order for a <code>ThrowerAnt</code> to throw a leaf, it must know which bee to hit. The provided implementation of the <code>nearest_bee</code> method in the <code>ThrowerAnt</code> class only allows them to hit bees in the same <code>Place</code>. Your job is to fix it so that a <code>ThrowerAnt</code> will <code>throw_at</code> the nearest bee in front of it <strong>that is not still in the <code>Hive</code>.</strong> This includes bees that are in the same <code>Place</code> as a <code>ThrowerAnt</code></p>
 <blockquote>
-<p><em>Hint:</em> All <code>Place</code>s have an <code>is_hive</code> attribute which is <code>True</code> when that place is the <code>Hive</code>.</p>
-</blockquote>
-<p>Change <code>nearest_bee</code> so that it returns a random <code>Bee</code> from the nearest place that contains bees. Your implementation should follow this logic:</p>
+  <p><em>Hint:</em> All <code>Place</code>s have an <code>is_hive</code> attribute which is <code>True</code> when that place is the <code>Hive</code>.</p>
+
+</blockquote><p>Change <code>nearest_bee</code> so that it returns a random <code>Bee</code> from the nearest place that contains bees. Your implementation should follow this logic:</p>
 <ul>
 <li>Start from the current <code>Place</code> of the <code>ThrowerAnt</code>.</li>
 <li>For each place, return a random bee if there is any, and if not, inspect the place in front of it (stored as the current place&rsquo;s <code>entrance</code>).</li>
 <li>If there is no bee to attack, return <code>None</code>.</li>
 </ul>
-</blockquote>
-<p>Now we have to add a function to <code>ThrowerAnt</code>, so that it can attack the closest bee🐝. <strong>Note that if the bee is in the same place as it, it can also attack the 🐝</strong>.</p>
+
+</blockquote><p>Now we have to add a function to <code>ThrowerAnt</code>, so that it can attack the closest bee🐝. <strong>Note that if the bee is in the same place as it, it can also attack the 🐝</strong>.</p>
 <p>Our job requirement is to traverse each grid (<strong>just like you traverse the linked list</strong>) to find the first place that contains at least a bee, and return a random bee</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -657,14 +655,14 @@
     <a href="#phase-2-ants" class="header-mark" aria-label="Header mark for 'Phase 2: Ants!'"></a>Phase 2: Ants!</h2><hr>
 <h3 id="problem-4-2-pt" class="headerLink">
     <a href="#problem-4-2-pt" class="header-mark" aria-label="Header mark for 'Problem 4 (2 pt)'"></a>Problem 4 (2 pt)</h3><blockquote>
-<p>A <code>ThrowerAnt</code> is a powerful threat to the bees, but it has a high food cost. In this problem, you&rsquo;ll implement two subclasses of <code>ThrowerAnt</code> that are less costly but have constraints on the distance they can throw:</p>
+  <p>A <code>ThrowerAnt</code> is a powerful threat to the bees, but it has a high food cost. In this problem, you&rsquo;ll implement two subclasses of <code>ThrowerAnt</code> that are less costly but have constraints on the distance they can throw:</p>
 <ul>
 <li>The <code>LongThrower</code> can only <code>throw_at</code> a <code>Bee</code> that is found after following at least 5 <code>entrance</code> transitions. It cannot hit <code>Bee</code>s that are in the same <code>Place</code> as it or the first 4 <code>Place</code>s in front of it. If there are two <code>Bees</code>, one too close to the <code>LongThrower</code> and the other within its range, the <code>LongThrower</code> should only throw at the farther <code>Bee</code>, which is within its range, instead of trying to hit the closer <code>Bee</code>.</li>
 <li>The <code>ShortThrower</code> can only <code>throw_at</code> a <code>Bee</code> that is found after following at most 3 <code>entrance</code> transitions. It cannot throw at any bees further than 3 <code>Place</code>s in front of it.</li>
 </ul>
 <p>Neither of these specialized throwers can <code>throw_at</code> a <code>Bee</code> that is exactly 4 <code>Place</code>s away.</p>
-</blockquote>
-<p>Now we have to implement two classes, <code>LongThrower</code> and <code>ShortThrower</code>. Both of them are subclasses of <code>ThrowererAnt</code> . In fact, it can be seen from their names that the differences are the attack range.</p>
+
+</blockquote><p>Now we have to implement two classes, <code>LongThrower</code> and <code>ShortThrower</code>. Both of them are subclasses of <code>ThrowererAnt</code> . In fact, it can be seen from their names that the differences are the attack range.</p>
 <p><strong>How do we express the concept of attack range?</strong> In fact, it is very simple. In problem 3, when we find the nearest bee, we move forward one place at a time, and we can calculate the number of steps at the same time, then we will get the distance. Then we may check whether the distance is fall between the <code>min_range</code> and <code>max_range</code> (class variables, indicating the attack range of the ants corresponding to this class)</p>
 <p>Also, note that we cannot affect the results in problem 3. Just need to do some simple modifications. We let <code>min_range=-1</code>, <code>max_range=float('inf')</code>, which is equivalent to no limit ~! Because of The advantages of OOP, we save a lot of code.</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
@@ -811,10 +809,10 @@
 </div>
 <h3 id="problem-5-3-pt" class="headerLink">
     <a href="#problem-5-3-pt" class="header-mark" aria-label="Header mark for 'Problem 5 (3 pt)'"></a>Problem 5 (3 pt)</h3><blockquote>
-<p>Implement the <code>FireAnt</code>, which does damage when it receives damage. Specifically, if it is damaged by <code>amount</code> health units, it does a damage of <code>amount</code> to all bees in its place (this is called <em>reflected damage</em>). If it dies, it does an additional amount of damage, as specified by its <code>damage</code> attribute, which has a default value of <code>3</code> as defined in the <code>FireAnt</code> class.</p>
+  <p>Implement the <code>FireAnt</code>, which does damage when it receives damage. Specifically, if it is damaged by <code>amount</code> health units, it does a damage of <code>amount</code> to all bees in its place (this is called <em>reflected damage</em>). If it dies, it does an additional amount of damage, as specified by its <code>damage</code> attribute, which has a default value of <code>3</code> as defined in the <code>FireAnt</code> class.</p>
 <p>To implement this, override <code>FireAnt</code>&rsquo;s <code>reduce_health</code> method. Your overriden method should call the <code>reduce_health</code> method inherited from the superclass (<code>Ant</code>) to reduce the current <code>FireAnt</code> instance&rsquo;s health. Calling the <em>inherited</em> <code>reduce_health</code> method on a <code>FireAnt</code> instance reduces the insect&rsquo;s <code>health</code> by the given <code>amount</code> and removes the insect from its place if its <code>health</code> reaches zero or lower.</p>
-</blockquote>
-<p>When the <code>FireAnt</code> receives damage, it will reflect the damage it has received to all bees in the current place, and if it dies because of the bee&rsquo;s attack, it can also deal its damage to these bees again (depending on the damage of the <code>FireAnt</code>)</p>
+
+</blockquote><p>When the <code>FireAnt</code> receives damage, it will reflect the damage it has received to all bees in the current place, and if it dies because of the bee&rsquo;s attack, it can also deal its damage to these bees again (depending on the damage of the <code>FireAnt</code>)</p>
 <p>Details: All the bees in the current place are stored as a <code>list</code>. As a result,  **we may mutate the <code>list</code> while we are iterating it, so we need to traverse its copy(slice)</p>
 <p>The final code is as follows:</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
@@ -946,10 +944,10 @@
     <a href="#phase-3-more-ants" class="header-mark" aria-label="Header mark for 'Phase 3: More Ants!'"></a>Phase 3: More Ants!</h2><hr>
 <h3 id="problem-6-1-pt" class="headerLink">
     <a href="#problem-6-1-pt" class="header-mark" aria-label="Header mark for 'Problem 6 (1 pt)'"></a>Problem 6 (1 pt)</h3><blockquote>
-<p>We are going to add some protection to our glorious home base by implementing the <code>WallAnt</code>, an ant that does nothing each turn. A <code>WallAnt</code> is useful because it has a large <code>health</code> value.</p>
+  <p>We are going to add some protection to our glorious home base by implementing the <code>WallAnt</code>, an ant that does nothing each turn. A <code>WallAnt</code> is useful because it has a large <code>health</code> value.</p>
 <p>Unlike with previous ants, we have not provided you with a class header. Implement the <code>WallAnt</code> class from scratch. Give it a class attribute <code>name</code> with the value <code>'Wall'</code> (so that the graphics work) and a class attribute<code>implemented</code> with the value <code>True</code> (so that you can use it in a game).</p>
-</blockquote>
-<p>Implement a <code>WallAnt</code> from scratch. This one is easy !</p>
+
+</blockquote><p>Implement a <code>WallAnt</code> from scratch. This one is easy !</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1056,11 +1054,11 @@
 </div>
 <h3 id="problem-7-3-pt" class="headerLink">
     <a href="#problem-7-3-pt" class="header-mark" aria-label="Header mark for 'Problem 7 (3 pt)'"></a>Problem 7 (3 pt)</h3><blockquote>
-<p>Implement the <code>HungryAnt</code>, which will select a random <code>Bee</code> from its <code>place</code> and eat it whole. After eating a <code>Bee</code>, a <code>HungryAnt</code> must spend 3 turns chewing before eating again. If there is no bee available to eat, <code>HungryAnt</code> will do nothing.</p>
+  <p>Implement the <code>HungryAnt</code>, which will select a random <code>Bee</code> from its <code>place</code> and eat it whole. After eating a <code>Bee</code>, a <code>HungryAnt</code> must spend 3 turns chewing before eating again. If there is no bee available to eat, <code>HungryAnt</code> will do nothing.</p>
 <p>Give <code>HungryAnt</code> a <code>chew_duration</code> <strong>class</strong> attribute that stores the number of turns that it will take a <code>HungryAnt</code> to chew (set to 3). Also, give each <code>HungryAnt</code> an <strong>instance</strong> attribute <code>chew_countdown</code> that counts the number of turns it has left to chew (initialized to 0, since it hasn&rsquo;t eaten anything at the beginning. You can also think of <code>chew_countdown</code> as the number of turns until a <code>HungryAnt</code> can eat another <code>Bee</code>).</p>
 <p>Implement the <code>action</code> method of the <code>HungryAnt</code>: First, check if it is chewing; if so, decrement its <code>chew_countdown</code>. Otherwise, eat a random <code>Bee</code> in its <code>place</code> by reducing the <code>Bee</code>&rsquo;s health to 0. Make sure to set the <code>chew_countdown</code>when a Bee is eaten!</p>
-</blockquote>
-<p>Implementing a <code>HungryAnt</code> from scratch that can swallow a whole bee at random!!!! But it takes <code>chew_duration</code> to chew before the next attack. Isn&rsquo;t this the piranha in Plants vs. Zombies!!!</p>
+
+</blockquote><p>Implementing a <code>HungryAnt</code> from scratch that can swallow a whole bee at random!!!! But it takes <code>chew_duration</code> to chew before the next attack. Isn&rsquo;t this the piranha in Plants vs. Zombies!!!</p>
 <p>We only need to judge whether it is currently in the chewing state. Note that the value of <code>chew_duration</code> may be modified in the runtime.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1182,10 +1180,10 @@
 </div>
 <h3 id="problem-8-3-pt" class="headerLink">
     <a href="#problem-8-3-pt" class="header-mark" aria-label="Header mark for 'Problem 8 (3 pt)'"></a>Problem 8 (3 pt)</h3><blockquote>
-<p>A <code>BodyguardAnt</code> differs from a normal ant because it is a <code>ContainerAnt</code>; it can contain another ant and protect it, all in one <code>Place</code>. When a <code>Bee</code> stings the ant in a <code>Place</code> where one ant contains another, only the container is damaged. The ant inside the container can still perform its original action. If the container perishes, the contained ant still remains in the place (and can then be damaged).</p>
+  <p>A <code>BodyguardAnt</code> differs from a normal ant because it is a <code>ContainerAnt</code>; it can contain another ant and protect it, all in one <code>Place</code>. When a <code>Bee</code> stings the ant in a <code>Place</code> where one ant contains another, only the container is damaged. The ant inside the container can still perform its original action. If the container perishes, the contained ant still remains in the place (and can then be damaged).</p>
 <p>Each <code>ContainerAnt</code> has an instance attribute <code>ant_contained</code> that stores the ant it contains. This ant, <code>ant_contained</code>, initially starts off as <code>None</code> to indicate that there is no ant being stored yet. Implement the <code>store_ant</code> method so that it sets the <code>ContainerAnt</code>&rsquo;s <code>ant_contained</code> instance attribute to the passed in <code>ant</code>argument. Also implement the <code>ContainerAnt</code>&rsquo;s <code>action</code> method to perform its <code>ant_contained</code>&rsquo;s action if it is currently containing an ant.</p>
-</blockquote>
-<p>The ant to be implemented here is also very interesting, it can protect an ant. It can even stay in the same place with the protected ant inside.</p>
+
+</blockquote><p>The ant to be implemented here is also very interesting, it can protect an ant. It can even stay in the same place with the protected ant inside.</p>
 <p>Note a few details here:</p>
 <ol>
 <li><code>BodyguardAnt</code> cannot protect <code>BodyguardAnt</code>!</li>
@@ -1364,11 +1362,11 @@
 </div>
 <h3 id="problem-9-1-pt" class="headerLink">
     <a href="#problem-9-1-pt" class="header-mark" aria-label="Header mark for 'Problem 9 (1 pt)'"></a>Problem 9 (1 pt)</h3><blockquote>
-<p>The <code>BodyguardAnt</code> provides great defense, but they say the best defense is a good offense. The <code>TankAnt</code> is a container that protects an ant in its place and also deals 1 damage to all bees in its place each turn.</p>
+  <p>The <code>BodyguardAnt</code> provides great defense, but they say the best defense is a good offense. The <code>TankAnt</code> is a container that protects an ant in its place and also deals 1 damage to all bees in its place each turn.</p>
 <p>We have not provided you with a class header. Implement the <code>TankAnt</code> class from scratch. Give it a class attribute <code>name</code> with the value <code>'Tank'</code> (so that the graphics work) and a class attribute <code>implemented</code> with the value <code>True</code> (so that you can use it in a game).</p>
 <p>You should not need to modify any code outside of the <code>TankAnt</code> class. If you find yourself needing to make changes elsewhere, look for a way to write your code for the previous question such that it applies not just to <code>BodyguardAnt</code> and <code>TankAnt</code> objects, but to container ants in general.</p>
-</blockquote>
-<p>According to the description, we can know that <code>TankAnt</code> is a special kind of <code>ContainerAnt</code>I its attack method is quite special: the attack method of the ant it protects + deals its damage to all the bees in the same place</p>
+
+</blockquote><p>According to the description, we can know that <code>TankAnt</code> is a special kind of <code>ContainerAnt</code>I its attack method is quite special: the attack method of the ant it protects + deals its damage to all the bees in the same place</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1484,11 +1482,11 @@
     <a href="#phase-4-water-and-might" class="header-mark" aria-label="Header mark for 'Phase 4: Water and Might'"></a>Phase 4: Water and Might</h2><hr>
 <h3 id="problem-10-1-pt" class="headerLink">
     <a href="#problem-10-1-pt" class="header-mark" aria-label="Header mark for 'Problem 10 (1 pt)'"></a>Problem 10 (1 pt)</h3><blockquote>
-<p>Let&rsquo;s add water to the colony! Currently there are only two types of places, the <code>Hive</code> and a basic <code>Place</code>. To make things more interesting, we&rsquo;re going to create a new type of <code>Place</code> called <code>Water</code>.</p>
+  <p>Let&rsquo;s add water to the colony! Currently there are only two types of places, the <code>Hive</code> and a basic <code>Place</code>. To make things more interesting, we&rsquo;re going to create a new type of <code>Place</code> called <code>Water</code>.</p>
 <p>Only an insect that is waterproof can be placed in <code>Water</code>. In order to determine whether an <code>Insect</code> is waterproof, add a new class attribute to the <code>Insect</code> class named <code>is_waterproof</code> that is set to <code>False</code>. Since bees can fly, set their <code>is_waterproof</code> attribute to <code>True</code>, overriding the inherited value.</p>
 <p>Now, implement the <code>add_insect</code> method for <code>Water</code>. First, add the insect to the place regardless of whether it is waterproof. Then, if the insect is not waterproof, reduce the insect&rsquo;s health to 0. <em>Do not repeat code from elsewhere in the program.</em> Instead, use methods that have already been defined.</p>
-</blockquote>
-<p>In order to make the game more interesting, we will add a new kind of Place - <code>Water</code>, only creatures with <code>is_waterproof = True</code> can be placed in(Of course, bees can fly, ants can&rsquo;t)</p>
+
+</blockquote><p>In order to make the game more interesting, we will add a new kind of Place - <code>Water</code>, only creatures with <code>is_waterproof = True</code> can be placed in(Of course, bees can fly, ants can&rsquo;t)</p>
 <p>Add the class attribute <code>is_waterproof</code> in many classes, I will only put the code of the <code>Water</code> class below</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1596,10 +1594,10 @@
 </div>
 <h3 id="problem-11-1-pt" class="headerLink">
     <a href="#problem-11-1-pt" class="header-mark" aria-label="Header mark for 'Problem 11 (1 pt)'"></a>Problem 11 (1 pt)</h3><blockquote>
-<p>Currently there are no ants that can be placed on <code>Water</code>. Implement the <code>ScubaThrower</code>, which is a subclass of <code>ThrowerAnt</code> that is more costly and waterproof, <em>but otherwise identical to its base class</em>. A <code>ScubaThrower</code> should not lose its health when placed in <code>Water</code>.</p>
+  <p>Currently there are no ants that can be placed on <code>Water</code>. Implement the <code>ScubaThrower</code>, which is a subclass of <code>ThrowerAnt</code> that is more costly and waterproof, <em>but otherwise identical to its base class</em>. A <code>ScubaThrower</code> should not lose its health when placed in <code>Water</code>.</p>
 <p>We have not provided you with a class header. Implement the <code>ScubaThrower</code> class from scratch. Give it a class attribute <code>name</code> with the value <code>'Scuba'</code> (so that the graphics work) and remember to set the class attribute<code>implemented</code> with the value <code>True</code> (so that you can use it in a game).</p>
-</blockquote>
-<p>Implementing a <code>ScubaThrower</code> from scratch, it can be seen from the name that it should be a special <code>ThrowerAnt</code>.  It can be placed in <code>Water</code> !</p>
+
+</blockquote><p>Implementing a <code>ScubaThrower</code> from scratch, it can be seen from the name that it should be a special <code>ThrowerAnt</code>.  It can be placed in <code>Water</code> !</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1705,15 +1703,15 @@
 </div>
 <h3 id="problem-12-3-pt" class="headerLink">
     <a href="#problem-12-3-pt" class="header-mark" aria-label="Header mark for 'Problem 12 (3 pt)'"></a>Problem 12 (3 pt)</h3><blockquote>
-<p>Finally, implement the <code>QueenAnt</code>. The queen is a waterproof <code>ScubaThrower</code> that inspires her fellow ants through her bravery. In addition to the standard <code>ScubaThrower</code> action, the <code>QueenAnt</code> doubles the damage of all the ants behind her each time she performs an action. Once an ant&rsquo;s damage has been doubled, it is <em>not</em> doubled again for subsequent turns.</p>
+  <p>Finally, implement the <code>QueenAnt</code>. The queen is a waterproof <code>ScubaThrower</code> that inspires her fellow ants through her bravery. In addition to the standard <code>ScubaThrower</code> action, the <code>QueenAnt</code> doubles the damage of all the ants behind her each time she performs an action. Once an ant&rsquo;s damage has been doubled, it is <em>not</em> doubled again for subsequent turns.</p>
 <p>However, with great power comes great responsibility. The <code>QueenAnt</code> is governed by three special rules:</p>
 <ol>
 <li>If the queen ever has its health reduced to 0, the ants lose. You will need to override <code>Ant.reduce_health</code> in <code>QueenAnt</code> and call <code>ants_lose()</code> in that case in order to signal to the simulator that the game is over. (The ants also still lose if any bee reaches the end of a tunnel.)</li>
 <li>There can be only one queen. A second queen cannot be constructed. To check if an Ant can be constructed, we use the <code>Ant.construct()</code> class method to either construct an Ant if possible, or return <code>None</code> if not. You will need to override <code>Ant.construct</code> as a class method of <code>QueenAnt</code> in order to add this check. To keep track of whether a queen has already been created, you can use an instance variable added to the current <code>GameState</code>.</li>
 <li>The queen cannot be removed. Attempts to remove the queen should have no effect (but should not cause an error). You will need to override <code>Ant.remove_from</code> in <code>QueenAnt</code> to enforce this condition.</li>
 </ol>
-</blockquote>
-<p>Finally, we came to the last question (except the extra questions), we have to implement a queen ant🐜. It has the following features:</p>
+
+</blockquote><p>Finally, we came to the last question (except the extra questions), we have to implement a queen ant🐜. It has the following features:</p>
 <ol>
 <li>
 <p>It can be placed in <code>water</code></p>
@@ -1897,14 +1895,14 @@
 </div>
 <h3 id="extra-credit-2-pt" class="headerLink">
     <a href="#extra-credit-2-pt" class="header-mark" aria-label="Header mark for 'Extra Credit (2 pt)'"></a>Extra Credit (2 pt)</h3><blockquote>
-<p>Implement two final thrower ants that do zero damage, but instead apply a temporary &ldquo;status&rdquo; on the <code>action</code>method of a <code>Bee</code> instance that they <code>throw_at</code>. This &ldquo;status&rdquo; lasts for a certain number of turns, after which it ceases to take effect.</p>
+  <p>Implement two final thrower ants that do zero damage, but instead apply a temporary &ldquo;status&rdquo; on the <code>action</code>method of a <code>Bee</code> instance that they <code>throw_at</code>. This &ldquo;status&rdquo; lasts for a certain number of turns, after which it ceases to take effect.</p>
 <p>We will be implementing two new ants that inherit from <code>ThrowerAnt</code>.</p>
 <ul>
 <li><code>SlowThrower</code> throws sticky syrup at a bee, slowing it for 3 turns. When a bee is slowed, it can only move on turns when <code>gamestate.time</code> is even, and can do nothing otherwise. If a bee is hit by syrup while it is already slowed, it is slowed for an additional 3 turns.</li>
 <li><code>ScaryThrower</code> intimidates a nearby bee, causing it to back away instead of advancing. (If the bee is already right next to the Hive and cannot go back further, it should not move. To check if a bee is next to the Hive, you might find the <code>is_hive</code> instance attribute of <code>Place</code>s useful). Bees remain scared until they have tried to back away twice. Bees cannot try to back away if they are slowed and <code>gamestate.time</code> is odd. <em>Once a bee has been scared once, it can&rsquo;t be scared ever again.</em></li>
 </ul>
-</blockquote>
-<p>Implement two special types of ants, which do no damage themselves, but add debuffs to bees.</p>
+
+</blockquote><p>Implement two special types of ants, which do no damage themselves, but add debuffs to bees.</p>
 <ul>
 <li><code>SlowThrower</code> can slow down the bees, so that they can only move forward when the current time is even. This effect can last for 3 turns, but **we can slow the bees as many times as we want.</li>
 <li><code>ScaryThrower</code> will make the bee move back(if you can&rsquo;t move back, just keep still). This effect <strong>lasts for 2 turns</strong>. <strong>But if it is slowed, it will continue to stay still</strong>. This kind of  debuff only can last time</li>
@@ -2092,12 +2090,12 @@
     <a href="#optional-problems" class="header-mark" aria-label="Header mark for 'Optional Problems'"></a>Optional Problems</h2><hr>
 <h3 id="optional-problem-1" class="headerLink">
     <a href="#optional-problem-1" class="header-mark" aria-label="Header mark for 'Optional Problem 1'"></a>Optional Problem 1</h3><blockquote>
-<p>Implement the <code>NinjaAnt</code>, which damages all <code>Bee</code>s that pass by, but can never be stung.</p>
+  <p>Implement the <code>NinjaAnt</code>, which damages all <code>Bee</code>s that pass by, but can never be stung.</p>
 <p>A <code>NinjaAnt</code> does not block the path of a <code>Bee</code> that flies by. To implement this behavior, first modify the <code>Ant</code> class to include a new class attribute <code>blocks_path</code> that is set to <code>True</code>, then override the value of <code>blocks_path</code> to <code>False</code>in the <code>NinjaAnt</code> class.</p>
 <p>Second, modify the <code>Bee</code>&rsquo;s method <code>blocked</code> to return <code>False</code> if either there is no <code>Ant</code> in the <code>Bee</code>&rsquo;s <code>place</code> or if there is an <code>Ant</code>, but its <code>blocks_path</code> attribute is <code>False</code>. Now <code>Bee</code>s will just fly past <code>NinjaAnt</code>s.</p>
 <p>Finally, we want to make the <code>NinjaAnt</code> damage all <code>Bee</code>s that fly past. Implement the <code>action</code> method in <code>NinjaAnt</code>to reduce the health of all <code>Bee</code>s in the same <code>place</code> as the <code>NinjaAnt</code> by its <code>damage</code> attribute. Similar to the <code>FireAnt</code>, you must iterate over a potentially changing list of bees.</p>
-</blockquote>
-<p>Ninja Ant🥷🐜, pay attention to a few details:</p>
+
+</blockquote><p>Ninja Ant🥷🐜, pay attention to a few details:</p>
 <ol>
 <li>Cannot be attacked by bees</li>
 <li>It will not block the bees, but will cause harm to the passing bees</li>
@@ -2226,10 +2224,10 @@
 </div>
 <h3 id="optional-problem-2" class="headerLink">
     <a href="#optional-problem-2" class="header-mark" aria-label="Header mark for 'Optional Problem 2'"></a>Optional Problem 2</h3><blockquote>
-<p>The <code>LaserAnt</code> shoots out a powerful laser, damaging all that dare to stand in its path. Both <code>Bee</code>s and <code>Ant</code>s, of all types, are at risk of being damaged by <code>LaserAnt</code>. When a <code>LaserAnt</code> takes its action, it will damage all <code>Insect</code>s in its place (excluding itself, but including its container if it has one) and the <code>Place</code>s in front of it, excluding the <code>Hive</code>.</p>
+  <p>The <code>LaserAnt</code> shoots out a powerful laser, damaging all that dare to stand in its path. Both <code>Bee</code>s and <code>Ant</code>s, of all types, are at risk of being damaged by <code>LaserAnt</code>. When a <code>LaserAnt</code> takes its action, it will damage all <code>Insect</code>s in its place (excluding itself, but including its container if it has one) and the <code>Place</code>s in front of it, excluding the <code>Hive</code>.</p>
 <p>If that were it, <code>LaserAnt</code> would be too powerful for us to contain. The <code>LaserAnt</code> has a base damage of <code>2</code>. But, <code>LaserAnt</code>&rsquo;s laser comes with some quirks. The laser is weakened by <code>0.25</code> each place it travels away from<code>LaserAnt</code>&rsquo;s place. Additionally, <code>LaserAnt</code> has limited battery. Each time <code>LaserAnt</code> actually damages an <code>Insect</code> its laser&rsquo;s total damage goes down by <code>0.0625</code> (1/16). If <code>LaserAnt</code>&rsquo;s damage becomes negative due to these restrictions, it simply does 0 damage instead.</p>
-</blockquote>
-<p>Laser 🐜, pay attention to several features:</p>
+
+</blockquote><p>Laser 🐜, pay attention to several features:</p>
 <ol>
 <li>Damage all creatures in your own place, including all creatures in the entire colony</li>
 <li>But each time it deals damage to other creatures, the damage will decrease, minus <code>0.0625</code> each time</li>
@@ -2438,7 +2436,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.135.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.136.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2024<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
