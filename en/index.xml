@@ -3,9 +3,23 @@
         <title>MartinLwx&#39;s Blog</title>
         <link>https://martinlwx.github.io/en/</link>
         <description>Welcome to my blog :)</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Mon, 20 Jan 2025 21:40:43 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 02 Feb 2025 14:22:57 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Reading Notes: Outrageously Large Neural Networks-The Sparsely-Gated Mixture-of-Experts Layer</title>
+    <link>https://martinlwx.github.io/en/reading-notes-mixture-of-experts/</link>
+    <pubDate>Sun, 02 Feb 2025 14:22:57 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/reading-notes-mixture-of-experts/</guid>
+    <description><![CDATA[<h2 id="motivations" class="headerLink">
+    <a href="#motivations" class="header-mark" aria-label="Header mark for 'Motivations'"></a>Motivations</h2><p>The model&rsquo;s performance is related to the model&rsquo;s parameter. The bigger the model is, the more performant it will be. However, the <em>computational cost also increases</em>. To mitigate this problem, various forms of conditional computation have been proposed to increase model performance <em>without a proportional increase in computational costs</em><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Today I would like to share the Sparsely-Gated Mixture-of-Experts Layer (MoE) as proposed in this paper.<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<figure><img src="/img/moe.png" width="resize">
+</figure>
+
+<h2 id="moe-architecture" class="headerLink">
+    <a href="#moe-architecture" class="header-mark" aria-label="Header mark for 'MoE architecture'"></a>MoE architecture</h2><p>There are $n$ experts in the MoE layer (denoted as $E_1, E_2, &hellip;, E_n$) and they are controlled by a gating network $G$. The output of the gating network $G$ is a vector with length $n$.</p>]]></description>
+</item><item>
     <title>What is the Python decorator really?</title>
     <link>https://martinlwx.github.io/en/understanding-python-decorator/</link>
     <pubDate>Mon, 20 Jan 2025 21:40:43 &#43;0800</pubDate><author>
@@ -121,23 +135,5 @@
     </author><guid>https://martinlwx.github.io/en/my-workflow-of-using-vim-fugitive-in-neovim/</guid>
     <description><![CDATA[<h2 id="intro" class="headerLink">
     <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Recently, while using Git with Neovim, I noticed that my workflow isn&rsquo;t as smooth as I&rsquo;d like it to be. I tend to <em>exit Neovim</em>, and then type git commands in the terminal. Before committing code changes, I usually check the diff information using <a href="https://github.com/dandavison/delta" target="_blank" rel="noopener noreferrer">delta</a>. To cut down the number of keystrokes, I&rsquo;ve also enabled the <a href="https://github.com/ohmyzsh/ohmyzsh" target="_blank" rel="noopener noreferrer">Oh My Zsh</a>&rsquo;s <code>git</code> plugin, so I can use a bunch of shortcuts like <code>ga = git add</code> and <code>gcmsg = git commit -m</code></p>]]></description>
-</item><item>
-    <title>Tree-sitter and its Query</title>
-    <link>https://martinlwx.github.io/en/tree-sitter-and-its-query/</link>
-    <pubDate>Sat, 07 Sep 2024 11:29:44 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/tree-sitter-and-its-query/</guid>
-    <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Tree-sitter is a parser generator, that is, we can leverage it to generate a specific parser. In addition to that, it also offers other functionality. For example, we can write a Query using S-expression, which will do the pattern matching on the AST. Before we delve into this feature, let&rsquo;s talk about some backgrounds</p>
-<h2 id="s-expression" class="headerLink">
-    <a href="#s-expression" class="header-mark" aria-label="Header mark for 'S-expression'"></a>S-expression</h2><div class="details admonition info open">
-    <div class="details-summary admonition-title">
-        <span class="icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg></span>Info<span class="details-icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
-    </div>
-    <div class="details-content">
-        <div class="admonition-content">If you once wrote Lisp (or its dialects, such as Scheme and Racket), you should be familiar with the S-expression</div></div></div>
-<p>We can define a S-expression <em>recursively</em>, the definition is</p>]]></description>
 </item></channel>
 </rss>
