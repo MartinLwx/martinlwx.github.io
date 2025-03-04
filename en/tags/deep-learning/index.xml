@@ -3,34 +3,29 @@
         <title>Deep-Learning - Tag - MartinLwx&#39;s Blog</title>
         <link>https://martinlwx.github.io/en/tags/deep-learning/</link>
         <description>Deep-Learning - Tag - MartinLwx&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 02 Mar 2025 10:50:00 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/tags/deep-learning/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Tue, 04 Mar 2025 23:41:07 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/tags/deep-learning/" rel="self" type="application/rss+xml" /><item>
+    <title>What is Multi-Head Attention (MHA)</title>
+    <link>https://martinlwx.github.io/en/an-explanation-of-multi-head-attention/</link>
+    <pubDate>Tue, 04 Mar 2025 23:41:07 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/an-explanation-of-multi-head-attention/</guid>
+    <description><![CDATA[<h2 id="whats-multi-head-attention-mha" class="headerLink">
+    <a href="#whats-multi-head-attention-mha" class="header-mark" aria-label="Header mark for 'What&rsquo;s Multi-Head Attention (MHA)'"></a>What&rsquo;s Multi-Head Attention (MHA)</h2><p>In <a href="https://martinlwx.github.io/en/an-explanation-of-self-attention/" rel="">last post</a> I have explained how the self-attention mechanism works. Today let&rsquo;s <em>take a step further</em> and explore multi-head attention (MHA), which is the full version of self-attention as described in the original paper<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Since I have covered most of the foundation concepts in <a href="https://martinlwx.github.io/en/an-explanation-of-self-attention/" rel="">last post</a>, this post will be short. :)</p>
+<p>Previously, we mentioned that the self-attention mechanism has three import matrices.</p>]]></description>
+</item><item>
     <title>An Explanation of Self-Attention mechanism in Transformer</title>
     <link>https://martinlwx.github.io/en/an-explanation-of-self-attention/</link>
     <pubDate>Sun, 02 Mar 2025 10:50:00 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/an-explanation-of-self-attention/</guid>
-    <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Currently, we are in the era of the Large Language Model (LLM), which is built on the Transformer architecture. To understand how LLM works, you <em>should</em> understand the self-attention mechanism in Transformer. In this post, I would like to share an explanation with you and finally use PyTorch to implement it :0</p>
-<div class="details admonition info open">
+    <description><![CDATA[<div class="details admonition info open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg></span>Info<span class="details-icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p><ol>
-<li>Notation Convention: Bold uppercase denotes matrices, bold lowercase denotes vectors, and regular lowercase denotes scalars.</li>
-<li>The self-attention mentioned in this article specifically refers to <em>unidirectional self-attention</em>.</li>
-</ol>
-</div></div></div><h2 id="understanding-self-attention" class="headerLink">
-    <a href="#understanding-self-attention" class="header-mark" aria-label="Header mark for 'Understanding self-attention'"></a>Understanding self-attention</h2><div class="details admonition note open">
-    <div class="details-summary admonition-title">
-        <span class="icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
-    </div>
-    <div class="details-content">
-        <div class="admonition-content"><p>In the original paper, the paper use $d_k$ rather than $d$, where $d_k$ represents the length of the key vector. To simplify this post, I would assume that the length of the query/key/value vector has the same length (denoted as $d$).</p>]]></description>
+        <div class="admonition-content"><p><strong>Further reading</strong>:</p>]]></description>
 </item><item>
     <title>Reading Notes: Outrageously Large Neural Networks-The Sparsely-Gated Mixture-of-Experts Layer</title>
     <link>https://martinlwx.github.io/en/reading-notes-mixture-of-experts/</link>
@@ -131,13 +126,5 @@
     <description><![CDATA[<h2 id="intro" class="headerLink">
     <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Even though I have been using Numpy and Pytorch for a long time, I never really knew how they implemented the underlying tensors and why they are <strong>so efficient</strong>. Recently, while studying the course <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a>, I finally got the opportunity to try implementing tensors on my own. After going through the process, my understanding of tensors is much better 🧐</p>
 <p>As a Pytorch user, is it necessary to understand the underlying tensor storage mechanism? I believe <strong>it is essential</strong>. In most cases, understanding the underlying principles helps you grasp higher-level concepts better. For example, understanding the tensor storage mechanism can help you answer the following questions:</p>]]></description>
-</item><item>
-    <title>Understanding GAT throught MPNN</title>
-    <link>https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/</link>
-    <pubDate>Sun, 21 May 2023 15:20:50 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/understanding-graph-attention-network-through-mpnn/</guid>
-    <description><![CDATA[<h2 id="whats-mpnn" class="headerLink">
-    <a href="#whats-mpnn" class="header-mark" aria-label="Header mark for 'What&rsquo;s MPNN'"></a>What&rsquo;s MPNN</h2><p>Justin Gilmer proposed the MPNN (Message Passing Neural Network) framework <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> for describing graph neural network models used in supervised learning on graphs. I found this to be a useful framework that provides a clear understanding of how different GNN models work and facilitates a quick grasp of the differences between them. Considering a node $v$ on the graph $G$, the update procedure for its vector representation $h_v$ is as follows:</p>]]></description>
 </item></channel>
 </rss>

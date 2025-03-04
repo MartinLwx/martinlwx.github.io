@@ -3,14 +3,28 @@
         <title>Deep-Learning - 标签 - MartinLwx&#39;s Blog</title>
         <link>https://martinlwx.github.io/zh-cn/tags/deep-learning/</link>
         <description>Deep-Learning - 标签 - MartinLwx&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 02 Mar 2025 10:50:00 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/tags/deep-learning/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Tue, 04 Mar 2025 23:41:07 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/tags/deep-learning/" rel="self" type="application/rss+xml" /><item>
+    <title>多头注意力是什么</title>
+    <link>https://martinlwx.github.io/zh-cn/an-explanation-of-multi-head-attention/</link>
+    <pubDate>Tue, 04 Mar 2025 23:41:07 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/zh-cn/an-explanation-of-multi-head-attention/</guid>
+    <description><![CDATA[<h2 id="什么是多头注意力" class="headerLink">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%9a%e5%a4%b4%e6%b3%a8%e6%84%8f%e5%8a%9b" class="header-mark" aria-label="Header mark for '什么是多头注意力'"></a>什么是多头注意力</h2><p>在<a href="https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/" rel="">上一篇文章</a>里面我们已经讲完了 Self Attention|自注意力，这里我们在自注意力的基础上<em>多增加一点东西</em>：加上多头注意力（Multi-Head Attention，MHA）。这个其实才是本来 Transformer 的自注意力的完全版本<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。因为大部分内容在<a href="https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/" rel="">前文</a>已经讲完，本篇不会太长～</p>]]></description>
+</item><item>
     <title>如何理解 Transformer 的自注意力公式</title>
     <link>https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/</link>
     <pubDate>Sun, 02 Mar 2025 10:50:00 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/</guid>
-    <description><![CDATA[<h2 id="引言" class="headerLink">
-    <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>大模型基于 Transformer 架构搭建而成，而自注意力机制是 Transformer 的<em>核心</em>。要理解大模型就要从理解自注意力开始。在本篇文章里，我将拆解自注意力公式来帮助你理解，最后还会手撕自注意力的 PyTorch 代码 :0</p>]]></description>
+    <description><![CDATA[<div class="details admonition info open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg></span>Info<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p><strong>进一步阅读</strong>:</p>]]></description>
 </item><item>
     <title>论文阅读: Outrageously Large Neural Networks-The Sparsely-Gated Mixture-of-Experts Layer</title>
     <link>https://martinlwx.github.io/zh-cn/reading-notes-mixture-of-experts/</link>
@@ -93,15 +107,5 @@
     </author><guid>https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/</guid>
     <description><![CDATA[<h2 id="引言" class="headerLink">
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>尽管我已经使用 Numpy 和 Pytorch 好长一段时间了，但我一直不知道他们是如何实现底层的张量（tensor），而且<strong>这么高效</strong>。最近在看 <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a> 这门课，终于有机会尝试自己实现张量，实现一遍之后对张量的理解更深刻了🧐</p>]]></description>
-</item><item>
-    <title>用 MPNN 框架解读 GAT</title>
-    <link>https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/</link>
-    <pubDate>Sun, 21 May 2023 15:20:50 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/</guid>
-    <description><![CDATA[<h2 id="什么是-mpnn-框架" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-mpnn-%e6%a1%86%e6%9e%b6" class="header-mark" aria-label="Header mark for '什么是 MPNN 框架'"></a>什么是 MPNN 框架</h2><p>Justin Gilmer 提出了 MPNN（Message Passing Neural Network）框架<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ，用于描述被用来做图上的监督学习的图神经网络模型。我发现这是一个很好用的框架，可以很好理解不同的 GNN 模型是如何工作的，方便快速弄清楚不同的 GNN 模型之间的差别。我们考虑图 $G$ 上的一个节点 $v$，它的向量表示 $h_v$ 的更新方式如下：
-$$m_v^{t+1}=\sum_{u\in \mathcal{N}(v)}M_t(h_v^t,h_u^t,e_{vu})$$
-$$h_v^{t+1}=U_t(h_v^t,m_v^{t+1})$$</p>]]></description>
 </item></channel>
 </rss>
