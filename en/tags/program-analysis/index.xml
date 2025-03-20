@@ -3,7 +3,62 @@
         <title>Program-Analysis - Tag - MartinLwx&#39;s Blog</title>
         <link>https://martinlwx.github.io/en/tags/program-analysis/</link>
         <description>Program-Analysis - Tag - MartinLwx&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Thu, 20 Feb 2025 18:51:13 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/tags/program-analysis/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 19 Mar 2025 22:27:38 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/tags/program-analysis/" rel="self" type="application/rss+xml" /><item>
+    <title>Class Hierarchy Analysis: a quick way to generate call graph</title>
+    <link>https://martinlwx.github.io/en/call-graph-generation-using-class-hierarchy-analysis/</link>
+    <pubDate>Wed, 19 Mar 2025 22:27:38 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/call-graph-generation-using-class-hierarchy-analysis/</guid>
+    <description><![CDATA[<h2 id="the-key-to-call-graph-construction" class="headerLink">
+    <a href="#the-key-to-call-graph-construction" class="header-mark" aria-label="Header mark for 'The key to call graph construction'"></a>The key to call graph construction</h2><p>For an OOP programming language, the key challenge in call graph construction is handling the virtual call, as it may involve <em>multiple target methods</em>, as shown in the following table<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+        <tr>
+            <th style="text-align: "></th>
+            <th style="text-align: ">Static Call</th>
+            <th style="text-align: ">Special Call</th>
+            <th style="text-align: ">Virtual Call</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: ">Instruction</td>
+            <td style="text-align: "><code>invokestatic</code></td>
+            <td style="text-align: "><code>invokespecial</code></td>
+            <td style="text-align: "><code>invokeinterface, invokevirtual</code></td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Receiver Objects</td>
+            <td style="text-align: ">❌</td>
+            <td style="text-align: ">✅</td>
+            <td style="text-align: ">✅</td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Target Methods</td>
+            <td style="text-align: ">Static Method</td>
+            <td style="text-align: ">Constructor, Private Instance Method, Superclass Instance Method</td>
+            <td style="text-align: ">Other Instance Method</td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Count of Possible Target Methods</td>
+            <td style="text-align: ">1</td>
+            <td style="text-align: ">1</td>
+            <td style="text-align: ">$\ge 1$ (polymorphism)</td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Determinancy</td>
+            <td style="text-align: ">Compile-time</td>
+            <td style="text-align: ">Compile-time</td>
+            <td style="text-align: ">Run-time</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<h2 id="the-method-call-and-method-signature" class="headerLink">
+    <a href="#the-method-call-and-method-signature" class="header-mark" aria-label="Header mark for 'The method call and method signature'"></a>The method call and method signature</h2><p>Let&rsquo;s take Java as an example; a method call may have this form.</p>]]></description>
+</item><item>
     <title>From Basic Block to Control Flow Graph</title>
     <link>https://martinlwx.github.io/en/from-basic-block-to-control-flow-graph/</link>
     <pubDate>Thu, 20 Feb 2025 18:51:13 &#43;0800</pubDate><author>
