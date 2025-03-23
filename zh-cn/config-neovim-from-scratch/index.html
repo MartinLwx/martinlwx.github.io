@@ -12,7 +12,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2023-02-08T15:01:42+08:00">
-    <meta property="article:modified_time" content="2024-04-04T22:00:42+08:00">
+    <meta property="article:modified_time" content="2025-03-22T22:00:42+08:00">
     <meta property="article:tag" content="Vim">
     <meta property="article:tag" content="Neovim">
     <meta property="og:image" content="https://martinlwx.github.io/logo.png">
@@ -35,8 +35,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/"
-        },"genre": "posts","keywords":["Neovim","Nvim","LSP"],"wordcount":  4665 ,
-        "url": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2024-04-04T22:00:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+        },"genre": "posts","keywords":["Neovim","Nvim","LSP"],"wordcount":  4393 ,
+        "url": "https://martinlwx.github.io/zh-cn/config-neovim-from-scratch/","datePublished": "2023-02-08T15:01:42+08:00","dateModified": "2025-03-22T22:00:42+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -197,13 +197,8 @@
         <li><a href="#按键配置-1">按键配置</a></li>
         <li><a href="#安装插件管理器">安装插件管理器</a></li>
         <li><a href="#主题配置">主题配置</a></li>
-        <li><a href="#自动补全指南">自动补全指南</a>
-          <ul>
-            <li><a href="#nvim-cmp-里面的按键映射">nvim-cmp 里面的按键映射</a></li>
-            <li><a href="#nvim-cmp-里面的补全菜单">nvim-cmp 里面的补全菜单</a></li>
-            <li><a href="#lsp">LSP</a></li>
-          </ul>
-        </li>
+        <li><a href="#自动补全插件">自动补全插件</a></li>
+        <li><a href="#lsp-配置">LSP 配置</a></li>
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
@@ -218,9 +213,9 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>Vim-Neovim</a></span></div>
             <div class="post-meta-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2024-04-04">2024-04-04</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;约 4665 字&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;预计阅读 10 分钟&nbsp;</div>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2025-03-22">2025-03-22</time>&nbsp;<svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;约 4393 字&nbsp;<svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;预计阅读 9 分钟&nbsp;</div>
         </div><div class="details toc print:!tw-block" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -246,24 +241,18 @@
         <li><a href="#按键配置-1">按键配置</a></li>
         <li><a href="#安装插件管理器">安装插件管理器</a></li>
         <li><a href="#主题配置">主题配置</a></li>
-        <li><a href="#自动补全指南">自动补全指南</a>
-          <ul>
-            <li><a href="#nvim-cmp-里面的按键映射">nvim-cmp 里面的按键映射</a></li>
-            <li><a href="#nvim-cmp-里面的补全菜单">nvim-cmp 里面的补全菜单</a></li>
-            <li><a href="#lsp">LSP</a></li>
-          </ul>
-        </li>
+        <li><a href="#自动补全插件">自动补全插件</a></li>
+        <li><a href="#lsp-配置">LSP 配置</a></li>
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><!-- LSP & 总结已经更改了强调风格-->
-<div class="details admonition info open">
+            </div><div class="content" id="content"><div class="details admonition info open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg></span>信息<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg></span>Info<span class="details-icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
@@ -274,14 +263,14 @@
 <li>如果之前跟着本篇教程采用 <code>packer.nvim</code> 进行安装的话，可以参考我迁移的时候的 <a href="https://github.com/MartinLwx/dotfiles/commit/63f21a50a1bc2b48d4ca3f7a9c6d1ea77505ea58" target="_blank" rel="noopener noreferrer">commit</a>，修改完之后记得用 <code>:checkhealth lazy</code> 检查下，因为还需要删除 <code>packer.nvim</code> 的一些旧文件</li>
 </ul>
 </li>
+<li><em>2025-03-22</em>，将 <code>nvim-cmp</code> 替换为 <code>blink.cmp</code>，配置更简单了</li>
 </ul>
 <p><strong>进一步阅读</strong>:</p>
 <ul>
-<li>如何为一门新的编程语言配置 Neovim ，以及支持第三方代码格式化工具，见<a href="https://martinlwx.github.io/zh-cn/neovim-setup-for-ocaml/" target="_blank" rel="noopener noreferrer">下篇文章</a></li>
+<li>如何为一门新的编程语言配置 Neovim ，以及支持第三方代码格式化工具，见<a href="https://martinlwx.github.io/zh-cn/neovim-setup-for-ocaml/" rel="">下篇文章</a></li>
 </ul>
-</div></div></div>
-<h2 id="版本信息" class="headerLink">
-    <a href="#%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af" class="header-mark" aria-label="Header mark for '版本信息'"></a>版本信息</h2><p>我使用的是 Macbook pro 2020 Intel 版本，系统版本为 macOS 14.3.1。我的 <code>Nvim</code> 版本信息如下</p>
+</div></div></div><h2 id="版本信息" class="headerLink">
+    <a href="#%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af" class="header-mark" aria-label="Header mark for '版本信息'"></a>版本信息</h2><p>我使用的是 MacBook Air M3，系统版本为 macOS 15.3.2。我的 <code>Nvim</code> 版本信息如下</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -376,12 +365,12 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl">NVIM v0.9.5
+      "><span class="line"><span class="cl">NVIM v0.10.4
 </span></span><span class="line"><span class="cl">Build type: Release
-</span></span><span class="line"><span class="cl">LuaJIT 2.1.1710088188
+</span></span><span class="line"><span class="cl">LuaJIT 2.1.1741730670
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">   system vimrc file: &#34;$VIM/sysinit.vim&#34;
-</span></span><span class="line"><span class="cl">  fall-back for $VIM: &#34;/usr/local/Cellar/neovim/0.9.5/share/nvim&#34;
+</span></span><span class="line"><span class="cl">  fall-back for $VIM: &#34;/opt/homebrew/Cellar/neovim/0.10.4_1/share/nvim&#34;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">Run :checkhealth for more info</span></span></code></pre>
 </div>
@@ -494,12 +483,10 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl">nvim
+      "><span class="line"><span class="cl">.
 </span></span><span class="line"><span class="cl">├── init.lua
 </span></span><span class="line"><span class="cl">└── lua
 </span></span><span class="line"><span class="cl">    ├── colorscheme.lua
-</span></span><span class="line"><span class="cl">    ├── config
-</span></span><span class="line"><span class="cl">    │   └── nvim-cmp.lua
 </span></span><span class="line"><span class="cl">    ├── keymaps.lua
 </span></span><span class="line"><span class="cl">    ├── lsp.lua
 </span></span><span class="line"><span class="cl">    ├── options.lua
@@ -516,11 +503,9 @@
 <li><code>plugins.lua</code> 配置插件</li>
 </ul>
 </li>
-<li><code>config</code> 用于<strong>存放各种插件自身的配置</strong>，文件名为插件的名字，这样比较好找。<em>这里的 <code>nvim-cmp.lua</code> 就是 <code>nvim-cmp</code> 插件的配置文件</em></li>
 <li><code>lua</code> 目录。当我们在 Lua 里面调用 <code>require</code> 加载模块（文件）的时候，它会自动在 <code>lua</code> 文件夹里面进行搜索
 <ul>
-<li><strong>将路径分隔符从 <code>/</code> 替换为 <code>.</code>，然后去掉 <code>.lua</code> 后缀就得到了 <code>require</code> 的参数格式</strong></li>
-<li><em>比如要导入上面的 <code>nvim-cmp.lua</code> 文件，可以用 <code>require('config.nvim-cmp')</code></em></li>
+<li><em>将路径分隔符从 <code>/</code> 替换为 <code>.</code>，然后去掉 <code>.lua</code> 后缀就得到了 <code>require</code> 的参数格式</em></li>
 </ul>
 </li>
 </ul>
@@ -1079,7 +1064,7 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;options&#39;</span><span class="p">)</span>        </span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;options&#39;</span><span class="p">)</span></span></span></code></pre>
 </div>
 <h3 id="按键配置-1" class="headerLink">
     <a href="#%e6%8c%89%e9%94%ae%e9%85%8d%e7%bd%ae-1" class="header-mark" aria-label="Header mark for '按键配置'"></a>按键配置</h3><p>按键功能一览：</p>
@@ -1311,7 +1296,7 @@
       tw-overflow-x-auto
       tw-scrollbar-thin
       "><span class="line"><span class="cl"><span class="p">...</span> <span class="c1">-- 省略其他行</span>
-</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;keymaps&#39;</span><span class="p">)</span>        </span></span></code></pre>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;keymaps&#39;</span><span class="p">)</span></span></span></code></pre>
 </div>
 <div class="details admonition warning open">
     <div class="details-summary admonition-title">
@@ -1537,7 +1522,7 @@
       tw-overflow-x-auto
       tw-scrollbar-thin
       "><span class="line"><span class="cl"><span class="p">...</span> <span class="c1">-- 省略其他行</span>
-</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;plugins&#39;</span><span class="p">)</span>        </span></span></code></pre>
+</span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;plugins&#39;</span><span class="p">)</span></span></span></code></pre>
 </div>
 <p>此时你重启 <code>Nvim</code> 会发现黑屏没显示，这是因为 <code>lazy.nvim</code> 在安装自己，静待片刻即可☕️。等待 Dashboard 出现之后，可以输入 <code>:Lazy</code> 试试，如果看到了弹出了 <code>lazy.nvim</code> 的窗口，那就安装成功了🎉</p>
 <div class="details admonition tip open">
@@ -1860,10 +1845,17 @@
       "><span class="line"><span class="cl"><span class="p">...</span> <span class="c1">-- 省略其他行</span>
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s1">&#39;colorscheme&#39;</span><span class="p">)</span></span></span></code></pre>
 </div>
-<h3 id="自动补全指南" class="headerLink">
-    <a href="#%e8%87%aa%e5%8a%a8%e8%a1%a5%e5%85%a8%e6%8c%87%e5%8d%97" class="header-mark" aria-label="Header mark for '自动补全指南'"></a>自动补全指南</h3><p>自己手动配置自动补全功能的话会比较繁琐，所以我们最好是借助于一些插件来帮忙，下面我讲讲<strong>我摸索出来的最简单配置方法</strong></p>
-<p>首先，第一个要用到的插件是 <a href="https://github.com/hrsh7th/nvim-cmp" target="_blank" rel="noopener noreferrer">nvim-cmp</a>，它可以管理各种补全候选项来源，然后展示在补全菜单里面，还支持我们对外观等进行定制化。</p>
-<p>我们先新建 <code>~/.config/nvim/lua/config/nvim-cmp.lua</code> 文件配置 <code>nvim-cmp</code></p>
+<h3 id="自动补全插件" class="headerLink">
+    <a href="#%e8%87%aa%e5%8a%a8%e8%a1%a5%e5%85%a8%e6%8f%92%e4%bb%b6" class="header-mark" aria-label="Header mark for '自动补全插件'"></a>自动补全插件</h3><div class="details admonition warning open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>Warning<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p><a href="https://github.com/saghen/blink.cmp" target="_blank" rel="noopener noreferrer">blink.cmp</a> 还在 beta 版本，这意味着变动会比较大，而且可能会遇到不少 Bug。但我目前日常使用下来没有问题 :)</p>
+</div></div></div><p>之前本文的自动补全插件采用的是 <a href="https://github.com/hrsh7th/nvim-cmp" target="_blank" rel="noopener noreferrer">nvim-cmp</a>，但配置上较为繁琐。现在有了 <a href="https://github.com/saghen/blink.cmp" target="_blank" rel="noopener noreferrer">blink.cmp</a> 插件，<em>配置会比较简单而且自动补全特别快</em></p>
+<p>在 <code>plugins.lua</code>里新增这个插件并做好配置</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1958,236 +1950,110 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">has_words_before</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">unpack</span> <span class="o">=</span> <span class="n">unpack</span> <span class="ow">or</span> <span class="n">table.unpack</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">local</span> <span class="n">line</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="n">vim.api</span><span class="p">.</span><span class="n">nvim_win_get_cursor</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">return</span> <span class="n">col</span> <span class="o">~=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">vim.api</span><span class="p">.</span><span class="n">nvim_buf_get_lines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="kc">true</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span><span class="n">sub</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span><span class="n">match</span><span class="p">(</span><span class="s2">&#34;%s&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="kr">end</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">luasnip</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&#34;luasnip&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="kd">local</span> <span class="n">cmp</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&#34;cmp&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">cmp.setup</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="n">snippet</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- REQUIRED - you must specify a snippet engine</span>
-</span></span><span class="line"><span class="cl">        <span class="n">expand</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">require</span><span class="p">(</span><span class="s1">&#39;luasnip&#39;</span><span class="p">).</span><span class="n">lsp_expand</span><span class="p">(</span><span class="n">args.body</span><span class="p">)</span> <span class="c1">-- For `luasnip` users.</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">end</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="n">mapping</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">preset.insert</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Use &lt;C-b/f&gt; to scroll the docs</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-b&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">scroll_docs</span><span class="p">(</span> <span class="o">-</span><span class="mi">4</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-f&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">scroll_docs</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Use &lt;C-k/j&gt; to switch in items</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-k&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">select_prev_item</span><span class="p">(),</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;C-j&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">select_next_item</span><span class="p">(),</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Use &lt;CR&gt;(Enter) to confirm selection</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s1">&#39;&lt;CR&gt;&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">.</span><span class="n">confirm</span><span class="p">({</span> <span class="n">select</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">}),</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">-- A super tab</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">-- sourc: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;&lt;Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">fallback</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">-- Hint: if the completion menu is visible select next one</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">if</span> <span class="n">cmp.visible</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cmp.select_next_item</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">elseif</span> <span class="n">has_words_before</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cmp.complete</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">else</span>
-</span></span><span class="line"><span class="cl">                <span class="n">fallback</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">end</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">end</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;s&#34;</span> <span class="p">}),</span> <span class="c1">-- i - insert mode; s - select mode</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;&lt;S-Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmp.mapping</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="n">fallback</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">if</span> <span class="n">cmp.visible</span><span class="p">()</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cmp.select_prev_item</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">elseif</span> <span class="n">luasnip.jumpable</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="kr">then</span>
-</span></span><span class="line"><span class="cl">                <span class="n">luasnip.jump</span><span class="p">(</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">else</span>
-</span></span><span class="line"><span class="cl">                <span class="n">fallback</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">            <span class="kr">end</span>
-</span></span><span class="line"><span class="cl">        <span class="kr">end</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;s&#34;</span> <span class="p">}),</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}),</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">-- Let&#39;s configure the item&#39;s appearance</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">-- source: https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance</span>
-</span></span><span class="line"><span class="cl">  <span class="n">formatting</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="c1">-- Set order from left to right</span>
-</span></span><span class="line"><span class="cl">      <span class="c1">-- kind: single letter indicating the type of completion</span>
-</span></span><span class="line"><span class="cl">      <span class="c1">-- abbr: abbreviation of &#34;word&#34;; when not empty it is used in the menu instead of &#34;word&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="c1">-- menu: extra text for the popup menu, displayed after &#34;word&#34; or &#34;abbr&#34;</span>
-</span></span><span class="line"><span class="cl">      <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;abbr&#39;</span><span class="p">,</span> <span class="s1">&#39;menu&#39;</span> <span class="p">},</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">      <span class="c1">-- customize the appearance of the completion menu</span>
-</span></span><span class="line"><span class="cl">      <span class="n">format</span> <span class="o">=</span> <span class="kr">function</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">vim_item</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">          <span class="n">vim_item.menu</span> <span class="o">=</span> <span class="p">({</span>
-</span></span><span class="line"><span class="cl">              <span class="n">nvim_lsp</span> <span class="o">=</span> <span class="s1">&#39;[Lsp]&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">              <span class="n">luasnip</span> <span class="o">=</span> <span class="s1">&#39;[Luasnip]&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">              <span class="n">buffer</span> <span class="o">=</span> <span class="s1">&#39;[File]&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">              <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;[Path]&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="p">})[</span><span class="n">entry.source</span><span class="p">.</span><span class="n">name</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">          <span class="kr">return</span> <span class="n">vim_item</span>
-</span></span><span class="line"><span class="cl">      <span class="kr">end</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="c1">-- Set source precedence</span>
-</span></span><span class="line"><span class="cl">  <span class="n">sources</span> <span class="o">=</span> <span class="n">cmp.config</span><span class="p">.</span><span class="n">sources</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;nvim_lsp&#39;</span> <span class="p">},</span>    <span class="c1">-- For nvim-lsp</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;luasnip&#39;</span> <span class="p">},</span>     <span class="c1">-- For luasnip user</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;buffer&#39;</span> <span class="p">},</span>      <span class="c1">-- For buffer word completion</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;path&#39;</span> <span class="p">},</span>        <span class="c1">-- For path completion</span>
-</span></span><span class="line"><span class="cl">  <span class="p">})</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span></span></span></code></pre>
-</div>
-<p>然后我们修改 <code>plugins.lua</code> 文件添加相关的插件</p>
-<div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
-  <div class="
-    code-block-title 
-    
-    tw-flex 
-    tw-flex-row 
-    tw-justify-between 
-    tw-w-full tw-bg-bgColor-secondary
-    ">      
-    <button 
-      class="
-        tw-select-none 
-        tw-mx-2 
-        tw-block
-        group-[.is-open]:tw-rotate-90
-        tw-transition-[transform] 
-        tw-duration-500 
-        tw-ease-in-out
-        print:!tw-hidden"
-      disabled
-      aria-hidden="true"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg></button>
-
-    <div class="code-block-title-bar tw-w-full">
-      <p class="tw-select-none !tw-my-1">lua</p>
-    </div>
-    <div class="tw-flex">
-      <button 
-        class="
-          line-number-button
-          tw-select-none 
-          tw-mx-2 
-          tw-hidden 
-          group-[.is-open]:tw-block 
-          group-[.show-line-numbers]:tw-text-fgColor-link 
-          print:!tw-hidden" 
-        title="Toggle line numbers"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M61.77 401l17.5-20.15a19.92 19.92 0 0 0 5.07-14.19v-3.31C84.34 356 80.5 352 73 352H16a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h22.83a157.41 157.41 0 0 0-11 12.31l-5.61 7c-4 5.07-5.25 10.13-2.8 14.88l1.05 1.93c3 5.76 6.29 7.88 12.25 7.88h4.73c10.33 0 15.94 2.44 15.94 9.09 0 4.72-4.2 8.22-14.36 8.22a41.54 41.54 0 0 1-15.47-3.12c-6.49-3.88-11.74-3.5-15.6 3.12l-5.59 9.31c-3.72 6.13-3.19 11.72 2.63 15.94 7.71 4.69 20.38 9.44 37 9.44 34.16 0 48.5-22.75 48.5-44.12-.03-14.38-9.12-29.76-28.73-34.88zM496 224H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM16 160h64a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8H64V40a8 8 0 0 0-8-8H32a8 8 0 0 0-7.14 4.42l-8 16A8 8 0 0 0 24 64h8v64H16a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8zm-3.91 160H80a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8H41.32c3.29-10.29 48.34-18.68 48.34-56.44 0-29.06-25-39.56-44.47-39.56-21.36 0-33.8 10-40.46 18.75-4.37 5.59-3 10.84 2.8 15.37l8.58 6.88c5.61 4.56 11 2.47 16.12-2.44a13.44 13.44 0 0 1 9.46-3.84c3.33 0 9.28 1.56 9.28 8.75C51 248.19 0 257.31 0 304.59v4C0 316 5.08 320 12.09 320z"/></svg></button>
-
-      <button 
-        class="
-          wrap-code-button
-          tw-select-none 
-          tw-mx-2 
-          tw-hidden 
-          group-[.is-open]:tw-block 
-          group-[.is-wrap]:tw-text-fgColor-link 
-          print:!tw-hidden" 
-        title="Toggle code wrap"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg></button>
-      
-      <button 
-        class="
-          copy-code-button
-          tw-select-none
-          tw-mx-2 
-          tw-hidden
-          group-[.is-open]:tw-block
-          hover:tw-text-fgColor-link 
-          print:!tw-hidden"
-        title="Copy code">
-          <span class="copy-icon tw-block"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"/></svg></span>
-          <span class="check-icon tw-hidden"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg></span>
-      </button>
-        
-      <button 
-        class="
-          tw-select-none 
-          tw-mx-2 
-          tw-block 
-          group-[.is-open]:tw-hidden 
-          print:!tw-hidden" 
-        disabled
-        aria-hidden="true"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"/></svg></button>
-    </div>
-  </div>
-  <pre style="counter-reset: codeblock;" class="tw-block tw-m-0 tw-p-0"><code 
-    id="codeblock-id-16" 
-    class="
-      chroma 
-      !tw-block 
-      tw-p-0
-      tw-m-0
-      tw-transition-[max-height] 
-      tw-duration-500 
-      tw-ease-in-out 
-      group-[.is-closed]:!tw-max-h-0 
-      group-[.is-wrap]:tw-text-wrap
-      tw-overflow-y-hidden
-      tw-overflow-x-auto
-      tw-scrollbar-thin
       "><span class="line"><span class="cl"><span class="p">...</span> <span class="c1">-- 省略其他行</span>
 </span></span><span class="line"><span class="cl"><span class="n">require</span><span class="p">(</span><span class="s2">&#34;lazy&#34;</span><span class="p">).</span><span class="n">setup</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">-- Vscode-like pictograms</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="s2">&#34;onsails/lspkind.nvim&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="n">event</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;VimEnter&#34;</span> <span class="p">},</span>
-</span></span><span class="line"><span class="cl">	<span class="p">},</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">-- Auto-completion engine</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="s2">&#34;hrsh7th/nvim-cmp&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="s2">&#34;lspkind.nvim&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">			<span class="s2">&#34;hrsh7th/cmp-nvim-lsp&#34;</span><span class="p">,</span> <span class="c1">-- lsp auto-completion</span>
-</span></span><span class="line"><span class="cl">			<span class="s2">&#34;hrsh7th/cmp-buffer&#34;</span><span class="p">,</span> <span class="c1">-- buffer auto-completion</span>
-</span></span><span class="line"><span class="cl">			<span class="s2">&#34;hrsh7th/cmp-path&#34;</span><span class="p">,</span> <span class="c1">-- path auto-completion</span>
-</span></span><span class="line"><span class="cl">			<span class="s2">&#34;hrsh7th/cmp-cmdline&#34;</span><span class="p">,</span> <span class="c1">-- cmdline auto-completion</span>
-</span></span><span class="line"><span class="cl">		<span class="p">},</span>
-</span></span><span class="line"><span class="cl">		<span class="n">config</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">			<span class="n">require</span><span class="p">(</span><span class="s2">&#34;config.nvim-cmp&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="kr">end</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="p">},</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">-- Code snippet engine</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="s2">&#34;L3MON4D3/LuaSnip&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="n">version</span> <span class="o">=</span> <span class="s2">&#34;v2.*&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="p">},</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span> <span class="c1">-- 省略其他行</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;saghen/blink.cmp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- optional: provides snippets for the snippet source</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;rafamadriz/friendly-snippets&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">-- use a release tag to download pre-built binaries</span>
+</span></span><span class="line"><span class="cl">        <span class="n">version</span> <span class="o">=</span> <span class="s2">&#34;*&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- build = &#39;cargo build --release&#39;,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- If you use nix, you can build from source using latest nightly rust with:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">-- build = &#39;nix run .#build-plugin&#39;,</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- &#39;default&#39; (recommended) for mappings similar to built-in completions (C-y to accept)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- &#39;super-tab&#39; for mappings similar to vscode (tab to accept)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- &#39;enter&#39; for enter to accept</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- &#39;none&#39; for no mappings</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">--</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- All presets have the following mappings:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- C-space: Open menu or open docs if already open</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- C-n/C-p or Up/Down: Select next/previous item</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- C-e: Hide menu</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- C-k: Toggle signature help (if signature.enabled = true)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">--</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- See :h blink-cmp-config-keymap for defining your own keymap</span>
+</span></span><span class="line"><span class="cl">            <span class="n">keymap</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- Each keymap may be a list of commands and/or functions</span>
+</span></span><span class="line"><span class="cl">                <span class="n">preset</span> <span class="o">=</span> <span class="s2">&#34;enter&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- Select completions</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="s2">&#34;&lt;Up&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;select_prev&#34;</span><span class="p">,</span> <span class="s2">&#34;fallback&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="s2">&#34;&lt;Down&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;select_next&#34;</span><span class="p">,</span> <span class="s2">&#34;fallback&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="s2">&#34;&lt;Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;select_next&#34;</span><span class="p">,</span> <span class="s2">&#34;fallback&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="s2">&#34;&lt;S-Tab&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;select_prev&#34;</span><span class="p">,</span> <span class="s2">&#34;fallback&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- Scroll documentation</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="s2">&#34;&lt;C-b&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;scroll_documentation_up&#34;</span><span class="p">,</span> <span class="s2">&#34;fallback&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="s2">&#34;&lt;C-f&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;scroll_documentation_down&#34;</span><span class="p">,</span> <span class="s2">&#34;fallback&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- Show/hide signature</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span><span class="s2">&#34;&lt;C-k&gt;&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;show_signature&#34;</span><span class="p">,</span> <span class="s2">&#34;hide_signature&#34;</span><span class="p">,</span> <span class="s2">&#34;fallback&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">appearance</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- &#39;mono&#39; (default) for &#39;Nerd Font Mono&#39; or &#39;normal&#39; for &#39;Nerd Font&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- Adjusts spacing to ensure icons are aligned</span>
+</span></span><span class="line"><span class="cl">                <span class="n">nerd_font_variant</span> <span class="o">=</span> <span class="s2">&#34;mono&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">sources</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- `lsp`, `buffer`, `snippets`, `path` and `omni` are built-in</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- so you don&#39;t need to define them in `sources.providers`</span>
+</span></span><span class="line"><span class="cl">                <span class="n">default</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;lsp&#34;</span><span class="p">,</span> <span class="s2">&#34;path&#34;</span><span class="p">,</span> <span class="s2">&#34;snippets&#34;</span><span class="p">,</span> <span class="s2">&#34;buffer&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1">-- Sources are configured via the sources.providers table</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- You may use a lua implementation instead by using `implementation = &#34;lua&#34;` or fallback to the lua implementation,</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- when the Rust fuzzy matcher is not available, by using `implementation = &#34;prefer_rust&#34;`</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">--</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">-- See the fuzzy documentation for more information</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fuzzy</span> <span class="o">=</span> <span class="p">{</span> <span class="n">implementation</span> <span class="o">=</span> <span class="s2">&#34;prefer_rust_with_warning&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="n">completion</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- The keyword should only matchh against the text before</span>
+</span></span><span class="line"><span class="cl">                <span class="n">keyword</span> <span class="o">=</span> <span class="p">{</span> <span class="n">range</span> <span class="o">=</span> <span class="s2">&#34;prefix&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="n">menu</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">-- Use treesitter to highlight the label text for the given list of sources</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">draw</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">treesitter</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;lsp&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">-- Show completions after tying a trigger character, defined by the source</span>
+</span></span><span class="line"><span class="cl">                <span class="n">trigger</span> <span class="o">=</span> <span class="p">{</span> <span class="n">show_on_trigger_character</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                <span class="n">documentation</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">-- Show documentation automatically</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">auto_show</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">-- Signature help when tying</span>
+</span></span><span class="line"><span class="cl">            <span class="n">signature</span> <span class="o">=</span> <span class="p">{</span> <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="n">opts_extend</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;sources.default&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">})</span></span></span></code></pre>
 </div>
-<p><strong>解释如下</strong></p>
+<p>关注其中的 <code>opts</code> 配置选项即可，关键的几个<em>解释如下</em></p>
 <ul>
-<li><code>cmp.setup</code> 函数的参数是一个 Lua 的 Table，用于设置各个选项（下面会解释）。后面你会发现很多第三方插件都用 <code>setup</code> 传入一个 Lua table 的方式进行配置，<strong>这个是 <code>Nvim</code> 的 Lua 插件的惯例</strong></li>
-<li><code>LuaSnip</code> 是 code snippet 引擎，因为<code>nvim-cmp</code> 要求我们必须指定<strong>至少一个</strong> code snippet 引擎来源。你暂时用不到当它不存在也没有关系</li>
-<li><code>lazy.nvim</code> 支持用 <code>config = function() ... end</code> 指定对应插件被加载之后要运行的代码，这里我们是让 Lua 导入前面写好的 <code>nvim-cmp.lua</code> 配置文件</li>
-<li>不要被上面的这么多插件吓到，<code>nvim-cmp</code> 为主，其他 <code>cmp-...</code> 的插件是用于在候选项来源和 <code>nvim-cmp</code> 之间交互，<code>lspkind.nvim</code> 是美化用的</li>
+<li><code>keymap</code> - 用于配置按键映射，格式也很好理解
+<ul>
+<li><code>preset = &quot;enter&quot;</code> 表示用 <code>回车键</code> 确定当前选中的补全项</li>
+<li><code>select_prev, select_next</code> 用于在各个候选项中进行选择，我这里配置了 2 套按键，支持用⬆️/⬇️，或者用 Tab/Shift-Tab 进行补全项的选择</li>
+<li><code>scroll_documentation_up, scroll_documentation_down</code> 用于滚动 API 的文档，我配置的是 <code>Ctrl-b, Ctrl-f</code></li>
 </ul>
-<h4 id="nvim-cmp-里面的按键映射" class="headerLink">
-    <a href="#nvim-cmp-%e9%87%8c%e9%9d%a2%e7%9a%84%e6%8c%89%e9%94%ae%e6%98%a0%e5%b0%84" class="header-mark" aria-label="Header mark for 'nvim-cmp 里面的按键映射'"></a>nvim-cmp 里面的按键映射</h4><p>按键映射用的是 <code>mapping = ...</code> ，每个按键绑定的格式是 <code>['&lt;key-binding&gt;'] = cmp.mapping.xxx,</code>，不同的 <code>cmp.mapping.xxx</code> 的含义可以用 <code>:h</code> 查看。<strong>如果你想要用其他的按键，只要修改 <code>[...]</code> 里面的按键即可</strong></p>
-<p>按照我的个人习惯，设置了</p>
-<ol>
-<li><code>&lt;C-k/j&gt;</code> 或者 <code>&lt;Tab&gt;/&lt;Shift-Tab&gt;</code> 在各种候选项里面移动</li>
-<li><code>&lt;C-b/f&gt;</code> 在候选项的文档里面移动</li>
-<li><code>&lt;CR&gt;</code> 也就是回车键确定补全</li>
-</ol>
-<h4 id="nvim-cmp-里面的补全菜单" class="headerLink">
-    <a href="#nvim-cmp-%e9%87%8c%e9%9d%a2%e7%9a%84%e8%a1%a5%e5%85%a8%e8%8f%9c%e5%8d%95" class="header-mark" aria-label="Header mark for 'nvim-cmp 里面的补全菜单'"></a>nvim-cmp 里面的补全菜单</h4><p>补全菜单的定制化用的是 <code>formatting = ...</code></p>
-<ul>
-<li><code>fields</code> 字段规定了每个候选项要显示什么东西</li>
-<li><code>format = function(...)</code> 设置了不同的候选项的来源显示，在 <code>sources = ...</code> 里面声明来源</li>
+</li>
+<li><code>trigger = { show_on_trigger_character = true }</code> - 输入字符之后就会展示所有可用补全项</li>
+<li><code>documentation = { auto_show = true }</code> - 自动显示当前被选中补全项的文档</li>
 </ul>
 <blockquote>
   <p>🎙️ 到这为止，重新启动 <code>Nvim</code> 后，等待插件安装完成后应该就能够用初步的自动补全功能了～</p>
 
-</blockquote><h4 id="lsp" class="headerLink">
-    <a href="#lsp" class="header-mark" aria-label="Header mark for 'LSP'"></a>LSP</h4><p>要把 <code>Nvim</code> 变成 IDE 就势必要借助于 LSP<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，自己安装和配置 LSP 是比较繁琐的。不同的 LSP 安装方法不同，也不方便后续管理。<a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a> 和配套的 <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig.nvim</a> 这两个插件很好解决了这个问题 &#x1f917;</p>
+</blockquote><h3 id="lsp-配置" class="headerLink">
+    <a href="#lsp-%e9%85%8d%e7%bd%ae" class="header-mark" aria-label="Header mark for 'LSP 配置'"></a>LSP 配置</h3><p>要把 <code>Nvim</code> 变成 IDE 就势必要借助于 LSP<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，自己安装和配置 LSP 是比较繁琐的。不同的 LSP 安装方法不同，也不方便后续管理。<a href="https://github.com/williamboman/mason.nvim" target="_blank" rel="noopener noreferrer">mason.nvim</a> 和配套的 <a href="https://github.com/williamboman/mason-lspconfig.nvim" target="_blank" rel="noopener noreferrer">mason-lspconfig.nvim</a> 这两个插件很好解决了这个问题 &#x1f917;</p>
 <p>首先修改 <code>plugins.lua</code> 文件，增加对应的插件</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -2269,7 +2135,7 @@
     </div>
   </div>
   <pre style="counter-reset: codeblock;" class="tw-block tw-m-0 tw-p-0"><code 
-    id="codeblock-id-17" 
+    id="codeblock-id-16" 
     class="
       chroma 
       !tw-block 
@@ -2373,7 +2239,7 @@
     </div>
   </div>
   <pre style="counter-reset: codeblock;" class="tw-block tw-m-0 tw-p-0"><code 
-    id="codeblock-id-18" 
+    id="codeblock-id-17" 
     class="
       chroma 
       !tw-block 
@@ -2490,7 +2356,7 @@
     </div>
   </div>
   <pre style="counter-reset: codeblock;" class="tw-block tw-m-0 tw-p-0"><code 
-    id="codeblock-id-19" 
+    id="codeblock-id-18" 
     class="
       chroma 
       !tw-block 
@@ -2637,7 +2503,7 @@
     </div>
   </div>
   <pre style="counter-reset: codeblock;" class="tw-block tw-m-0 tw-p-0"><code 
-    id="codeblock-id-20" 
+    id="codeblock-id-19" 
     class="
       chroma 
       !tw-block 
@@ -2681,7 +2547,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2024-04-04</span>
+                <span>更新于 2025-03-22</span>
             </div>
             <div class="post-info-license"></div>
         </div>
