@@ -4,22 +4,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" /><title>Hw05 solutions (UCB CS61A@2021 Fall) - MartinLwx&#39;s Blog</title><meta name="Description" content="The simple solutions of hw05 of CS61A of UCB"><meta property="og:url" content="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/">
+    <meta name="robots" content="noodp" /><title>Two different APIs related to Process Pool in Python - MartinLwx&#39;s Blog</title><meta name="Description" content="An gentle introduction of multiprocessing.Pool 和 concurrent.futures.Future APIs in data parallel cases"><meta property="og:url" content="https://martinlwx.github.io/en/data-parallel-with-two-different-api/">
   <meta property="og:site_name" content="MartinLwx&#39;s Blog">
-  <meta property="og:title" content="Hw05 solutions (UCB CS61A@2021 Fall)">
-  <meta property="og:description" content="The simple solutions of hw05 of CS61A of UCB">
+  <meta property="og:title" content="Two different APIs related to Process Pool in Python">
+  <meta property="og:description" content="An gentle introduction of multiprocessing.Pool 和 concurrent.futures.Future APIs in data parallel cases">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2022-02-22T23:03:22+08:00">
-    <meta property="article:modified_time" content="2022-02-23T23:03:22+08:00">
-    <meta property="article:tag" content="Course">
+    <meta property="article:published_time" content="2025-03-30T21:36:18+08:00">
+    <meta property="article:modified_time" content="2025-03-30T21:36:18+08:00">
+    <meta property="article:tag" content="Python">
+    <meta property="article:tag" content="Performance-Engineering">
     <meta property="og:image" content="https://martinlwx.github.io/logo.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://martinlwx.github.io/logo.png">
-  <meta name="twitter:title" content="Hw05 solutions (UCB CS61A@2021 Fall)">
-  <meta name="twitter:description" content="The simple solutions of hw05 of CS61A of UCB">
+  <meta name="twitter:title" content="Two different APIs related to Process Pool in Python">
+  <meta name="twitter:description" content="An gentle introduction of multiprocessing.Pool 和 concurrent.futures.Future APIs in data parallel cases">
 <meta name="application-name" content="MartinLwx&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
 
@@ -27,21 +28,21 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-<link rel="canonical" href="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/" /><link rel="prev" href="https://martinlwx.github.io/en/lab06-cs61a-of-ucb/" /><link rel="next" href="https://martinlwx.github.io/en/lab07-cs61a-of-ucb/" />
+<link rel="canonical" href="https://martinlwx.github.io/en/data-parallel-with-two-different-api/" /><link rel="prev" href="https://martinlwx.github.io/en/call-graph-generation-using-class-hierarchy-analysis/" />
 <link rel="stylesheet" href="/css/main.min.css"><link rel="stylesheet" href="/css/style.min.css"><script type="application/ld+json">{"@context": "https://schema.org","@type": "BlogPosting",
-        "headline": "Hw05 solutions (UCB CS61A@2021 Fall)",
+        "headline": "Two different APIs related to Process Pool in Python",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/"
-        },"genre": "posts","keywords":["CS61A","hw","solutions"],"wordcount":  1809 ,
-        "url": "https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/","datePublished": "2022-02-22T23:03:22+08:00","dateModified": "2022-02-23T23:03:22+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/en/data-parallel-with-two-different-api/"
+        },"genre": "posts","keywords":["Process Pool","Parallelism"],"wordcount":  795 ,
+        "url": "https://martinlwx.github.io/en/data-parallel-with-two-different-api/","datePublished": "2025-03-30T21:36:18+08:00","dateModified": "2025-03-30T21:36:18+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx",
                 "url": "https://github.com/MartinLwx"
-            },"description": "The simple solutions of hw05 of CS61A of UCB"
+            },"description": "An gentle introduction of multiprocessing.Pool 和 concurrent.futures.Future APIs in data parallel cases"
     }</script></head>
 
 
@@ -96,7 +97,7 @@
                     rel="noopener noreferrer" target="_blank" ><svg class='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d='M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z'/></svg>  </a><span class="menu-item delimiter"></span><button class="menu-item language" aria-label="Select Language">English<svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
                     <select class="language-select" aria-label="Select Language" id="language-select-desktop"
-                        onchange="location = this.value;"><option value="/en/hw05-of-cs61a-of-ucb/"  selected>English</option><option value="/zh-cn/hw05-of-cs61a-of-ucb/" >简体中文</option></select>
+                        onchange="location = this.value;"><option value="/en/data-parallel-with-two-different-api/"  selected>English</option><option value="/zh-cn/data-parallel-with-two-different-api/" >简体中文</option></select>
                 </button><span class="menu-item search" id="search-desktop">
                     <input type="text"
                         placeholder="Search titles or contents..."
@@ -166,7 +167,7 @@
                 </select>
             </button><button class="menu-item tw-w-full" title="">English<svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
-                <select class="language-select" title="" onchange="location = this.value;"><option value="/en/hw05-of-cs61a-of-ucb/"  selected>English</option><option value="/zh-cn/hw05-of-cs61a-of-ucb/" >简体中文</option></select>
+                <select class="language-select" title="" onchange="location = this.value;"><option value="/en/data-parallel-with-two-different-api/"  selected>English</option><option value="/zh-cn/data-parallel-with-two-different-api/" >简体中文</option></select>
             </button></div>
     </div>
 </header>
@@ -180,28 +181,25 @@
         <h2 class="toc-title">Contents</h2>
         <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#q1-generate-permutations">Q1: Generate Permutations</a></li>
-        <li><a href="#q2-yield-paths">Q2: Yield Paths</a></li>
-        <li><a href="#q3-preorder">Q3: Preorder</a></li>
-        <li><a href="#q4-generate-preorder">Q4: Generate Preorder</a></li>
-        <li><a href="#q5-remainder-generator">Q5: Remainder Generator</a></li>
-      </ul>
-    </li>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#multiprocessingpool">multiprocessing.Pool</a></li>
+    <li><a href="#concurrentfuturesprocesspoolexecutor">concurrent.futures.ProcessPoolExecutor</a></li>
+    <li><a href="#which-one-to-use">Which one to use?</a></li>
+    <li><a href="#takeaway">Takeaway</a></li>
+    <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title">Hw05 solutions (UCB CS61A@2021 Fall)</h1><div class="post-meta">
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title">Two different APIs related to Process Pool in Python</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
-                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/course/"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>Course</a></span></div>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/programming-languages/"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>Programming-Languages</a></span></div>
             <div class="post-meta-line"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;<time datetime="2022-02-22">2022-02-22</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1809 words&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;9 minutes&nbsp;</div>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;<time datetime="2025-03-30">2025-03-30</time>&nbsp;<svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2025-03-30">2025-03-30</time>&nbsp;<svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;795 words&nbsp;<svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;4 minutes&nbsp;</div>
         </div><div class="details toc print:!tw-block" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -210,30 +208,18 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#q1-generate-permutations">Q1: Generate Permutations</a></li>
-        <li><a href="#q2-yield-paths">Q2: Yield Paths</a></li>
-        <li><a href="#q3-preorder">Q3: Preorder</a></li>
-        <li><a href="#q4-generate-preorder">Q4: Generate Preorder</a></li>
-        <li><a href="#q5-remainder-generator">Q5: Remainder Generator</a></li>
-      </ul>
-    </li>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#multiprocessingpool">multiprocessing.Pool</a></li>
+    <li><a href="#concurrentfuturesprocesspoolexecutor">concurrent.futures.ProcessPoolExecutor</a></li>
+    <li><a href="#which-one-to-use">Which one to use?</a></li>
+    <li><a href="#takeaway">Takeaway</a></li>
+    <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h3 id="q1-generate-permutations" class="headerLink">
-    <a href="#q1-generate-permutations" class="header-mark" aria-label="Header mark for 'Q1: Generate Permutations'"></a>Q1: Generate Permutations</h3><blockquote>
-  <p>Given a sequence of unique elements, a <em>permutation</em> of the sequence is a list containing the elements of the sequence in some arbitrary order. For example, <code>[2, 1, 3]</code>, <code>[1, 3, 2]</code>, and <code>[3, 2, 1]</code> are some of the permutations of the sequence <code>[1, 2, 3]</code>.</p>
-<p>Implement <code>gen_perms</code>, a generator function that takes in a sequence <code>seq</code> and returns a generator that yields all permutations of <code>seq</code>. For this question, assume that <code>seq</code> will not be empty.</p>
-<p>Permutations may be yielded in any order. Note that the doctests test whether you are yielding all possible permutations, but not in any particular order. The built-in <code>sorted</code> function takes in an iterable object and returns a list containing the elements of the iterable in non-decreasing order.</p>
-<blockquote>
-  <p><em>Hint:</em> If you had the permutations of all the elements in <code>seq</code> not including the first element, how could you use that to generate the permutations of the full <code>seq</code>?</p>
-
-</blockquote><blockquote>
-  <p><em>Hint:</em> Remember, it&rsquo;s possible to loop over generator objects because generators are iterators!</p>
-
-</blockquote>
-</blockquote><p>This problem asks us to return a generator that will return all the permutations of the list. We can learn from the hint that we need to solve this problem recursively. It&rsquo;s easy to figure out the base case of this problem:</p>
+            </div><div class="content" id="content"><h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>As a machine learning engineer, I work with vast amounts of data, performing tasks such as data cleaning and information extraction. These tasks are typically data-parallel and do not involve race conditions. Such workloads are usually referred to as CPU-intensive tasks. Typically, these tasks can be formulated as <code>map(fn, data)</code>.</p>
+<p>Python is limited by its Global Interpreter Lock (GIL). As a result, using multithreading could not improve the performance. Instead, multiprocessing should be used. Usually, you would not manually manage all the launched processes but would instead use a process pool. Today, I&rsquo;d like to discuss two different APIs related to multiprocessing: <code>multiprocessing.Pool</code> and <code>concurrent.futures.ProcessPoolExecutor</code>, and provide a simple comparison.</p>
+<p>Before we get started, let&rsquo;s define a function called <code>task</code> and import all the modules we need. We assume that the <code>task</code> function is computationally expansive and uses <code>time.sleep</code> to simulate its workload.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -328,15 +314,19 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">seq</span>
-</span></span><span class="line"><span class="cl">    <span class="o">...</span></span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">concurrent</span> <span class="kn">import</span> <span class="n">futures</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">task</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Let&#39;s assume it&#39;s a heavy task</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span></span></span></code></pre>
 </div>
-<p>Now, the problem is how can we break down this problem into simpler ones? We can learn from the hint that we should recursively process elements other than the element in the first position. Try to think about a question like this: If we have already got the permutations of <code>l[1:]</code>, what should we do with <code>l[0]</code>. The answer is quite intuitive: we insert <code>l[0]</code> to every possible position in the permutations of <code>l[1:]</code>.</p>
-<p>For example, we have <code>[2, 3]</code>, whose permutations are <code>[[2, 3], [3, 2]]</code>. First, we insert <code>1</code> to <code>[2, 3]</code>, which give us <code>[1, 2, 3], [2, 1, 3], [2, 3, 1]</code>. Then we repeat the procedure on <code>[3, 2]</code>.</p>
-<p>So we can write the following code:</p>
-<div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
+<p>The arguments of the <code>task</code> function are <code>(1, 1), (2, 2), (3, 3), (4, 4)</code> which can be constructed by <code>xs</code> and <code>ys</code>.</p>
+<div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
     
@@ -430,48 +420,11 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Generates all permutations of the given sequence. Each permutation is a
-</span></span></span><span class="line"><span class="cl"><span class="s2">    list of the elements in SEQ in a different order. The permutations may be
-</span></span></span><span class="line"><span class="cl"><span class="s2">    yielded in any order.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; perms = gen_perms([100])
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; type(perms)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &lt;class &#39;generator&#39;&gt;
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(perms)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [100]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; try: #this piece of code prints &#34;No more permutations!&#34; if calling next would cause an error
-</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     next(perms)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    ... except StopIteration:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     print(&#39;No more permutations!&#39;)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    No more permutations!
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms([1, 2, 3])) # Returns a sorted list containing elements of the generator
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms((10, 20, 30)))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [[10, 20, 30], [10, 30, 20], [20, 10, 30], [20, 30, 10], [30, 10, 20], [30, 20, 10]]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(gen_perms(&#34;ab&#34;))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [[&#39;a&#39;, &#39;b&#39;], [&#39;b&#39;, &#39;a&#39;]]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># This problem requires list type, see example above</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">seq</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># base case</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">seq</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># iterate every permutation in the generator</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">gen_perms</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
-</span></span><span class="line"><span class="cl">            <span class="c1"># enumerate every position for insertation</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">perm</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span></span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="n">xs</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">ys</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span></span></span></code></pre>
 </div>
-<h3 id="q2-yield-paths" class="headerLink">
-    <a href="#q2-yield-paths" class="header-mark" aria-label="Header mark for 'Q2: Yield Paths'"></a>Q2: Yield Paths</h3><blockquote>
-  <p>Define a generator function <code>path_yielder</code> which takes in a tree <code>t</code>, a value <code>value</code>, and returns a generator object which yields each path from the root of <code>t</code> to a node that has label <code>value</code>.</p>
-<p>Each path should be represented as a list of the labels along that path in the tree. You may yield the paths in any order.</p>
-<p>We have provided a skeleton for you. You do not need to use this skeleton, but if your implementation diverges significantly from it, you might want to think about how you can get it to fit the skeleton.</p>
-
-</blockquote><p>The problem asks us to <code>yield</code> all possible path leads us to <code>value</code>. Pay a attention to the hint. The template of the code looks like this:</p>
+<h2 id="multiprocessingpool" class="headerLink">
+    <a href="#multiprocessingpool" class="header-mark" aria-label="Header mark for 'multiprocessing.Pool'"></a>multiprocessing.Pool</h2><p>The <code>multiprocessing</code> library provides a process pool implementation called <code>Pool</code>. By setting the <code>processes</code> parameter we can control the size of the process pool. <code>multiprocessing.Pool</code> has many methods available, such as <code>map, imap, apply</code>. In our example, the most suitable method would be <code>starmap</code>, as shown below.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -566,16 +519,26 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_______________</span> <span class="ow">in</span> <span class="n">_________________</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="s2">&#34;*** YOUR CODE HERE ***&#34;</span></span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mp_starmap</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">result</span><span class="si">=}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mp_starmap</span><span class="p">()</span></span></span></code></pre>
 </div>
-<p>You can find it that the template is quite similar to the solution in Q1 if you observe it carefully. First, we should ask ourselves the most important question? - What is the base case? Well, apparently, we meet the base case when we encounter the node with the <code>value</code> label. It can be any branch of the current node, so we need to check each branch. When we find the sub-path, we return it and add the label of the current node.</p>
-<p>For example, check the example in the doctoring. We want all the paths to lead us to <code>3</code>. First, we start from the root node(<code>1</code>). It has 2 branches - <code>2</code> and <code>5</code>. In the first branch of <code>1</code>, we can find <code>3</code>, at this point we <code>yield [3]</code>. When we backtrack to <code>2</code>, we get the sub-path - <code>[2, 3]</code>. Finally, we will get <code>[1] + [2, 3] = [1, 2, 3]</code> when we come back to the root node(<code>1</code>)</p>
-<p>The code shows as below:</p>
-<div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
+<div class="details admonition tip open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z"/></svg></span>Tip<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>If the <code>task</code> function has single argument, the <code>pool.map</code> method should be used instead.</p>
+</div></div></div><h2 id="concurrentfuturesprocesspoolexecutor" class="headerLink">
+    <a href="#concurrentfuturesprocesspoolexecutor" class="header-mark" aria-label="Header mark for 'concurrent.futures.ProcessPoolExecutor'"></a>concurrent.futures.ProcessPoolExecutor</h2><p>Starting from Python 3.2, the <code>concurrent.futures</code> module has been added to the official libraries. It also provides a process pool implementation called <code>ProcexsPoolExecutor</code><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
     
@@ -669,52 +632,29 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">path_yielder</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yields all possible paths from the root of t to a node with the label
-</span></span></span><span class="line"><span class="cl"><span class="s2">    value as a list.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(t1)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    1
-</span></span></span><span class="line"><span class="cl"><span class="s2">      2
-</span></span></span><span class="line"><span class="cl"><span class="s2">        3
-</span></span></span><span class="line"><span class="cl"><span class="s2">        4
-</span></span></span><span class="line"><span class="cl"><span class="s2">          6
-</span></span></span><span class="line"><span class="cl"><span class="s2">        5
-</span></span></span><span class="line"><span class="cl"><span class="s2">      5
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(path_yielder(t1, 6))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [1, 2, 4, 6]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; path_to_5 = path_yielder(t1, 5)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_5))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [[1, 2, 5], [1, 5]]
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; t2 = tree(0, [tree(2, [t1])])
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print_tree(t2)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    0
-</span></span></span><span class="line"><span class="cl"><span class="s2">      2
-</span></span></span><span class="line"><span class="cl"><span class="s2">        1
-</span></span></span><span class="line"><span class="cl"><span class="s2">          2
-</span></span></span><span class="line"><span class="cl"><span class="s2">            3
-</span></span></span><span class="line"><span class="cl"><span class="s2">            4
-</span></span></span><span class="line"><span class="cl"><span class="s2">              6
-</span></span></span><span class="line"><span class="cl"><span class="s2">            5
-</span></span></span><span class="line"><span class="cl"><span class="s2">          5
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; path_to_2 = path_yielder(t2, 2)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; sorted(list(path_to_2))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [[0, 2], [0, 2, 1, 2]]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path_yielder</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="p">[</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span> <span class="o">+</span> <span class="n">path</span></span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">exetutor_map</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="k">as</span> <span class="n">exetutor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">exetutor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">result</span><span class="si">=}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exetutor_map</span><span class="p">()</span></span></span></code></pre>
 </div>
-<h3 id="q3-preorder" class="headerLink">
-    <a href="#q3-preorder" class="header-mark" aria-label="Header mark for 'Q3: Preorder'"></a>Q3: Preorder</h3><blockquote>
-  <p>Define the function <code>preorder</code>, which takes in a tree as an argument and returns a list of all the entries in the tree in the order that <code>print_tree</code> would print them.</p>
-<p>The following diagram shows the order that the nodes would get printed, with the arrows representing function calls.</p>
-
-</blockquote><p>Again, we need to solve the problem of the preorder traversal of the tree. We have to recursively visit all nodes of this tree, starting from the root node. Note that we first memorize the value of the root node and then look at its subtrees, and handle such problems recursively.</p>
+<p>From the two different implementations with the same functionality, we can see that they are quite similar. One noticeable difference is that when passing multiple arguments to the <code>exetutor.map</code> method, it feels <em>more natural</em> and doesn&rsquo;t require manually using <code>zip</code>.</p>
+<div class="details admonition tip open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z"/></svg></span>Tip<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>Behind the scenes, <code>executor.map(fn, *iterables)</code> will wrap each function call (<code>fn(*iterables)</code> in a future object and return a <em>generator</em>. When we iterate over the generator, it calls the <code>.result()</code> method of each future object and <em>blocks</em> until the result is available.</p>
+</div></div></div><p>If you prefer to manually submit the asynchronous tasks and retrieve results, you can use the <code>executor.submit</code> and <code>futures.as_completed</code> methods.</p>
+<ul>
+<li><code>executor.submit(fn, *args, **kwargs)</code> submits the task <code>fn(*args, **kwargs)</code> and it will transform it to a future object.</li>
+<li><code>futures.as_completed(futures)</code> takes iterable future objects and returns an iterator that yields each future object as it completes. Note that you must call the <code>.result()</code> method on each future object to retrieve its result, as the iterator returns the future object itself.</li>
+</ul>
+<p>See the code below.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -809,31 +749,18 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Return a list of the entries in this tree in the order that they
-</span></span></span><span class="line"><span class="cl"><span class="s2">    would be visited by a preorder traversal (see problem description).
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(numbers)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [1, 2, 3, 4, 5, 6, 7]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; preorder(tree(2, [tree(4, [tree(6)])]))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [2, 4, 6]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">                <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">helper</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span></span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">exetutor_submit_completed</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">exetutor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">todo</span> <span class="o">=</span> <span class="p">[</span><span class="n">exetutor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">futures</span><span class="o">.</span><span class="n">as_completed</span><span class="p">(</span><span class="n">todo</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;result=</span><span class="si">{</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exetutor_submit_completed</span><span class="p">()</span></span></span></code></pre>
 </div>
-<h3 id="q4-generate-preorder" class="headerLink">
-    <a href="#q4-generate-preorder" class="header-mark" aria-label="Header mark for 'Q4: Generate Preorder'"></a>Q4: Generate Preorder</h3><blockquote>
-  <p>Similarly to <code>preorder</code> in Question 3, define the function <code>generate_preorder</code>, which takes in a tree as an argument and now instead <code>yield</code>s the entries in the tree in the order that <code>print_tree</code> would print them.</p>
-<p><strong>Hint:</strong> How can you modify your implementation of <code>preorder</code> to <code>yield from</code> your recursive calls instead of returning them?</p>
-
-</blockquote><p>The overall solution is very similar to Q3, but now we don&rsquo;t need to use a <code>result</code> to store the traversed sequence, because what we want to return is a generator. However, the logic of this algorithm is still the same. If you want to have a deeper understanding of <code>yield from</code>, we can look at this person&rsquo;s [this article](<a href="http://simeonvisser.com/posts/python-3-using-yield-" target="_blank" rel="noopener noreferrer">http://simeonvisser.com/posts/python-3-using-yield-</a> from-in-generators-part-1.html)</p>
+<p>One pitfall is that <em>the return order of future objects of <code>as_completed</code> does not match the order of the submitted tasks</em>. Therefore, a common programming idiom is to use a dictionary to maintain this mapping manually, as shown below.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -928,35 +855,24 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">generate_preorder</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Yield the entries in this tree in the order that they
-</span></span></span><span class="line"><span class="cl"><span class="s2">    would be visited by a preorder traversal (see problem description).
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; gen = generate_preorder(numbers)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; next(gen)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    1
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; list(gen)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [2, 3, 4, 5, 6, 7]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">yield</span> <span class="n">label</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">branches</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">yield from</span> <span class="n">generate_preorder</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">exetutor_submit_completed_enhanced</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">exetutor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">todo</span> <span class="o">=</span> <span class="p">{</span><span class="n">exetutor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">futures</span><span class="o">.</span><span class="n">as_completed</span><span class="p">(</span><span class="n">todo</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">input_args</span> <span class="o">=</span> <span class="n">todo</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="p">[</span><span class="n">input_args</span><span class="p">]</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;result=</span><span class="si">{</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exetutor_submit_completed_enhanced</span><span class="p">()</span></span></span></code></pre>
 </div>
-<h3 id="q5-remainder-generator" class="headerLink">
-    <a href="#q5-remainder-generator" class="header-mark" aria-label="Header mark for 'Q5: Remainder Generator'"></a>Q5: Remainder Generator</h3><blockquote>
-  <p>Like functions, generators can also be <em>higher-order</em>. For this problem, we will be writing <code>remainders_generator</code>, which yields a series of generator objects.</p>
-<p><code>remainders_generator</code> takes in an integer <code>m</code>, and yields <code>m</code> different generators. The first generator is a generator of multiples of <code>m</code>, i.e. numbers where the remainder is 0. The second is a generator of natural numbers with remainder 1 when divided by <code>m</code>. The last generator yields natural numbers with remainder <code>m - 1</code> when divided by <code>m</code>.</p>
-<blockquote>
-  <p><em>Hint</em>: To create a generator of infinite natural numbers, you can call the <code>naturals</code> function that&rsquo;s provided in the starter code.</p>
-
-</blockquote><blockquote>
-  <p><em>Hint</em>: Consider defining an inner generator function. Each yielded generator varies only in that the elements of each generator have a particular remainder when divided by <code>m</code>. What does that tell you about the argument(s) that the inner function should take in?</p>
-
-</blockquote>
-</blockquote><p>If you have no idea what is the generator in python, you will find it difficult to figure out the solution. I will recommend <a href="https://realpython.com/introduction-to-python-generators/" target="_blank" rel="noopener noreferrer">this article</a></p>
-<p>After reading the article aforementioned, we may start to try to solve this problem. What the problem wants are <code>m</code> generators, the ith yielded generator yields natural numbers whose remainder is i when divided by m.</p>
-<p>If we know how to get the first generator, then we know how to get all the generators. I believe that it is easy to write a function that returns natural numbers whose remainder is i when divided by m. With the help of <code>yield</code>, we don&rsquo;t need a list to store the numbers(Just like what I did in Q3).</p>
+<h2 id="which-one-to-use" class="headerLink">
+    <a href="#which-one-to-use" class="header-mark" aria-label="Header mark for 'Which one to use?'"></a>Which one to use?</h2><p>In my opinion, <em>the <code>concurrent.futures.ProcessPoolExecutor</code> should be used</em> for the following reasons.</p>
+<p>First, <code>exetutor.map</code> has similar semantics to the built-in <code>map</code> function, as both return a generator - meaning they are lazy. However, <code>pool.map</code> uses eager evaluation, and you need <code>pool.imap</code> to achieve a lazy version.</p>
+<p>Second, when the <code>task</code> function takes multiple arguments (as shown in our example), <code>executor.map(task, args1, args2)</code> is more elegant than <code>pool.starmap(task, zip(args1, args2))</code>. Moreover, these two APIs have different semantics: the former is lazy, while the latter is eager. A potential counterpart should be <code>pool.istarmap</code>, but <em>it does not exist</em> at all. Although we could write a tedious helper function and use <code>pool.imap</code> like this</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1051,23 +967,20 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">yield</span> <span class="n">num</span>
-</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># you can give it a test</span>
-</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">helper</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="mi">2</span>				<span class="c1"># 2 % 3 == 2</span>
-</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="mi">5</span>				<span class="c1"># 5 % 3 == 2</span>
-</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="mi">8</span>				<span class="c1"># 8 % 3 == 2</span></span></span></code></pre>
+      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">task_helper</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">task</span><span class="p">(</span><span class="o">*</span><span class="n">seq</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mp_imap</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">imap</span><span class="p">(</span><span class="n">task_helper</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">result</span><span class="si">=}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mp_imap</span><span class="p">()</span></span></span></code></pre>
 </div>
-<p>Then how can we get a list of generators. <code>for</code> loop !&#x1f917;</p>
-<div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
+<p>Third, if a process is killed for some reason, the program using <code>multiprocessing.Pool</code> will hang indefinitely. However, with <code>concurrent.futures.ProcessPoolExecutor</code>, you would get a nice error message:</p>
+<div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
     
@@ -1091,7 +1004,7 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg></button>
 
     <div class="code-block-title-bar tw-w-full">
-      <p class="tw-select-none !tw-my-1">python</p>
+      <p class="tw-select-none !tw-my-1">text</p>
     </div>
     <div class="tw-flex">
       <button 
@@ -1161,45 +1074,19 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">remainders_generator</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Yields m generators. The ith yielded generator yields natural numbers whose
-</span></span></span><span class="line"><span class="cl"><span class="s2">    remainder is i when divided by m.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; import types
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; [isinstance(gen, types.GeneratorType) for gen in remainders_generator(5)]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    [True, True, True, True, True]
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; remainders_four = remainders_generator(4)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; for i in range(4):
-</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     print(&#34;First 3 natural numbers with remainder </span><span class="si">{0}</span><span class="s2"> when divided by 4:&#34;.format(i))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     gen = next(remainders_four)
-</span></span></span><span class="line"><span class="cl"><span class="s2">    ...     for _ in range(3):
-</span></span></span><span class="line"><span class="cl"><span class="s2">    ...         print(next(gen))
-</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 0 when divided by 4:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    4
-</span></span></span><span class="line"><span class="cl"><span class="s2">    8
-</span></span></span><span class="line"><span class="cl"><span class="s2">    12
-</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 1 when divided by 4:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    1
-</span></span></span><span class="line"><span class="cl"><span class="s2">    5
-</span></span></span><span class="line"><span class="cl"><span class="s2">    9
-</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 2 when divided by 4:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    2
-</span></span></span><span class="line"><span class="cl"><span class="s2">    6
-</span></span></span><span class="line"><span class="cl"><span class="s2">    10
-</span></span></span><span class="line"><span class="cl"><span class="s2">    First 3 natural numbers with remainder 3 when divided by 4:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    3
-</span></span></span><span class="line"><span class="cl"><span class="s2">    7
-</span></span></span><span class="line"><span class="cl"><span class="s2">    11
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># loop variable</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">m</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="k">yield</span> <span class="n">num</span>
-</span></span><span class="line"><span class="cl">            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">yield</span> <span class="n">helper</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span></span></span></code></pre>
+      "><span class="line"><span class="cl">concurrent.futures.process.BrokenProcessPool: A process in the process pool was\
+</span></span><span class="line"><span class="cl">terminated abruptly while the future was running or pending.</span></span></code></pre>
+</div>
+<h2 id="takeaway" class="headerLink">
+    <a href="#takeaway" class="header-mark" aria-label="Header mark for 'Takeaway'"></a>Takeaway</h2><p>Prefer <code>concurrent.futures.ProcessPoolExecutor</code> when creating a process pool.</p>
+<h2 id="refs" class="headerLink">
+    <a href="#refs" class="header-mark" aria-label="Header mark for 'Refs'"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://peps.python.org/pep-3148/" target="_blank" rel="noopener noreferrer">PEP3148.futures - execute computations asynchronously</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
 </div>
 </div>
 
@@ -1207,17 +1094,17 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-02-23</span>
+                <span>Updated on 2025-03-30</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line print:!tw-hidden">
             <div class="post-info-md"></div>
-            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/" data-title="Hw05 solutions (UCB CS61A@2021 Fall)" data-hashtags="Course"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/" data-hashtag="Course"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/" data-title="Hw05 solutions (UCB CS61A@2021 Fall)"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/" data-title="Hw05 solutions (UCB CS61A@2021 Fall)"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/" data-title="Hw05 solutions (UCB CS61A@2021 Fall)"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/" data-title="Hw05 solutions (UCB CS61A@2021 Fall)" data-web><svg class="icon"
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/data-parallel-with-two-different-api/" data-title="Two different APIs related to Process Pool in Python" data-hashtags="Python,Performance-Engineering"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/data-parallel-with-two-different-api/" data-hashtag="Python"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/data-parallel-with-two-different-api/" data-title="Two different APIs related to Process Pool in Python"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/data-parallel-with-two-different-api/" data-title="Two different APIs related to Process Pool in Python"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/data-parallel-with-two-different-api/" data-title="Two different APIs related to Process Pool in Python"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/data-parallel-with-two-different-api/" data-title="Two different APIs related to Process Pool in Python" data-web><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/></svg></button><script>
         function shareOnMastodon(title, link) {
             const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
@@ -1234,23 +1121,21 @@
             window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
         }
     </script>
-    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Hw05 solutions (UCB CS61A@2021 Fall)&#34;, &#34;https://martinlwx.github.io/en/hw05-of-cs61a-of-ucb/&#34;)"><svg class="icon"
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Two different APIs related to Process Pool in Python&#34;, &#34;https://martinlwx.github.io/en/data-parallel-with-two-different-api/&#34;)"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg></button></div>
         </div>
     </div>
 
     <div class="post-info-more">
         <section class="post-tags"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/course/">Course</a></section>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/python/">Python</a>,&nbsp;<a href="/en/tags/performance-engineering/">Performance-Engineering</a></section>
         <section class="print:!tw-hidden">
             <span><button class="tw-text-fgColor-link-muted hover:tw-text-fgColor-link-muted-hover" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav print:tw-hidden"><a href="/en/lab06-cs61a-of-ucb/" class="prev" rel="prev" title="Lab06 solutions (UCB CS61A@2021 Fall)"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>Lab06 solutions (UCB CS61A@2021 Fall)</a>
-            <a href="/en/lab07-cs61a-of-ucb/" class="next" rel="next" title="Lab07 solutions (UCB CS61A@2021 Fall)">Lab07 solutions (UCB CS61A@2021 Fall)<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></a></div>
+    <div class="post-nav print:tw-hidden"><a href="/en/call-graph-generation-using-class-hierarchy-analysis/" class="prev" rel="prev" title="Class Hierarchy Analysis: a quick way to generate call graph"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>Class Hierarchy Analysis: a quick way to generate call graph</a></div>
 </div>
 <div id="comments" class="print:!tw-hidden tw-pt-32 tw-pb-8"><div id="giscus"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
