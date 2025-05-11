@@ -243,7 +243,6 @@
     <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>If you&rsquo;ve been using dynamic languages like Python, Javascript, etc., you probably won&rsquo;t notice the difference between stack and heap. Because these languages have garbage collectors (GCs) that will automatically manage memory for you, you just need to program at a high level without considering the details. The bad news is that GC is not a cost-free design. No matter how well designed a GC algorithm is, the performance of the code will be degraded to some extent. If you have been in programming for a long time, you may have heard something like &ldquo;the recursion explodes the stack&rdquo;. You may or may not click on the search engine to understand the difference between stack and heap. Chances are you just clicked into this article :)</p>
 <blockquote>
   <p>📒 Although GC will degrade the performance, it removes the mental burden of manually managing memory for developers, which can greatly speed up software development. This is sacrificing performance for development speed. However, when the performance bottleneck occurs in the later stage of the software, it is necessary to study how to refactor or even rewrite the key parts of code to improve performance.</p>
-
 </blockquote><p>The stack and heap I mentioned here <strong>are not the heap and stack in the data structure</strong>, but the two mechanisms of memory management. Understanding the detailed differences between stack and heap helps us understand some programming languages that are closer to the low-level, <em>such as Rust, C, C++, etc</em>. In Rust, the most important concept is ownership. Mastering the ownership can make you feel easier when you are learning other designs in rust😄.</p>
 <h2 id="the-layout-of-a-program-in-memory" class="headerLink">
     <a href="#the-layout-of-a-program-in-memory" class="header-mark" aria-label="Header mark for 'The layout of a program in memory'"></a>The layout of a program in memory</h2><p>To run a program, it must be loaded into the memory. During the process of the program running, the data also needs to be read into the memory, so have you ever wondered how all this is distributed in the memory? I will give you a rough illustration below<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
@@ -261,10 +260,8 @@
 <p>What is stored on the heap and stack will be discussed later.</p>
 <blockquote>
   <p>📒 The thing to remember here is that the stack and the heap are moving closer to each other as they are growing. The stack grows from <strong>high address -&gt; low address</strong>, and the heap grows from <strong>low address -&gt; high address</strong>. After understanding this, you will get a better understanding when you see that the <code>sp</code> pointer is got subtracted in the assembly code.</p>
-
 </blockquote><blockquote>
   <p>📒 It seems that as we allocate more and more memory, the stack and heap may collide (because they are getting closer to each other). However, there is no need to worry about this problem, because: 1) This layout is happening in virtual memory. Today&rsquo;s processors are generally 64-bit, and the capacity is very large. 2) Before the conflict, it is very likely that your physical memory has been exhausted long ago, this should be your first concern.</p>
-
 </blockquote><h2 id="stack" class="headerLink">
     <a href="#stack" class="header-mark" aria-label="Header mark for 'Stack'"></a>Stack</h2><h3 id="terms" class="headerLink">
     <a href="#terms" class="header-mark" aria-label="Header mark for 'Terms'"></a>Terms</h3><ul>
@@ -287,10 +284,8 @@
 </ul>
 <blockquote>
   <p>The full procedure of function call can be found on <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-
 </blockquote><blockquote>
   <p>📒 The problem to be worried about when allocating space on the stack is: do not keep allocating which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. <em>For example, in Python, you can use <code>sys.getrecursionlimit()</code> to modify the size limit of the stack</em>. In some programming languages, we can also change the recursive function to the tail recursion version, which can benefit from the optimizations.</p>
-
 </blockquote><h3 id="an-example-fibonacci-sequence" class="headerLink">
     <a href="#an-example-fibonacci-sequence" class="header-mark" aria-label="Header mark for 'An example: fibonacci sequence'"></a>An example: fibonacci sequence</h3><p>When explaining recursion in CS courses, we usually use the Fibonacci sequence as an example. Now we use <code>F(n)</code> to represent the <code>n</code>th value of the Fibonacci sequence, then the formulas are:</p>
 <ul>
@@ -532,7 +527,6 @@
 </ol>
 <blockquote>
   <p>📒 The memory that can be allocated on the heap is way larger than the stack, but better management mechanisms are needed to handle this more complex situation. <strong>For developers, it also causes a certain burden. We can&rsquo;t rely on the compiler to automatically handle it for us, we have to manage the memory manually</strong>. If you forget to call <code>free()</code> after allocating space, then your program will have a <strong>memory leak problem</strong>. Not to mention other issues such as dangling pointers and double-free.</p>
-
 </blockquote><h3 id="the-data-on-the-heap" class="headerLink">
     <a href="#the-data-on-the-heap" class="header-mark" aria-label="Header mark for 'The data on the heap'"></a>The data on the heap</h3><p>After having a certain understanding of the allocation of memory space on the heap, it is not difficult for us to draw the following conclusions:</p>
 <ol>
@@ -554,11 +548,9 @@
 </ol>
 <blockquote>
   <p>📒 In my humble opinion, the abstraction layer design is the most important concept in CS.</p>
-
 </blockquote><p>Should you choose a language with GC that is easy to use but less efficient, or choose to manually manage memory yourself to make your code more efficient? It depends on the job at hand. If you want to develop speed, of course, it is the former, and if you focus on performance, it is the latter. Of course, in the middle is no GC + basically no need to manually manage memory by yourself + efficient = Rust language 🚀. Why not learn some Rust 😉</p>
 <blockquote>
   <p>⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check the refs.</p>
-
 </blockquote><h2 id="refs" class="headerLink">
     <a href="#refs" class="header-mark" aria-label="Header mark for 'Refs'"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
@@ -627,7 +619,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

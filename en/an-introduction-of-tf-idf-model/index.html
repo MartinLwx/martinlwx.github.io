@@ -238,8 +238,7 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>The crux of the problem - How to define the word importance?</p>
-</div></div></div><p>One idea is that the more frequently a word appears within a single document, the more important it is <em>for that document</em>. For instance, in an article discussing dogs, the word &ldquo;dog&rdquo; is likely to appear frequently, reflecting the document&rsquo;s main topic.</p>
+        <div class="admonition-content"><p>The crux of the problem - How to define the word importance?</p></div></div></div><p>One idea is that the more frequently a word appears within a single document, the more important it is <em>for that document</em>. For instance, in an article discussing dogs, the word &ldquo;dog&rdquo; is likely to appear frequently, reflecting the document&rsquo;s main topic.</p>
 <p>But what if a word appears very frequently <em>in all documents</em>? For example, the word &ldquo;of&rdquo; may appear quite often in every document, can we say &ldquo;of&rdquo; is important? Clearly, that&rsquo;s not the case. So we have a clue here: If a word has a high frequency in <em>every document</em>, it&rsquo;s probably not significant and does not convey too much information.</p>
 <p>Therefore, a reasonable solution should consider a word&rsquo;s frequency within <em>a single document</em> but also take into account its frequency crossing <em>multiple documents</em>. TF-IDF balances these two aspects.</p>
 <div class="details admonition note open">
@@ -249,8 +248,7 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>In summary, the <em>intuition</em> behind TF-IDF is that similar documents <em>may</em> use similar words, while the importance of different words should vary.</p>
-</div></div></div><h2 id="tf-idf-in-detail" class="headerLink">
+        <div class="admonition-content"><p>In summary, the <em>intuition</em> behind TF-IDF is that similar documents <em>may</em> use similar words, while the importance of different words should vary.</p></div></div></div><h2 id="tf-idf-in-detail" class="headerLink">
     <a href="#tf-idf-in-detail" class="header-mark" aria-label="Header mark for 'TF-IDF in detail'"></a>TF-IDF in detail</h2><p>TF-IDF = Term frequency(TF) + Inverse document frequency(IDF). Let&rsquo;s break it into two parts.</p>
 <h3 id="tf" class="headerLink">
     <a href="#tf" class="header-mark" aria-label="Header mark for 'TF'"></a>TF</h3><p>The TF can be seen as a function of document $d$ and word $w$, and the equation is:</p>
@@ -266,8 +264,7 @@ $$</p>
     </div>
     <div class="details-content">
         <div class="admonition-content"><p>In Scikit-Learn, the computation of TF is a bit different. It <em>doesn&rsquo;t</em> involve dividing by the total number of words in the document. The purpose of dividing is to normalize the $\text{TF}(w, d)$ values within the document $d$, making them add up to one.</p>
-<p>In Scikit-Learn, this normalization process is performed after the TF-IDF calculation. We will demonstrate this with an example later.</p>
-</div></div></div><h3 id="idf" class="headerLink">
+<p>In Scikit-Learn, this normalization process is performed after the TF-IDF calculation. We will demonstrate this with an example later.</p></div></div></div><h3 id="idf" class="headerLink">
     <a href="#idf" class="header-mark" aria-label="Header mark for 'IDF'"></a>IDF</h3><p>The goal of IDF is to <em>reduce the importance of some common words that appear in each document</em>. Therefore, the IDF is a function involving the word $w$ and the $corpus$.</p>
 <p>$$
 \text{IDF}(w, corpus)=log\ \frac{\text{document count of }corpus}{1+\text{count of document which contains }w}
@@ -280,16 +277,14 @@ $$</p>
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>The $corpus$ is generally fixed. So it can be treated as a constant. In that case, IDF can be considered as something <em>that&rsquo;s only related to the word $w$</em></p>
-</div></div></div><div class="details admonition warning open">
+        <div class="admonition-content"><p>The $corpus$ is generally fixed. So it can be treated as a constant. In that case, IDF can be considered as something <em>that&rsquo;s only related to the word $w$</em></p></div></div></div><div class="details admonition warning open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>Warning<span class="details-icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>Note the $log$ here. Are we using $log_2$, $log_{10}$ or $ln$? Different frameworks might have variations. <em>Scikit-Learn use $ln$</em></p>
-</div></div></div><div class="details admonition bug open">
+        <div class="admonition-content"><p>Note the $log$ here. Are we using $log_2$, $log_{10}$ or $ln$? Different frameworks might have variations. <em>Scikit-Learn use $ln$</em></p></div></div></div><div class="details admonition bug open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M511.988 288.9c-.478 17.43-15.217 31.1-32.653 31.1H424v16c0 21.864-4.882 42.584-13.6 61.145l60.228 60.228c12.496 12.497 12.496 32.758 0 45.255-12.498 12.497-32.759 12.496-45.256 0l-54.736-54.736C345.886 467.965 314.351 480 280 480V236c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v244c-34.351 0-65.886-12.035-90.636-32.108l-54.736 54.736c-12.498 12.497-32.759 12.496-45.256 0-12.496-12.497-12.496-32.758 0-45.255l60.228-60.228C92.882 378.584 88 357.864 88 336v-16H32.666C15.23 320 .491 306.33.013 288.9-.484 270.816 14.028 256 32 256h56v-58.745l-46.628-46.628c-12.496-12.497-12.496-32.758 0-45.255 12.498-12.497 32.758-12.497 45.256 0L141.255 160h229.489l54.627-54.627c12.498-12.497 32.758-12.497 45.256 0 12.496 12.497 12.496 32.758 0 45.255L424 197.255V256h56c17.972 0 32.484 14.816 31.988 32.9zM257 0c-61.856 0-112 50.144-112 112h224C369 50.144 318.856 0 257 0z"/></svg></span>Bug<span class="details-icon"><svg class="icon"
@@ -299,8 +294,7 @@ $$</p>
         <div class="admonition-content"><p>In Scikit-Learn, the calculation of IDF differs from the equations mentioned above. By default, Scikit-Learn uses the following formula<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
 <p>$$
 \text{IDF}(w, corpus)=log\ \frac{1 + \text{document count of }corpus}{1+\text{count of document which contains }w} + 1
-$$</p>
-</div></div></div><p>🤔️ In my opinion, <em>the modification made by Scikit-Learn ensures that $\text{IDF}(w)$ cannot be less than 1</em>. In the origin equation, if a word $w$ appears in each document within the corpus, $\text{IDF}(w)$ could be a negative value. Therefore, Scikit-Learn&rsquo;s modification seems more practical. It provides a more intuitive comparison of the IDF values for different words.</p>
+$$</p></div></div></div><p>🤔️ In my opinion, <em>the modification made by Scikit-Learn ensures that $\text{IDF}(w)$ cannot be less than 1</em>. In the origin equation, if a word $w$ appears in each document within the corpus, $\text{IDF}(w)$ could be a negative value. Therefore, Scikit-Learn&rsquo;s modification seems more practical. It provides a more intuitive comparison of the IDF values for different words.</p>
 <h3 id="tf-idf" class="headerLink">
     <a href="#tf-idf" class="header-mark" aria-label="Header mark for 'TF-IDF'"></a>TF-IDF</h3><p>$$
 \text{TF-IDF}(w, d, corpus)=\text{TF}(w, d) * \text{IDF}(w, corpus)
@@ -769,8 +763,7 @@ $$</p>
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>The code below is not optimized, just for demonstration :)</p>
-</div></div></div><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
+        <div class="admonition-content"><p>The code below is not optimized, just for demonstration :)</p></div></div></div><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
     
@@ -955,7 +948,7 @@ $$</p>
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

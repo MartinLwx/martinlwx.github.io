@@ -305,7 +305,6 @@
 <p>ANTLR4 也提供了方法让我们可以在语法文件里面插入动作，这些动作最后都会被 ANTLR4 注入到生成的 Parser 文件里面。<strong>因此，动作用什么语言写取决于你输出 Parser 的目标语言是什么</strong></p>
 <blockquote>
   <p><strong>⚠️这里假定你对如何编写 ANTLR4 的语法文件（<code>*.g4</code>）有基本了解，不会进行赘述，本文只集中介绍如何在语法文件里面插入动作</strong></p>
-
 </blockquote><h3 id="动作注入的位置和方法" class="headerLink">
     <a href="#%e5%8a%a8%e4%bd%9c%e6%b3%a8%e5%85%a5%e7%9a%84%e4%bd%8d%e7%bd%ae%e5%92%8c%e6%96%b9%e6%b3%95" class="header-mark" aria-label="Header mark for '动作注入的位置和方法'"></a>动作注入的位置和方法</h3><p>下面是简化的生成的 Parser 文件的代码模板。总体上来看，我们能注入的位置如下所示：</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -619,7 +618,6 @@
 </div>
 <blockquote>
   <p>⚠️在我使用的 <code>antlr4-python3-runtime</code> 中（4.10），还无法在插入类的字段进行注释</p>
-
 </blockquote><h4 id="action" class="headerLink">
     <a href="#action" class="header-mark" aria-label="Header mark for '&lt;action&gt;'"></a><code>&lt;action&gt;</code></h4><p>在 ANTLR4 中，动作是用<strong>花括号 <code>{&lt;specific-language-here&gt;}</code> 括起来的代码</strong>。正如前面提到的，看你最后输出的 Parser 想要是什么语言，你就用什么语言写动作。</p>
 <p>动作一般会放在一条规则的某个 symbol 之后，意思是说在 parser 应用这条规则的时候执行到这里就执行相应的动作。这里的 symbol 可以是 terminal 也可以是 nonterminal。</p>
@@ -735,10 +733,8 @@
 <h2 id="举个例子" class="headerLink">
     <a href="#%e4%b8%be%e4%b8%aa%e4%be%8b%e5%ad%90" class="header-mark" aria-label="Header mark for '举个例子'"></a>举个例子</h2><blockquote>
   <p><strong>⚠️下面都只会给出部分代码，完整的代码在我的 <a href="https://github.com/MartinLwx/ECE573-Fall-2015-Purdue/blob/main/Project03.Symbol_table/Micro.g4" target="_blank" rel="noopener noreferrer">Github 项目</a></strong></p>
-
 </blockquote><blockquote>
   <p>⚠️因为这个项目要求把 warning 输出在其他输出前面，所以我用 <code>warning_list</code> 和 <code>output_list</code> 来存储，最后再一起输出</p>
-
 </blockquote><p>下面以普渡大学 2015 年的开设的编译器课程的<a href="https://engineering.purdue.edu/~milind/ece573/2015fall/project/step3/step3.html" target="_blank" rel="noopener noreferrer">项目作业</a>为例，整个项目要实现一个 Micro 语言的编译器，关于 Micro 语言的语法，可以在<a href="https://engineering.purdue.edu/~milind/ece573/2015fall/project/grammar.txt" target="_blank" rel="noopener noreferrer">这里</a>看到。下面我会对步骤三的作业要求进行一个简单的介绍。</p>
 <p>在这个作业中我们要构建一个 symbol table，并在相应的时刻输出相关的信息：</p>
 <ul>
@@ -855,7 +851,6 @@
 <p>不难想出，<strong>支持高效率查询和插入的数据结构就是「哈希表」</strong>。为了维护变量的作用域，<strong>可以把同个作用域下的变量放在同个哈希表里面，用一个列表来记住所有的变量作用域</strong>，也就是说是 <code>[{scope1}, {scope2},...]</code> 这样。同时维护一个 <code>self.current_scope</code> 来记住当前处于哪一个变量作用域里面。每当有一个新的作用域出现的时候，保存当前的作用域，往列表里插入一个新的作用域，再更新 <code>self.current_scope</code>。</p>
 <blockquote>
   <p>📒 这里的 list 其实就是用来模拟栈</p>
-
 </blockquote><p>🤔我们要实现什么样的方法？起码要有下面这几个：</p>
 <ul>
 <li><code>lookup(identifier, value)</code>：插入变量到当前的 symbol table 里面。根据这个项目作业的要求，还应该查询是否变量已经被声明过</li>
@@ -1108,7 +1103,6 @@
 <p>可以看到，声明变量对应的是 <code>var_decl</code> 规则，一次可以声明一至多个变量，每一个变量之间用 <code>,</code> 隔开的，所以我们可以在这条规则的末尾最后注入如下的动作代码。</p>
 <blockquote>
   <p>⚠️要注意如果你也是使用 python 的话，这里所以缩进会有点怪，因为每一行都要从最左边开始，但最后生成的代码是没有问题的</p>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1697,7 +1691,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

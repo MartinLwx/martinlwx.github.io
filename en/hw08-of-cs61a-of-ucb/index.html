@@ -223,7 +223,6 @@
     <a href="#q1-my-filter" class="header-mark" aria-label="Header mark for 'Q1: My Filter'"></a>Q1: My Filter</h3><blockquote>
   <p>Write a procedure <code>my-filter</code>, which takes a predicate <code>func</code> and a list <code>lst</code>, and returns a new list containing only elements of the list that satisfy the predicate. The output should contain the elements in the same order that they appeared in the original list.</p>
 <p><strong>Note:</strong> Make sure that you are not just calling the built-in <code>filter</code> function in Scheme - we are asking you to re-implement this!</p>
-
 </blockquote><p>We need to implement a function that contains elements which are qualified <code>(func e)</code> = <code>#t</code> in the list.</p>
 <p>The base case: an empty list. Otherwise, we check if <code>(car lst)</code> can be kept.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -331,7 +330,6 @@
     <a href="#q2-interleave" class="header-mark" aria-label="Header mark for 'Q2: Interleave'"></a>Q2: Interleave</h3><blockquote>
   <p>Implement the function <code>interleave</code>, which takes a two lists <code>s1</code> and <code>s2</code> as arguments. <code>interleave</code> should return a new list that interleaves the elements of the two lists. (In other words, the resulting list should contain elements alternating between <code>s1</code> and <code>s2</code>.)</p>
 <p>If one of the input lists to <code>interleave</code> is shorter than the other, then <code>interleave</code> should alternate elements from both lists until one list has no more elements, and then the remaining elements from the longer list should be added to the end of the new list.</p>
-
 </blockquote><p>It can be solved recursively.</p>
 <p>The base case: both lists are empty. We need to return <code>nil</code></p>
 <p>Notion: the first parameter of interleave - <code>first_param</code>, the second parameter of interleave - <code>second_param</code></p>
@@ -446,7 +444,6 @@
 <li><code>term</code>: a function of one argument that computes the <em>n</em>th term of a sequence</li>
 </ol>
 <p>For example, we can find the product of all the numbers from 1 to 5 by using the multiplication operator as the <code>merger</code>, and starting our product at 1:</p>
-
 </blockquote><p>We need to calculate the &ldquo;sum&rdquo; of the first <code>n</code> natural numbers(<code>[1, n]</code>). The definitin of &ldquo;sum&rdquo; is defined by <code>merger</code>. We also have <code>term</code> to compute the ith term of a sequence.</p>
 <p>We can&rsquo;t use <code>while</code> loop in scheme(If you don&rsquo;t have implement this by yourself). So we need a recursive solution. The base case: <code>n = 1</code>, we <code>merge</code> 1 and <code>start</code>. Otherwise, we will call <code>(accumulate merger start (- n 1) term)</code> :)</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -553,10 +550,8 @@
   <p>Implement <code>no-repeats</code>, which takes a list of numbers <code>lst</code> as input and returns a list that has all of the unique elements of <code>lst</code> in the order that they first appear, but no repeats. For example, <code>(no-repeats (list 5 4 5 4 2 2))</code>evaluates to <code>(5 4 2)</code>.</p>
 <blockquote>
   <p><strong>Hint:</strong> How can you make the first time you see an element in the input list be the first and only time you see the element in the resulting list you return?</p>
-
 </blockquote><blockquote>
   <p><strong>Hint:</strong> You may find it helpful to use the <code>my-filter</code> procedure with a helper <code>lambda</code> function to use as a filter. To test if two numbers are equal, use the <code>=</code> procedure. To test if two numbers are not equal, use the <code>not</code>procedure in combination with <code>=.</code></p>
-
 </blockquote>
 </blockquote><p>The base case: an empty list. We will return <code>nil</code>. Otherwise, we need to delete all elements that are equal to <code>(car lst)</code> in <code>(cdr lst)</code>, which can implemented by the <code>my-filter</code> procedure in Q1.</p>
 <p>(ps. I have been looking for bugs for a long time because of an extra set of parentheses. &#x1f622;)</p>
@@ -718,7 +713,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

@@ -242,7 +242,6 @@
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>如果你一直都是是用动态语言，比如 Python、Javascript 这种，你很可能并不会注意到栈和堆的区别。因为这些语言有垃圾收集器（Garbage collector，GC）存在，会自动帮你做好内存管理，你只要集中注意力编程即可。坏消息是 GC 并不是没有成本的事情，实际上设计再好的 GC 算法，也会降低代码的性能。如果你接触编程的时间足够久，那么想必你可能会听到过什么“递归层数太深栈爆炸了”这种话，此时你可能会点开搜索引擎稍微了解一下栈和堆的区别，有可能你就刚好点进了这一篇文章 :)</p>
 <blockquote>
   <p>📒 虽然 GC 会降低代码性能，但是免去了开发人员手动管理内存的心智负担，可以大大加速软件开发的速度，这是牺牲性能换取开发速度。但到了软件后期出现性能瓶颈的时候，就不得不研究如何重构甚至重写关键部分的代码提高性能了。</p>
-
 </blockquote><p>这里的栈和堆并不是数据结构里面的堆和栈，而是指内存管理的两种机制。了解栈和堆的细节差异有助于我们理解一些比较接近底层的编程语言，这里说的编程语言<em>比如 Rust、C 和 C++ 等</em>。在 Rust 中，最为重要的概念就是所有权的问题，Rust 的很多设计都是围绕它展开，掌握了所有权就能在学习 Rust 的时候如鱼得水😄。</p>
 <h2 id="程序在内存上的布局" class="headerLink">
     <a href="#%e7%a8%8b%e5%ba%8f%e5%9c%a8%e5%86%85%e5%ad%98%e4%b8%8a%e7%9a%84%e5%b8%83%e5%b1%80" class="header-mark" aria-label="Header mark for '程序在内存上的布局'"></a>程序在内存上的布局</h2><p>我们知道，要运行一个程序必须将程序加载到内存里面，在程序运行的过程中，数据也是需要读取到内存上的，那么你有没有想过这一切在内存上是如何分布的呢？下面我会给出一个比较简单的示意图<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>：如下所示：</p>
@@ -260,10 +259,8 @@
 <p>关于栈和堆会在后面进行单独说明</p>
 <blockquote>
   <p>📒 这里要记住的就是：栈和堆是在向彼此靠近的，栈是从<strong>高地址 -&gt; 低地址</strong>增长，而堆是<strong>低地址 -&gt; 高地址</strong>增长。这样你在看汇编代码的时候看到<strong>入栈时 sp 指针是做减法</strong>你就能理解了。</p>
-
 </blockquote><blockquote>
   <p>📒 虽然看起来，随着我们申请内存越来越多，栈和堆可能会冲突（因为他们在彼此靠近），但是实际上并不需要担心这个问题，因为：1）这个布局是发生在虚拟内存上的，现在的处理器一般是 64 位的，容量非常大。2）在它们冲突之前，很有可能你的物理内存早就耗尽了，还是先担心这个</p>
-
 </blockquote><h2 id="栈" class="headerLink">
     <a href="#%e6%a0%88" class="header-mark" aria-label="Header mark for '栈'"></a>栈</h2><h3 id="术语" class="headerLink">
     <a href="#%e6%9c%af%e8%af%ad" class="header-mark" aria-label="Header mark for '术语'"></a>术语</h3><ul>
@@ -286,10 +283,8 @@
 </ul>
 <blockquote>
   <p>对这个过程的详细解释可以参考 <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-
 </blockquote><blockquote>
   <p>📒 在栈上申请内存空间的时候需要担心的问题是：不要申请太多导致栈爆了（也就是大名鼎鼎的 Stack Overflow）。这一点在写递归函数的时候要特别注意。你可以选择改成迭代的算法，也可以考虑增加栈的大小限制。<em>比如在 Python 里面可以用 <code>sys.getrecursionlimit()</code> 来修改栈的大小限制</em>。有的编程语言还会对尾递归进行优化，此时也可以选择将普通的递归函数改写为尾递归的形式。</p>
-
 </blockquote><h3 id="以斐波那契数列的递归函数看栈的变化" class="headerLink">
     <a href="#%e4%bb%a5%e6%96%90%e6%b3%a2%e9%82%a3%e5%a5%91%e6%95%b0%e5%88%97%e7%9a%84%e9%80%92%e5%bd%92%e5%87%bd%e6%95%b0%e7%9c%8b%e6%a0%88%e7%9a%84%e5%8f%98%e5%8c%96" class="header-mark" aria-label="Header mark for '以斐波那契数列的递归函数看栈的变化'"></a>以斐波那契数列的递归函数看栈的变化</h3><p>CS 课程中讲解递归的时候一般都会讲到斐波那契数列，现在我们用 <code>F(n)</code> 表示斐波那契数列的第 <code>n</code> 个值，那么有：</p>
 <ul>
@@ -531,7 +526,6 @@
 </ol>
 <blockquote>
   <p>📒 堆上可以分配的内存比较大，但是需要更良好的管理机制来处理这种比较复杂的情况。<strong>对开发人员来说，也造成了一定的负担，我们无法依赖编译器自动帮我们处理，而是要自己手动管理内存</strong>，<em>比如在 C 语言中你进行了 <code>malloc()</code> 函数申请空间之后要是忘记用 <code>free()</code> 释放，那么你的程序就会存在内存泄露的问题</em>。更别谈还有其他的诸如悬垂指针等问题。</p>
-
 </blockquote><h3 id="堆上存放的是什么数据" class="headerLink">
     <a href="#%e5%a0%86%e4%b8%8a%e5%ad%98%e6%94%be%e7%9a%84%e6%98%af%e4%bb%80%e4%b9%88%e6%95%b0%e6%8d%ae" class="header-mark" aria-label="Header mark for '堆上存放的是什么数据'"></a>堆上存放的是什么数据</h3><p>对堆上内存空间的分配有一定了解之后，我们不难得出下面的几个结论：</p>
 <ol>
@@ -553,11 +547,9 @@
 </ol>
 <blockquote>
   <p>📒 在 CS 里面，我认为最重要的概念就是封装。逐层封装，对上一层隐藏细节的这种设计实在很不错。</p>
-
 </blockquote><p>选择带有 GC 好上手但效率较低的语言还是选择自己手动管理内存让代码效率更高呢？这点其实取决于你手头的工作。如果要开发速度当然是前者了，如果注重性能那就是后者。当然，夹在中间的是没有 GC + 基本不用自己手动管理内存 + 效率高的 Rust 语言🚀，要不学点 Rust😉</p>
 <blockquote>
   <p>⚠️ 本文在组织的时候可以忽略了一些细节，我只讲了我认为比较重要的几点。如果想要了解更多，值得一看的材料参考下面的资料引用</p>
-
 </blockquote><h2 id="参考" class="headerLink">
     <a href="#%e5%8f%82%e8%80%83" class="header-mark" aria-label="Header mark for '参考'"></a>参考</h2><div class="footnotes" role="doc-endnotes">
 <hr>
@@ -626,7 +618,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

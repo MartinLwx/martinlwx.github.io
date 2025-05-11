@@ -228,7 +228,6 @@
 <h3 id="job-control" class="headerLink">
     <a href="#job-control" class="header-mark" aria-label="Header mark for 'Job control'"></a>Job control</h3><blockquote>
   <p>From what we have seen, we can use some <code>ps aux | grep</code> commands to get our jobs’ pids and then kill them, but there are better ways to do it. Start a <code>sleep 10000</code> job in a terminal, background it with <code>Ctrl-Z</code> and continue its execution with <code>bg</code>. Now use <a href="https://www.man7.org/linux/man-pages/man1/pgrep.1.html" target="_blank" rel="noopener noreferrer"><code>pgrep</code></a> to find its pid and <a href="http://man7.org/linux/man-pages/man1/pgrep.1.html" target="_blank" rel="noopener noreferrer"><code>pkill</code></a> to kill it without ever typing the pid itself. (Hint: use the <code>-af</code> flags).</p>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -340,7 +339,6 @@
 <blockquote>
   <p>Say you don’t want to start a process until another completes. How would you go about it? In this exercise, our limiting process will always be <code>sleep 60 &amp;</code>. One way to achieve this is to use the <a href="https://www.man7.org/linux/man-pages/man1/wait.1p.html" target="_blank" rel="noopener noreferrer"><code>wait</code></a> command. Try launching the sleep command and having an <code>ls</code> wait until the background process finishes.</p>
 <p>However, this strategy will fail if we start in a different bash session, since <code>wait</code> only works for child processes. One feature we did not discuss in the notes is that the <code>kill</code> command’s exit status will be zero on success and nonzero otherwise. <code>kill -0</code> does not send a signal but will give a nonzero exit status if the process does not exist. Write a bash function called <code>pidwait</code> that takes a pid and waits until the given process completes. You should use <code>sleep</code> to avoid wasting CPU unnecessarily.</p>
-
 </blockquote><p>We can use <code>wait &lt;pid&gt;</code> to wait for a process to complete before proceeding. Then the question is what is exactly the <code>pid</code> of <code>sleep 60 &amp;</code>. In last exercise, we know we can use <code>pgrep</code> to get the pid by process name. So the basic solution will be:</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -645,12 +643,10 @@
 <h3 id="terminal-multiplexer" class="headerLink">
     <a href="#terminal-multiplexer" class="header-mark" aria-label="Header mark for 'Terminal multiplexer'"></a>Terminal multiplexer</h3><blockquote>
   <p>Follow this <code>tmux</code> <a href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/" target="_blank" rel="noopener noreferrer">tutorial</a> and then learn how to do some basic customizations following <a href="https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/" target="_blank" rel="noopener noreferrer">these steps</a></p>
-
 </blockquote><p>Just follow the tutorial.</p>
 <h3 id="aliases" class="headerLink">
     <a href="#aliases" class="header-mark" aria-label="Header mark for 'Aliases'"></a>Aliases</h3><blockquote>
   <p>Create an alias <code>dc</code> that resolves to <code>cd</code> for when you type it wrongly.</p>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -751,7 +747,6 @@
   <ol>
 <li>Run <code>history | awk '{$1=&quot;&quot;;print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10</code> to get your top 10 most used commands and consider writing shorter aliases for them. Note: this works for Bash; if you’re using ZSH, use <code>history 1</code> instead of just <code>history</code>.</li>
 </ol>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -860,7 +855,6 @@
 <li>Migrate all of your current tool configurations to your dotfiles repository.</li>
 <li>Publish your dotfiles on GitHub.</li>
 </ol>
-
 </blockquote><p>It is weird. &#x1f914; I created a folder and migrate all my configurations to it. And I also made soft links. However, it is just didn&rsquo;t work.</p>
 <h3 id="remote-machines" class="headerLink">
     <a href="#remote-machines" class="header-mark" aria-label="Header mark for 'Remote machines'"></a>Remote machines</h3><blockquote>
@@ -988,13 +982,11 @@
 <p>(Challenge) Look into what the <code>-N</code> and <code>-f</code> flags do in <code>ssh</code> and figure out a command to achieve background port forwarding.</p>
 </li>
 </ol>
-
 </blockquote><p>I don&rsquo;t have enough disk space for a linux virtual machine :(</p>
 <h2 id="lecture-06-version-controlgit" class="headerLink">
     <a href="#lecture-06-version-controlgit" class="header-mark" aria-label="Header mark for 'Lecture 06. Version Control(git)'"></a>Lecture 06. Version Control(git)</h2><hr>
 <blockquote>
   <p>If you don’t have any past experience with Git, either try reading the first couple chapters of <a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener noreferrer">Pro Git</a> or go through a tutorial like <a href="https://learngitbranching.js.org/" target="_blank" rel="noopener noreferrer">Learn Git Branching</a>. As you’re working through it, relate Git commands to the data model.</p>
-
 </blockquote><p>:)</p>
 <blockquote>
   <p>Clone the <a href="https://github.com/missing-semester/missing-semester" target="_blank" rel="noopener noreferrer">repository for the class website</a></p>
@@ -1003,7 +995,6 @@
 <li>Who was the last person to modify <code>README.md</code>? (Hint: use <code>git log</code> with an argument).</li>
 <li>What was the commit message associated with the last modification to the <code>collections:</code> line of <code>_config.yml</code>? (Hint: use <code>git blame</code> and <code>git show</code>).</li>
 </ol>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1116,7 +1107,6 @@
 </div>
 <blockquote>
   <p>One common mistake when learning Git is to commit large files that should not be managed by Git or adding sensitive information. Try adding a file to a repository, making some commits and then deleting that file from history (you may want to look at <a href="https://help.github.com/articles/removing-sensitive-data-from-a-repository/" target="_blank" rel="noopener noreferrer">this</a>).</p>
-
 </blockquote><p>I made a new repo and made some commits. Finally I found the correct command to delete a file from all history &#x1f917;</p>
 <p>Ths command we are going to use is <code>git filter-repo</code>. If you haven&rsquo;t installed it, you may just run <code>brew install git filter-repo </code>(for mac users). Then use this &ldquo;magic&rdquo; command do finish this exercise.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -1219,7 +1209,6 @@
 <p>The mechanism behind this command is: <code>--invert-paths</code> will only select files matching none of options which we specify by <code>--path</code>. So it will keep everything except <code>&lt;file&gt;</code>, and overwrite this commit history.</p>
 <blockquote>
   <p>Clone some repository from GitHub, and modify one of its existing files. What happens when you do <code>git stash</code>? What do you see when running <code>git log --all --oneline</code>? Run <code>git stash pop</code> to undo what you did with <code>git stash</code>. In what scenario might this be useful?</p>
-
 </blockquote><p>I tried to modify <code>README.md</code> is the repo for the class website.</p>
 <p>Then I ran <code>git stash</code>. The output is: <code>Saved working directory and index state WIP on master: c2f9535 Merge pull request #172 from chapmanjacobd/patch-1</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -1326,7 +1315,6 @@
 <p>The scenario of using <code>git stash</code> is that: For exmaple, say I have beening working on my project in <code>master</code> branch for quite a long time. Now I want to switch to another branch, but my working directory is in a mess. I don&rsquo;t want to make a dirty commit to temporarily save my work. Here comes the <code>git stash</code>. <strong>I can use this command to temporarily save my half-finished work.</strong> &#x1f917;</p>
 <blockquote>
   <p>Like many command line tools, Git provides a configuration file (or dotfile) called <code>~/.gitconfig</code>. Create an alias in <code>~/.gitconfig</code> so that when you run <code>git graph</code>, you get the output of <code>git log --all --graph --decorate --oneline</code>. Information about git aliases can be found <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-alias" target="_blank" rel="noopener noreferrer">here</a>.</p>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1426,7 +1414,6 @@
 </div>
 <blockquote>
   <p>You can define global ignore patterns in <code>~/.gitignore_global</code> after running <code>git config --global core.excludesfile ~/.gitignore_global</code>. Do this, and set up your global gitignore file to ignore OS-specific or editor-specific temporary files, like <code>.DS_Store</code>.</p>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -1526,7 +1513,6 @@
 </div>
 <blockquote>
   <p>Fork the <a href="https://github.com/missing-semester/missing-semester" target="_blank" rel="noopener noreferrer">repository for the class website</a>, find a typo or some other improvement you can make, and submit a pull request on GitHub (you may want to look at <a href="https://github.com/firstcontributions/first-contributions" target="_blank" rel="noopener noreferrer">this</a>).</p>
-
 </blockquote><p>I followed first-contributions in <a href="https://github.com/firstcontributions/first-contributions" target="_blank" rel="noopener noreferrer">this</a>.:happy:</p>
 </div>
 
@@ -1584,7 +1570,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

@@ -264,12 +264,10 @@
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>最近正在跟着<a href="https://craftinginterpreters.com/" target="_blank" rel="noopener noreferrer">《Crafting interpreter》</a>这本书写解释器，原本书里面用 Java 实现了一个 Tree-walker 解释器 jlox，我正在用 Python 重写一遍，称为 <a href="https://github.com/MartinLwx/pylox" target="_blank" rel="noopener noreferrer">pylox</a>。看了这本书感觉对解释器的理解越来越深刻了，很推荐👍。此时的我突然想起来之前看完的 CS61A 的 Scheme 解释器还有几个小问题没有解决，导致它一直是未完成的状态，于是今天我打开了这个项目，打算从头到尾捋一遍，讲讲思路。</p>
 <blockquote>
   <p>注：Scheme 解释器这个项目比较大，所以<strong>我只复制了题目描述中的重要部分</strong>，完整的描述还是要回去看项目主页。同时<strong>代码只显示核心的部分</strong>。</p>
-
 </blockquote><h2 id="part-1-the-evaluator" class="headerLink">
     <a href="#part-1-the-evaluator" class="header-mark" aria-label="Header mark for 'Part 1. The Evaluator'"></a>Part 1. The Evaluator</h2><h3 id="problem-1" class="headerLink">
     <a href="#problem-1" class="header-mark" aria-label="Header mark for 'Problem 1'"></a>Problem 1</h3><blockquote>
   <p>Implement the <code>define</code> and <code>lookup</code> methods of the Frame class&hellip;<code>bindings</code> is a dictionary representing the bindings in the frame&hellip;<code>parent</code> is the parent Frame instance&hellip;The <em>environment</em> for a <code>Frame</code> instance consists of that frame, its parent frame, and all its ancestor frames, including the Global Frame.</p>
-
 </blockquote><p><code>define</code> 函数很简单，就是一个字符串（<code>symbol</code>）到 Scheme 值（<code>value</code>）的映射，参数都给你写好了</p>
 <p><code>lookup</code> 函数的具体执行过程在本来的题目描述中已经列出来了，照着做就行，<strong>迭代和递归的解法都可以</strong>，我感觉迭代的解法会比较简单</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -390,7 +388,6 @@
 <h3 id="problem-2" class="headerLink">
     <a href="#problem-2" class="header-mark" aria-label="Header mark for 'Problem 2'"></a>Problem 2</h3><blockquote>
   <p>To be able to call built-in procedures, such as <code>+</code>, you need to complete the <code>BuiltinProcedure</code> case within the <code>scheme_apply</code> function in <code>scheme_eval_apply.py</code>. Built-in procedures are applied by calling a corresponding Python function that implements the procedure.</p>
-
 </blockquote><p>跟着题目的要求做即可，没有什么难度。<strong>值得一提的是要和 <code>nil</code> 判断而不是和 <code>None</code> 判断</strong>，不然你可能在第三题一直得到 &ldquo;incorrect number of arguments&hellip;&quot;，我发现我之前没有做出来就是这里没写好</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -511,7 +508,6 @@
 <h3 id="problem-3" class="headerLink">
     <a href="#problem-3" class="header-mark" aria-label="Header mark for 'Problem 3'"></a>Problem 3</h3><blockquote>
   <p>Implement the missing part of <code>scheme_eval</code>, which evaluates a call expression&hellip;You&rsquo;ll have to recursively call <code>scheme_eval</code> in the first two steps&hellip;The <code>map</code> method of <code>Pair</code> returns a new Scheme list constructed by applying a <em>one-argument function</em> to every item in a Scheme list&hellip;Important: do not mutate the passed-in <code>expr</code>. That would change a program as it&rsquo;s being evaluated, creating strange and incorrect effects.</p>
-
 </blockquote><p>这一道题也很直白，可能的一个难点是，<code>rest.map</code> 的参数是一个 “one-argument function”，也就是只接受一个参数，但是题目提供的 <code>scheme_eval</code> 有 2 个参数。所以<strong>需要对函数进行转化</strong>，当然这里可以写一个 lambda 表达式包装一下 <code>scheme_eval</code>。<strong>我选择用 <code>functools</code> 包提供的 <code>partial</code> 函数，它的用途就是绑定函数的部分参数并返回一个新的函数</strong>。第一次见到 <code>partial</code> 这种用法还是在函数式编程语言里面，不少函数式编程语言都是原生就支持这个功能。</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -622,7 +618,6 @@
 <h3 id="problem-4" class="headerLink">
     <a href="#problem-4" class="header-mark" aria-label="Header mark for 'Problem 4'"></a>Problem 4</h3><blockquote>
   <p>The type of the first operand tells us what is being defined&hellip;implement just the first part, which evaluates the second operand to obtain a value and binds the first operand, a symbol, to that value. Then, <code>do_define_form</code> returns the symbol that was bound.</p>
-
 </blockquote><p>这里只要求实现 <code>define</code> 的第一个功能——绑定变量，具体绑定的方式其实我们已经在 Problem 1 里面实现好了，就是 <code>Frame</code> 类的 <code>define</code> 方法，因此绑定变量只要调用 <code>env.define</code> 即可。</p>
 <p>根据 <code>define</code> 绑定变量的写法: <code>(define a some_val)</code>，可以通过 <code>.rest.first</code> 拿到对应的 <code>some_val</code> 用 <code>scheme_eval</code> 进行估值</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -733,7 +728,6 @@
 <h3 id="problem-5" class="headerLink">
     <a href="#problem-5" class="header-mark" aria-label="Header mark for 'Problem 5'"></a>Problem 5</h3><blockquote>
   <p>Implement the <code>do_quote_form</code> function in <code>scheme_forms.py</code> so that it simply returns the unevaluated operand of the <code>(quote ...)</code> expression.</p>
-
 </blockquote><p><code>validate_form(expressions, 1, 1)</code> 确保输入长度为 1，即检查是否为 <code>'...</code> 形式，我们只需要直接返回即可</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -837,7 +831,6 @@
     <a href="#part-2-procedures" class="header-mark" aria-label="Header mark for 'Part 2. Procedures'"></a>Part 2. Procedures</h2><h3 id="problem-6" class="headerLink">
     <a href="#problem-6" class="header-mark" aria-label="Header mark for 'Problem 6'"></a>Problem 6</h3><blockquote>
   <p>Change the <code>eval_all</code> function in <code>scheme_eval_apply.py</code> (which is called from <code>do_begin_form</code> in <code>scheme_forms.py</code>) to complete the implementation of the <code>begin</code> special form (spec). A <code>begin</code> expression is evaluated by evaluating all sub-expressions in order. The value of the <code>begin</code> expression is the value of the final sub-expression.</p>
-
 </blockquote><p>其实这是一个递归的过程：</p>
 <ol>
 <li>先检查 <code>expressions</code> 是否为 <code>nil</code>，是的话返回 <code>None</code> 表示没有定义</li>
@@ -949,7 +942,6 @@
 <h3 id="problem-7" class="headerLink">
     <a href="#problem-7" class="header-mark" aria-label="Header mark for 'Problem 7'"></a>Problem 7</h3><blockquote>
   <p>Implement the <code>do_lambda_form</code> function (spec), which creates and returns a <code>LambdaProcedure</code> instance</p>
-
 </blockquote><p>在 Problem 6 里面已经说了 <code>LambdaProcedure</code> 的结构，调用一下它的构造函数就行</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1054,7 +1046,6 @@
 <h3 id="problem-8" class="headerLink">
     <a href="#problem-8" class="header-mark" aria-label="Header mark for 'Problem 8'"></a>Problem 8</h3><blockquote>
   <p>This method takes in two arguments: <code>formals</code>, which is a Scheme list of symbols, and <code>vals</code>, which is a Scheme list of values. It should return a new child frame, binding the formal parameters to the values.</p>
-
 </blockquote><p>题目的步骤已经够详细了，这里就不展开了</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1165,7 +1156,6 @@
 <h3 id="problem-9" class="headerLink">
     <a href="#problem-9" class="header-mark" aria-label="Header mark for 'Problem 9'"></a>Problem 9</h3><blockquote>
   <p>You should first create a new <code>Frame</code> instance using the <code>make_child_frame</code> method of the appropriate parent frame, binding formal parameters to argument values. Then, evaluate each of the expressions of the body of the procedure using <code>eval_all</code> within this new frame.</p>
-
 </blockquote><p>这里刚好用了 Problem 8 写的 <code>make_child_frame</code> 函数</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1271,7 +1261,6 @@
 <h3 id="problem-10" class="headerLink">
     <a href="#problem-10" class="header-mark" aria-label="Header mark for 'Problem 10'"></a>Problem 10</h3><blockquote>
   <p>Modify the <code>do_define_form</code> function in <code>scheme_forms.py</code> so that it correctly handles <code>define (...) ...)</code> expressions</p>
-
 </blockquote><p>和之前的相比，差别主要在 <code>env.define</code> 的第 2 个参数，用前面写好的 <code>do_lambda_form</code> 或者直接调用 <code>LambdaProcedure</code> 也可以</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1384,7 +1373,6 @@
 <h3 id="problem-11" class="headerLink">
     <a href="#problem-11" class="header-mark" aria-label="Header mark for 'Problem 11'"></a>Problem 11</h3><blockquote>
   <p>Implement <code>do_mu_form</code> in <code>scheme_forms.py</code> to evaluate the <code>mu</code> special form. A <code>mu</code> expression evaluates to a <code>MuProcedure</code>. Most of the <code>MuProcedure</code> class (defined in <code>scheme_classes.py</code>) has been provided for you.</p>
-
 </blockquote><p><code>MuProcedure</code> 的特别之处在于 dynamic scoping，参数的值取决于调用的时候环境里面有什么。<code>scheme_apply</code> 函数的参数 <code>env</code> 就表示了当前环境，我们只需要构造一个 child frame 并在里面评估 <code>MuProcedure</code> 即可</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1496,7 +1484,6 @@
     <a href="#part-3-special-forms" class="header-mark" aria-label="Header mark for 'Part 3. Special Forms'"></a>Part 3. Special Forms</h2><h3 id="problem-12" class="headerLink">
     <a href="#problem-12" class="header-mark" aria-label="Header mark for 'Problem 12'"></a>Problem 12</h3><blockquote>
   <p>Implement <code>do_and_form</code> and <code>do_or_form</code> so that <code>and</code> and <code>or</code> expressions are evaluated correctly. The logical forms <code>and</code> and <code>or</code> are <em>short-circuiting</em></p>
-
 </blockquote><p><code>do_and_form</code> 和 <code>do_or_form</code> 都可以用递归写：</p>
 <ul>
 <li><code>do_and_form</code>：base case 为 <code>nil</code> 此时返回为 <code>True</code>，从头到尾检查，一旦发现不为 <code>True</code> 的就立刻返回</li>
@@ -1625,7 +1612,6 @@
 <h3 id="problem-13" class="headerLink">
     <a href="#problem-13" class="header-mark" aria-label="Header mark for 'Problem 13'"></a>Problem 13</h3><blockquote>
   <p>Fill in the missing parts of <code>do_cond_form</code> so that it correctly implements <code>cond</code>, returning the value of the first result sub-expression corresponding to a true predicate, or the result sub-expression corresponding to <code>else</code>.</p>
-
 </blockquote><p>按照题目的意思来就行</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1733,7 +1719,6 @@
 <h3 id="problem-14" class="headerLink">
     <a href="#problem-14" class="header-mark" aria-label="Header mark for 'Problem 14'"></a>Problem 14</h3><blockquote>
   <p>Implement <code>make_let_frame</code> in <code>scheme_forms.py</code>, which returns a child frame of <code>env</code> that binds the symbol in each element of <code>bindings</code> to the value of its corresponding expression. The <code>bindings</code> Scheme list contains pairs that each contain a symbol and a corresponding expression.</p>
-
 </blockquote><p>遍历每一个 <code>binding</code>，收集参数名和值到 <code>names</code> 和 <code>values</code> 就行</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1850,7 +1835,6 @@
 <h3 id="problem-15" class="headerLink">
     <a href="#problem-15" class="header-mark" aria-label="Header mark for 'Problem 15'"></a>Problem 15</h3><blockquote>
   <p>Implement the <code>enumerate</code> procedure, which takes in a list of values and returns a list of two-element lists, where the first element is the index of the value, and the second element is the value itself.</p>
-
 </blockquote><p>通过递归就可以实现，在下面我实现了一个 <code>helper</code> 递归函数，参数是输入 <code>input</code> 和索引 <code>index</code>：</p>
 <ul>
 <li>base case：输入 <code>input</code> 为空，则返回 <code>'()</code></li>
@@ -1963,7 +1947,6 @@
 <h3 id="problem-16" class="headerLink">
     <a href="#problem-16" class="header-mark" aria-label="Header mark for 'Problem 16'"></a>Problem 16</h3><blockquote>
   <p>Implement the <code>merge</code> procedure, which takes in a comparator function <code>inorder?</code> and two lists that are sorted, and combines the two lists into a single sorted list. A comparator defines an ordering by comparing two values and returning a true value if and only if the two values are ordered. Here, sorted means sorted according to the comparator</p>
-
 </blockquote><p>经典算法：合并 2 个有序列表，每次取出 2 个列表的头个元素，对应下面的 <code>(car list1) (car list2)</code>，然后进行比较，根据不同情况进行递归调用</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -2124,7 +2107,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

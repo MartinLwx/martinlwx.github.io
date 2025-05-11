@@ -3,7 +3,21 @@
         <title>ML-DL - Category - MartinLwx&#39;s Blog</title>
         <link>https://martinlwx.github.io/en/categories/ml-dl/</link>
         <description>ML-DL - Category - MartinLwx&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Mon, 14 Apr 2025 20:44:01 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 11 May 2025 14:01:26 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+    <title>Transformer architecture variation: RMSNorm</title>
+    <link>https://martinlwx.github.io/en/rmsnorm-in-a-nutshell/</link>
+    <pubDate>Sun, 11 May 2025 14:01:26 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/rmsnorm-in-a-nutshell/</guid>
+    <description><![CDATA[<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>It&rsquo;s been 8 years since the famous transformer architecture was first proposed. You might have noticed that some modifications to the original design - for instance, most large language models (LLMs) now use RMSNorm<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> instead of LayerNorm. Today I will briefly introduce RMSNorm, but first, let&rsquo;s recap LayerNorm.</p>
+<h2 id="layernorm-recap" class="headerLink">
+    <a href="#layernorm-recap" class="header-mark" aria-label="Header mark for 'LayerNorm Recap'"></a>LayerNorm Recap</h2><p>$$
+\mathbf y=\frac{\mathbf x-E[\mathbf x]}{\sqrt{Var(\mathbf x)+\epsilon}}*\gamma+\beta
+$$</p>
+<p>The equation above shows how LayerNorm works. If we ignore the scaling factors ($\gamma, \beta$), LayerNorm&rsquo;s behavior becomes intuitive: <em>it transforms each input $\mathbf x$ into a feature vector with zero mean and unit standard deviation .</em></p>]]></description>
+</item><item>
     <title>One for all: the torch.einsum API</title>
     <link>https://martinlwx.github.io/en/the-magic-torch-einsum-api/</link>
     <pubDate>Mon, 14 Apr 2025 20:44:01 &#43;0800</pubDate><author>
@@ -138,13 +152,5 @@
 </figure>
 
 <p>Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM <em>but</em> inserting trainable modules. Today, I will introduce the LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
-</item><item>
-    <title>A trick to calculating partial derivatives in machine learning</title>
-    <link>https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/</link>
-    <pubDate>Wed, 26 Jul 2023 00:31:50 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/a-trick-to-calculating-partial-derivatives-in-ml/</guid>
-    <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>You may have difficulties when trying to calculate the partial derivatives in machine learning like me. Even though I found a good reference <a href="https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf" target="_blank" rel="noopener noreferrer">cookbook</a> that could be used to derive the gradients, I still got confused. Today, I want to share a practical technique I recently learned from this <a href="https://youtu.be/JLg1HkzDsKI" target="_blank" rel="noopener noreferrer">video</a>: <strong>when calculating partial derivatives in machine learning, you can treat everything <strong>as if</strong> it were a scalar and then make the shapes match</strong></p>]]></description>
 </item></channel>
 </rss>

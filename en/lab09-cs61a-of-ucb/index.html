@@ -281,7 +281,6 @@
   <p>A subsequence of a sequence <code>S</code> is a subset of elements from <code>S</code>, in the same order they appear in <code>S</code>. Consider the list <code>[1, 2, 3]</code>. Here are a few of it&rsquo;s subsequences <code>[]</code>, <code>[1, 3]</code>, <code>[2]</code>, and <code>[1, 2, 3]</code>.</p>
 <p>Write a function that takes in a list and returns all possible subsequences of that list. The subsequences should be returned as a list of lists, where each nested list is a subsequence of the original input.</p>
 <p>In order to accomplish this, you might first want to write a function <code>insert_into_all</code> that takes an item and a list of lists, adds the item to the beginning of each nested list, and returns the resulting list.</p>
-
 </blockquote><p>This problem requires us to write a function which can return all possible subsequences of its input.</p>
 <p>The hint says that we should implement the <code>insert_into_all</code> function first. We can do this by a simple list comprehension.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -497,7 +496,6 @@
 <p>This time we have another condition: we only want the subsequences for which consecutive elements are <em>nondecreasing</em>. For example, <code>[1, 3, 2]</code> is a subsequence of <code>[1, 3, 2, 4]</code>, but since 2 &lt; 3, this subsequence would <em>not</em> be included in our result.</p>
 <p><strong>Fill in the blanks</strong> to complete the implementation of the <code>non_decrease_subseqs</code> function. You may assume that the input list contains no negative elements.</p>
 <p>You may use the provided helper function <code>insert_into_all</code>, which takes in an <code>item</code> and a list of lists and inserts the <code>item</code> to the front of each list.</p>
-
 </blockquote><p>In Q1, we wrote the function that can return all the possible subsequences. Now Q2 puts forward higher requirements.</p>
 <p>This hint says that we <em>may</em> use the <code>insert_into_all</code> function, so let&rsquo;s ponder on a critical question: what should we pay attention to when calling this function? By definition, we know that all subsequences of the rest part of the input should be non-decreasing. Now we figure out the answer - the first element should be less or equal to the first element of each subsequence. What if it is not true? We can simply remove it.</p>
 <p>Now let&rsquo;s check the <code>subseq_helper</code> function, the meaning of the <code>prev</code> argument becomes clearer. It represents the minimum allowed value of all subsequences.</p>
@@ -616,7 +614,6 @@
   <p>A <strong>full binary tree</strong> is a tree where each node has either 2 branches or 0 branches, but never 1 branch.</p>
 <p>Write a function which returns the number of unique full binary tree structures that have exactly n leaves.</p>
 <p>For those interested in combinatorics, this problem does have a <a href="http://en.wikipedia.org/wiki/Catalan_number" target="_blank" rel="noopener noreferrer">closed form solution</a>):</p>
-
 </blockquote><p>The answer is the Catalan number. So we need to write a function to calculate the ith Catalan number. As for why it is a catalan number, I can barely understand this. I found the simple explanation: the subtrees of a full binary tree must also be full binary trees. Assuming that we have <code>1</code> leaf node in the left subtree, then we have <code>n - 1</code> leaf nodes in the right subtree. Then there are <code>f(1) * f(n - 1)</code> possibilities. Similarly, we need to calculate <code>f(2) * f(n - 2)</code> &hellip;</p>
 <p>ps: The definition of a full binary tree here is not strict. Actually, it means all the degrees of nodes in the tree should be either 0 or 2.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -731,7 +728,6 @@
   <p>Implement <code>merge(incr_a, incr_b)</code>, which takes two iterables <code>incr_a</code> and <code>incr_b</code> whose elements are ordered. <code>merge</code> yields elements from <code>incr_a</code> and <code>incr_b</code> in sorted order, eliminating repetition. You may assume <code>incr_a</code>and <code>incr_b</code> themselves do not contain repeats, and that none of the elements of either are <code>None</code>. You may <strong>not</strong>assume that the iterables are finite; either may produce an infinite stream of results.</p>
 <p>You will probably find it helpful to use the two-argument version of the built-in <code>next</code> function: <code>next(incr, v)</code> is the same as <code>next(incr)</code>, except that instead of raising <code>StopIteration</code> when <code>incr</code> runs out of elements, it returns <code>v</code>.</p>
 <p>See the doctest for examples of behavior.</p>
-
 </blockquote><p>What the <code>merge</code> do is merging two iterable objects. It can be assumed that the two iterable objects have no duplicate elements individually, and none of the elements is <code>None</code>. Because we can&rsquo;t assume that the two iterable objects are finite, we can&rsquo;t solve this in a brute-force way(Merge them and sort and use <code>set</code> to move duplicates).</p>
 <p>The procedure is:</p>
 <ol>
@@ -879,7 +875,6 @@
 <blockquote>
   <p><strong>Hint:</strong> You can call the <code>str</code> function on an integer to get a string representation of the integer. You might find this function useful when implementing the <code>__repr__</code> and <code>__str__</code> methods.</p>
 <p><strong>Hint:</strong> You can alternatively use <a href="https://realpython.com/python-f-strings/" target="_blank" rel="noopener noreferrer">fstrings</a> to implement the <code>__repr__</code> and <code>__str__</code> methods cleanly.</p>
-
 </blockquote>
 </blockquote><p>The <code>Account</code> should be able to:</p>
 <ol>
@@ -1135,7 +1130,6 @@
 </span></span><span class="line"><span class="cl">[1, 2, 10, 11, 12, 13, 6]</span></span></code></pre>
 </div>
 <p>Additionally, recall that the starting and ending indices for a slice can be left out and Python will use a default value. <code>lst[i:]</code> is the same as <code>lst[i:len(lst)]</code>, and <code>lst[:j]</code> is the same as <code>lst[0:j]</code>.</p>
-
 </blockquote>
 </blockquote><p>It has provided us with some code that can exchange elements. All we have to do is to make <code>m</code> and <code>n</code> stop in right place. We need to make sure that the <code>m</code> and <code>n</code> are leal indices.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -1256,7 +1250,6 @@
 <p>To interleave two sequences <code>s0</code> and <code>s1</code> is to create a new sequence such that the new sequence contains (in this order) the first element of <code>s0</code>, the first element of <code>s1</code>, the second element of <code>s0</code>, the second element of <code>s1</code>, and so on. If the two lists are not the same length, then the leftover elements of the longer list should still appear at the end.</p>
 <blockquote>
   <p><strong>Note:</strong> If you&rsquo;re running into an issue where the special heart / diamond / spades / clubs symbols are erroring in the doctests, feel free to copy paste the below doctests into your file as these don&rsquo;t use the special characters and should not give an &ldquo;illegal multibyte sequence&rdquo; error.</p>
-
 </blockquote>
 </blockquote><p>This problem requires us to implement the <code>shuffle</code> function. For example, <code>[0, 1, 2, 3, 4, 5] = [0, 3, 1, 4, 2, 5]</code>.</p>
 <p>The key: the relationship between the indices - <code>[0, 1, ..., len(cards) // 2, len(cards) // 2 + 1, ...]</code>. You can find that the indices of the elements in the corresponding positions of the first half and the second half differ by <code>len(cards) // 2</code></p>
@@ -1468,7 +1461,6 @@
       tw-scrollbar-thin
       "><span class="line"><span class="cl">raise IndexError(&#39;Out of bounds!&#39;)</span></span></code></pre>
 </div>
-
 </blockquote>
 </blockquote><p>It is strange that if we insert a new node(the index = 0), we won&rsquo;t pass the <code>link is other_link</code> test(because we have changed the head of the link). So I change my way to insert: I make a copy of the current node and then change the value of the origin node.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -1589,7 +1581,6 @@
   <p>A linked list that contains one or more linked lists as elements is called a <em>deep</em> linked list. Write a function <code>deep_len</code> that takes in a (possibly deep) linked list and returns the <em>deep length</em> of that linked list. The deep length of a linked list is the total number of non-link elements in the list, as well as the total number of elements contained in all contained lists. See the function&rsquo;s doctests for examples of the deep length of linked lists.</p>
 <blockquote>
   <p><strong>Hint:</strong> Use <code>isinstance</code> to check if something is an instance of an object.</p>
-
 </blockquote>
 </blockquote><p>Deep Linked List Length is a nested list. We need to calculate how many nodes are in it. To solve the problem of the <strong>nested</strong> linklist, we can solve it recursively.</p>
 <p>The base case is an empty linklist or it is not a linklist. Otherwise, we will check the <code>lnk.first</code>(it may be a linklist) and the <code>lnk.rest</code></p>
@@ -1802,7 +1793,6 @@
 </span></span><span class="line"><span class="cl">&gt;&gt;&gt; &#39;cs &#39; + str(61) + &#39;a&#39;
 </span></span><span class="line"><span class="cl">&#39;cs 61a&#39;</span></span></code></pre>
 </div>
-
 </blockquote><p>The format:  <code>front + the value of the current node + mid + the string of lnk.rest + back</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1913,7 +1903,6 @@
 <h3 id="q11-long-paths" class="headerLink">
     <a href="#q11-long-paths" class="header-mark" aria-label="Header mark for 'Q11: Long Paths'"></a>Q11: Long Paths</h3><blockquote>
   <p>Implement <code>long_paths</code>, which returns a list of all <em>paths</em> in a tree with length at least <code>n</code>. A path in a tree is a list of node labels that starts with the root and ends at a leaf. Each subsequent element must be from a label of a branch of the previous value&rsquo;s node. The <em>length</em> of a path is the number of edges in the path (i.e. one less than the number of nodes in the path). Paths are ordered in the output list from left to right in the tree. See the doctests for some examples.</p>
-
 </blockquote><p>We need to return a nested list, each one of them represents a path with a length at least <code>n</code>. Notice that the path must end in a leaf node.</p>
 <p>Actually, it is a classical problem that can be solved by recursion and backtrace. The skeleton is like:</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -2189,7 +2178,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

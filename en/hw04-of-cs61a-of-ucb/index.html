@@ -268,7 +268,6 @@
 <h3 id="q2-weights" class="headerLink">
     <a href="#q2-weights" class="header-mark" aria-label="Header mark for 'Q2: Weights'"></a>Q2: Weights</h3><blockquote>
   <p>Implement the <code>planet</code> data abstraction by completing the <code>planet</code> constructor and the <code>size</code> selector so that a planet is represented using a two-element list where the first element is the string <code>'planet'</code> and the second element is its size.</p>
-
 </blockquote><p>From the description, we can know what is <code>planet</code>. It is a <code>['planet', size]</code>. Then we can take a look at the <code>mobile</code> function, the solution is quite similar.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -383,7 +382,6 @@
 <li>Each of the mobiles hanging at the end of its arms is balanced.</li>
 </ol>
 <p>Planets themselves are balanced, as there is nothing hanging off of them.</p>
-
 </blockquote><p>This problem is a little tricky. We need to solve this problem recursively. We can call a mobile is balanced if:</p>
 <ol>
 <li>It is a <code>planet</code>. THE BASE CASE!!</li>
@@ -518,7 +516,6 @@
 <h3 id="q4-totals" class="headerLink">
     <a href="#q4-totals" class="header-mark" aria-label="Header mark for 'Q4: Totals'"></a>Q4: Totals</h3><blockquote>
   <p>Implement <code>totals_tree</code>, which takes in a <code>mobile</code> or <code>planet</code> and returns a <code>tree</code> whose root is the total weight of the input. For a <code>planet</code>, <code>totals_tree</code> should return a leaf. For a <code>mobile</code>, <code>totals_tree</code> should return a tree whose label is that <code>mobile</code>&rsquo;s total weight, and whose branches are <code>totals_tree</code>s for the ends of its arms. As a reminder, the description of the tree data abstraction can be found <a href="http://composingprograms.com/pages/23-sequences.html#trees" target="_blank" rel="noopener noreferrer">here</a>.</p>
-
 </blockquote><p>What we want to do is convert the <code>mobile</code> into a <code>tree</code>. The base case is to make a leaf when we encounter the <code>planet</code>, otherwise, we make a sub-tree instead.</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -654,7 +651,6 @@
     <a href="#q5-replace-loki-at-leaf" class="header-mark" aria-label="Header mark for 'Q5: Replace Loki at Leaf'"></a>Q5: Replace Loki at Leaf</h3><blockquote>
   <p>Define <code>replace_loki_at_leaf</code>, which takes a tree <code>t</code> and a value <code>lokis_replacement</code>. <code>replace_loki_at_leaf</code> returns a new tree that&rsquo;s the same as <code>t</code> except that every leaf label equal to <code>&quot;loki&quot;</code> has been replaced with <code>lokis_replacement</code>.</p>
 <p>If you want to learn about the Norse mythology referenced in this problem, you can read about it <a href="https://en.wikipedia.org/wiki/Yggdrasil" target="_blank" rel="noopener noreferrer">here</a>.</p>
-
 </blockquote><p>The base case is the <code>leaf</code> node. We need to check if its label is equal to &rsquo;loki&rsquo;. If it is the truth, we will make a new leaf, otherwise, we will just return the original leaf.</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -788,7 +784,6 @@
 <h3 id="q6-has-path" class="headerLink">
     <a href="#q6-has-path" class="header-mark" aria-label="Header mark for 'Q6: Has Path'"></a>Q6: Has Path</h3><blockquote>
   <p>Write a function <code>has_path</code> that takes in a tree <code>t</code> and a string <code>word</code>. It returns <code>True</code> if there is a path that starts from the root where the entries along the path spell out the <code>word</code>, and <code>False</code> otherwise. (This data structure is called a trie, and it has a lot of cool applications, such as autocomplete). You may assume that every node&rsquo;s <code>label</code>is exactly one character.</p>
-
 </blockquote><ol>
 <li>What is the base case ? We need to memorize the current word along the path. For example, we got <code>label(t)</code> when we start from the root of the tree(<code>h</code>). When we pay a visit to the <code>tree('i')</code>(the first branch), the current word will be <code>h</code> + <code>i</code> = <code>hi</code>. So we need to define a <code>helper</code> function. The base case is either the current word is equal to the target(<code>word</code>) or the current word is not in target(<code>word</code>), which means we don&rsquo;t need to go deeper into this tree</li>
 <li>How to break down the current problem into simpler ones ? We use <code>any</code> in python to check if any of the branches contain the word we want.</li>
@@ -932,7 +927,6 @@
     <a href="#q7-preorder" class="header-mark" aria-label="Header mark for 'Q7: Preorder'"></a>Q7: Preorder</h3><blockquote>
   <p>Define the function <code>preorder</code>, which takes in a tree as an argument and returns a list of all the entries in the tree in the order that <code>print_tree</code> would print them.</p>
 <p>The following diagram shows the order that the nodes would get printed, with the arrows representing function calls.</p>
-
 </blockquote><p>The preorder function is one of the basic methods when we want to visit every node in a tree. We need to memorize the label of the <em>root</em> before we visit its sub-tree.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1055,10 +1049,8 @@
 <p><strong>Introduction.</strong> Alyssa P. Hacker is designing a system to help people solve engineering problems. One feature she wants to provide in her system is the ability to manipulate inexact quantities (such as measurements from physical devices) with known precision, so that when computations are done with such approximate quantities the results will be numbers of known precision. For example, if a measured quantity x lies between two numbers a and b, Alyssa would like her system to use this range in computations involving x.</p>
 <p>Alyssa&rsquo;s idea is to implement interval arithmetic as a set of arithmetic operations for combining &ldquo;intervals&rdquo; (objects that represent the range of possible values of an inexact quantity). The result of adding, subracting, multiplying, or dividing two intervals is also an interval, one that represents the range of the result.</p>
 <p>Alyssa suggests the existence of an abstraction called an &ldquo;interval&rdquo; that has two endpoints: a lower bound and an upper bound. She also presumes that, given the endpoints of an interval, she can create the interval using data abstraction. Using this constructor and the appropriate selectors, she defines the following operations:</p>
-
 </blockquote><blockquote>
   <p>Alyssa&rsquo;s program is incomplete because she has not specified the implementation of the interval abstraction. She has implemented the constructor for you; fill in the implementation of the selectors.</p>
-
 </blockquote><p>The calculation system of this question is actually used to calculate the resistance. We know that there will be tolerance in the resistor (such as $\pm5%$), so the real resistance value should be in an interval. This is the <code> interval</code> indicates. The <code>interval</code> is just a <code>list</code> with size 2. To get the lower bound and the upper bound. We just need to return <code>x[0]</code> or <code>x[1]</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1276,7 +1268,6 @@
 </span></span><span class="line"><span class="cl">    <span class="n">p4</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">)]</span></span></span></code></pre>
 </div>
-
 </blockquote><p>There are many data abstraction violations in <code>mul_interval</code>. We can&rsquo;t use <code>x[0]</code> or <code>x[1]</code> to get the lower bound and the upper bound. We should use the function <code>lower_bound()</code> and the <code>upper_bound()</code> instead. In addition, we can&rsquo;t use <code>[...]</code> to make an interval. That&rsquo;s a violation too!</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1384,7 +1375,6 @@
 <h4 id="interval-subtraction" class="headerLink">
     <a href="#interval-subtraction" class="header-mark" aria-label="Header mark for 'Interval Subtraction'"></a>Interval Subtraction</h4><blockquote>
   <p>Using a similar approach as <code>mul_interval</code> and <code>add_interval</code>, define a subtraction function for intervals. If you find yourself repeating code, see if you can reuse functions that have already been implemented.</p>
-
 </blockquote><p>This solution is almost identical to the <code>mul_interval</code>. If you are using vim as your editor, you just need to copy the content of <code>mul_interval</code> and use visual mode to select <code>*</code> then press <code>r-</code> to substitute them.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1492,7 +1482,6 @@
 <h4 id="interval-division" class="headerLink">
     <a href="#interval-division" class="header-mark" aria-label="Header mark for 'Interval Division'"></a>Interval Division</h4><blockquote>
   <p>Alyssa implements division below by multiplying by the reciprocal of <code>y</code>. A systems programmer looks over Alyssa&rsquo;s shoulder and comments that it is not clear what it means to divide by an interval that spans zero. Add an <code>assert</code>statement to Alyssa&rsquo;s code to ensure that no such interval is used as a divisor:</p>
-
 </blockquote><p>To avoid the divisor span zero, all we have to do is check if <code>lower_bound(y) &gt; 0</code> &#x1f917;</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1895,7 +1884,6 @@
 </div>
 <p>Lem points out that Alyssa&rsquo;s program gives different answers for the two ways of computing. Find two intervals <code>r1</code> and <code>r2</code> that demonstrate the difference in behavior between <code>par1</code> and <code>par2</code> when passed into each of the two functions.</p>
 <p>Demonstrate that Lem is right. Investigate the behavior of the system on a variety of arithmetic expressions. Make some intervals <code>r1</code> and <code>r2</code>, and show that <code>par1</code> and <code>par2</code> can give different results.</p>
-
 </blockquote><p>If you want to understand the mechanism why this happens, you may check this <a href="http://jots-jottings.blogspot.com/2011/09/sicp-exercise-214-broken-intervals.html" target="_blank" rel="noopener noreferrer">link</a></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -2060,7 +2048,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

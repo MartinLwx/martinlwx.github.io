@@ -265,12 +265,10 @@
     <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>Recently, I am reading a book called <a href="https://craftinginterpreters.com/" target="_blank" rel="noopener noreferrer"><em>Crafting interpreters</em></a> written by Robert Nystrom. In the original book, a Tree-walker interpreter jlox was implemented in Java. And I am trying to rewrite in Python - <a href="https://github.com/MartinLwx/pylox" target="_blank" rel="noopener noreferrer">pylox</a>. I highly recommend it👍. At this moment, I suddenly remembered that there were a few small issues with the Scheme interpreter for CS61A that I had not resolved after finishing it a year ago, which kept it in an unfinished state. So today I opened the project and intended to run through it from beginning to end and talk about the ideas.</p>
 <blockquote>
   <p>Note: I only quote <strong>part</strong> of the original problem description. To make the post more compact, I also omit the irrelevant code :)</p>
-
 </blockquote><h2 id="part-1-the-evaluator" class="headerLink">
     <a href="#part-1-the-evaluator" class="header-mark" aria-label="Header mark for 'Part 1. The Evaluator'"></a>Part 1. The Evaluator</h2><h3 id="problem-1" class="headerLink">
     <a href="#problem-1" class="header-mark" aria-label="Header mark for 'Problem 1'"></a>Problem 1</h3><blockquote>
   <p>Implement the <code>define</code> and <code>lookup</code> methods of the Frame class&hellip;<code>bindings</code> is a dictionary representing the bindings in the frame&hellip;<code>parent</code> is the parent Frame instance&hellip;The <em>environment</em> for a <code>Frame</code> instance consists of that frame, its parent frame, and all its ancestor frames, including the Global Frame.</p>
-
 </blockquote><p>Problem 1 is trivial in my opinion. To implement the <code>define</code> function, you just need to save the <code>{ symbol: value }</code> in <code>self.bindings</code>. As for the <code>lookup</code> function, we can write a iterative solution or recursive one. The iterative solution is more intuitive though.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -390,7 +388,6 @@
 <h3 id="problem-2" class="headerLink">
     <a href="#problem-2" class="header-mark" aria-label="Header mark for 'Problem 2'"></a>Problem 2</h3><blockquote>
   <p>To be able to call built-in procedures, such as <code>+</code>, you need to complete the <code>BuiltinProcedure</code> case within the <code>scheme_apply</code> function in <code>scheme_eval_apply.py</code>. Built-in procedures are applied by calling a corresponding Python function that implements the procedure.</p>
-
 </blockquote><p>The full problem description elaborates on the procedure of implementing <code>scheme_apply</code> function. Notice that you should distinguish <code>nil</code> and <code>None</code>. This subtle bug may cause you other correct solutions fail to pass the test suite.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -511,7 +508,6 @@
 <h3 id="problem-3" class="headerLink">
     <a href="#problem-3" class="header-mark" aria-label="Header mark for 'Problem 3'"></a>Problem 3</h3><blockquote>
   <p>Implement the missing part of <code>scheme_eval</code>, which evaluates a call expression&hellip;You&rsquo;ll have to recursively call <code>scheme_eval</code> in the first two steps&hellip;The <code>map</code> method of <code>Pair</code> returns a new Scheme list constructed by applying a <em>one-argument function</em> to every item in a Scheme list&hellip;Important: do not mutate the passed-in <code>expr</code>. That would change a program as it&rsquo;s being evaluated, creating strange and incorrect effects.</p>
-
 </blockquote><p>Is&rsquo; quite straightforward to implement <code>scheme_eval</code>. The main obstacle in the way may comes from the requirement that we need to pass one-argument function to <code>rest.map</code>. However, the <code>scheme_eval</code> has two arguments(let&rsquo;s ignore the optional part). To make the <code>scheme_eval</code> a one-argument function, we may write a simple <code>lambda</code> to wrapper it, or we can use the <code>partial</code> function in <code>functools</code> packages to <em>fix</em> arguments for a specefic function. I choose to use the latter solution.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -622,7 +618,6 @@
 <h3 id="problem-4" class="headerLink">
     <a href="#problem-4" class="header-mark" aria-label="Header mark for 'Problem 4'"></a>Problem 4</h3><blockquote>
   <p>The type of the first operand tells us what is being defined&hellip;implement just the first part, which evaluates the second operand to obtain a value and binds the first operand, a symbol, to that value. Then, <code>do_define_form</code> returns the symbol that was bound.</p>
-
 </blockquote><p>In problem 1, we have implemented the <code>define</code> method, which can bind value to a symbol. All we need to do is pass the correct arguments to this method. To access the <code>some_val</code> part in <code>(define a some_val)</code>, we can use the <code>.rest.first</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -732,7 +727,6 @@
 <h3 id="problem-5" class="headerLink">
     <a href="#problem-5" class="header-mark" aria-label="Header mark for 'Problem 5'"></a>Problem 5</h3><blockquote>
   <p>Implement the <code>do_quote_form</code> function in <code>scheme_forms.py</code> so that it simply returns the unevaluated operand of the <code>(quote ...)</code> expression.</p>
-
 </blockquote><p><code>validate_form(expressions, 1, 1)</code> ensures that the <code>expressions</code> is <code>'...</code>. And we just need to return it.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -836,7 +830,6 @@
     <a href="#part-2-procedures" class="header-mark" aria-label="Header mark for 'Part 2. Procedures'"></a>Part 2. Procedures</h2><h3 id="problem-6" class="headerLink">
     <a href="#problem-6" class="header-mark" aria-label="Header mark for 'Problem 6'"></a>Problem 6</h3><blockquote>
   <p>Change the <code>eval_all</code> function in <code>scheme_eval_apply.py</code> (which is called from <code>do_begin_form</code> in <code>scheme_forms.py</code>) to complete the implementation of the <code>begin</code> special form (spec). A <code>begin</code> expression is evaluated by evaluating all sub-expressions in order. The value of the <code>begin</code> expression is the value of the final sub-expression.</p>
-
 </blockquote><p>Let&rsquo;s write the recursive solution:</p>
 <ol>
 <li>Check if <code>expressions</code> is <code>nil</code>, and return <code>None</code> if it holds</li>
@@ -948,7 +941,6 @@
 <h3 id="problem-7" class="headerLink">
     <a href="#problem-7" class="header-mark" aria-label="Header mark for 'Problem 7'"></a>Problem 7</h3><blockquote>
   <p>Implement the <code>do_lambda_form</code> function (spec), which creates and returns a <code>LambdaProcedure</code> instance</p>
-
 </blockquote><p>By reading the problem description of Problem 6, we know how to construct a <code>LambdaProcedure</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1053,7 +1045,6 @@
 <h3 id="problem-8" class="headerLink">
     <a href="#problem-8" class="header-mark" aria-label="Header mark for 'Problem 8'"></a>Problem 8</h3><blockquote>
   <p>This method takes in two arguments: <code>formals</code>, which is a Scheme list of symbols, and <code>vals</code>, which is a Scheme list of values. It should return a new child frame, binding the formal parameters to the values.</p>
-
 </blockquote><p>The full problem description is well written and this problem us trivial.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1164,7 +1155,6 @@
 <h3 id="problem-9" class="headerLink">
     <a href="#problem-9" class="header-mark" aria-label="Header mark for 'Problem 9'"></a>Problem 9</h3><blockquote>
   <p>You should first create a new <code>Frame</code> instance using the <code>make_child_frame</code> method of the appropriate parent frame, binding formal parameters to argument values. Then, evaluate each of the expressions of the body of the procedure using <code>eval_all</code> within this new frame.</p>
-
 </blockquote><p>In this problem, we can use the <code>make_child_frame</code> implemented in Problem 8.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1270,7 +1260,6 @@
 <h3 id="problem-10" class="headerLink">
     <a href="#problem-10" class="header-mark" aria-label="Header mark for 'Problem 10'"></a>Problem 10</h3><blockquote>
   <p>Modify the <code>do_define_form</code> function in <code>scheme_forms.py</code> so that it correctly handles <code>define (...) ...)</code> expressions</p>
-
 </blockquote><p>Use <code>do_lambda_form</code> or just call the constructer of <code>LambdaProcedure</code>.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1383,7 +1372,6 @@
 <h3 id="problem-11" class="headerLink">
     <a href="#problem-11" class="header-mark" aria-label="Header mark for 'Problem 11'"></a>Problem 11</h3><blockquote>
   <p>Implement <code>do_mu_form</code> in <code>scheme_forms.py</code> to evaluate the <code>mu</code> special form. A <code>mu</code> expression evaluates to a <code>MuProcedure</code>. Most of the <code>MuProcedure</code> class (defined in <code>scheme_classes.py</code>) has been provided for you.</p>
-
 </blockquote><p>The key to this problem is understanding dynamic scoping. We can make a child frame and evaluate the <code>MuProcedure</code> and it should work as expected.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1495,7 +1483,6 @@
     <a href="#part-3-special-forms" class="header-mark" aria-label="Header mark for 'Part 3. Special Forms'"></a>Part 3. Special Forms</h2><h3 id="problem-12" class="headerLink">
     <a href="#problem-12" class="header-mark" aria-label="Header mark for 'Problem 12'"></a>Problem 12</h3><blockquote>
   <p>Implement <code>do_and_form</code> and <code>do_or_form</code> so that <code>and</code> and <code>or</code> expressions are evaluated correctly. The logical forms <code>and</code> and <code>or</code> are <em>short-circuiting</em></p>
-
 </blockquote><p>I write <code>do_and_form</code> and <code>do_or_form</code> recursively:</p>
 <ul>
 <li><code>do_and_form</code>: the base case is <code>nil</code> and we should return <code>True</code>. Otherwise, we check each one and return immediately if we found <em>False</em></li>
@@ -1624,7 +1611,6 @@
 <h3 id="problem-13" class="headerLink">
     <a href="#problem-13" class="header-mark" aria-label="Header mark for 'Problem 13'"></a>Problem 13</h3><blockquote>
   <p>Fill in the missing parts of <code>do_cond_form</code> so that it correctly implements <code>cond</code>, returning the value of the first result sub-expression corresponding to a true predicate, or the result sub-expression corresponding to <code>else</code>.</p>
-
 </blockquote><p>Just do as the problem description says.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1732,7 +1718,6 @@
 <h3 id="problem-14" class="headerLink">
     <a href="#problem-14" class="header-mark" aria-label="Header mark for 'Problem 14'"></a>Problem 14</h3><blockquote>
   <p>Implement <code>make_let_frame</code> in <code>scheme_forms.py</code>, which returns a child frame of <code>env</code> that binds the symbol in each element of <code>bindings</code> to the value of its corresponding expression. The <code>bindings</code> Scheme list contains pairs that each contain a symbol and a corresponding expression.</p>
-
 </blockquote><p>Check each <code>binding</code> and use the <code>Pair</code> to collection the <code>names</code> and <code>values</code>.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1849,7 +1834,6 @@
 <h3 id="problem-15" class="headerLink">
     <a href="#problem-15" class="header-mark" aria-label="Header mark for 'Problem 15'"></a>Problem 15</h3><blockquote>
   <p>Implement the <code>enumerate</code> procedure, which takes in a list of values and returns a list of two-element lists, where the first element is the index of the value, and the second element is the value itself.</p>
-
 </blockquote><p>We can implement the <code>enumerate</code> procedure recursively by writing a helper function called <code>helper</code>:</p>
 <ul>
 <li>base case: the <code>input</code> is <code>nil</code> and we just return <code>'()</code></li>
@@ -1962,7 +1946,6 @@
 <h3 id="problem-16" class="headerLink">
     <a href="#problem-16" class="header-mark" aria-label="Header mark for 'Problem 16'"></a>Problem 16</h3><blockquote>
   <p>Implement the <code>merge</code> procedure, which takes in a comparator function <code>inorder?</code> and two lists that are sorted, and combines the two lists into a single sorted list. A comparator defines an ordering by comparing two values and returning a true value if and only if the two values are ordered. Here, sorted means sorted according to the comparator</p>
-
 </blockquote><p>A classic interview problem: merge two sorted lists. We just need to compare the <em>head</em> of each list and recursively call <code>merge</code> in the right arguments form</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -2123,7 +2106,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

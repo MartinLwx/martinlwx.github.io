@@ -3,9 +3,22 @@
         <title>MartinLwx&#39;s Blog</title>
         <link>https://martinlwx.github.io/en/</link>
         <description>Welcome to my blog :)</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sat, 26 Apr 2025 17:23:49 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 11 May 2025 14:01:26 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Transformer architecture variation: RMSNorm</title>
+    <link>https://martinlwx.github.io/en/rmsnorm-in-a-nutshell/</link>
+    <pubDate>Sun, 11 May 2025 14:01:26 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/rmsnorm-in-a-nutshell/</guid>
+    <description><![CDATA[<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>It&rsquo;s been 8 years since the famous transformer architecture was first proposed. You might have noticed that some modifications to the original design - for instance, most large language models (LLMs) now use RMSNorm<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> instead of LayerNorm. Today I will briefly introduce RMSNorm, but first, let&rsquo;s recap LayerNorm.</p>
+<h2 id="layernorm-recap" class="headerLink">
+    <a href="#layernorm-recap" class="header-mark" aria-label="Header mark for 'LayerNorm Recap'"></a>LayerNorm Recap</h2><p>$$
+\mathbf y=\frac{\mathbf x-E[\mathbf x]}{\sqrt{Var(\mathbf x)+\epsilon}}*\gamma+\beta
+$$</p>
+<p>The equation above shows how LayerNorm works. If we ignore the scaling factors ($\gamma, \beta$), LayerNorm&rsquo;s behavior becomes intuitive: <em>it transforms each input $\mathbf x$ into a feature vector with zero mean and unit standard deviation .</em></p>]]></description>
+</item><item>
     <title>Kosaraju&#39;s Algorithm Explained</title>
     <link>https://martinlwx.github.io/en/kosaraju-algorithm-explained/</link>
     <pubDate>Sat, 26 Apr 2025 17:23:49 &#43;0800</pubDate><author>
@@ -178,19 +191,5 @@ $$</p>
     </div>
     <div class="details-content">
         <div class="admonition-content"><p>Note: The Three-Address Code is the basics of the Basic Block (BB), and the Basic Block is the foundation of the Control Flow Graph (CFG). Therefore, before reading this post, it&rsquo;s recommended that you first understand the Three-Address Code. You may refer to my <a href="https://martinlwx.github.io/en/three-address-code/" rel="">previous post</a></p>]]></description>
-</item><item>
-    <title>What is Three-Address Code (3AC/TAC)</title>
-    <link>https://martinlwx.github.io/en/three-address-code/</link>
-    <pubDate>Tue, 18 Feb 2025 23:13:42 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/three-address-code/</guid>
-    <description><![CDATA[<div class="details admonition info open">
-    <div class="details-summary admonition-title">
-        <span class="icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg></span>Info<span class="details-icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
-    </div>
-    <div class="details-content">
-        <div class="admonition-content"><p><strong>Further reading</strong></p>]]></description>
 </item></channel>
 </rss>

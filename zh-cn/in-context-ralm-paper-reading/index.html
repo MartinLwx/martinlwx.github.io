@@ -281,8 +281,7 @@ $$</p>
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>REALM 我之前也发过一篇论文阅读笔记，感兴趣的可以查看<a href="https://martinlwx.github.io/zh-cn/rag-realm-paper-reading/" rel="">该链接</a></p>
-</div></div></div><p>Retrieval Stride 要解决的是“Retriever 检索的频率应该如何设置”这个问题，像 REALM 一样在一开始的时候做检索（而且只做一次）当然可以，但作者提出：<em>应该固定步长就做一次检索</em>，这里的步长（用 $s$ 表示）用 token 数量来度量</p>
+        <div class="admonition-content"><p>REALM 我之前也发过一篇论文阅读笔记，感兴趣的可以查看<a href="https://martinlwx.github.io/zh-cn/rag-realm-paper-reading/" rel="">该链接</a></p></div></div></div><p>Retrieval Stride 要解决的是“Retriever 检索的频率应该如何设置”这个问题，像 REALM 一样在一开始的时候做检索（而且只做一次）当然可以，但作者提出：<em>应该固定步长就做一次检索</em>，这里的步长（用 $s$ 表示）用 token 数量来度量</p>
 <p>作者发现，<em>$s$ 越小，模型生成的文本越好，但开销也会越大，这里存在 trade-off</em>。每隔 $s$ 个 token 的情况做一次检索的情况下，带有 RAG 的 LLM 的文本生成可以用公式表示为</p>
 <p>$$
 P_\theta(x_1,x_2,…,x_L)=\prod_{j=0}^{n_s-1}\prod_{i=1}^{s} P_\theta\big(x_{s\cdot j +i}|[R_{\mathcal C}(x_{\le s\cdot j});x_{&lt;(s\cdot j + i)}]\big)
@@ -306,8 +305,7 @@ $$</p>
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>$l$ 应该等于 $s$ 吗？作者发现 $s=l$ 的话，<em>效果会不好</em></p>
-</div></div></div><h3 id="reranking" class="headerLink">
+        <div class="admonition-content"><p>$l$ 应该等于 $s$ 吗？作者发现 $s=l$ 的话，<em>效果会不好</em></p></div></div></div><h3 id="reranking" class="headerLink">
     <a href="#reranking" class="header-mark" aria-label="Header mark for 'Reranking'"></a>Reranking</h3><p>Retriever 会对语料库中的文档都计算相关性，一般<em>只使用最相关的</em>文档，但直接根据相关性计算出来的就一定最好吗？是否可以考虑返回 Top-k 个然后重新做<em>排序操作</em>？</p>
 <p>作者研究了 2 种排序方法</p>
 <p>第一种，直接用 LLM 判断，假设要对 k 个文档排序，那么对于每一个文档 $d_i$：取 $x_{s\cdot j}$ 的最后 $s&rsquo;$ 个 token 作为预测目标，并从 LLM 输入中去掉这 $s&rsquo;$ 个 token。文档 $d_i$ 会被添加到 LLM 输入的前面，然后再让 LLM 预测。<em>最好的文档就是会让这 $s&rsquo;$ 个 token 出现频率最高的</em></p>
@@ -321,8 +319,7 @@ $$</p>
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>第一种方法里面用于排序的 LLM <em>并没有要求</em>要和负责生成文本的 LLM 一样。因此出于性能的考虑，<em>负责排序的 LLM 完全可以用更小的模型</em></p>
-</div></div></div><p>第二种，<em>直接训练一个 reranker</em>，作者称其为 <em>Predictive Reranking</em></p>
+        <div class="admonition-content"><p>第一种方法里面用于排序的 LLM <em>并没有要求</em>要和负责生成文本的 LLM 一样。因此出于性能的考虑，<em>负责排序的 LLM 完全可以用更小的模型</em></p></div></div></div><p>第二种，<em>直接训练一个 reranker</em>，作者称其为 <em>Predictive Reranking</em></p>
 <ul>
 <li>Reranker 输入
 <ul>
@@ -345,8 +342,7 @@ $$</p>
 <li>让 LLM 模型用 $x_{\le s\cdot j}$ 生成 $s$ 个 token（用 $y$ 表示），注意这里的 $s$ 是步长</li>
 <li>让 Retriever 用最后 $l$ 个 token 检索到 k 个文档</li>
 <li>让 LLM 根据 $[d_i; x_{\le s\cdot j}]$ 预测 $y$，计算概率，就得到了 label</li>
-</ol>
-</div></div></div><h2 id="总结" class="headerLink">
+</ol></div></div></div><h2 id="总结" class="headerLink">
     <a href="#%e6%80%bb%e7%bb%93" class="header-mark" aria-label="Header mark for '总结'"></a>总结</h2><p>我将本文的研究结论汇总成一张表格，如下所示</p>
 
 <div class="table-wrapper">
@@ -454,7 +450,7 @@ $$</p>
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

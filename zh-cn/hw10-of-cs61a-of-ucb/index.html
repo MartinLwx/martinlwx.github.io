@@ -244,7 +244,6 @@
 <p>For example, <code>r&quot;apples&quot;</code> would match exactly the phrase &ldquo;apples&rdquo; in an input. If we wanted our pattern from before to match &ldquo;oranges&rdquo; as well, we could expand our <code>rstring</code> to do so using groupings and pipes: <code>r&quot;(apples)|(oranges)&quot;</code>.</p>
 <blockquote>
   <p>Hint: note that <code>group</code>s and <code>pipe</code>s are valid <code>regex</code> expressions on their own! You may need to update a previously defined expression.</p>
-
 </blockquote>
 </blockquote><p>给本来用来匹配正则表达式的 BNF 添加功能: <code>group</code> 和 <code>pipe</code>. 其实怎么实现这一写已经在描述里面给出了, 我这里就提一点: <code>group</code> 和 <code>pipe</code> 本身也是 <code>?regex</code> 的一部分, 所以要把他们加到 <code>?regex</code> 里面</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -366,7 +365,6 @@
 <li>A <strong><code>class</code></strong> expression consists of any number of <code>character</code>s or character <code>range</code>s surrounded by square brackets (<code>[]</code>).</li>
 </ol>
 <p>Note that for this question, a range may only consist of either <code>NUMBER</code>s or <code>LETTER</code>s; this means that while <code>[0-9]</code> and <code>[A-Z]</code> are valid ranges, <code>[0-Z]</code> would not be a valid range. In addition, the <code>character</code>s and <code>range</code>s in a <code>class</code> may appear in any order and any number of times. For example, <code>[ad-fc0-9]</code>, <code>[ad-f0-9c]</code>, <code>[a0-9d-fc]</code>, and <code>[0-9ad-fc]</code> are all valid classes.</p>
-
 </blockquote><p>这次要加上的功能是 <code>?-?</code> 和 <code>[]</code> 的功能, 具体怎么做同样在问题描述里面给出了. 这里讲一下注意的点:</p>
 <ul>
 <li><code>range</code> 的 <code>-</code> 左右两边要是对应的, 所以 <code>character &quot;-&quot; character</code> 这种写法是错的</li>
@@ -502,7 +500,6 @@
 </ol>
 <blockquote>
   <p>Hint: these three quantifiers share many similarities. Consider defining additional expressions in this question!</p>
-
 </blockquote>
 </blockquote><p>可以发现这三个 <code>_quant</code> 都是 <code>group</code> 或者 <code>character</code> 或者 <code>class</code>开头, 所以这里可以定义一个 <code>?tmp: class | group | character</code> 避免重复. 同时定义 <code>?quants: plus_quant | star_quant | num_quant</code>, 放在 <code>?regex</code> 里</p>
 <p>这里 <code>num_quant</code> 需要枚举下面这几种情况</p>
@@ -634,7 +631,6 @@
     <a href="#q4-size-of-dogs" class="header-mark" aria-label="Header mark for 'Q4: Size of Dogs'"></a>Q4: Size of Dogs</h3><blockquote>
   <p>The Fédération Cynologique Internationale classifies a standard poodle as over 45 cm and up to 60 cm. The <code>sizes</code> table describes this and other such classifications, where a dog must be over the <code>min</code> and less than or equal to the <code>max</code> in <code>height</code> to qualify as a <code>size</code>.</p>
 <p>Create a <code>size_of_dogs</code> table with two columns, one for each dog&rsquo;s <code>name</code> and another for its <code>size</code>.</p>
-
 </blockquote><p>要根据狗的体型大小来决定它的 <code>size</code>. 这个就是一个基本的 <code>select ... from ... where</code> 的写法. 我们这里可以把两个表连接起来得到所有可能的结果, 然后用 <code>where</code> 来选出符合条件的.</p>
 <p>注意这里用 alias 会比较简洁</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -739,7 +735,6 @@
 <h3 id="q5-by-parent-height" class="headerLink">
     <a href="#q5-by-parent-height" class="header-mark" aria-label="Header mark for 'Q5: By Parent Height'"></a>Q5: By Parent Height</h3><blockquote>
   <p>Create a table <code>by_parent_height</code> that has a column of the names of all dogs that have a <code>parent</code>, ordered by the height of the parent from tallest parent to shortest parent.</p>
-
 </blockquote><p>用 <code>ORDER BY</code> 来进行排序, 注意是降序所以用 <code>DESC</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -849,7 +844,6 @@
 <p><em>Hint</em>: First, create a helper table containing each pair of siblings. This will make comparing the sizes of siblings when constructing the main table easier.</p>
 <p><strong>Hint</strong>: If you join a table with itself, use <code>AS</code> within the <code>FROM</code> clause to give each table an alias.</p>
 <p><strong>Hint</strong>: In order to concatenate two strings into one, use the <code>||</code> operator.</p>
-
 </blockquote><p>完成了 Q5 之后这一题就很简单了.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1006,7 +1000,7 @@
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

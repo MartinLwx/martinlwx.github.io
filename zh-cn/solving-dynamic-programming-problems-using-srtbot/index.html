@@ -238,7 +238,6 @@
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>在做算法题的时候，让我头疼的经常是动态规划问题，它属于那种自己琢磨半天想不出来，但是看了答案之后会恍然大悟，下次再做的话很有可能又忘记了的一类问题。我也曾经看了很多人的题解，试图消化、吸收、应用他们的思路，但我<strong>一直</strong>找不到一个归纳得特别好的框架，似乎每个人都有自己解决动态规划的思路，将他们的思路应用在没有见过的动态规划问题的时候我总是遇到困难，而他们的方法轮<em>似乎</em>也无法让我处理所有的动态规划问题。这种寻寻觅觅对动态规划似懂非懂的状态，终于在我看完 <a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" target="_blank" rel="noopener noreferrer">MIT6.006</a> 的课程之后发生了改变，课上老师提出了解决动态规划问题的 6 个步骤——被称为 <strong>SRTBOT 框架</strong>，我发现它是<strong>如此地好用</strong>，因此我决定写下这篇博客来与大家分享🙌</p>
 <blockquote>
   <p>👉 总的来说，这篇博客更适合已经对动态规划有了初步了解但是还没有找到系统方法论人的阅读</p>
-
 </blockquote><h2 id="什么是动态规划问题" class="headerLink">
     <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92%e9%97%ae%e9%a2%98" class="header-mark" aria-label="Header mark for '什么是动态规划问题'"></a>什么是动态规划问题</h2><p>动态规划问题的两大特征：<strong>重叠子问题</strong>和<strong>最优子结构</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <ul>
@@ -248,7 +247,6 @@
 <p>前面的定义要特别注意的是「重叠」以及「子问题」，强调重叠是因为动态规划的厉害之处就在于它会记住解决过的子问题的答案，那么<strong>重叠的子问题越多，动态规划的优势更加明显</strong></p>
 <blockquote>
   <p>🤔️ 如果子问题并不重叠，那么就应该用分治法解决</p>
-
 </blockquote><p>上面是从定义的角度来谈动态规划问题的，从编程题目的角度来看，<strong>下面两大类问题一般都是要用动态规划算法</strong>：</p>
 <ul>
 <li>最优化问题：<strong>求最值 + 重叠子问题</strong></li>
@@ -256,7 +254,6 @@
 </ul>
 <blockquote>
   <p>📒 或者，根据我的个人刷题经验来说：动态规划问题一般是可以暴力解决的递归问题，但是存在大量重叠子问题因此可以对其进行优化</p>
-
 </blockquote><h2 id="srtbot-框架" class="headerLink">
     <a href="#srtbot-%e6%a1%86%e6%9e%b6" class="header-mark" aria-label="Header mark for 'SRTBOT 框架'"></a>SRTBOT 框架</h2><p>SRTBOT 是 6 个步骤的首字母缩写，分别是<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>：</p>
 <ul>
@@ -302,12 +299,10 @@
 </ul>
 <blockquote>
   <p>📒 进阶：掌握了上面的一般思路之后，其实已经能够解决很多动态规划问题，但你有时候会发现你定义的子问题<strong>不够精确</strong>，导致难以无法关联子问题，<strong>当你在关联子问题有困难的时候总是可以尝试给你定义的子问题加上约束，或者是对子问题进行扩展</strong>。在 MIT 6.006 中称为 Subproblem Constraints and Expansion</p>
-
 </blockquote><p>对子问题进行扩展会更为常见一些，一般此时就是将定义的 <code>dp[i]</code> 变成 <code>dp[i][j]</code> 这样的形式，<strong>同时修改你的子问题定义</strong>。<em>举例来说，在 <a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener noreferrer">198. 打家劫舍</a> 中可以考虑额外引入一个状态记住是否偷了房屋 <code>i</code></em></p>
 <p>也稍微提一下对子问题的定义加上限制是什么意思，<em>比如我们定义 <code>dp[i]</code> 是输入为 <code>A[:i+1]</code> 的解，假设每个 <code>A[i]</code> 存在选中与不选中两个状态，那么可以考虑将 <code>dp[i]</code> 定义为 输入为 <code>A[:i+1]</code> <strong>而且 <code>A[i]</code> 一定是选中状态</strong>的时候的解</em>（这么说可能有点抽象，待我之后找到可以这样处理的问题后贴个链接在这）</p>
 <blockquote>
   <p>📒 你会发现，<strong>定义子问题的时候我们根本不会去思考要如何计算出来</strong>，千万不要在定义子问题的时候就开始想要怎么计算出这个值，当你使用 SRTBOT 框架分析到最后，你就自然而然知道怎么计算了~</p>
-
 </blockquote><h3 id="relate-subproblems" class="headerLink">
     <a href="#relate-subproblems" class="header-mark" aria-label="Header mark for '递归式关联子问题（Relate subproblem solutions recursively）'"></a>递归式关联子问题（Relate subproblem solutions recursively）</h3><p>试着提出一个问题——如果你知道这个问题的答案，你就能够将这个大问题分解为更小的子问题。可能用数学公式表述会更明显一点：</p>
 <p>$$
@@ -317,10 +312,8 @@ $$
 <p><strong>上面提出的问题的答案一般就是“局部暴力枚举”</strong>，这也是我们关联不同子问题的主要手段。方法是：看问题描述，从中归纳出允许的“决策”，<strong>“决策”会导致我们从一个子问题转移到另外一个子问题</strong>。思考的时候注意力放在 <code>nums[i]</code>、更小的子问题 <code>dp[j_k]</code> 和可行的决策这三者上</p>
 <blockquote>
   <p>👻 如果一开始做动态规划想不出来也没关系，这东西熟练了之后就比较容易想到不同子问题如何通过不同的决策关联起来</p>
-
 </blockquote><blockquote>
   <p>🤔️ 我发现，在想办法递归关联子问题的时候，画出依赖图总是能给我很大帮助（结点为子问题，边为“决策”），依赖图不仅清晰展示了子问题之间的关联方式，还可以验证有重叠子问题出现</p>
-
 </blockquote><div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     code-block-title 
@@ -528,16 +521,13 @@ $$
 </div>
 <blockquote>
   <p>🤔️ 可以通过这个例子理解“局部暴力枚举”中的“局部”的含义：我们只考虑做一次决策，<em>比如上面爬楼梯，每次爬一个台阶最后连续爬 <code>n</code> 个台阶 关联 <code>dp[i]</code> 和 <code>dp[i - n]</code> 这种方式就不是局部</em></p>
-
 </blockquote><h3 id="根据拓扑排序确定解决子问题的顺序topological-order-to-argue-relation-is-acyclic-and-subproblems-form-a-dag" class="headerLink">
     <a href="#%e6%a0%b9%e6%8d%ae%e6%8b%93%e6%89%91%e6%8e%92%e5%ba%8f%e7%a1%ae%e5%ae%9a%e8%a7%a3%e5%86%b3%e5%ad%90%e9%97%ae%e9%a2%98%e7%9a%84%e9%a1%ba%e5%ba%8ftopological-order-to-argue-relation-is-acyclic-and-subproblems-form-a-dag" class="header-mark" aria-label="Header mark for '根据拓扑排序确定解决子问题的顺序（Topological order to argue relation is acyclic and subproblems form a DAG）'"></a>根据拓扑排序确定解决子问题的顺序（Topological order to argue relation is acyclic and subproblems form a DAG）</h3><p>你可能在别的地方看到过动态规划问题的另外一个名字——“表格法”。因为当我们采用“自底向上”的解法解决动态规划问题的时候可以看成是在填表格。但在我看来，<strong>将动态规划看成一张有向无环图会更有助于对动态规划的理解</strong>——将子问题看成是图上的顶点，用<strong>有向边连接「小的子问题」-&gt; 「大的子问题」</strong>，这个图会构成一个有向无环图（DAG），<strong>动态规划算法其实就是 DAG 的拓扑排序过程</strong>。即「DAG 拓扑排序」=「自底向上方法」=「表格法」。上面的依赖图“自底向上”就是在做拓扑排序</p>
 <blockquote>
   <p>🤔️ 为什么是有向无环图？首先，有向边<strong>表示了子问题之间的依赖关系</strong>也表示了<strong>我们求解子问题的顺序</strong>：要解决一个子问题，需要先求解出更小的子问题；其次，它必须是无环的，因为动态规划会记住求解过的子问题，我们<strong>不可能多次求解同一个子问题</strong>，因此它必须是无环的。</p>
-
 </blockquote><p>意识到动态规划的子问题求解顺序是 DAG 的拓扑排序有什么用呢？这在<strong>很大程度上帮我理解了树形 DP 问题</strong>：动态规划要先求解子问题 &ndash; 在树形 DP 中，显然“子树”和“子问题”的概念是对应的，因此要先解决子问题其实意味着计算 <code>dp[r]</code> 的时候应该先计算 <code>dp[r.left]</code> 和 <code>dp[r.right]</code>，而这恰恰遵循了二叉树的后序遍历顺序，<strong>因此树形 DP 问题往往是通过后序遍历实现的</strong>。如果把树看成图的话（注意边由孩子结点指向父节点），那么拓扑排序也是和后序遍历的顺序对应的</p>
 <blockquote>
   <p>🤔️ 实际写代码的时候，你可能对如何用正确的顺序更新子问题有疑问，只要记住<strong>永远都是先解决小问题，然后才到大问题</strong>，再看一眼前面定义的关系式，你就知道更新顺序是什么了</p>
-
 </blockquote><h3 id="边界情况base-cases" class="headerLink">
     <a href="#%e8%be%b9%e7%95%8c%e6%83%85%e5%86%b5base-cases" class="header-mark" aria-label="Header mark for '边界情况（Base cases）'"></a>边界情况（Base cases）</h3><p>类似递归算法中的 base case，表示<strong>独立的</strong>最小子问题的解，是关系式推导的起点，<strong>这种信息一般可以通过看题目看出来</strong></p>
 <h3 id="原始问题original-problem" class="headerLink">
@@ -551,7 +541,6 @@ $$</p>
     <a href="#%e5%ba%94%e7%94%a8" class="header-mark" aria-label="Header mark for '应用'"></a>应用</h2><p>光是谈理论总是一知半解，只有真正开始把 SRTBOT 框架应用于动态规划问题才能够体会它的强大之处，下面是我整理的部分动态规划问题的题解，在题解里面我会谈到如何用 SRTBOT 分析动态规划问题。<strong>后序会不断把做的动态规划的题目搬运到这里来，或者也可以直接看 Leetcode 账号查看题解👻</strong></p>
 <blockquote>
   <p>📒 注：我的解法并不一定是最优的解法，<em>比如有时候可以用「状态压缩」的技巧减少空间复杂度等，我可能并不会这么做</em>，我<strong>只是将 SRTBOT 框架应用于这些动态规划问题</strong></p>
-
 </blockquote>
 <div class="table-wrapper">
   <table>
@@ -709,7 +698,7 @@ $$</p>
             </noscript></div></article></div>
         </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.139.4">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.0"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
