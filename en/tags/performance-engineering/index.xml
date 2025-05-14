@@ -11,7 +11,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/data-parallel-with-two-different-api/</guid>
     <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>As a machine learning engineer, I work with vast amounts of data, performing tasks such as data cleaning and information extraction. These tasks are typically data-parallel and do not involve race conditions. Such workloads are usually referred to as CPU-intensive tasks. Typically, these tasks can be formulated as <code>map(fn, data)</code>.</p>
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>As a machine learning engineer, I work with vast amounts of data, performing tasks such as data cleaning and information extraction. These tasks are typically data-parallel and do not involve race conditions. Such workloads are usually referred to as CPU-intensive tasks. Typically, these tasks can be formulated as <code>map(fn, data)</code>.</p>
 <p>Python is limited by its Global Interpreter Lock (GIL). As a result, using multithreading could not improve the performance. Instead, multiprocessing should be used. Usually, you would not manually manage all the launched processes but would instead use a process pool. Today, I&rsquo;d like to discuss two different APIs related to multiprocessing: <code>multiprocessing.Pool</code> and <code>concurrent.futures.ProcessPoolExecutor</code>, and provide a simple comparison.</p>]]></description>
 </item><item>
     <title>Tail call and Tail-call Optimization (TCO)</title>
@@ -20,8 +20,10 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/tail-call-and-tail-call-optimization/</guid>
     <description><![CDATA[<h2 id="tail-call--tail-recursion" class="headerLink">
-    <a href="#tail-call--tail-recursion" class="header-mark" aria-label="Header mark for 'Tail call &amp; Tail-recursion'"></a>Tail call &amp; Tail-recursion</h2><p>Assume that function <code>A</code> calls function <code>B</code>. We call function <code>A</code> <em>Caller</em> and function <code>B</code> <em>Callee</em>.</p>
+    <a href="#tail-call--tail-recursion" class="header-mark"></a>Tail call &amp; Tail-recursion</h2><p>Assume that function <code>A</code> calls function <code>B</code>. We call function <code>A</code> <em>Caller</em> and function <code>B</code> <em>Callee</em>.</p>
 <p>The tail call refers to when the Caller <em>only needs to</em> wait for the return value of the Callee, as <em>everything else</em> has already been completed<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<p>If this is a recursive function call(e.g. the Caller and Callee are the same function), then the function is said to be tail-recursive.</p>]]></description>
+<p>If this is a recursive function call(e.g. the Caller and Callee are the same function), then the function is said to be tail-recursive.</p>
+<h3 id="tail-call-optimization-tco" class="headerLink">
+    <a href="#tail-call-optimization-tco" class="header-mark"></a>Tail-call Optimization (TCO)</h3><p>According to the mechanism of the function call, a stack frame will be created to store some useful information such as the return address. What if the function call is a tail-call? Could you find any optimization chance?</p>]]></description>
 </item></channel>
 </rss>

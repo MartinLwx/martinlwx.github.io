@@ -11,7 +11,53 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/call-graph-generation-using-class-hierarchy-analysis/</guid>
     <description><![CDATA[<h2 id="调用图生成的核心问题" class="headerLink">
-    <a href="#%e8%b0%83%e7%94%a8%e5%9b%be%e7%94%9f%e6%88%90%e7%9a%84%e6%a0%b8%e5%bf%83%e9%97%ae%e9%a2%98" class="header-mark" aria-label="Header mark for '调用图生成的核心问题'"></a>调用图生成的核心问题</h2><p>对于 OOP 语言来说，搭建调用图的核心问题是<em>有多态的场景下</em>如何确定到底是哪一个方法被调用了，下面是 Java 的一些可能的函数调用 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
+    <a href="#%e8%b0%83%e7%94%a8%e5%9b%be%e7%94%9f%e6%88%90%e7%9a%84%e6%a0%b8%e5%bf%83%e9%97%ae%e9%a2%98" class="header-mark"></a>调用图生成的核心问题</h2><p>对于 OOP 语言来说，搭建调用图的核心问题是<em>有多态的场景下</em>如何确定到底是哪一个方法被调用了，下面是 Java 的一些可能的函数调用 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+        <tr>
+            <th style="text-align: "></th>
+            <th style="text-align: ">Static Call</th>
+            <th style="text-align: ">Special Call</th>
+            <th style="text-align: ">Virtual Call</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: ">Instruction</td>
+            <td style="text-align: "><code>invokestatic</code></td>
+            <td style="text-align: "><code>invokespecial</code></td>
+            <td style="text-align: "><code>invokeinterface, invokevirtual</code></td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Receiver Objects</td>
+            <td style="text-align: ">❌</td>
+            <td style="text-align: ">✅</td>
+            <td style="text-align: ">✅</td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Target Methods</td>
+            <td style="text-align: ">Static Method</td>
+            <td style="text-align: ">Constructor, Private Instance Method, Superclass Instance Method</td>
+            <td style="text-align: ">Other Instance Method</td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Count of Possible Target Methods</td>
+            <td style="text-align: ">1</td>
+            <td style="text-align: ">1</td>
+            <td style="text-align: ">$\ge 1$ (polymorphism)</td>
+        </tr>
+        <tr>
+            <td style="text-align: ">Determinancy</td>
+            <td style="text-align: ">Compile-time</td>
+            <td style="text-align: ">Compile-time</td>
+            <td style="text-align: ">Run-time</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<p>其中 Virtual Call 因为包含了多态，方法调用存在<em>多个</em>可能的目标方法</p>]]></description>
 </item><item>
     <title>LoRA 微调</title>
     <link>https://martinlwx.github.io/zh-cn/lora-finetuning/</link>
@@ -19,7 +65,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/lora-finetuning/</guid>
     <description><![CDATA[<h2 id="什么是-lora" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-lora" class="header-mark" aria-label="Header mark for '什么是 LoRA'"></a>什么是 LoRA</h2><figure><img src="/img/lora.jpg">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-lora" class="header-mark"></a>什么是 LoRA</h2><figure><img src="/img/lora.jpg">
 </figure>
 
 <p>自从 LLM 时代到来之后，如何微调 LLM 成为了一个难题，因为 LLM 的模型实在是太大了，很难做全量微调更新所有参数。可选的路线有：冻结整个模型做 Prompt tuning 或者 In-context Learning；冻结整个模型<em>但是</em>会插入可训练的模块。今天要介绍的 LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation) 就对应了后者的技术路线，这是微软团队的工作<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
@@ -30,7 +76,15 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/an-introduction-of-tf-idf-model/</guid>
     <description><![CDATA[<h2 id="什么是-tf-idf-模型" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-tf-idf-%e6%a8%a1%e5%9e%8b" class="header-mark" aria-label="Header mark for '什么是 TF-IDF 模型'"></a>什么是 TF-IDF 模型</h2><p>在之前的 <a href="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" rel="">文章</a> 中谈到了词袋模型，也讲到了它的许多不足，在今天的这篇文章中，我们要尝试解决词袋模型的<em>缺点</em>之一：每个词的重要性是一样的</p>]]></description>
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-tf-idf-%e6%a8%a1%e5%9e%8b" class="header-mark"></a>什么是 TF-IDF 模型</h2><p>在之前的 <a href="https://martinlwx.github.io/zh-cn/an-introduction-of-bag-of-word-model/" rel="">文章</a> 中谈到了词袋模型，也讲到了它的许多不足，在今天的这篇文章中，我们要尝试解决词袋模型的<em>缺点</em>之一：每个词的重要性是一样的</p>
+<div class="details admonition quesstion open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Quesstion<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>那么，核心问题就是————如何定义「单词的重要性」这个概念？</p>]]></description>
 </item><item>
     <title>Pytorch 张量的 strides 格式是什么</title>
     <link>https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/</link>
@@ -38,7 +92,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/how-to-reprensent-a-tensor-or-ndarray/</guid>
     <description><![CDATA[<h2 id="引言" class="headerLink">
-    <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>尽管我已经使用 Numpy 和 Pytorch 好长一段时间了，但我一直不知道他们是如何实现底层的张量（tensor），而且<strong>这么高效</strong>。最近在看 <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a> 这门课，终于有机会尝试自己实现张量，实现一遍之后对张量的理解更深刻了🧐</p>]]></description>
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>尽管我已经使用 Numpy 和 Pytorch 好长一段时间了，但我一直不知道他们是如何实现底层的张量（tensor），而且<strong>这么高效</strong>。最近在看 <a href="https://dlsyscourse.org/" target="_blank" rel="noopener noreferrer">Deep Learning Systems</a> 这门课，终于有机会尝试自己实现张量，实现一遍之后对张量的理解更深刻了🧐</p>]]></description>
 </item><item>
     <title>用 MPNN 框架解读 GAT</title>
     <link>https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/</link>
@@ -46,7 +100,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/understanding-graph-attention-network-through-mpnn/</guid>
     <description><![CDATA[<h2 id="什么是-mpnn-框架" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-mpnn-%e6%a1%86%e6%9e%b6" class="header-mark" aria-label="Header mark for '什么是 MPNN 框架'"></a>什么是 MPNN 框架</h2><p>Justin Gilmer 提出了 MPNN（Message Passing Neural Network）框架<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ，用于描述被用来做图上的监督学习的图神经网络模型。我发现这是一个很好用的框架，可以很好理解不同的 GNN 模型是如何工作的，方便快速弄清楚不同的 GNN 模型之间的差别。我们考虑图 $G$ 上的一个节点 $v$，它的向量表示 $h_v$ 的更新方式如下：
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-mpnn-%e6%a1%86%e6%9e%b6" class="header-mark"></a>什么是 MPNN 框架</h2><p>Justin Gilmer 提出了 MPNN（Message Passing Neural Network）框架<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> ，用于描述被用来做图上的监督学习的图神经网络模型。我发现这是一个很好用的框架，可以很好理解不同的 GNN 模型是如何工作的，方便快速弄清楚不同的 GNN 模型之间的差别。我们考虑图 $G$ 上的一个节点 $v$，它的向量表示 $h_v$ 的更新方式如下：
 $$m_v^{t+1}=\sum_{u\in \mathcal{N}(v)}M_t(h_v^t,h_u^t,e_{vu})$$
 $$h_v^{t+1}=U_t(h_v^t,m_v^{t+1})$$</p>]]></description>
 </item></channel>

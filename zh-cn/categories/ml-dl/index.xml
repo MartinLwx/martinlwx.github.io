@@ -11,7 +11,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/rmsnorm-in-a-nutshell/</guid>
     <description><![CDATA[<h2 id="引言" class="headerLink">
-    <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><p>从 2017 年 Transformer 架构被提出以来，到现在 2025 已经 8 年过去了，Transformer 架构已经发生了很多变化。比如，现如今越来越多的大模型采用的是 RMSNorm<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 而不是 LayerNorm。今天这篇文章就是对 RMSNorm 的一个简单介绍，在了解 RMSNorm 之前，我们不妨先回顾一下什么是 LayerNorm</p>]]></description>
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>从 2017 年 Transformer 架构被提出以来，到现在 2025 已经 8 年过去了，Transformer 架构已经发生了很多变化。比如，现如今越来越多的大模型采用的是 RMSNorm<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 而不是 LayerNorm。今天这篇文章就是对 RMSNorm 的一个简单介绍，在了解 RMSNorm 之前，我们不妨先回顾一下什么是 LayerNorm</p>]]></description>
 </item><item>
     <title>神奇的 torch.einsum API</title>
     <link>https://martinlwx.github.io/zh-cn/the-magic-torch-einsum-api/</link>
@@ -19,7 +19,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/the-magic-torch-einsum-api/</guid>
     <description><![CDATA[<h2 id="motivations" class="headerLink">
-    <a href="#motivations" class="header-mark" aria-label="Header mark for 'Motivations'"></a>Motivations</h2><p>在 PyTorch 里面存在着<em>很多</em>跟矩阵乘法、矩阵向量乘法等操作相关的 API，这对记忆来说是一种负担。并且，在使用这些 API 的过程中<em>经常</em>需要对矩阵进行 reshape 等操作，确保维度信息对得上</p>]]></description>
+    <a href="#motivations" class="header-mark"></a>Motivations</h2><p>在 PyTorch 里面存在着<em>很多</em>跟矩阵乘法、矩阵向量乘法等操作相关的 API，这对记忆来说是一种负担。并且，在使用这些 API 的过程中<em>经常</em>需要对矩阵进行 reshape 等操作，确保维度信息对得上</p>]]></description>
 </item><item>
     <title>语言模型中的 Weight Tying 技术</title>
     <link>https://martinlwx.github.io/zh-cn/an-explanation-of-weight-tying/</link>
@@ -27,7 +27,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/an-explanation-of-weight-tying/</guid>
     <description><![CDATA[<h2 id="引言" class="headerLink">
-    <a href="#%e5%bc%95%e8%a8%80" class="header-mark" aria-label="Header mark for '引言'"></a>引言</h2><div class="details admonition quote open">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><div class="details admonition quote open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"/></svg></span>Quote<span class="details-icon"><svg class="icon"
@@ -42,7 +42,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/an-explanation-of-multi-head-attention/</guid>
     <description><![CDATA[<h2 id="什么是多头注意力" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%9a%e5%a4%b4%e6%b3%a8%e6%84%8f%e5%8a%9b" class="header-mark" aria-label="Header mark for '什么是多头注意力'"></a>什么是多头注意力</h2><p>在<a href="https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/" rel="">上一篇文章</a>里面我们已经讲完了 Self Attention|自注意力，这里我们在自注意力的基础上<em>多增加一点东西</em>：加上多头注意力（Multi-Head Attention，MHA）。这个其实才是本来 Transformer 的自注意力的完全版本<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。因为大部分内容在<a href="https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/" rel="">前文</a>已经讲完，本篇不会太长～</p>]]></description>
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%9a%e5%a4%b4%e6%b3%a8%e6%84%8f%e5%8a%9b" class="header-mark"></a>什么是多头注意力</h2><p>在<a href="https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/" rel="">上一篇文章</a>里面我们已经讲完了 Self Attention|自注意力，这里我们在自注意力的基础上<em>多增加一点东西</em>：加上多头注意力（Multi-Head Attention，MHA）。这个其实才是本来 Transformer 的自注意力的完全版本<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。因为大部分内容在<a href="https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/" rel="">前文</a>已经讲完，本篇不会太长～</p>]]></description>
 </item><item>
     <title>如何理解 Transformer 的自注意力公式</title>
     <link>https://martinlwx.github.io/zh-cn/an-explanation-of-self-attention/</link>
@@ -64,7 +64,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/the-flow-of-graphrag/</guid>
     <description><![CDATA[<h2 id="motivation" class="headerLink">
-    <a href="#motivation" class="header-mark" aria-label="Header mark for 'Motivation'"></a>Motivation</h2><p>当前的 RAG 技术无法回答<em>关于语料库的全局性问题</em>，比如“这个数据集的主题是什么”。这一类问题不是可以通过检索增强技术解决的，因为答案一般不在某一段文本里面，正确答案需要<em>理解整个语料库并给出抽象的总结</em>，作者称这类问题为 query-focused summarization (QFS) 问题<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。普通的 RAG 技术无法很好处理这个问题。</p>]]></description>
+    <a href="#motivation" class="header-mark"></a>Motivation</h2><p>当前的 RAG 技术无法回答<em>关于语料库的全局性问题</em>，比如“这个数据集的主题是什么”。这一类问题不是可以通过检索增强技术解决的，因为答案一般不在某一段文本里面，正确答案需要<em>理解整个语料库并给出抽象的总结</em>，作者称这类问题为 query-focused summarization (QFS) 问题<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。普通的 RAG 技术无法很好处理这个问题。</p>]]></description>
 </item><item>
     <title>论文阅读: Outrageously Large Neural Networks-The Sparsely-Gated Mixture-of-Experts Layer</title>
     <link>https://martinlwx.github.io/zh-cn/reading-notes-mixture-of-experts/</link>
@@ -72,7 +72,8 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/reading-notes-mixture-of-experts/</guid>
     <description><![CDATA[<h2 id="motivations" class="headerLink">
-    <a href="#motivations" class="header-mark" aria-label="Header mark for 'Motivations'"></a>Motivations</h2><p>模型能力跟模型参数量有关系，模型参数量越多，数据越多，效果就越好。<em>但训练成本也成倍上升</em>。为了解决这个问题，大家提出了很多种<em>条件计算</em>（Conditional Computations）的方案，顾名思义，某些条件满足的情况下才会计算，这样<em>就可以不增加训练成本的同时增加模型参数量，提升模型效果</em></p>]]></description>
+    <a href="#motivations" class="header-mark"></a>Motivations</h2><p>模型能力跟模型参数量有关系，模型参数量越多，数据越多，效果就越好。<em>但训练成本也成倍上升</em>。为了解决这个问题，大家提出了很多种<em>条件计算</em>（Conditional Computations）的方案，顾名思义，某些条件满足的情况下才会计算，这样<em>就可以不增加训练成本的同时增加模型参数量，提升模型效果</em></p>
+<p>作者提出了 Sparsely-Gated Mixture-of-Experts Layer (MoE) 架构，如下所示<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
 </item><item>
     <title>KNN 算法是什么</title>
     <link>https://martinlwx.github.io/zh-cn/what-is-k-nearest-neighbor-algorithms/</link>
@@ -80,7 +81,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/what-is-k-nearest-neighbor-algorithms/</guid>
     <description><![CDATA[<h2 id="什么是-knn" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-knn" class="header-mark" aria-label="Header mark for '什么是 KNN'"></a>什么是 KNN</h2><div class="details admonition tip open">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-knn" class="header-mark"></a>什么是 KNN</h2><div class="details admonition tip open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z"/></svg></span>Tip<span class="details-icon"><svg class="icon"
@@ -95,7 +96,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/llm-inference-optimization-kv-cache/</guid>
     <description><![CDATA[<h2 id="背景" class="headerLink">
-    <a href="#%e8%83%8c%e6%99%af" class="header-mark" aria-label="Header mark for '背景'"></a>背景</h2><p>LLM 用于推理的时候就是不断基于前面的所有 token 生成下一个 token</p>
+    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>LLM 用于推理的时候就是不断基于前面的所有 token 生成下一个 token</p>
 <p>假设现在已经生成了 $t$ 个 token，用 $x_{1:t}$ 表示。在下一轮，LLM 会生成 $x_{1:t+1}$，注意他们的前 $t$ 个 token 是<em>一样的</em></p>]]></description>
 </item><item>
     <title>LoRA 微调</title>
@@ -104,7 +105,7 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/zh-cn/lora-finetuning/</guid>
     <description><![CDATA[<h2 id="什么是-lora" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-lora" class="header-mark" aria-label="Header mark for '什么是 LoRA'"></a>什么是 LoRA</h2><figure><img src="/img/lora.jpg">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-lora" class="header-mark"></a>什么是 LoRA</h2><figure><img src="/img/lora.jpg">
 </figure>
 
 <p>自从 LLM 时代到来之后，如何微调 LLM 成为了一个难题，因为 LLM 的模型实在是太大了，很难做全量微调更新所有参数。可选的路线有：冻结整个模型做 Prompt tuning 或者 In-context Learning；冻结整个模型<em>但是</em>会插入可训练的模块。今天要介绍的 LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation) 就对应了后者的技术路线，这是微软团队的工作<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>

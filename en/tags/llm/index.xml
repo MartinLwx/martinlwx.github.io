@@ -11,9 +11,9 @@
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/rmsnorm-in-a-nutshell/</guid>
     <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><p>It&rsquo;s been 8 years since the famous transformer architecture was first proposed. You might have noticed that some modifications to the original design - for instance, most large language models (LLMs) now use RMSNorm<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> instead of LayerNorm. Today I will briefly introduce RMSNorm, but first, let&rsquo;s recap LayerNorm.</p>
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>It&rsquo;s been 8 years since the famous transformer architecture was first proposed. You might have noticed that some modifications to the original design - for instance, most large language models (LLMs) now use RMSNorm<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> instead of LayerNorm. Today I will briefly introduce RMSNorm, but first, let&rsquo;s recap LayerNorm.</p>
 <h2 id="layernorm-recap" class="headerLink">
-    <a href="#layernorm-recap" class="header-mark" aria-label="Header mark for 'LayerNorm Recap'"></a>LayerNorm Recap</h2><p>$$
+    <a href="#layernorm-recap" class="header-mark"></a>LayerNorm Recap</h2><p>$$
 \mathbf y=\frac{\mathbf x-E[\mathbf x]}{\sqrt{Var(\mathbf x)+\epsilon}}*\gamma+\beta
 $$</p>
 <p>The equation above shows how LayerNorm works. If we ignore the scaling factors ($\gamma, \beta$), LayerNorm&rsquo;s behavior becomes intuitive: <em>it transforms each input $\mathbf x$ into a feature vector with zero mean and unit standard deviation .</em></p>]]></description>
@@ -24,7 +24,7 @@ $$</p>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/an-explanation-of-weight-tying/</guid>
     <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark" aria-label="Header mark for 'Intro'"></a>Intro</h2><div class="details admonition quote open">
+    <a href="#intro" class="header-mark"></a>Intro</h2><div class="details admonition quote open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"/></svg></span>Quote<span class="details-icon"><svg class="icon"
@@ -39,8 +39,11 @@ $$</p>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/an-explanation-of-multi-head-attention/</guid>
     <description><![CDATA[<h2 id="whats-multi-head-attention-mha" class="headerLink">
-    <a href="#whats-multi-head-attention-mha" class="header-mark" aria-label="Header mark for 'What&rsquo;s Multi-Head Attention (MHA)'"></a>What&rsquo;s Multi-Head Attention (MHA)</h2><p>In <a href="https://martinlwx.github.io/en/an-explanation-of-self-attention/" rel="">last post</a> I have explained how the self-attention mechanism works. Today let&rsquo;s <em>take a step further</em> and explore multi-head attention (MHA), which is the full version of self-attention as described in the original paper<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Since I have covered most of the foundation concepts in <a href="https://martinlwx.github.io/en/an-explanation-of-self-attention/" rel="">last post</a>, this post will be short. :)</p>
-<p>Previously, we mentioned that the self-attention mechanism has three import matrices.</p>]]></description>
+    <a href="#whats-multi-head-attention-mha" class="header-mark"></a>What&rsquo;s Multi-Head Attention (MHA)</h2><p>In <a href="https://martinlwx.github.io/en/an-explanation-of-self-attention/" rel="">last post</a> I have explained how the self-attention mechanism works. Today let&rsquo;s <em>take a step further</em> and explore multi-head attention (MHA), which is the full version of self-attention as described in the original paper<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Since I have covered most of the foundation concepts in <a href="https://martinlwx.github.io/en/an-explanation-of-self-attention/" rel="">last post</a>, this post will be short. :)</p>
+<p>Previously, we mentioned that the self-attention mechanism has three import matrices.</p>
+<p>$$
+\mathbf Q,\mathbf K,\mathbf V\in\mathcal{R}^{n\times d}
+$$</p>]]></description>
 </item><item>
     <title>An Explanation of Self-Attention mechanism in Transformer</title>
     <link>https://martinlwx.github.io/en/an-explanation-of-self-attention/</link>
@@ -62,7 +65,8 @@ $$</p>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/the-flow-of-graphrag/</guid>
     <description><![CDATA[<h2 id="motivation" class="headerLink">
-    <a href="#motivation" class="header-mark" aria-label="Header mark for 'Motivation'"></a>Motivation</h2><p>The current RAG techniques can not answer the <em>global questions</em> about the corpus. For example, we may want to know <em>what is the topic of the corpus</em>. Usually, the answer does not exist in the corpus but needs to understand <em>the whole corpus</em> and give summarization. Such global questions are called query-focused summarization (QFS) problems in this paper<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. A naive RAG technique can not handle such a situation.</p>]]></description>
+    <a href="#motivation" class="header-mark"></a>Motivation</h2><p>The current RAG techniques can not answer the <em>global questions</em> about the corpus. For example, we may want to know <em>what is the topic of the corpus</em>. Usually, the answer does not exist in the corpus but needs to understand <em>the whole corpus</em> and give summarization. Such global questions are called query-focused summarization (QFS) problems in this paper<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. A naive RAG technique can not handle such a situation.</p>
+<p>And it&rsquo;s <em>unrealistic</em> to put all the text in the corpus in the context window of LLM. Even if we could, the LLM may miss the information in the middle of the context window.</p>]]></description>
 </item><item>
     <title>Reading Notes: Generalization through Memorization: Nearest Neighbor Language Models</title>
     <link>https://martinlwx.github.io/en/what-is-knn-lm/</link>
@@ -70,19 +74,19 @@ $$</p>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/what-is-knn-lm/</guid>
     <description><![CDATA[<h2 id="motivation" class="headerLink">
-    <a href="#motivation" class="header-mark" aria-label="Header mark for 'Motivation'"></a>Motivation</h2><p>A language solves 2 subproblems.</p>
+    <a href="#motivation" class="header-mark"></a>Motivation</h2><p>A language solves 2 subproblems.</p>
 <ol>
 <li>Mapping sentence prefixes to fixed-size representation.</li>
 <li>Using these representations to predict the next token in the context.</li>
 </ol>
 <p>The $k\texttt{NN-LM}$ proposed in this hypothesis that <em>representation learning problem may be easier than the prediction problem</em></p>
 <h2 id="knn-lm" class="headerLink">
-    <a href="#knn-lm" class="header-mark" aria-label="Header mark for 'kNN-LM'"></a>kNN-LM</h2><p>The following graph demonstrates the idea behind the $k\texttt{NN-LM}$ model.</p>
+    <a href="#knn-lm" class="header-mark"></a>kNN-LM</h2><p>The following graph demonstrates the idea behind the $k\texttt{NN-LM}$ model.</p>
 <figure><img src="/img/knn-lm.png" width="resize">
 </figure>
 
 <h3 id="data-preparation" class="headerLink">
-    <a href="#data-preparation" class="header-mark" aria-label="Header mark for 'Data Preparation'"></a>Data Preparation</h3><p>To use the $k\texttt{NN-LM}$, we need to preprocess the documents in the corpus. The preprocessing procedure can be divided into some steps. Take the following sentence as an example.</p>]]></description>
+    <a href="#data-preparation" class="header-mark"></a>Data Preparation</h3><p>To use the $k\texttt{NN-LM}$, we need to preprocess the documents in the corpus. The preprocessing procedure can be divided into some steps. Take the following sentence as an example.</p>]]></description>
 </item><item>
     <title>Reading Notes: In-Context Retrieval-Augmented Language Models</title>
     <link>https://martinlwx.github.io/en/in-context-ralm-paper-reading/</link>
@@ -90,7 +94,7 @@ $$</p>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/in-context-ralm-paper-reading/</guid>
     <description><![CDATA[<h2 id="the-idea" class="headerLink">
-    <a href="#the-idea" class="header-mark" aria-label="Header mark for 'The idea'"></a>The idea</h2><p>In-Context RALM<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> is the RAG technology for Autoregressive LM. In summary, the RAG technology involves using a retriever during model inference to fetch relevant documents, which are then concatenated with the origin input.</p>
+    <a href="#the-idea" class="header-mark"></a>The idea</h2><p>In-Context RALM<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> is the RAG technology for Autoregressive LM. In summary, the RAG technology involves using a retriever during model inference to fetch relevant documents, which are then concatenated with the origin input.</p>
 <p>In the In-Context Learning setting, some examples are placed <em>before</em> the user&rsquo;s input, and then they are fed to LLM. Similarly, the In-Context RALM works in a <em>similar</em> way: it directly concatenates <em>the most relevant retrieved document in front of</em> the model&rsquo;s input. The advantage is that there&rsquo;s <em>no need to retrain the LLM</em>. A diagram created with Mermaid is shown below.</p>]]></description>
 </item><item>
     <title>LLM inference optimization - KV Cache</title>
@@ -99,7 +103,7 @@ $$</p>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/llm-inference-optimization-kv-cache/</guid>
     <description><![CDATA[<h2 id="background" class="headerLink">
-    <a href="#background" class="header-mark" aria-label="Header mark for 'Background'"></a>Background</h2><p>The secret behind LLM is that it will generate tokens one by one based on all the previous tokens.</p>
+    <a href="#background" class="header-mark"></a>Background</h2><p>The secret behind LLM is that it will generate tokens one by one based on all the previous tokens.</p>
 <p><em>Let&rsquo;s assume that we have already generated $t$ tokens, denoted by $x_{1:t}$. In the next iteration, the LLM will generate $x_{1:t+1}$. Note that the first $t$ tokens are the same</em>.</p>
 <p>$$x_{1:t+1}=\text{LLM}(x_{1:t})$$</p>
 <p><em>The next iteration is similar.</em></p>
@@ -112,7 +116,7 @@ $$</p>
         <name>MartinLwx</name>
     </author><guid>https://martinlwx.github.io/en/the-bpe-tokenizer/</guid>
     <description><![CDATA[<h2 id="a-taxonomy-of-tokenization-methods" class="headerLink">
-    <a href="#a-taxonomy-of-tokenization-methods" class="header-mark" aria-label="Header mark for 'A taxonomy of tokenization methods'"></a>A taxonomy of tokenization methods</h2><p>In NLP, one crux of problems is - how to tokenize the text. There are three methods available:</p>
+    <a href="#a-taxonomy-of-tokenization-methods" class="header-mark"></a>A taxonomy of tokenization methods</h2><p>In NLP, one crux of problems is - how to tokenize the text. There are three methods available:</p>
 <ul>
 <li>Char-level</li>
 <li>Word-level</li>
