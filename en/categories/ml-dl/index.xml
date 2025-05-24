@@ -4,7 +4,29 @@
         <link>https://martinlwx.github.io/en/categories/ml-dl/</link>
         <description>ML-DL - Category - MartinLwx&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 11 May 2025 14:01:26 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sat, 24 May 2025 16:28:13 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+    <title>Transformer architecture variation: Rotary Position Embedding (RoPE)</title>
+    <link>https://martinlwx.github.io/en/rotary-position-embedding/</link>
+    <pubDate>Sat, 24 May 2025 16:28:13 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/rotary-position-embedding/</guid>
+    <description><![CDATA[<h2 id="a-recap-of-self-attention-mechanism" class="headerLink">
+    <a href="#a-recap-of-self-attention-mechanism" class="header-mark"></a>A Recap of Self-attention Mechanism</h2><p>In self-attention, the query ($\mathbf q_m$), key ($\mathbf k_n$), and value ($\mathbf v_n$) vectors are computed as follows:</p>
+<p>$$
+\begin{equation}
+\begin{aligned}
+\mathbf q_m&amp;=f_q(\mathbf x_m,m)\\
+\mathbf k_n&amp;=f_k(\mathbf x_n,n)\\
+\mathbf v_n&amp;=f_v(\mathbf x_n,n)
+\end{aligned}
+\end{equation}
+$$</p>
+<p>Here, the $\mathbf x_i$ is the $i$-th token embedding, while $n$ and $m$ denote different positions.</p>
+<p>The attention score between position $m$ and $n$ is computed as:</p>
+<p>$$
+\alpha_{m,n}=\frac{exp(\frac{\mathbf q_m^T\mathbf k_n}{\sqrt d})}{\sum_{j=1}^Nexp(\frac{\mathbf q_m^T\mathbf k_j}{\sqrt d})}
+$$</p>]]></description>
+</item><item>
     <title>Transformer architecture variation: RMSNorm</title>
     <link>https://martinlwx.github.io/en/rmsnorm-in-a-nutshell/</link>
     <pubDate>Sun, 11 May 2025 14:01:26 &#43;0800</pubDate><author>
@@ -140,16 +162,5 @@ $$</p>]]></description>
 <p><em>The next iteration is similar.</em></p>
 <p>$$x_{1:t+2}=\text{LLM}(x_{1:t+1})$$</p>
 <p>In summary, in each iteration, we will <em>use the output of the previous round</em> as a new input for the LLM. Generally, this process will continue until the output reaches the maximum length we predefined or the LLM itself generates a special token, signifying the completion of the generating process.</p>]]></description>
-</item><item>
-    <title>LoRA fine-tuning</title>
-    <link>https://martinlwx.github.io/en/lora-finetuning/</link>
-    <pubDate>Thu, 14 Sep 2023 22:57:06 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/lora-finetuning/</guid>
-    <description><![CDATA[<h2 id="whats-lora" class="headerLink">
-    <a href="#whats-lora" class="header-mark"></a>What&rsquo;s LoRA</h2><figure><img src="/img/lora.jpg">
-</figure>
-
-<p>Since the era of LLM(large language model) arrived, fine-tuning LLM has become a challenge because the LLM models are extremely large, making it difficult to perform full fine-tuning. There are mainly two approaches: freeze the entire LLM and perform prompt tuning or In-context Learning; freeze the entire LLM <em>but</em> inserting trainable modules. Today, I will introduce the LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation), which corresponds to the latter technical approach. This is a work proposed by the Microsoft team<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
 </item></channel>
 </rss>

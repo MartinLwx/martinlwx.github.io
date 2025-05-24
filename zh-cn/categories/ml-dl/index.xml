@@ -4,7 +4,25 @@
         <link>https://martinlwx.github.io/zh-cn/categories/ml-dl/</link>
         <description>ML-DL - 分类 - MartinLwx&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 11 May 2025 14:01:26 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sat, 24 May 2025 16:28:13 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+    <title>Transformer 架构变化：旋转位置编码 (RoPE)</title>
+    <link>https://martinlwx.github.io/zh-cn/rotary-position-embedding/</link>
+    <pubDate>Sat, 24 May 2025 16:28:13 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/zh-cn/rotary-position-embedding/</guid>
+    <description><![CDATA[<h2 id="自注意力机制回顾" class="headerLink">
+    <a href="#%e8%87%aa%e6%b3%a8%e6%84%8f%e5%8a%9b%e6%9c%ba%e5%88%b6%e5%9b%9e%e9%a1%be" class="header-mark"></a>自注意力机制回顾</h2><p>用 $\mathbf x_i$ 表示没有位置编码的 token embedding，那么 $\mathbf q_m,\mathbf k_n,\mathbf v_n$ 的计算如下</p>
+<p>$$
+\begin{equation}
+\begin{aligned}
+\mathbf q_m&amp;=f_q(\mathbf x_m,m)\\
+\mathbf k_n&amp;=f_k(\mathbf x_n,n)\\
+\mathbf v_n&amp;=f_v(\mathbf x_n,n)
+\end{aligned}
+\end{equation}
+$$</p>
+<p>这里的 $n, m$ 表示的是不同的位置，这里假设 $\mathbf k$ 和 $\mathbf v$ 是都是位置 $n$ 的，而 $\mathbf q$ 是位置 $m$ 的，并且 $m &gt; n$</p>]]></description>
+</item><item>
     <title>Transformer 架构变化：RMSNorm 指南</title>
     <link>https://martinlwx.github.io/zh-cn/rmsnorm-in-a-nutshell/</link>
     <pubDate>Sun, 11 May 2025 14:01:26 &#43;0800</pubDate><author>
@@ -98,16 +116,5 @@
     <description><![CDATA[<h2 id="背景" class="headerLink">
     <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>LLM 用于推理的时候就是不断基于前面的所有 token 生成下一个 token</p>
 <p>假设现在已经生成了 $t$ 个 token，用 $x_{1:t}$ 表示。在下一轮，LLM 会生成 $x_{1:t+1}$，注意他们的前 $t$ 个 token 是<em>一样的</em></p>]]></description>
-</item><item>
-    <title>LoRA 微调</title>
-    <link>https://martinlwx.github.io/zh-cn/lora-finetuning/</link>
-    <pubDate>Thu, 14 Sep 2023 22:57:06 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/zh-cn/lora-finetuning/</guid>
-    <description><![CDATA[<h2 id="什么是-lora" class="headerLink">
-    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-lora" class="header-mark"></a>什么是 LoRA</h2><figure><img src="/img/lora.jpg">
-</figure>
-
-<p>自从 LLM 时代到来之后，如何微调 LLM 成为了一个难题，因为 LLM 的模型实在是太大了，很难做全量微调更新所有参数。可选的路线有：冻结整个模型做 Prompt tuning 或者 In-context Learning；冻结整个模型<em>但是</em>会插入可训练的模块。今天要介绍的 LoRA(<strong>Lo</strong>w-<strong>R</strong>ank <strong>A</strong>daptation) 就对应了后者的技术路线，这是微软团队的工作<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>]]></description>
 </item></channel>
 </rss>

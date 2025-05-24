@@ -4,7 +4,29 @@
         <link>https://martinlwx.github.io/en/tags/deep-learning/</link>
         <description>Deep-Learning - Tag - MartinLwx&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 11 May 2025 14:01:26 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/tags/deep-learning/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sat, 24 May 2025 16:28:13 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/tags/deep-learning/" rel="self" type="application/rss+xml" /><item>
+    <title>Transformer architecture variation: Rotary Position Embedding (RoPE)</title>
+    <link>https://martinlwx.github.io/en/rotary-position-embedding/</link>
+    <pubDate>Sat, 24 May 2025 16:28:13 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/rotary-position-embedding/</guid>
+    <description><![CDATA[<h2 id="a-recap-of-self-attention-mechanism" class="headerLink">
+    <a href="#a-recap-of-self-attention-mechanism" class="header-mark"></a>A Recap of Self-attention Mechanism</h2><p>In self-attention, the query ($\mathbf q_m$), key ($\mathbf k_n$), and value ($\mathbf v_n$) vectors are computed as follows:</p>
+<p>$$
+\begin{equation}
+\begin{aligned}
+\mathbf q_m&amp;=f_q(\mathbf x_m,m)\\
+\mathbf k_n&amp;=f_k(\mathbf x_n,n)\\
+\mathbf v_n&amp;=f_v(\mathbf x_n,n)
+\end{aligned}
+\end{equation}
+$$</p>
+<p>Here, the $\mathbf x_i$ is the $i$-th token embedding, while $n$ and $m$ denote different positions.</p>
+<p>The attention score between position $m$ and $n$ is computed as:</p>
+<p>$$
+\alpha_{m,n}=\frac{exp(\frac{\mathbf q_m^T\mathbf k_n}{\sqrt d})}{\sum_{j=1}^Nexp(\frac{\mathbf q_m^T\mathbf k_j}{\sqrt d})}
+$$</p>]]></description>
+</item><item>
     <title>Transformer architecture variation: RMSNorm</title>
     <link>https://martinlwx.github.io/en/rmsnorm-in-a-nutshell/</link>
     <pubDate>Sun, 11 May 2025 14:01:26 &#43;0800</pubDate><author>
@@ -148,18 +170,5 @@ $$</p>]]></description>
     </div>
     <div class="details-content">
         <div class="admonition-content"><p>The REALM framework uses the Masked LM (BERT) rather than LLM. So I assume that you <em>have a basic understanding of BERT</em> such as how to do pre-train/fine-tuning.</p>]]></description>
-</item><item>
-    <title>LLM inference optimization - KV Cache</title>
-    <link>https://martinlwx.github.io/en/llm-inference-optimization-kv-cache/</link>
-    <pubDate>Thu, 12 Oct 2023 18:29:31 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/llm-inference-optimization-kv-cache/</guid>
-    <description><![CDATA[<h2 id="background" class="headerLink">
-    <a href="#background" class="header-mark"></a>Background</h2><p>The secret behind LLM is that it will generate tokens one by one based on all the previous tokens.</p>
-<p><em>Let&rsquo;s assume that we have already generated $t$ tokens, denoted by $x_{1:t}$. In the next iteration, the LLM will generate $x_{1:t+1}$. Note that the first $t$ tokens are the same</em>.</p>
-<p>$$x_{1:t+1}=\text{LLM}(x_{1:t})$$</p>
-<p><em>The next iteration is similar.</em></p>
-<p>$$x_{1:t+2}=\text{LLM}(x_{1:t+1})$$</p>
-<p>In summary, in each iteration, we will <em>use the output of the previous round</em> as a new input for the LLM. Generally, this process will continue until the output reaches the maximum length we predefined or the LLM itself generates a special token, signifying the completion of the generating process.</p>]]></description>
 </item></channel>
 </rss>
