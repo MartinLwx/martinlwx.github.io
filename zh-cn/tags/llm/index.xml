@@ -4,7 +4,15 @@
         <link>https://martinlwx.github.io/zh-cn/tags/llm/</link>
         <description>LLM - 标签 - MartinLwx&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sat, 24 May 2025 16:28:13 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/tags/llm/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/tags/llm/" rel="self" type="application/rss+xml" /><item>
+    <title>异步编程&#43;令牌桶算法：批量调用 LLM API</title>
+    <link>https://martinlwx.github.io/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/</link>
+    <pubDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/</guid>
+    <description><![CDATA[<h2 id="背景" class="headerLink">
+    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>最近在工作中着手模型评测平台的搭建，其中有这么一个场景：需要调用其他部门提供的 LLM API 进行在评测集上跑模型评测，但这个 LLM API 有请求速率限制 - 最多 1 秒调用 2 次。所以我的任务概括来说就是：<em>如何在严格遵守 API 速率请求的情况下，最大提高并发度加快模型评测速度</em>。本文的内容主要记录了对这个任务的尝试，以及最后的解决方案</p>]]></description>
+</item><item>
     <title>Transformer 架构变化：旋转位置编码 (RoPE)</title>
     <link>https://martinlwx.github.io/zh-cn/rotary-position-embedding/</link>
     <pubDate>Sat, 24 May 2025 16:28:13 &#43;0800</pubDate><author>
@@ -13,13 +21,11 @@
     <description><![CDATA[<h2 id="自注意力机制回顾" class="headerLink">
     <a href="#%e8%87%aa%e6%b3%a8%e6%84%8f%e5%8a%9b%e6%9c%ba%e5%88%b6%e5%9b%9e%e9%a1%be" class="header-mark"></a>自注意力机制回顾</h2><p>用 $\mathbf x_i$ 表示没有位置编码的 token embedding，那么 $\mathbf q_m,\mathbf k_n,\mathbf v_n$ 的计算如下</p>
 <p>$$
-\begin{equation}
 \begin{aligned}
 \mathbf q_m&amp;=f_q(\mathbf x_m,m)\\
 \mathbf k_n&amp;=f_k(\mathbf x_n,n)\\
 \mathbf v_n&amp;=f_v(\mathbf x_n,n)
 \end{aligned}
-\end{equation}
 $$</p>
 <p>这里的 $n, m$ 表示的是不同的位置，这里假设 $\mathbf k$ 和 $\mathbf v$ 是都是位置 $n$ 的，而 $\mathbf q$ 是位置 $m$ 的，并且 $m &gt; n$</p>]]></description>
 </item><item>
@@ -106,19 +112,5 @@ $$</p>
     <description><![CDATA[<h2 id="背景" class="headerLink">
     <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>LLM 用于推理的时候就是不断基于前面的所有 token 生成下一个 token</p>
 <p>假设现在已经生成了 $t$ 个 token，用 $x_{1:t}$ 表示。在下一轮，LLM 会生成 $x_{1:t+1}$，注意他们的前 $t$ 个 token 是<em>一样的</em></p>]]></description>
-</item><item>
-    <title>BPE 分词解密 - 实现方法与示例讲解</title>
-    <link>https://martinlwx.github.io/zh-cn/the-bpe-tokenizer/</link>
-    <pubDate>Thu, 24 Aug 2023 22:06:37 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/zh-cn/the-bpe-tokenizer/</guid>
-    <description><![CDATA[<h2 id="bpe-简介" class="headerLink">
-    <a href="#bpe-%e7%ae%80%e4%bb%8b" class="header-mark"></a>BPE 简介</h2><p>在 NLP 里面，一个核心的问题是，如何对文本进行分词？从分类的角度上面来说，可以分为：</p>
-<ul>
-<li>Char level</li>
-<li>Word level</li>
-<li>Subword level</li>
-</ul>
-<p>先看 Char level 分词，顾名思义，就是把文本拆分成一个个字符单独表示，<em>比如 <code>highest -&gt; h, i, g, h, e, s, t</code></em>，一个显然的好处是，Vocab 不会太大，Vocab 的大小为字符集的大小，也不会遇到 Out-of-vocabulary(OOV) 的问题，但是<strong>字符本身并没有传达太多的语义</strong>，而且<strong>分词之后会有太多的 token</strong>，<em>光是一个 highest 就可以得到 7 个 token，难以想象很长的文本分出来会有多少个</em>😨</p>]]></description>
 </item></channel>
 </rss>

@@ -4,7 +4,15 @@
         <link>https://martinlwx.github.io/en/categories/ml-dl/</link>
         <description>ML-DL - Category - MartinLwx&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sat, 24 May 2025 16:28:13 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/en/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
+    <title>Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently</title>
+    <link>https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/</link>
+    <pubDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/</guid>
+    <description><![CDATA[<h2 id="background" class="headerLink">
+    <a href="#background" class="header-mark"></a>Background</h2><p>Recently, at work, I&rsquo;ve been working on setting up a LLM evaluation platform. There&rsquo;s one particular scenario: we need to call an LLM API provided by another department to run model evaluations on a test dataset, but this LLM API has a rate limit of a maximum of 2 calls per second (2 RPS). Thus, my task essentially boils down to: <em>How to maximize concurrency to speed up model evaluation while strictly adhering to the API rate limits</em>. In this brief post, I will share my thoughts about approaching this task.</p>]]></description>
+</item><item>
     <title>Transformer architecture variation: Rotary Position Embedding (RoPE)</title>
     <link>https://martinlwx.github.io/en/rotary-position-embedding/</link>
     <pubDate>Sat, 24 May 2025 16:28:13 &#43;0800</pubDate><author>
@@ -13,13 +21,11 @@
     <description><![CDATA[<h2 id="a-recap-of-self-attention-mechanism" class="headerLink">
     <a href="#a-recap-of-self-attention-mechanism" class="header-mark"></a>A Recap of Self-attention Mechanism</h2><p>In self-attention, the query ($\mathbf q_m$), key ($\mathbf k_n$), and value ($\mathbf v_n$) vectors are computed as follows:</p>
 <p>$$
-\begin{equation}
 \begin{aligned}
 \mathbf q_m&amp;=f_q(\mathbf x_m,m)\\
 \mathbf k_n&amp;=f_k(\mathbf x_n,n)\\
 \mathbf v_n&amp;=f_v(\mathbf x_n,n)
 \end{aligned}
-\end{equation}
 $$</p>
 <p>Here, the $\mathbf x_i$ is the $i$-th token embedding, while $n$ and $m$ denote different positions.</p>
 <p>The attention score between position $m$ and $n$ is computed as:</p>
@@ -149,18 +155,5 @@ $$</p>]]></description>
     </div>
     <div class="details-content">
         <div class="admonition-content"><p>By the definition, we know that the KNN algorithm <em>does not have a training process</em></p>]]></description>
-</item><item>
-    <title>LLM inference optimization - KV Cache</title>
-    <link>https://martinlwx.github.io/en/llm-inference-optimization-kv-cache/</link>
-    <pubDate>Thu, 12 Oct 2023 18:29:31 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/llm-inference-optimization-kv-cache/</guid>
-    <description><![CDATA[<h2 id="background" class="headerLink">
-    <a href="#background" class="header-mark"></a>Background</h2><p>The secret behind LLM is that it will generate tokens one by one based on all the previous tokens.</p>
-<p><em>Let&rsquo;s assume that we have already generated $t$ tokens, denoted by $x_{1:t}$. In the next iteration, the LLM will generate $x_{1:t+1}$. Note that the first $t$ tokens are the same</em>.</p>
-<p>$$x_{1:t+1}=\text{LLM}(x_{1:t})$$</p>
-<p><em>The next iteration is similar.</em></p>
-<p>$$x_{1:t+2}=\text{LLM}(x_{1:t+1})$$</p>
-<p>In summary, in each iteration, we will <em>use the output of the previous round</em> as a new input for the LLM. Generally, this process will continue until the output reaches the maximum length we predefined or the LLM itself generates a special token, signifying the completion of the generating process.</p>]]></description>
 </item></channel>
 </rss>
