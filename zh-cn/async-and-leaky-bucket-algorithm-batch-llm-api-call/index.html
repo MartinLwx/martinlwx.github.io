@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" /><title>Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently - MartinLwx&#39;s Blog</title><meta name="Description" content="A introduction of how to combine async programming and token bucket to batch LLM api calls efficiently in model evaluaiton"><meta property="og:url" content="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/">
+    <meta name="robots" content="noodp" /><title>异步编程&#43;漏桶算法：批量调用 LLM API - MartinLwx&#39;s Blog</title><meta name="Description" content="介绍了如何用异步编程加漏桶算法处理模型评测中需要批量调用 LLM API 的场景"><meta property="og:url" content="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/">
   <meta property="og:site_name" content="MartinLwx&#39;s Blog">
-  <meta property="og:title" content="Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently">
-  <meta property="og:description" content="A introduction of how to combine async programming and token bucket to batch LLM api calls efficiently in model evaluaiton">
-  <meta property="og:locale" content="en">
+  <meta property="og:title" content="异步编程&#43;漏桶算法：批量调用 LLM API">
+  <meta property="og:description" content="介绍了如何用异步编程加漏桶算法处理模型评测中需要批量调用 LLM API 的场景">
+  <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2025-06-18T23:07:55+08:00">
-    <meta property="article:modified_time" content="2025-06-18T23:07:55+08:00">
+    <meta property="article:modified_time" content="2025-06-25T23:07:55+08:00">
     <meta property="article:tag" content="Python">
     <meta property="article:tag" content="LLM">
     <meta property="article:tag" content="Algorithm">
@@ -21,8 +21,8 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://martinlwx.github.io/logo.png">
-  <meta name="twitter:title" content="Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently">
-  <meta name="twitter:description" content="A introduction of how to combine async programming and token bucket to batch LLM api calls efficiently in model evaluaiton">
+  <meta name="twitter:title" content="异步编程&#43;漏桶算法：批量调用 LLM API">
+  <meta name="twitter:description" content="介绍了如何用异步编程加漏桶算法处理模型评测中需要批量调用 LLM API 的场景">
 <meta name="application-name" content="MartinLwx&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
 
@@ -30,21 +30,21 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
-<link rel="canonical" href="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/" /><link rel="prev" href="https://martinlwx.github.io/en/why-functor/" />
+<link rel="canonical" href="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/why-functor/" />
 <link rel="stylesheet" href="/css/main.min.css"><link rel="stylesheet" href="/css/style.min.css"><script type="application/ld+json">{"@context": "https://schema.org","@type": "BlogPosting",
-        "headline": "Async + Token Bucket: How to Batch LLM API Calls Efficiently",
-        "inLanguage": "en",
+        "headline": "异步编程+漏桶算法：批量调用 LLM API",
+        "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/"
-        },"genre": "posts","keywords":["Async Programming","Token Bucket","LLM","Model Evaluation"],"wordcount":  1607 ,
-        "url": "https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/","datePublished": "2025-06-18T23:07:55+08:00","dateModified": "2025-06-18T23:07:55+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@id": "https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/"
+        },"genre": "posts","keywords":["异步编程","漏桶算法","大模型","模型评测"],"wordcount":  2437 ,
+        "url": "https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/","datePublished": "2025-06-18T23:07:55+08:00","dateModified": "2025-06-25T23:07:55+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "MartinLwx",
                 "url": "https://github.com/MartinLwx"
-            },"description": "A introduction of how to combine async programming and token bucket to batch LLM api calls efficiently in model evaluaiton"
+            },"description": "介绍了如何用异步编程加漏桶算法处理模型评测中需要批量调用 LLM API 的场景"
     }</script></head>
 
 
@@ -86,28 +86,27 @@
     <div id="mask"></div><header class="desktop print:!tw-hidden" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/en/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
+            <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="desktop-header-typeit" class="typeit"></span></a>
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item"
-                    href="/en/posts/" > Posts </a><a class="menu-item"
-                    href="/en/tags/" > Tags </a><a class="menu-item"
-                    href="/en/categories/" > Categories </a><a class="menu-item"
-                    href="/en/about/" > About </a><a class="menu-item"
+                    href="/zh-cn/posts/" > 所有文章 </a><a class="menu-item"
+                    href="/zh-cn/tags/" > 标签 </a><a class="menu-item"
+                    href="/zh-cn/categories/" > 分类 </a><a class="menu-item"
                     href="https://github.com/MartinLwx"  title="GitHub" 
-                    rel="noopener noreferrer" target="_blank" ><svg class='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d='M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z'/></svg>  </a><span class="menu-item delimiter"></span><button class="menu-item language" aria-label="Select Language">English<svg class="icon"
+                    rel="noopener noreferrer" target="_blank" ><svg class='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d='M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z'/></svg>  </a><span class="menu-item delimiter"></span><button class="menu-item language" aria-label="选择语言">简体中文<svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
-                    <select class="language-select" aria-label="Select Language" id="language-select-desktop"
-                        onchange="location = this.value;"><option value="/en/async-and-token-bucket-algorithm-batch-llm-api-call/"  selected>English</option><option value="/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/" >简体中文</option></select>
+                    <select class="language-select" aria-label="选择语言" id="language-select-desktop"
+                        onchange="location = this.value;"><option value="/en/async-and-leaky-bucket-algorithm-batch-llm-api-call/" >English</option><option value="/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/"  selected>简体中文</option></select>
                 </button><span class="menu-item search" id="search-desktop">
                     <input type="text"
-                        placeholder="Search titles or contents..."
+                        placeholder="搜索文章标题或内容..."
                         id="search-input-desktop">
-                    <button class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                    <button class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                         <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
                     </button>
-                    <button class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                    <button class="search-button search-clear" id="search-clear-desktop" title="清空">
                         <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"/></svg>
                     </button>
@@ -115,13 +114,13 @@
                         <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"/></svg>
                     </span>
-                </span><button class="menu-item theme-select" aria-label="Switch Theme">
+                </span><button class="menu-item theme-select" aria-label="切换主题">
                     <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"/></svg>
-                    <select class="color-theme-select" id="theme-select-desktop" aria-label="Switch Theme">
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                        <option value="auto">Auto</option>
+                    <select class="color-theme-select" id="theme-select-desktop" aria-label="切换主题">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="auto">跟随系统</option>
                     </select>
                 </button></div>
         </div>
@@ -130,7 +129,7 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/en/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
+                <a href="/zh-cn/" title="MartinLwx&#39;s Blog"><span id="mobile-header-typeit" class="typeit"></span></a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -139,13 +138,13 @@
         <div class="menu" id="menu-mobile"><div class="search-wrapper">
                 <div class="search mobile" id="search-mobile">
                     <input type="text"
-                        placeholder="Search titles or contents..."
+                        placeholder="搜索文章标题或内容..."
                         id="search-input-mobile">
-                    <button class="search-button search-toggle tw-h-10" id="search-toggle-mobile" title="Search">
+                    <button class="search-button search-toggle tw-h-10" id="search-toggle-mobile" title="搜索">
                         <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
                     </button>
-                    <button class="search-button search-clear tw-h-fit" id="search-clear-mobile" title="Clear">
+                    <button class="search-button search-clear tw-h-fit" id="search-clear-mobile" title="清空">
                         <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"/></svg>
                     </button>
@@ -155,20 +154,20 @@
                     </span>
                 </div>
                 <button class="search-cancel" id="search-cancel-mobile">
-                    Cancel
+                    取消
                 </button>
-            </div><a class="menu-item" href="/en/posts/" title="" >Posts</a><a class="menu-item" href="/en/tags/" title="" >Tags</a><a class="menu-item" href="/en/categories/" title="" >Categories</a><a class="menu-item" href="/en/about/" title="" >About</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" 
-                rel="noopener noreferrer" target="_blank" ><svg class='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d='M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z'/></svg></a><button class="menu-item theme-select tw-w-full" aria-label="Switch Theme">
+            </div><a class="menu-item" href="/zh-cn/posts/" title="" >所有文章</a><a class="menu-item" href="/zh-cn/tags/" title="" >标签</a><a class="menu-item" href="/zh-cn/categories/" title="" >分类</a><a class="menu-item" href="https://github.com/MartinLwx" title="GitHub" 
+                rel="noopener noreferrer" target="_blank" ><svg class='icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d='M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z'/></svg></a><button class="menu-item theme-select tw-w-full" aria-label="切换主题">
                 <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705 0 184 82.311 184 184 0 101.705-82.311 184-184 184z"/></svg>
-                <select class="color-theme-select" id="theme-select-mobile" aria-label="Switch Theme">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                    <option value="auto">Auto</option>
+                <select class="color-theme-select" id="theme-select-mobile" aria-label="切换主题">
+                    <option value="light">浅色</option>
+                    <option value="dark">深色</option>
+                    <option value="auto">跟随系统</option>
                 </select>
-            </button><button class="menu-item tw-w-full" title="">English<svg class="icon"
+            </button><button class="menu-item tw-w-full" title="">简体中文<svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
-                <select class="language-select" title="" onchange="location = this.value;"><option value="/en/async-and-token-bucket-algorithm-batch-llm-api-call/"  selected>English</option><option value="/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/" >简体中文</option></select>
+                <select class="language-select" title="" onchange="location = this.value;"><option value="/en/async-and-leaky-bucket-algorithm-batch-llm-api-call/" >English</option><option value="/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/"  selected>简体中文</option></select>
             </button></div>
     </div>
 </header>
@@ -178,63 +177,63 @@
 <div class="search-dropdown mobile">
     <div id="search-dropdown-mobile"></div>
 </div><main class="tw-mx-4 tw-flex-1"><div class="toc print:!tw-hidden" id="toc-auto">
-        <h2 class="toc-title">Contents</h2>
+        <h2 class="toc-title">目录</h2>
         <div class="toc-content" id="toc-content-auto"><nav id="TableOfContents">
   <ul>
-    <li><a href="#background">Background</a></li>
-    <li><a href="#environment-setup">Environment Setup</a></li>
-    <li><a href="#first-try-multithreading--requests">First try: Multithreading + Requests</a></li>
-    <li><a href="#second-try-async-programming-with-aiohttp">Second try: async programming with aiohttp</a></li>
-    <li><a href="#final-answer-aiohttp--token-bucket-algorithm">Final answer: aiohttp + token bucket algorithm</a></li>
-    <li><a href="#wrap-up">Wrap-up</a></li>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#环境设置">环境设置</a></li>
+    <li><a href="#首次尝试多线程--requests">首次尝试：多线程 + Requests</a></li>
+    <li><a href="#第二次尝试aiohttp-异步编程">第二次尝试：aiohttp 异步编程</a></li>
+    <li><a href="#最终版本aiohttp-异步编程--漏桶算法">最终版本：aiohttp 异步编程 + 漏桶算法</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
     </div><dialog id="toc-dialog" class="tw-max-w-full tw-w-full tw-max-h-full tw-h-full tw-ml-16">
         <div class="toc tw-mx-4 tw-max-w-full">
-            <h2 class="tw-mx-0 tw-my-6 tw-uppercase tw-text-2xl">Contents</h2>
+            <h2 class="tw-mx-0 tw-my-6 tw-uppercase tw-text-2xl">目录</h2>
             <div class="toc-content"><nav id="TableOfContents">
   <ul>
-    <li><a href="#background">Background</a></li>
-    <li><a href="#environment-setup">Environment Setup</a></li>
-    <li><a href="#first-try-multithreading--requests">First try: Multithreading + Requests</a></li>
-    <li><a href="#second-try-async-programming-with-aiohttp">Second try: async programming with aiohttp</a></li>
-    <li><a href="#final-answer-aiohttp--token-bucket-algorithm">Final answer: aiohttp + token bucket algorithm</a></li>
-    <li><a href="#wrap-up">Wrap-up</a></li>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#环境设置">环境设置</a></li>
+    <li><a href="#首次尝试多线程--requests">首次尝试：多线程 + Requests</a></li>
+    <li><a href="#第二次尝试aiohttp-异步编程">第二次尝试：aiohttp 异步编程</a></li>
+    <li><a href="#最终版本aiohttp-异步编程--漏桶算法">最终版本：aiohttp 异步编程 + 漏桶算法</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
         </div>
-    </dialog><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title" data-pagefind-meta="date:2025-06-18" data-pagefind-body>Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently</h1><div class="post-meta">
+    </dialog><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title" data-pagefind-meta="date:2025-06-18" data-pagefind-body>异步编程&#43;漏桶算法：批量调用 LLM API</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
-                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/ml-dl/"><svg class="icon"
+                </span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/ml-dl/"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>ML-DL</a></span></div>
             <div class="post-meta-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;<time datetime="2025-06-18">2025-06-18</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2025-06-18">2025-06-18</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1607 words&nbsp;
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2025-06-25">2025-06-25</time>&nbsp;<svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;约 2437 字&nbsp;
                     <svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;8 minutes&nbsp;</div>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="details toc print:!tw-block" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
-                    <span>Contents</span>
+                    <span>目录</span>
                     <span class="details-icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#background">Background</a></li>
-    <li><a href="#environment-setup">Environment Setup</a></li>
-    <li><a href="#first-try-multithreading--requests">First try: Multithreading + Requests</a></li>
-    <li><a href="#second-try-async-programming-with-aiohttp">Second try: async programming with aiohttp</a></li>
-    <li><a href="#final-answer-aiohttp--token-bucket-algorithm">Final answer: aiohttp + token bucket algorithm</a></li>
-    <li><a href="#wrap-up">Wrap-up</a></li>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#环境设置">环境设置</a></li>
+    <li><a href="#首次尝试多线程--requests">首次尝试：多线程 + Requests</a></li>
+    <li><a href="#第二次尝试aiohttp-异步编程">第二次尝试：aiohttp 异步编程</a></li>
+    <li><a href="#最终版本aiohttp-异步编程--漏桶算法">最终版本：aiohttp 异步编程 + 漏桶算法</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content" data-pagefind-body><h2 id="background" class="headerLink">
-    <a href="#background" class="header-mark"></a>Background</h2><p>Recently, at work, I&rsquo;ve been working on setting up a LLM evaluation platform. There&rsquo;s one particular scenario: we need to call an LLM API provided by another department to run model evaluations on a test dataset, but this LLM API has a rate limit of a maximum of 2 calls per second (2 RPS). Thus, my task essentially boils down to: <em>How to maximize concurrency to speed up model evaluation while strictly adhering to the API rate limits</em>. In this brief post, I will share my thoughts about approaching this task.</p>
-<h2 id="environment-setup" class="headerLink">
-    <a href="#environment-setup" class="header-mark"></a>Environment Setup</h2><p>For demonstration purposes, we&rsquo;ll use <code>fastapi</code> to create a <code>/chat</code> endpoint with a rate limit via <code>slowapi</code>, as shown below</p>
+            </div><div class="content" id="content" data-pagefind-body><h2 id="背景" class="headerLink">
+    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>最近在工作中着手模型评测平台的搭建，其中有这么一个场景：需要调用其他部门提供的 LLM API 进行在评测集上跑模型评测，但这个 LLM API 有请求速率限制 - 最多 1 秒调用 2 次（2 RPS）。所以我的任务概括来说就是：<em>如何在严格遵守 API 速率请求的情况下，最大提高并发度加快模型评测速度</em>。本文的内容主要记录了对这个任务的尝试，以及最后的解决方案</p>
+<h2 id="环境设置" class="headerLink">
+    <a href="#%e7%8e%af%e5%a2%83%e8%ae%be%e7%bd%ae" class="header-mark"></a>环境设置</h2><p>为了方便做演示，我这里采用 <code>fastapi</code> 搭建了 <code>/chat</code> 端点，并且用 <code>slowapi</code> 给 <code>/chat</code> 加上 API 速率限制，代码如下</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -345,10 +344,9 @@
 </span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;hello world&#34;</span></span></span></code></pre>
 </div>
-<p>Once the FastAPI service is running, we can treat <code>http://127.0.0.1:8000/chat</code> as a rate-limited LLM endpoint.</p>
-<h2 id="first-try-multithreading--requests" class="headerLink">
-    <a href="#first-try-multithreading--requests" class="header-mark"></a>First try: Multithreading + Requests</h2><p>Since it&rsquo;s an I/O-bound task, my first instinct is to use a thread pool for concurrency. For sending HTTP requests, I chose the popular <code>requests</code> library.</p>
-<p>Let&rsquo;s import all the libraries we need.</p>
+<p>本地启动 FastAPI 服务之后，<code>http://127.0.0.1:8000/chat</code> 就可以用来模拟带有速率限制的 LLM API 了</p>
+<h2 id="首次尝试多线程--requests" class="headerLink">
+    <a href="#%e9%a6%96%e6%ac%a1%e5%b0%9d%e8%af%95%e5%a4%9a%e7%ba%bf%e7%a8%8b--requests" class="header-mark"></a>首次尝试：多线程 + Requests</h2><p>显然这是一个 I/O 密集型任务，因此我的第一直觉就是用 Python 的多线程，搭配 <code>requests</code> 库试一下，首先导入必要的库</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -442,7 +440,7 @@
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span></span></span></code></pre>
 </div>
-<p>Next, we&rsquo;ll implement a function called <code>call_api</code> to send HTTP requests with retry logic.</p>
+<p>然后编写核心函数 <code>call_api</code>，它自带重试机制，并且会在发生错误的时候等待一段时间之后重试</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -558,7 +556,7 @@
 </span></span><span class="line"><span class="cl">            <span class="n">retry_sleep</span> <span class="o">=</span> <span class="n">retry_sleep</span><span class="o">**</span><span class="n">retry_multiplier</span>
 </span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Hit max retry limit&#34;</span><span class="p">)</span></span></span></code></pre>
 </div>
-<p>Next, let&rsquo;s create a thread pool of size 2 (to respect the rate limit) and use it to send our 10 HTTP requests.</p>
+<p>然后创建线程池，大小设置为 2（考虑到 API 速率限制是 1 秒 2 次），并假设需要请求 10 次</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -657,7 +655,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;=== </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">START</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Finish All Tasks ===&#34;</span><span class="p">)</span></span></span></code></pre>
 </div>
-<p>After launching the task, the log shows:</p>
+<p>下面是某一次的运行日志</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -770,8 +768,8 @@
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Request</span> <span class="mi">9</span><span class="p">]</span> <span class="n">SUCCESS</span> <span class="mf">20.02</span><span class="p">:</span> <span class="n">receive</span> <span class="n">hello</span> <span class="n">world</span>
 </span></span><span class="line"><span class="cl"><span class="o">===</span> <span class="mf">20.02</span> <span class="n">Finish</span> <span class="n">All</span> <span class="n">Tasks</span> <span class="o">===</span></span></span></code></pre>
 </div>
-<p>From the logs, we can see that it takes approximately 20 seconds to complete 10 HTTP requests - significantly longer than my expected 10 seconds. Given that the endpoint can handle 2 HTTP requests concurrently with a maximum response time of 5 seconds each, this performance is unexpected.</p>
-<p>To obtain more reliable performance metrics, I used <a href="https://github.com/sharkdp/hyperfine" target="_blank" rel="noopener noreferrer">hyperfine</a> and the result is:</p>
+<p>启动之后，我发现完成 10 个请求的时间<em>远远</em>没有达到理论速率。10 个请求按照 2 秒钟 1 个来算，再考虑得到一次模型回复最多等待 5 秒，那么理论上 10 秒钟就应该得到答案了，怎么也不会到 20 秒</p>
+<p>不信邪的我用 <a href="https://github.com/sharkdp/hyperfine" target="_blank" rel="noopener noreferrer">hyperfine</a> 进行了多次测试，下面是 <code>hyperfine</code> 的输出</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -865,7 +863,7 @@
 </span></span><span class="line"><span class="cl">  <span class="n">Time</span> <span class="p">(</span><span class="n">mean</span> <span class="err">±</span> <span class="n">σ</span><span class="p">):</span>     <span class="mf">18.688</span> <span class="n">s</span> <span class="err">±</span>  <span class="mf">2.007</span> <span class="n">s</span>    <span class="p">[</span><span class="n">User</span><span class="p">:</span> <span class="mf">0.118</span> <span class="n">s</span><span class="p">,</span> <span class="n">System</span><span class="p">:</span> <span class="mf">0.028</span> <span class="n">s</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Range</span> <span class="p">(</span><span class="nb">min</span> <span class="err">…</span> <span class="nb">max</span><span class="p">):</span>   <span class="mf">15.198</span> <span class="n">s</span> <span class="err">…</span> <span class="mf">22.165</span> <span class="n">s</span>    <span class="mi">10</span> <span class="n">runs</span></span></span></code></pre>
 </div>
-<p>Indeed, the solution above never completes 10 HTTP requests within 10 seconds - the average time is approximately 18 seconds. <em>How could this happen</em>? By analyzing the logs, I discovered some <em>unexpected</em> patterns.</p>
+<p>可以看到，确实从来没有一次可以在 10 秒钟之内完成 10 个请求的处理，平均需要 18 秒左右，那么<em>问题出在哪里了呢</em>？从日志输出中，我发现了<em>一丝端倪</em></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -960,8 +958,8 @@
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Request</span> <span class="mi">2</span><span class="p">]</span> <span class="n">Sending</span> <span class="mf">3.01</span>
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Request</span> <span class="mi">3</span><span class="p">]</span> <span class="n">Sending</span> <span class="mf">5.01</span></span></span></code></pre>
 </div>
-<p>The first 2 HTTP requests were sent immediately. However, the 3rd and 4th HTTP requests were delayed by 3 and 5 seconds respectively. This contradicts the expected behavior of sending 2 requests per second.</p>
-<p>🤔 The solution becomes obvious when you understand async programming. The <code>requests</code> library is synchronous - each <code>requests.get</code> call in the <code>call_api</code> method <em>blocks</em> the thread until receiving a response.</p>
+<p>一开始发送 2 个请求没问题，但是后续 2 个请求并没有立刻发送，而是分别等待了 3 秒和 5 秒后才继续发送请求，而我预期的是每一秒都要有 2 个请求发送</p>
+<p>🤔 如果你对异步编程有一定的了解的话，不难想明白其中的道理：requests 是同步的，<code>call_api</code> 函数里面发送请求后线程只能<em>阻塞等待</em> API 返回结果</p>
 <div class="details admonition note open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
@@ -969,9 +967,9 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p><em>Conclusion</em>: Avoid combining multithreading with the synchronous <code>requests</code> library for concurrent HTTP requests.</p></div></div></div><h2 id="second-try-async-programming-with-aiohttp" class="headerLink">
-    <a href="#second-try-async-programming-with-aiohttp" class="header-mark"></a>Second try: async programming with aiohttp</h2><p>After identifying the cause for the performance bottleneck, I discovered <code>aiohttp</code>, a popular async HTTP Client library. Its <a href="https://docs.aiohttp.org/en/stable/client_quickstart.html" target="_blank" rel="noopener noreferrer">official documentation</a> is well-written for developers with basic async knowledge.</p>
-<p>Let&rsquo;s make the <code>call_api</code> an asynchronous function, as shown below.</p>
+        <div class="admonition-content"><p><em>结论</em>：不要用多线程 + <code>requests</code> 并发 HTTP 请求</p></div></div></div><h2 id="第二次尝试aiohttp-异步编程" class="headerLink">
+    <a href="#%e7%ac%ac%e4%ba%8c%e6%ac%a1%e5%b0%9d%e8%af%95aiohttp-%e5%bc%82%e6%ad%a5%e7%bc%96%e7%a8%8b" class="header-mark"></a>第二次尝试：aiohttp 异步编程</h2><p>想明白问题之后，我有了解决问题的思路：用异步框架发送 HTTP 请求。在一番搜索之后，我找到了 <code>aiohttp</code>，<a href="https://docs.aiohttp.org/en/stable/client_quickstart.html" target="_blank" rel="noopener noreferrer">官方文档</a> 写得很简洁很好上手（如果你理解异步编程的话）</p>
+<p>首先改造一下 <code>call_api</code> 函数为异步的，主要是替换 <code>requests.get</code> 方法</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -1088,7 +1086,7 @@
 </span></span><span class="line"><span class="cl">            <span class="n">retry_sleep</span> <span class="o">=</span> <span class="n">retry_sleep</span><span class="o">**</span><span class="n">retry_multiplier</span>
 </span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Hit max retry limit&#34;</span><span class="p">)</span></span></span></code></pre>
 </div>
-<p>Next, let&rsquo;s write a <code>main</code> function to launch all tasks using <code>asyncio.gather</code>.</p>
+<p>然后写一个 <code>main</code> 函数并启动即可，这里用的是 <code>asyncio.gather</code> 方法</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -1192,7 +1190,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;=== </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">START</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Finish All Tasks ===&#34;</span><span class="p">)</span></span></span></code></pre>
 </div>
-<p>The logs are shown below.</p>
+<p>启动之后你可以看到如下的日志</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -1303,7 +1301,7 @@
 </span></span><span class="line"><span class="cl">[Request 6] FAIL 0.006951332092285156: retry in 3 seconds
 </span></span><span class="line"><span class="cl">...</span></span></code></pre>
 </div>
-<p>🤔 Eight out of ten HTTP requests failed due to rate limits. However, we did see some improvements - all HTTP requests have been sent <em>concurrently</em>. Now we just need to enforce rate limit compliance.</p>
+<p>🤔 启动了 10 个请求，有 8 个是失败的，显然这里失败是因为速率限制。但起码目前看来，发送 HTTP 请求的时候<em>不阻塞了</em>，只是需要找到一种方式限制 HTTP 请求的速率</p>
 <div class="details admonition note open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
@@ -1311,56 +1309,18 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p><em>Conclusion</em>: Use an asynchronous library such as <code>aiohttp</code> for concurrent HTTP requests.</p></div></div></div><h2 id="final-answer-aiohttp--token-bucket-algorithm" class="headerLink">
-    <a href="#final-answer-aiohttp--token-bucket-algorithm" class="header-mark"></a>Final answer: aiohttp + token bucket algorithm</h2><div class="details admonition tip open">
+        <div class="admonition-content"><p><em>结论</em>：用异步框架（如 <code>aiohttp</code>）并发你的 HTTP 请求</p></div></div></div><h2 id="最终版本aiohttp-异步编程--漏桶算法" class="headerLink">
+    <a href="#%e6%9c%80%e7%bb%88%e7%89%88%e6%9c%acaiohttp-%e5%bc%82%e6%ad%a5%e7%bc%96%e7%a8%8b--%e6%bc%8f%e6%a1%b6%e7%ae%97%e6%b3%95" class="header-mark"></a>最终版本：aiohttp 异步编程 + 漏桶算法</h2><div class="details admonition warning open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z"/></svg></span>Tip<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>Warning<span class="details-icon"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>Because the rate limit is 2 RPS, the <code>capacity</code> of the token bucket should be 2 and the <code>rate</code> should be 2 tokens/second.</p></div></div></div><p>The token bucket works like an actual bucket containing tokens. Each operation consumes tokens from the bucket before proceeding. Typically, tokens are replenished at a fixed rate. There are some key factors:</p>
-<ul>
-<li><code>rate</code>: replenished rate in tokens/second.</li>
-<li><code>tokens</code>: currently available tokens.</li>
-<li><code>capacity</code>: token bucket capacity.</li>
-<li><code>last_update</code>: timestamp of last bucket replenishment.</li>
-<li><code>need</code>: tokens required per operation.</li>
-</ul>
-<p>The detailed algorithm pseudo-code is shown below.</p>
-<ul>
-<li>Initialization
-<ul>
-<li><code>rate = ...</code>, initialize the <code>rate</code> with the specified rate - 2 in our example.</li>
-<li><code>capacity = ...</code>, initialize the token bucket capacity - 2 in our example.</li>
-<li><code>tokens = 0</code></li>
-<li><code>last_update = time.monotonic()</code></li>
-</ul>
-</li>
-<li>Do
-<ol>
-<li>Replenish tokens based on the time elapsed since <code>last_update</code>. Note that the tokens have an upper bound (<code>capacity</code>).</li>
-<li>Check the current <code>tokens</code>
-<ul>
-<li>If <code>tokens &gt;= need</code>, deduct <code>need</code> from <code>tokens</code>.</li>
-<li>Otherwise, just waiting <code>(need - tokens) / rate</code> seconds and return to step 1.</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<div class="details admonition tip open">
-    <div class="details-summary admonition-title">
-        <span class="icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z"/></svg></span>Tip<span class="details-icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
-    </div>
-    <div class="details-content">
-        <div class="admonition-content"><ol>
-<li>Since the <code>tokens</code> and <code>last_update</code> are shared variables across coroutines, we use <code>asyncio.Lock()</code> to ensure atomatic updates.</li>
-<li>We use <code>time.monotonic</code> instead of <code>time.time</code> because it guarantees strictly increasing timestamps, which is critical for correct elapsed time calculation.</li>
-</ol></div></div></div><p>The code is shown below.</p>
-<div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
+        <div class="admonition-content"><p>不要混淆漏桶算法和令牌桶算法，前者可以实现严格的速率限制，后者则可以允许突发流量，两者适用于不同的场景。这里因为我们想要的是严格遵循 API 速率限制，所以用漏桶算法更合适</p></div></div></div><p>漏桶算法，顾名思义，它是一个桶，但是这个桶会以<em>恒定速率</em>漏水。以这里处理 HTTP 请求为例，桶里装的是待发送的 HTTP 请求，“漏水速率”就是 HTTP 请求的发送速率（本文的场景下是 2 RPS）</p>
+<p>2 RPS 转换一下就是每隔 0.5 秒可以发一个 HTTP 请求，因此在每次发送 HTTP 请求之后，都需要等待这么一个时间间隔（用 <code>interval</code> 表示），为了代码写起来方便，可以维护一个变量 <code>next_available</code>，表示什么时候可以发下一个 HTTP 请求。但需要注意：并发发送 HTTP 请求的场景下，<code>next_available</code> 是一个是<em>共享变量</em>，它可能被多个协程改动，所以需要加锁，确保每次修改的时候是原子操作</p>
+<p>根据算法流程不难写出如下代码</p>
+<div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
     tw-flex 
@@ -1449,36 +1409,35 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">RateLimiter</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">capacity</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+      "><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LeakyBucketLimiter</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
-</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">rate</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">next_available</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">async</span> <span class="k">def</span> <span class="nf">acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">need</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">                <span class="n">elapsed</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span>
+</span></span><span class="line"><span class="cl">    <span class="k">async</span> <span class="k">def</span> <span class="nf">acquire</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wait_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_available</span> <span class="o">-</span> <span class="n">now</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">wait_time</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait_time</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                <span class="c1"># Add new tokens</span>
-</span></span><span class="line"><span class="cl">                <span class="n">new_tokens</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">elapsed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">new_tokens</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">+</span> <span class="n">new_tokens</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">&gt;=</span> <span class="n">need</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">-=</span> <span class="n">need</span>
-</span></span><span class="line"><span class="cl">                    <span class="k">return</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                <span class="n">deficit</span> <span class="o">=</span> <span class="n">need</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span>
-</span></span><span class="line"><span class="cl">                <span class="n">wait_time</span> <span class="o">=</span> <span class="n">deficit</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">wait_time</span><span class="p">)</span></span></span></code></pre>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">next_available</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span></span></span></code></pre>
 </div>
-<p>Next, we need to modify the previous written code:</p>
+<div class="details admonition warning open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>Warning<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>上面的代码有不少值得一提的细节，也是<em>容易犯错</em>的地方</p>
+<ol>
+<li><code>time.monotonic</code> 和 <code>time.time</code> 不一样，只有前者保证了单调性，适合用于计算时间差值，所以这里用这个</li>
+<li>用 <code>epsilon</code> 引入一些容忍度，让 HTTP 请求发送的速率更<em>保守</em>。这是关键一步，去掉这一步的话实际速率可能偶尔会超限制</li>
+</ol></div></div></div><p>再对前面的代码稍加修改</p>
 <div class="details admonition info open">
     <div class="details-summary admonition-title">
         <span class="icon"><svg class="icon"
@@ -1486,7 +1445,7 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>For simplicity, I&rsquo;ll omit the duplicate parts (marked with <code>...</code>)</p></div></div></div><div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
+        <div class="admonition-content"><p>为了简洁，重复的地方用 <code>...</code> 省略表示</p></div></div></div><div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
   <div class="
     
     tw-flex 
@@ -1577,7 +1536,7 @@
       tw-scrollbar-thin
       "><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">call_api</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
-</span></span><span class="line"><span class="cl">    <span class="n">rate_limiter</span><span class="p">:</span> <span class="n">RateLimiter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rate_limiter</span><span class="p">:</span> <span class="n">LeakyBucketLimiter</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="o">...</span>
@@ -1591,7 +1550,7 @@
 </span></span><span class="line"><span class="cl"><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 </span></span><span class="line"><span class="cl">    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;http://127.0.0.1:8000/chat&#34;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
-</span></span><span class="line"><span class="cl">        <span class="n">rate_limiter</span> <span class="o">=</span> <span class="n">RateLimiter</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rate_limiter</span> <span class="o">=</span> <span class="n">LeakyBucketLimiter</span><span class="p">(</span><span class="n">rate</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">results</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">            <span class="o">*</span><span class="p">[</span><span class="n">call_api</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">rate_limiter</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">urls</span><span class="p">)]</span>
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
@@ -1603,7 +1562,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;=== </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">START</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> Finish All Tasks ===&#34;</span><span class="p">)</span></span></span></code></pre>
 </div>
-<p>Finally, let&rsquo;s use <code>hyperfine</code> to test the performance.</p>
+<p>最后，用 <code>hyperfine</code> 测一下，结果如下所示</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -1694,29 +1653,36 @@
       tw-overflow-x-auto
       tw-scrollbar-thin
       "><span class="line"><span class="cl"><span class="n">Benchmark</span> <span class="mi">1</span><span class="p">:</span> <span class="n">uv</span> <span class="n">run</span> <span class="n">async_concurrency</span><span class="o">.</span><span class="n">py</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Time</span> <span class="p">(</span><span class="n">mean</span> <span class="err">±</span> <span class="n">σ</span><span class="p">):</span>      <span class="mf">9.766</span> <span class="n">s</span> <span class="err">±</span>  <span class="mf">0.552</span> <span class="n">s</span>    <span class="p">[</span><span class="n">User</span><span class="p">:</span> <span class="mf">0.173</span> <span class="n">s</span><span class="p">,</span> <span class="n">System</span><span class="p">:</span> <span class="mf">0.032</span> <span class="n">s</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Range</span> <span class="p">(</span><span class="nb">min</span> <span class="err">…</span> <span class="nb">max</span><span class="p">):</span>    <span class="mf">8.715</span> <span class="n">s</span> <span class="err">…</span> <span class="mf">10.240</span> <span class="n">s</span>    <span class="mi">10</span> <span class="n">runs</span></span></span></code></pre>
+</span></span><span class="line"><span class="cl">  <span class="n">Time</span> <span class="p">(</span><span class="n">mean</span> <span class="err">±</span> <span class="n">σ</span><span class="p">):</span>      <span class="mf">8.708</span> <span class="n">s</span> <span class="err">±</span>  <span class="mf">0.655</span> <span class="n">s</span>    <span class="p">[</span><span class="n">User</span><span class="p">:</span> <span class="mf">0.181</span> <span class="n">s</span><span class="p">,</span> <span class="n">System</span><span class="p">:</span> <span class="mf">0.035</span> <span class="n">s</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Range</span> <span class="p">(</span><span class="nb">min</span> <span class="err">…</span> <span class="nb">max</span><span class="p">):</span>    <span class="mf">7.332</span> <span class="n">s</span> <span class="err">…</span>  <span class="mf">9.328</span> <span class="n">s</span>    <span class="mi">10</span> <span class="n">runs</span></span></span></code></pre>
 </div>
-<p>The improvements are significant and it reached my expected speed.</p>
-<h2 id="wrap-up" class="headerLink">
-    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><p>The above pretty much captures my thought process while tackling this issue. As an AI engineer, I mostly work with Python multiprocessing for data processing and data analysis. This time, dealing with batching LLM API calls introduced me to new concepts like async programming and the token bucket algorithm — both of which were fresh territory for me. Overall, it was a fun challenge, and I learned a lot from it. :D</p>
+<p>可以看到，改进很明显，基本就达到了理论速度</p>
+<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p><em>结论</em>：使用漏桶算法<em>严格</em>限制请求速率</p></div></div></div><h2 id="总结" class="headerLink">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-mark"></a>总结</h2><p>上面基本还原了我在处理这个问题时候的解决思路。作为一名算法工程师，日常工作用 Python 多进程处理数据比较多，本次为了处理模型评测性能问题用到的异步编程、漏桶算法对我来说都是比较新的东西，整体下来还是挺有趣的，也学到了新的知识点 :0</p>
 </div>
 
         <div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2025-06-18</span>
+                <span>更新于 2025-06-25</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line print:!tw-hidden">
             <div class="post-info-md"></div>
-            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/" data-title="Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently" data-hashtags="Python,LLM,Algorithm,Performance-Engineering"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/" data-hashtag="Python"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/" data-title="Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/" data-title="Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/" data-title="Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/" data-title="Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently" data-web><svg class="icon"
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/" data-title="异步编程&#43;漏桶算法：批量调用 LLM API" data-hashtags="Python,LLM,Algorithm,Performance-Engineering"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/" data-hashtag="Python"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/" data-title="异步编程&#43;漏桶算法：批量调用 LLM API"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/" data-title="异步编程&#43;漏桶算法：批量调用 LLM API"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/" data-title="异步编程&#43;漏桶算法：批量调用 LLM API"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/" data-title="异步编程&#43;漏桶算法：批量调用 LLM API" data-web><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/></svg></button><script>
         function shareOnMastodon(title, link) {
             const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
@@ -1733,34 +1699,34 @@
             window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
         }
     </script>
-    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently&#34;, &#34;https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/&#34;)"><svg class="icon"
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;异步编程&#43;漏桶算法：批量调用 LLM API&#34;, &#34;https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/&#34;)"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg></button></div>
         </div>
     </div>
 
     <div class="post-info-more">
         <section class="post-tags"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/python/">Python</a>,&nbsp;<a href="/en/tags/llm/">LLM</a>,&nbsp;<a href="/en/tags/algorithm/">Algorithm</a>,&nbsp;<a href="/en/tags/performance-engineering/">Performance-Engineering</a></section>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/zh-cn/tags/python/">Python</a>,&nbsp;<a href="/zh-cn/tags/llm/">LLM</a>,&nbsp;<a href="/zh-cn/tags/algorithm/">Algorithm</a>,&nbsp;<a href="/zh-cn/tags/performance-engineering/">Performance-Engineering</a></section>
         <section class="print:!tw-hidden">
-            <span><button class="tw-text-fgColor-link-muted hover:tw-text-fgColor-link-muted-hover" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
+            <span><button class="tw-text-fgColor-link-muted hover:tw-text-fgColor-link-muted-hover" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav print:tw-hidden"><a href="/en/why-functor/" class="prev" rel="prev" title="Programming with Categories: Functor"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>Programming with Categories: Functor</a></div>
+    <div class="post-nav print:tw-hidden"><a href="/zh-cn/why-functor/" class="prev" rel="prev" title="范畴论与编程：Functor 是什么"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/></svg>范畴论与编程：Functor 是什么</a></div>
 </div>
 <div id="comments" class="print:!tw-hidden tw-pt-32 tw-pb-8"><div id="giscus"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
             </noscript></div></article></main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.8">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.147.9">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
             <div class="footer-line"></div>
             <div class="footer-line">
             </div>
-        </div></footer><div class="print:!tw-hidden tw-flex tw-flex-col tw-fixed tw-right-4 tw-bottom-4 tw-gap-2"><a href="#back-to-top" id="back-to-top-button" class="tw-transition-opacity tw-opacity-0 tw-block tw-bg-bgColor-secondary tw-rounded-full" style="padding: 0.6rem; line-height: 1.3rem; font-size: 1rem;" title="Back to Top">
+        </div></footer><div class="print:!tw-hidden tw-flex tw-flex-col tw-fixed tw-right-4 tw-bottom-4 tw-gap-2"><a href="#back-to-top" id="back-to-top-button" class="tw-transition-opacity tw-opacity-0 tw-block tw-bg-bgColor-secondary tw-rounded-full" style="padding: 0.6rem; line-height: 1.3rem; font-size: 1rem;" title="回到顶部">
       <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg>
   </a>
@@ -1768,13 +1734,13 @@
   <button id="toc-drawer-button" class="tw-block tw-bg-bgColor-secondary tw-rounded-full md:tw-hidden" style="padding: 0.6rem; line-height: 1.3rem; font-size: 1rem;">
       <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg>
-  </button><a href="#comments" id="view-comments" class="tw-block tw-bg-bgColor-secondary tw-rounded-full" style="padding: 0.6rem; line-height: 1.3rem; font-size: 1rem;" title="View Comments">
+  </button><a href="#comments" id="view-comments" class="tw-block tw-bg-bgColor-secondary tw-rounded-full" style="padding: 0.6rem; line-height: 1.3rem; font-size: 1rem;" title="查看评论">
       <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32z"/></svg>
   </a></div>
 <link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
         <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript>
-<script>window.config={"algoliasearch.min.js":"/lib/algoliasearch/algoliasearch-lite.umd.min.js","autocomplete.min.js":"/lib/autocomplete/autocomplete.min.js","comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"O4EMEES3VS","algoliaIndex":"index.en","algoliaSearchKey":"36fdaa364fae083332d0c8709026bd62","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script
+<script>window.config={"algoliasearch.min.js":"/lib/algoliasearch/algoliasearch-lite.umd.min.js","autocomplete.min.js":"/lib/autocomplete/autocomplete.min.js","comment":{"giscus":{"darkTheme":"dark","dataCategory":"Announcements","dataCategoryId":"DIC_kwDOGfB5nc4Ccjd0","dataEmitMetadata":"0","dataInputPosition":"bottom","dataLang":"en","dataLoading":"lazy","dataMapping":"pathname","dataReactionsEnabled":"1","dataRepo":"MartinLwx/martinlwx.github.io","dataRepoId":"R_kgDOGfB5nQ","dataStrict":"0","lightTheme":"preferred_color_scheme"}},"data":{"desktop-header-typeit":"MartinLwx's blog","mobile-header-typeit":"MartinLwx's blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"O4EMEES3VS","algoliaIndex":"index.zh-cn","algoliaSearchKey":"36fdaa364fae083332d0c8709026bd62","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"sharerjs":true,"table":{"sort":true},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"desktop-header-typeit":["desktop-header-typeit"],"mobile-header-typeit":["mobile-header-typeit"]},"duration":-1,"speed":100}};</script><script
     src="/lib/tablesort/tablesort.min.js"
     
   ></script><script

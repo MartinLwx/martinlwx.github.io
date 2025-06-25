@@ -7,11 +7,11 @@
             <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Async &#43; Token Bucket: How to Batch LLM API Calls Efficiently</title>
-    <link>https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/</link>
+    <title>Async &#43; Leaky Bucket: How to Batch LLM API Calls Efficiently</title>
+    <link>https://martinlwx.github.io/en/async-and-leaky-bucket-algorithm-batch-llm-api-call/</link>
     <pubDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/async-and-token-bucket-algorithm-batch-llm-api-call/</guid>
+    </author><guid>https://martinlwx.github.io/en/async-and-leaky-bucket-algorithm-batch-llm-api-call/</guid>
     <description><![CDATA[<h2 id="background" class="headerLink">
     <a href="#background" class="header-mark"></a>Background</h2><p>Recently, at work, I&rsquo;ve been working on setting up a LLM evaluation platform. There&rsquo;s one particular scenario: we need to call an LLM API provided by another department to run model evaluations on a test dataset, but this LLM API has a rate limit of a maximum of 2 calls per second (2 RPS). Thus, my task essentially boils down to: <em>How to maximize concurrency to speed up model evaluation while strictly adhering to the API rate limits</em>. In this brief post, I will share my thoughts about approaching this task.</p>]]></description>
 </item><item>
@@ -126,51 +126,48 @@ $$</p>
     </author><guid>https://martinlwx.github.io/en/call-graph-generation-using-class-hierarchy-analysis/</guid>
     <description><![CDATA[<h2 id="the-key-to-call-graph-construction" class="headerLink">
     <a href="#the-key-to-call-graph-construction" class="header-mark"></a>The key to call graph construction</h2><p>For an OOP programming language, the key challenge in call graph construction is handling the virtual call, as it may involve <em>multiple target methods</em>, as shown in the following table<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-
-<div class="table-wrapper">
-  <table>
-    <thead>
-        <tr>
-            <th style="text-align: "></th>
-            <th style="text-align: ">Static Call</th>
-            <th style="text-align: ">Special Call</th>
-            <th style="text-align: ">Virtual Call</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: ">Instruction</td>
-            <td style="text-align: "><code>invokestatic</code></td>
-            <td style="text-align: "><code>invokespecial</code></td>
-            <td style="text-align: "><code>invokeinterface, invokevirtual</code></td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Receiver Objects</td>
-            <td style="text-align: ">❌</td>
-            <td style="text-align: ">✅</td>
-            <td style="text-align: ">✅</td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Target Methods</td>
-            <td style="text-align: ">Static Method</td>
-            <td style="text-align: ">Constructor, Private Instance Method, Superclass Instance Method</td>
-            <td style="text-align: ">Other Instance Method</td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Count of Possible Target Methods</td>
-            <td style="text-align: ">1</td>
-            <td style="text-align: ">1</td>
-            <td style="text-align: ">$\ge 1$ (polymorphism)</td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Determinancy</td>
-            <td style="text-align: ">Compile-time</td>
-            <td style="text-align: ">Compile-time</td>
-            <td style="text-align: ">Run-time</td>
-        </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Static Call</th>
+          <th>Special Call</th>
+          <th>Virtual Call</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Instruction</td>
+          <td><code>invokestatic</code></td>
+          <td><code>invokespecial</code></td>
+          <td><code>invokeinterface, invokevirtual</code></td>
+      </tr>
+      <tr>
+          <td>Receiver Objects</td>
+          <td>❌</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td>Target Methods</td>
+          <td>Static Method</td>
+          <td>Constructor, Private Instance Method, Superclass Instance Method</td>
+          <td>Other Instance Method</td>
+      </tr>
+      <tr>
+          <td>Count of Possible Target Methods</td>
+          <td>1</td>
+          <td>1</td>
+          <td>$\ge 1$ (polymorphism)</td>
+      </tr>
+      <tr>
+          <td>Determinancy</td>
+          <td>Compile-time</td>
+          <td>Compile-time</td>
+          <td>Run-time</td>
+      </tr>
+  </tbody>
+</table>
 <h2 id="the-method-call-and-method-signature" class="headerLink">
     <a href="#the-method-call-and-method-signature" class="header-mark"></a>The method call and method signature</h2><p>Let&rsquo;s take Java as an example; a method call may have this form.</p>]]></description>
 </item><item>

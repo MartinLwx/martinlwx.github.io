@@ -7,13 +7,13 @@
             <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>异步编程&#43;令牌桶算法：批量调用 LLM API</title>
-    <link>https://martinlwx.github.io/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/</link>
+    <title>异步编程&#43;漏桶算法：批量调用 LLM API</title>
+    <link>https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/</link>
     <pubDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/</guid>
+    </author><guid>https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/</guid>
     <description><![CDATA[<h2 id="背景" class="headerLink">
-    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>最近在工作中着手模型评测平台的搭建，其中有这么一个场景：需要调用其他部门提供的 LLM API 进行在评测集上跑模型评测，但这个 LLM API 有请求速率限制 - 最多 1 秒调用 2 次。所以我的任务概括来说就是：<em>如何在严格遵守 API 速率请求的情况下，最大提高并发度加快模型评测速度</em>。本文的内容主要记录了对这个任务的尝试，以及最后的解决方案</p>]]></description>
+    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>最近在工作中着手模型评测平台的搭建，其中有这么一个场景：需要调用其他部门提供的 LLM API 进行在评测集上跑模型评测，但这个 LLM API 有请求速率限制 - 最多 1 秒调用 2 次（2 RPS）。所以我的任务概括来说就是：<em>如何在严格遵守 API 速率请求的情况下，最大提高并发度加快模型评测速度</em>。本文的内容主要记录了对这个任务的尝试，以及最后的解决方案</p>]]></description>
 </item><item>
     <title>范畴论与编程：Functor 是什么</title>
     <link>https://martinlwx.github.io/zh-cn/why-functor/</link>
@@ -79,51 +79,48 @@ $$</p>
     </author><guid>https://martinlwx.github.io/zh-cn/call-graph-generation-using-class-hierarchy-analysis/</guid>
     <description><![CDATA[<h2 id="调用图生成的核心问题" class="headerLink">
     <a href="#%e8%b0%83%e7%94%a8%e5%9b%be%e7%94%9f%e6%88%90%e7%9a%84%e6%a0%b8%e5%bf%83%e9%97%ae%e9%a2%98" class="header-mark"></a>调用图生成的核心问题</h2><p>对于 OOP 语言来说，搭建调用图的核心问题是<em>有多态的场景下</em>如何确定到底是哪一个方法被调用了，下面是 Java 的一些可能的函数调用 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-
-<div class="table-wrapper">
-  <table>
-    <thead>
-        <tr>
-            <th style="text-align: "></th>
-            <th style="text-align: ">Static Call</th>
-            <th style="text-align: ">Special Call</th>
-            <th style="text-align: ">Virtual Call</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: ">Instruction</td>
-            <td style="text-align: "><code>invokestatic</code></td>
-            <td style="text-align: "><code>invokespecial</code></td>
-            <td style="text-align: "><code>invokeinterface, invokevirtual</code></td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Receiver Objects</td>
-            <td style="text-align: ">❌</td>
-            <td style="text-align: ">✅</td>
-            <td style="text-align: ">✅</td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Target Methods</td>
-            <td style="text-align: ">Static Method</td>
-            <td style="text-align: ">Constructor, Private Instance Method, Superclass Instance Method</td>
-            <td style="text-align: ">Other Instance Method</td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Count of Possible Target Methods</td>
-            <td style="text-align: ">1</td>
-            <td style="text-align: ">1</td>
-            <td style="text-align: ">$\ge 1$ (polymorphism)</td>
-        </tr>
-        <tr>
-            <td style="text-align: ">Determinancy</td>
-            <td style="text-align: ">Compile-time</td>
-            <td style="text-align: ">Compile-time</td>
-            <td style="text-align: ">Run-time</td>
-        </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Static Call</th>
+          <th>Special Call</th>
+          <th>Virtual Call</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Instruction</td>
+          <td><code>invokestatic</code></td>
+          <td><code>invokespecial</code></td>
+          <td><code>invokeinterface, invokevirtual</code></td>
+      </tr>
+      <tr>
+          <td>Receiver Objects</td>
+          <td>❌</td>
+          <td>✅</td>
+          <td>✅</td>
+      </tr>
+      <tr>
+          <td>Target Methods</td>
+          <td>Static Method</td>
+          <td>Constructor, Private Instance Method, Superclass Instance Method</td>
+          <td>Other Instance Method</td>
+      </tr>
+      <tr>
+          <td>Count of Possible Target Methods</td>
+          <td>1</td>
+          <td>1</td>
+          <td>$\ge 1$ (polymorphism)</td>
+      </tr>
+      <tr>
+          <td>Determinancy</td>
+          <td>Compile-time</td>
+          <td>Compile-time</td>
+          <td>Run-time</td>
+      </tr>
+  </tbody>
+</table>
 <p>其中 Virtual Call 因为包含了多态，方法调用存在<em>多个</em>可能的目标方法</p>]]></description>
 </item><item>
     <title>前缀和数组: 快速计算数组区间和</title>

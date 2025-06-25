@@ -5,13 +5,13 @@
         <description>ML-DL - 分类 - MartinLwx&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
             <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/categories/ml-dl/" rel="self" type="application/rss+xml" /><item>
-    <title>异步编程&#43;令牌桶算法：批量调用 LLM API</title>
-    <link>https://martinlwx.github.io/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/</link>
+    <title>异步编程&#43;漏桶算法：批量调用 LLM API</title>
+    <link>https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/</link>
     <pubDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/zh-cn/async-and-token-bucket-algorithm-batch-llm-api-call/</guid>
+    </author><guid>https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/</guid>
     <description><![CDATA[<h2 id="背景" class="headerLink">
-    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>最近在工作中着手模型评测平台的搭建，其中有这么一个场景：需要调用其他部门提供的 LLM API 进行在评测集上跑模型评测，但这个 LLM API 有请求速率限制 - 最多 1 秒调用 2 次。所以我的任务概括来说就是：<em>如何在严格遵守 API 速率请求的情况下，最大提高并发度加快模型评测速度</em>。本文的内容主要记录了对这个任务的尝试，以及最后的解决方案</p>]]></description>
+    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>最近在工作中着手模型评测平台的搭建，其中有这么一个场景：需要调用其他部门提供的 LLM API 进行在评测集上跑模型评测，但这个 LLM API 有请求速率限制 - 最多 1 秒调用 2 次（2 RPS）。所以我的任务概括来说就是：<em>如何在严格遵守 API 速率请求的情况下，最大提高并发度加快模型评测速度</em>。本文的内容主要记录了对这个任务的尝试，以及最后的解决方案</p>]]></description>
 </item><item>
     <title>Transformer 架构变化：旋转位置编码 (RoPE)</title>
     <link>https://martinlwx.github.io/zh-cn/rotary-position-embedding/</link>
