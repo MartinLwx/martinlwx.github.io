@@ -4,10 +4,21 @@
         <link>https://martinlwx.github.io/en/</link>
         <description>Welcome to my blog :)</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Fri, 12 Sep 2025 23:53:24 &#43;0800</lastBuildDate>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Tue, 23 Sep 2025 22:00:13 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>TSNE &#43; K-Means: Data visualization and Clustering</title>
+    <title>Better TF-IDF: BM25</title>
+    <link>https://martinlwx.github.io/en/better-tf-idf-bm25/</link>
+    <pubDate>Tue, 23 Sep 2025 22:00:13 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/better-tf-idf-bm25/</guid>
+    <description><![CDATA[<h2 id="intro" class="headerLink">
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>You probably encountered BM25 numerous times when reading papers from the LLM (RAG) or information retrieval domain. This algorithm is a ranking method that computes relevance scores for documents given a user query.</p>
+<p>If you examine the BM25 formula carefully, you will notice its similarity to the classic TF-IDF. In fact, BM25 is <em>an enhanced version</em> of TF-IDF, as we&rsquo;ll explore shortly.</p>
+<h2 id="the-bm25" class="headerLink">
+    <a href="#the-bm25" class="header-mark"></a>The BM25</h2><p>Before we dive into the mechanism of BM25, let&rsquo;s establish some notations:</p>]]></description>
+</item><item>
+    <title>t-SNE &#43; K-Means: Data visualization and Clustering</title>
     <link>https://martinlwx.github.io/en/k-means-tutorial/</link>
     <pubDate>Fri, 12 Sep 2025 23:53:24 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
@@ -139,57 +150,5 @@ $$</p>
     <description><![CDATA[<h2 id="intro" class="headerLink">
     <a href="#intro" class="header-mark"></a>Intro</h2><p>As a machine learning engineer, I work with vast amounts of data, performing tasks such as data cleaning and information extraction. These tasks are typically data-parallel and do not involve race conditions. Such workloads are usually referred to as CPU-intensive tasks. Typically, these tasks can be formulated as <code>map(fn, data)</code>.</p>
 <p>Python is limited by its Global Interpreter Lock (GIL). As a result, using multithreading could not improve the performance. Instead, multiprocessing should be used. Usually, you would not manually manage all the launched processes but would instead use a process pool. Today, I&rsquo;d like to discuss two different APIs related to multiprocessing: <code>multiprocessing.Pool</code> and <code>concurrent.futures.ProcessPoolExecutor</code>, and provide a simple comparison.</p>]]></description>
-</item><item>
-    <title>Class Hierarchy Analysis: a quick way to generate call graph</title>
-    <link>https://martinlwx.github.io/en/call-graph-generation-using-class-hierarchy-analysis/</link>
-    <pubDate>Wed, 19 Mar 2025 22:27:38 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/call-graph-generation-using-class-hierarchy-analysis/</guid>
-    <description><![CDATA[<h2 id="the-key-to-call-graph-construction" class="headerLink">
-    <a href="#the-key-to-call-graph-construction" class="header-mark"></a>The key to call graph construction</h2><p>For an OOP programming language, the key challenge in call graph construction is handling the virtual call, as it may involve <em>multiple target methods</em>, as shown in the following table<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<table>
-  <thead>
-      <tr>
-          <th></th>
-          <th>Static Call</th>
-          <th>Special Call</th>
-          <th>Virtual Call</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Instruction</td>
-          <td><code>invokestatic</code></td>
-          <td><code>invokespecial</code></td>
-          <td><code>invokeinterface, invokevirtual</code></td>
-      </tr>
-      <tr>
-          <td>Receiver Objects</td>
-          <td>❌</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td>Target Methods</td>
-          <td>Static Method</td>
-          <td>Constructor, Private Instance Method, Superclass Instance Method</td>
-          <td>Other Instance Method</td>
-      </tr>
-      <tr>
-          <td>Count of Possible Target Methods</td>
-          <td>1</td>
-          <td>1</td>
-          <td>$\ge 1$ (polymorphism)</td>
-      </tr>
-      <tr>
-          <td>Determinancy</td>
-          <td>Compile-time</td>
-          <td>Compile-time</td>
-          <td>Run-time</td>
-      </tr>
-  </tbody>
-</table>
-<h2 id="the-method-call-and-method-signature" class="headerLink">
-    <a href="#the-method-call-and-method-signature" class="header-mark"></a>The method call and method signature</h2><p>Let&rsquo;s take Java as an example; a method call may have this form.</p>]]></description>
 </item></channel>
 </rss>

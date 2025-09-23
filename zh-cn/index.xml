@@ -4,10 +4,18 @@
         <link>https://martinlwx.github.io/zh-cn/</link>
         <description>Welcome to my blog :)</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Fri, 12 Sep 2025 23:53:24 &#43;0800</lastBuildDate>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Tue, 23 Sep 2025 22:00:13 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>TSNE &#43; K-Means：可视化与聚类</title>
+    <title>Better TF-IDF: BM25</title>
+    <link>https://martinlwx.github.io/zh-cn/better-tf-idf-bm25/</link>
+    <pubDate>Tue, 23 Sep 2025 22:00:13 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/zh-cn/better-tf-idf-bm25/</guid>
+    <description><![CDATA[<h2 id="引言" class="headerLink">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>如果你经常翻阅 LLM (RAG) 或者信息检索相关文献的话，想必会经常看到 BM25 算法。BM25 是用来对检索到的东西按照<em>相关性</em>排序的算法。即在给定用户查询（Query）的情况下，计算每一个文档（Document）的相关性（Relevance）并进行排序</p>]]></description>
+</item><item>
+    <title>t-SNE &#43; K-Means：可视化与聚类</title>
     <link>https://martinlwx.github.io/zh-cn/k-means-tutorial/</link>
     <pubDate>Fri, 12 Sep 2025 23:53:24 &#43;0800</pubDate><author>
         <name>MartinLwx</name>
@@ -95,56 +103,5 @@ $$</p>
     </author><guid>https://martinlwx.github.io/zh-cn/data-parallel-with-two-different-api/</guid>
     <description><![CDATA[<h2 id="intro" class="headerLink">
     <a href="#intro" class="header-mark"></a>Intro</h2><p>作为一名算法工程师，在我的工作中经常都会写各种 Python 脚本来处理大量数据，做数据清洗、信息提取等。通常情况下，这些数据的处理并不涉及竞争条件（Race Condition），而是简单的数据并行（Data Parallel），属于 <em>CPU 密集型任务</em>。通常情况下，这样的任务可以被抽象为 <code>map(fn, data)</code> 的模式</p>]]></description>
-</item><item>
-    <title>Class Hierarchy Analysis 算法: 快速生成调用图</title>
-    <link>https://martinlwx.github.io/zh-cn/call-graph-generation-using-class-hierarchy-analysis/</link>
-    <pubDate>Wed, 19 Mar 2025 22:27:38 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/zh-cn/call-graph-generation-using-class-hierarchy-analysis/</guid>
-    <description><![CDATA[<h2 id="调用图生成的核心问题" class="headerLink">
-    <a href="#%e8%b0%83%e7%94%a8%e5%9b%be%e7%94%9f%e6%88%90%e7%9a%84%e6%a0%b8%e5%bf%83%e9%97%ae%e9%a2%98" class="header-mark"></a>调用图生成的核心问题</h2><p>对于 OOP 语言来说，搭建调用图的核心问题是<em>有多态的场景下</em>如何确定到底是哪一个方法被调用了，下面是 Java 的一些可能的函数调用 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<table>
-  <thead>
-      <tr>
-          <th></th>
-          <th>Static Call</th>
-          <th>Special Call</th>
-          <th>Virtual Call</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Instruction</td>
-          <td><code>invokestatic</code></td>
-          <td><code>invokespecial</code></td>
-          <td><code>invokeinterface, invokevirtual</code></td>
-      </tr>
-      <tr>
-          <td>Receiver Objects</td>
-          <td>❌</td>
-          <td>✅</td>
-          <td>✅</td>
-      </tr>
-      <tr>
-          <td>Target Methods</td>
-          <td>Static Method</td>
-          <td>Constructor, Private Instance Method, Superclass Instance Method</td>
-          <td>Other Instance Method</td>
-      </tr>
-      <tr>
-          <td>Count of Possible Target Methods</td>
-          <td>1</td>
-          <td>1</td>
-          <td>$\ge 1$ (polymorphism)</td>
-      </tr>
-      <tr>
-          <td>Determinancy</td>
-          <td>Compile-time</td>
-          <td>Compile-time</td>
-          <td>Run-time</td>
-      </tr>
-  </tbody>
-</table>
-<p>其中 Virtual Call 因为包含了多态，方法调用存在<em>多个</em>可能的目标方法</p>]]></description>
 </item></channel>
 </rss>
