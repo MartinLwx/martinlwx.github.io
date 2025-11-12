@@ -275,6 +275,7 @@
 <li>想清楚什么是 base case ?</li>
 <li>怎么把当前的问题分解为更简单的问题 ? 时刻要记住我们定义的函数的定义</li>
 </ol>
+
 </blockquote><p>后面我也会按照这个思路来解决这个 lab 中的递归问题</p>
 <h2 id="recursion" class="headerLink">
     <a href="#recursion" class="header-mark"></a>Recursion</h2><hr>
@@ -282,6 +283,7 @@
     <a href="#q2-summation" class="header-mark"></a>Q2: Summation</h3><blockquote>
   <p>Write a recursive implementation of <code>summation</code>, which takes a positive integer <code>n</code> and a function <code>term</code>. It applies <code>term</code> to every number from <code>1</code> to <code>n</code> including <code>n</code> and returns the sum.</p>
 <p><strong>Important:</strong> Use recursion; the tests will fail if you use any loops (for, while).</p>
+
 </blockquote><ol>
 <li>
 <p>什么是这一题的 base case ? 这个很容易想到, 因为我们要处理从 <code>1</code> 到 <code>n</code>, 显然当 <code>n = 1</code> 的时候就是我们的 base case, 此时返回 <code>term(n)</code></p>
@@ -506,6 +508,7 @@
 <p>Every number in Pascal&rsquo;s triangle is defined as the sum of the item above it and the item above and to the left of it. Use <code>0</code> if the item does not exist.</p>
 <p>Define the procedure <code>pascal(row, column)</code> which takes a row and a column, and finds the value of the item at that position in Pascal&rsquo;s triangle. Rows and columns are zero-indexed; that is, the first row is row 0 instead of 1 and the first column is column 0 instead of column 1.</p>
 <p>For example, the item at row 2, column 1 in Pascal&rsquo;s triangle is 2.</p>
+
 </blockquote><p>这个问题是很经典的帕斯卡三角形问题了, 根据定义我们可以知道在 <code>Pascal(i, j)</code> 这个位置, 要得到它的值我们可以用 <code>Pascal(i - 1, j) + Pascal(i - 1, j - 1)</code> 来计算, 显然这个定义式天然给出了递归分解子问题的方式. 那么我们剩下要解决的就是「什么是 base case ?」, 显然只要是在第一列(<code>j = 0</code>)或者说行号和列号(<code>i == j</code>)相等, 那么就是 <code>1</code>. 再看看上面的帕斯卡三角形示例, 你会发现这两个 base case + 递归分解子问题的方式我们就可以计算出所有的情况.</p>
 <p>注意我们还要考虑到索引非法的情况(<code>j &gt; i</code>)</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -629,6 +632,7 @@
 <p><img class="tw-inline" loading="lazy" src='https://inst.eecs.berkeley.edu/~cs61a/fa21/lab/lab04/assets/grid.jpg'   alt="grid"  ></p>
 <p>For example, the 2 by 2 grid has a total of two ways for the insect to move from the start to the goal. For the 3 by 3 grid, the insect has 6 diferent paths (only 3 are shown above).</p>
 <p><em>Hint:</em> What happens if we hit the top or rightmost edge?</p>
+
 </blockquote><p>从题目中我们可以知道我们只能向上走或者向右走, 也就是说假设我们处在 <code>path(i, j)</code> 这个位置, 那么我们只可能是从左边或者是从下边来的, 那么走到 <code>path(i, j)</code> 有几种走法呢 ? 显然, 它等于 <code>path(i, j - 1) + path(i - 1, j)</code>. (这里左下角才是 <code>(0, 0)</code>). 那么我们剩下要解决的就是「什么是 base case ?」, 也就是一直往上走和一直往右走这两种, 都只有 1 中走法. 如下面这个表格所示:</p>
 
 <div class="table-wrapper">
@@ -687,6 +691,7 @@
   <p>Implement the function <code>couple</code>, which takes in two lists and returns a list that contains lists with i-th elements of two sequences coupled together. You can assume the lengths of two sequences are the same. Try using a list comprehension.</p>
 <blockquote>
   <p><em>Hint</em>: You may find the built in <a href="https://www.w3schools.com/python/ref_func_range.asp" target="_blank" rel="noopener noreferrer">range</a> function helpful.</p>
+
 </blockquote>
 </blockquote><p>这个问题简单, 因为两个是等长的 list, 所以我们只要用同一个索引从两个 list 中取数即可</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -804,6 +809,7 @@
 <p>See the doctest for examples.</p>
 <blockquote>
   <p><em>Note</em>: your answer can only be <em>one line long</em>. You should make use of list comprehensions!</p>
+
 </blockquote>
 </blockquote><p>这个其实也容易, 就是多了一个 <code>if</code> 语句来过滤掉不符合条件的结果而已</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -910,6 +916,7 @@
   <p>A common way of shuffling cards is known as the <a href="https://www.youtube.com/watch?v=JmbVNyIiD54" target="_blank" rel="noopener noreferrer">riffle shuffle</a>. The shuffle produces a new configuration of cards in which the top card is followed by the middle card, then by the second card, then the card after the middle, and so forth.</p>
 <p>Write a list comprehension that riffle shuffles a sequence of items. You can assume the sequence contains an even number of items.</p>
 <p><em>Hint:</em> There are two ways you can write this as a single list comprension: 1) You may find the expression <code>k%2</code>, which evaluates to 0 on even numbers and 1 on odd numbers, to be alternatively access the beginning and middle of the deck. 2) You can utilize an if expression in your comprehension for the odd and even numbers respectively.</p>
+
 </blockquote><p>这一个问题会稍微难一点, 我们其实是要想办法得到正确的索引, 显然索引为奇数和偶数的时候情况并不相同. 我们可以看如下的表格找一下规律⬇️:</p>
 
 <div class="table-wrapper">
@@ -1101,7 +1108,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
             </noscript></div></article></main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.150.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.152.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

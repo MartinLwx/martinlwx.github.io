@@ -238,6 +238,7 @@
 <p><strong>Important:</strong> Use list mutation to modify the original list. No new lists should be created or returned.</p>
 <blockquote>
   <p><strong>Note:</strong> If the values passed into <code>entry</code> and <code>elem</code> are equivalent, make sure you&rsquo;re not creating an infinitely long list while iterating through it. If you find that your code is taking more than a few seconds to run, the function may be in a loop of inserting new values.</p>
+
 </blockquote>
 </blockquote><p>注意我们不能 <code>for</code> 循环来一边遍历这个 <code>list</code> 一边进行修改, 我记得我之前在《Effective Python》看过这一点. 其实自己 debug 就可以发现, 因为一开始用 <code>for i in range(len(lst))</code> 的时候就固定了, 但其实你在 <code>for</code> 循环里面会插入新的值, 这个 <code>list</code> 其实是变得更长的(但是 <code>i</code> 还是在原来的范围里), 所以后面超过本来长度的元素就会看不到.</p>
 <p>注意下面这个代码是错误的🙅‍♂️</p>
@@ -485,6 +486,7 @@
   <p>Implement <code>count_occurrences</code>, which takes in an iterator <code>t</code> and returns the number of times the value <code>x</code> appears in the first <code>n</code> elements of <code>t</code>. A value appears in a sequence of elements if it is equal to an entry in the sequence.</p>
 <blockquote>
   <p><strong>Note:</strong> You can assume that <code>t</code> will have at least <code>n</code> elements.</p>
+
 </blockquote>
 </blockquote><p>这一道题主要是要让我们学会使用 <code>iter</code> 和 <code>next</code> 这两个函数. 我们可以用 <code>while n &gt; 0</code> 来控制只访问前 <code>n</code> 个位置, 做一个简单的判读来计数即可</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
@@ -610,7 +612,9 @@
   <p>Implement <code>repeated</code>, which takes in an iterator <code>t</code> and returns the first value in <code>t</code> that appears <code>k</code> times in a row.</p>
 <blockquote>
   <p><strong>Note:</strong> You can assume that the iterator <code>t</code> will have a value that appears at least <code>k</code> times in a row. If you are receiving a <code>StopIteration</code>, your <code>repeated</code> function is likely not identifying the correct value.</p>
+
 </blockquote><p>Your implementation should iterate through the items in a way such that if the same iterator is passed into <code>repeated</code> twice, it should continue in the second call at the point it left off in the first. An example of this behavior is in the doctests.</p>
+
 </blockquote><p>我们在这个问题重要解决两个问题:</p>
 <ol>
 <li>如何找到连续的 <code>k</code> 个值 ? 需要设置 <code>last_val</code> 来记住上一个值是什么, 这样才能和当前的值进行对比. 用一个 <code>while True:</code> 来不断找即可(题目保证一定找得到, 所以不用怕死循环)</li>
@@ -799,7 +803,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
             </noscript></div></article></main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.150.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.152.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

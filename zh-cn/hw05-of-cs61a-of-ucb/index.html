@@ -243,8 +243,10 @@
 <p>Permutations may be yielded in any order. Note that the doctests test whether you are yielding all possible permutations, but not in any particular order. The built-in <code>sorted</code> function takes in an iterable object and returns a list containing the elements of the iterable in non-decreasing order.</p>
 <blockquote>
   <p><em>Hint:</em> If you had the permutations of all the elements in <code>seq</code> not including the first element, how could you use that to generate the permutations of the full <code>seq</code>?</p>
+
 </blockquote><blockquote>
   <p><em>Hint:</em> Remember, it&rsquo;s possible to loop over generator objects because generators are iterators!</p>
+
 </blockquote>
 </blockquote><p>题意就是要我们返回一个 generator, 这个 generator 会一个个返回列表的所有排列组合. 这个 Hint 明摆着我们要用递归的方法解决这个问题. 很容易想到这一道题的 base case, 如下</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
@@ -471,6 +473,7 @@
   <p>Define a generator function <code>path_yielder</code> which takes in a tree <code>t</code>, a value <code>value</code>, and returns a generator object which yields each path from the root of <code>t</code> to a node that has label <code>value</code>.</p>
 <p>Each path should be represented as a list of the labels along that path in the tree. You may yield the paths in any order.</p>
 <p>We have provided a skeleton for you. You do not need to use this skeleton, but if your implementation diverges significantly from it, you might want to think about how you can get it to fit the skeleton.</p>
+
 </blockquote><p>题目让我们返回从根结点出发到达所有标签为 <code>value</code> 的路径. 注意给我们的提示, 我们要实现的函数应该如下所示:</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -703,6 +706,7 @@
     <a href="#q3-preorder" class="header-mark"></a>Q3: Preorder</h3><blockquote>
   <p>Define the function <code>preorder</code>, which takes in a tree as an argument and returns a list of all the entries in the tree in the order that <code>print_tree</code> would print them.</p>
 <p>The following diagram shows the order that the nodes would get printed, with the arrows representing function calls.</p>
+
 </blockquote><p>又是树的先序遍历问题, 这真的是一个十分经典的问题. 我们要递归访问这一棵树的所有结点, 从根结点出发, 注意我们是先记住根结点的值再去看它的子树, 并递归式处理这样的问题.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -816,6 +820,7 @@
     <a href="#q4-generate-preorder" class="header-mark"></a>Q4: Generate Preorder</h3><blockquote>
   <p>Similarly to <code>preorder</code> in Question 3, define the function <code>generate_preorder</code>, which takes in a tree as an argument and now instead <code>yield</code>s the entries in the tree in the order that <code>print_tree</code> would print them.</p>
 <p><strong>Hint:</strong> How can you modify your implementation of <code>preorder</code> to <code>yield from</code> your recursive calls instead of returning them?</p>
+
 </blockquote><p>仍旧是先序遍历的问题, 整体解法上很像 Q3, 只是现在我们不需要用一个 <code>result</code> 来存储遍历的序列, 因为我们要返回的是 generator. 但这个算法的逻辑还是一致的, 先看根结点, 然后去看它的子树的结点. 如果想对 <code>yield from</code> 有更深的了解, 我们可以看看这个人的<a href="http://simeonvisser.com/posts/python-3-using-yield-from-in-generators-part-1.html" target="_blank" rel="noopener noreferrer">这篇文章</a></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -927,8 +932,10 @@
 <p><code>remainders_generator</code> takes in an integer <code>m</code>, and yields <code>m</code> different generators. The first generator is a generator of multiples of <code>m</code>, i.e. numbers where the remainder is 0. The second is a generator of natural numbers with remainder 1 when divided by <code>m</code>. The last generator yields natural numbers with remainder <code>m - 1</code> when divided by <code>m</code>.</p>
 <blockquote>
   <p><em>Hint</em>: To create a generator of infinite natural numbers, you can call the <code>naturals</code> function that&rsquo;s provided in the starter code.</p>
+
 </blockquote><blockquote>
   <p><em>Hint</em>: Consider defining an inner generator function. Each yielded generator varies only in that the elements of each generator have a particular remainder when divided by <code>m</code>. What does that tell you about the argument(s) that the inner function should take in?</p>
+
 </blockquote>
 </blockquote><p>这个问题如果你对 python 的 generator 一点都不了解的话, 一时要写出这样的代码是比较困难的, 我会推荐你先阅读这个<a href="https://realpython.com/introduction-to-python-generators/" target="_blank" rel="noopener noreferrer">教程</a>.</p>
 <p>在阅读上面的材料之后我们开始以前来想这个问题要怎么解决. 其实它就是要返回 <code>m</code> 个 generator, 第 <code>i</code> 个 generator 里面分别是除以 <code>m</code> 得到余数为 <code>i</code> 的所有数.</p>
@@ -1222,7 +1229,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
             </noscript></div></article></main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.150.0">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
+                    由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.152.2">Hugo</a> 强力驱动&nbsp;|&nbsp;主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

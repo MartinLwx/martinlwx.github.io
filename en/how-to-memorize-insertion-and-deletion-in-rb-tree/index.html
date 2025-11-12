@@ -322,8 +322,10 @@
 </ul>
 <blockquote>
   <p>💡 To help readers understand how to transform between 2-3-4 tree and Red-black tree, I have used a colored transparent box to highlight the equivalent parts before and after the transformation</p>
+
 </blockquote><blockquote>
   <p>💡 I chose to use specific numerical values instead of abstract symbols because it provides a more intuitive understanding and makes it easier for readers to find connections between 2-3-4 tree and Red-black tree</p>
+
 </blockquote><h3 id="its-parent-node-is-black" class="headerLink">
     <a href="#its-parent-node-is-black" class="header-mark"></a>Its parent node is black</h3><p>A trivial case woudl be, the newly insertion node&rsquo;s parent node is black. By the definition of the Red-black tree, we know we don&rsquo;t need to change anything</p>
 <figure><img src="/img/rbtree_insertion_parent_is_black.png">
@@ -337,6 +339,7 @@
 <p>Please note that all of these forms are equivalent. Below, I will demonstrate how to operate the first example shown in the above diagram</p>
 <blockquote>
   <p>💡 In the subsequent discussions of other scenarios, they may also have equivalent forms. However, the methods are generally similar, so I will pick one example to explain each time.</p>
+
 </blockquote><figure><img src="/img/rbtree_insertion_no_uncle.png">
 </figure>
 
@@ -372,8 +375,10 @@
 <h3 id="the-node-to-delete-has-a-single-right-childred" class="headerLink">
     <a href="#the-node-to-delete-has-a-single-right-childred" class="header-mark"></a>The node to delete has a single right child(red)</h3><blockquote>
   <p>💡 Based on the deletion procedure of BST, we know that <strong>the node <code>z</code> to be deleted does not have a left child</strong>. If It has a right child, we will denote it as <code>y</code></p>
+
 </blockquote><blockquote>
   <p>💡 The yellow node represents the unknown color or is irrelevant</p>
+
 </blockquote><figure><img src="/img/rbtree_deletion_with_red_child.png">
 </figure>
 
@@ -382,6 +387,7 @@
     <a href="#the-node-to-delete-has-a-single-right-childblack" class="header-mark"></a>The node to delete has a single right child(black)</h3><p>Let&rsquo;s temporarily replace the black <code>z</code> with the black <code>y</code>, and mark <code>y</code> as a &ldquo;double black&rdquo; node. *In the diagram, a black node with a circular border represents a &ldquo;double black&rdquo; node<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
 <blockquote>
   <p>💡 In the context of a Red-black tree, &ldquo;double black&rdquo; means that we need two black nodes on this side. In the context of a 2-3-4 tree, it corresponds to an underflow situation after you delete a key in a 2-node</p>
+
 </blockquote><figure><img src="/img/rbtree_deletion_double_black.png">
 </figure>
 
@@ -394,8 +400,10 @@
 <p><em>In the above example, when we transform it into an equivalent 2-3-4 tree deletion operation, we encounter a situation in the 2-3-4 tree where a transfer operation is required because the sibling nodes <code>6, 7</code> is a 3-node, and we need to borrow a key from them. The transfer operation involves moving the key from the parent node to the position of the deleted node, and then moving the minimum key from the sibling node to the parent node to fill the gap</em></p>
 <blockquote>
   <p>💡 Note that now <code>4</code> and <code>5</code> are two black nodes. Previously, this was a special &ldquo;double black&rdquo; node, but now that we have two black nodes, the &ldquo;double black&rdquo; node is no longer necessary. That&rsquo;s also the reason why it&rsquo;s called a &ldquo;double black&rdquo; node—we need to remind ourselves that two black nodes are needed here.</p>
+
 </blockquote><blockquote>
   <p>💡 Note that the color of node <code>6</code> is the same as the original color of node <code>5</code></p>
+
 </blockquote><h4 id="if-the-sibling-node-is-black-and-it-has-two-black-children" class="headerLink">
     <a href="#if-the-sibling-node-is-black-and-it-has-two-black-children" class="header-mark"></a>If the sibling node is black and it has two black children</h4><figure><img src="/img/rbtree_deletion_black_uncle_with_black_children.png">
 </figure>
@@ -403,6 +411,7 @@
 <p><em>In the above example, when we transform it into an equivalent 2-3-4 tree deletion operation, we encounter a situation in the 2-3-4 tree where a fusion operation is required because the sibling node <code>7</code> is a 2-node and cannot lend a key. The fusion operation involves borrowing a key from the parent node and merging it with the sibling node to form a 3-node - <code>5, 7</code></em></p>
 <blockquote>
   <p>💡 However, note that in this fusion operation, when we borrow a key from the parent node, it may cause the parent node to <strong>underflow</strong>, just as we may encounter overflow when inserting a new node.</p>
+
 </blockquote><p>Based on the node mappings rules, node <code>5</code> in this example should be colored black, and we can get rid of the &ldquo;double black&rdquo; node. However, <strong>we should not forget that <code>5</code> itself has its own color</strong></p>
 <ul>
 <li>If <code>5</code> was originally red, then changing it to black is not a problem because node <code>7</code> is now red</li>
@@ -412,6 +421,7 @@
     <a href="#if-the-sibling-node-is-red-and-it-has-two-black-children" class="header-mark"></a>If the sibling node is red and it has two black children</h4><p><strong>The last scenario is when the sibling node is red and has two black children</strong></p>
 <blockquote>
   <p>💡 Note that if the sibling node is red, then the parent should be a black node, as a Red-black tree does not allow two consecutive red nodes</p>
+
 </blockquote><p>This situation can be cleverly transformed into one of the previous cases</p>
 <figure><img src="/img/rbtree_deletion_black_uncle_with_red_children.png">
 </figure>
@@ -492,7 +502,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://giscus.app/">giscus</a>.
             </noscript></div></article></main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.150.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.152.2">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 0.4.2"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2025<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
