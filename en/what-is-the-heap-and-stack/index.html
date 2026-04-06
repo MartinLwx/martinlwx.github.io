@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" /><title>What is stack and heap - MartinLwx&#39;s Blog</title><meta name="Description" content="the differences between the stack and the heap"><meta property="og:url" content="https://martinlwx.github.io/en/what-is-the-heap-and-stack/">
+    <meta name="robots" content="noodp" /><title>System programming: stack and heap - MartinLwx&#39;s Blog</title><meta name="Description" content="the differences between the stack and the heap"><meta property="og:url" content="https://martinlwx.github.io/en/what-is-the-heap-and-stack/">
   <meta property="og:site_name" content="MartinLwx&#39;s Blog">
-  <meta property="og:title" content="What is stack and heap">
+  <meta property="og:title" content="System programming: stack and heap">
   <meta property="og:description" content="the differences between the stack and the heap">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
@@ -18,7 +18,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://martinlwx.github.io/logo.png">
-  <meta name="twitter:title" content="What is stack and heap">
+  <meta name="twitter:title" content="System programming: stack and heap">
   <meta name="twitter:description" content="the differences between the stack and the heap">
 <meta name="application-name" content="MartinLwx&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
@@ -29,12 +29,12 @@
 
 <link rel="canonical" href="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/en/vim-macro-101/" /><link rel="next" href="https://martinlwx.github.io/en/pattern-matching-in-python/" />
 <link rel="stylesheet" href="/css/main.min.css"><link rel="stylesheet" href="/css/style.min.css"><script type="application/ld+json">{"@context": "https://schema.org","@type": "BlogPosting",
-        "headline": "What is stack and heap",
+        "headline": "System programming: stack and heap",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/what-is-the-heap-and-stack/"
-        },"genre": "posts","keywords":["heap","stack","system programming"],"wordcount":  2278 ,
+        },"genre": "posts","keywords":["heap","stack","system programming"],"wordcount":  2224 ,
         "url": "https://martinlwx.github.io/en/what-is-the-heap-and-stack/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -184,7 +184,7 @@
       <ul>
         <li><a href="#terms">Terms</a></li>
         <li><a href="#stack-allocation">Stack allocation</a></li>
-        <li><a href="#an-example-fibonacci-sequence">An example: fibonacci sequence</a></li>
+        <li><a href="#an-example-fibonacci-sequence">An example: Fibonacci sequence</a></li>
         <li><a href="#the-data-on-the-stack">The data on the stack</a></li>
       </ul>
     </li>
@@ -194,7 +194,7 @@
         <li><a href="#the-data-on-the-heap">The data on the heap</a></li>
       </ul>
     </li>
-    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
@@ -209,7 +209,7 @@
       <ul>
         <li><a href="#terms">Terms</a></li>
         <li><a href="#stack-allocation">Stack allocation</a></li>
-        <li><a href="#an-example-fibonacci-sequence">An example: fibonacci sequence</a></li>
+        <li><a href="#an-example-fibonacci-sequence">An example: Fibonacci sequence</a></li>
         <li><a href="#the-data-on-the-stack">The data on the stack</a></li>
       </ul>
     </li>
@@ -219,12 +219,12 @@
         <li><a href="#the-data-on-the-heap">The data on the heap</a></li>
       </ul>
     </li>
-    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
         </div>
-    </dialog><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title" data-pagefind-meta="date:2022-09-19" data-pagefind-body>What is stack and heap</h1><div class="post-meta">
+    </dialog><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title" data-pagefind-meta="date:2022-09-19" data-pagefind-body>System programming: stack and heap</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
@@ -233,7 +233,7 @@
             <div class="post-meta-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2278 words&nbsp;
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2224 words&nbsp;
                     <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;10 minutes&nbsp;</div>
         </div><div class="details toc print:!tw-block" id="toc-static"  kept="">
@@ -250,7 +250,7 @@
       <ul>
         <li><a href="#terms">Terms</a></li>
         <li><a href="#stack-allocation">Stack allocation</a></li>
-        <li><a href="#an-example-fibonacci-sequence">An example: fibonacci sequence</a></li>
+        <li><a href="#an-example-fibonacci-sequence">An example: Fibonacci sequence</a></li>
         <li><a href="#the-data-on-the-stack">The data on the stack</a></li>
       </ul>
     </li>
@@ -260,22 +260,28 @@
         <li><a href="#the-data-on-the-heap">The data on the heap</a></li>
       </ul>
     </li>
-    <li><a href="#wrap-up">Wrap up</a></li>
+    <li><a href="#wrap-up">Wrap-up</a></li>
     <li><a href="#refs">Refs</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content" data-pagefind-body><h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark"></a>Intro</h2><p>If you&rsquo;ve been using dynamic languages like Python, Javascript, etc., you probably won&rsquo;t notice the difference between stack and heap. Because these languages have garbage collectors (GCs) that will automatically manage memory for you, you just need to program at a high level without considering the details. The bad news is that GC is not a cost-free design. No matter how well designed a GC algorithm is, the performance of the code will be degraded to some extent. If you have been in programming for a long time, you may have heard something like &ldquo;the recursion explodes the stack&rdquo;. You may or may not click on the search engine to understand the difference between stack and heap. Chances are you just clicked into this article :)</p>
-<blockquote>
-  <p>📒 Although GC will degrade the performance, it removes the mental burden of manually managing memory for developers, which can greatly speed up software development. This is sacrificing performance for development speed. However, when the performance bottleneck occurs in the later stage of the software, it is necessary to study how to refactor or even rewrite the key parts of code to improve performance.</p>
-
-</blockquote><p>The stack and heap I mentioned here <strong>are not the heap and stack in the data structure</strong>, but the two mechanisms of memory management. Understanding the detailed differences between stack and heap helps us understand some programming languages that are closer to the low-level, <em>such as Rust, C, C++, etc</em>. In Rust, the most important concept is ownership. Mastering the ownership can make you feel easier when you are learning other designs in rust😄.</p>
+    <a href="#intro" class="header-mark"></a>Intro</h2><p>If you&rsquo;ve been using dynamic languages like Python, JavaScript, etc., you probably won&rsquo;t notice the difference between stack and heap. Because these languages have garbage collectors (GCs) that will automatically manage memory for you, you just need to program at a high level without considering the details. The bad news is that GC is not a cost-free design. No matter how well-designed a GC algorithm is, the performance of the code will be degraded to some extent. If you have been in programming for a long time, you may have heard something like &ldquo;the recursion explodes the stack&rdquo;. You may or may not click on the search engine to understand the difference between stack and heap. Chances are you just clicked into this article :)</p>
+<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>Although GC will degrade the performance, it removes the mental burden of manually managing memory for developers, which can greatly speed up software development. This is sacrificing performance for development speed. However, when the performance bottleneck occurs in the later stages of the software, it is necessary to study how to refactor or even rewrite the key parts of code to improve performance.</p></div></div></div><p>The stack and heap I mentioned here <em>are not the heap and stack in the data structure</em>, but the two mechanisms of memory management. Understanding the detailed differences between stack and heap helps us understand some programming languages that are closer to the low-level, <em>such as Rust, C, C++, etc</em>. In Rust, the most important concept is ownership. Mastering the ownership can make you feel more at ease when learning other language constructs in Rust😄.</p>
 <h2 id="the-layout-of-a-program-in-memory" class="headerLink">
-    <a href="#the-layout-of-a-program-in-memory" class="header-mark"></a>The layout of a program in memory</h2><p>To run a program, it must be loaded into the memory. During the process of the program running, the data also needs to be read into the memory, so have you ever wondered how all this is distributed in the memory? I will give you a rough illustration below<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+    <a href="#the-layout-of-a-program-in-memory" class="header-mark"></a>The layout of a program in memory</h2><p>To run a program, it must be loaded into memory. During program execution, data must also be loaded into memory—have you ever wondered how it is laid out there? I will give you a rough illustration below<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
 <hr>
-<p><img class="tw-inline" loading="lazy" src='/img/program_layout_in_memory.png'     ></p>
+<figure><img src="/img/program_layout_in_memory.png">
+</figure>
+
 <hr>
-<p>In the image above, the meanings of different parts:</p>
+<p>In the image above, the meanings of the different parts:</p>
 <ul>
 <li>text: store code</li>
 <li>data: store the initialized static variables. <em>such as global variable, static variable</em></li>
@@ -284,40 +290,52 @@
 <li>stack</li>
 </ul>
 <p>What is stored on the heap and stack will be discussed later.</p>
-<blockquote>
-  <p>📒 The thing to remember here is that the stack and the heap are moving closer to each other as they are growing. The stack grows from <strong>high address -&gt; low address</strong>, and the heap grows from <strong>low address -&gt; high address</strong>. After understanding this, you will get a better understanding when you see that the <code>sp</code> pointer is got subtracted in the assembly code.</p>
-
-</blockquote><blockquote>
-  <p>📒 It seems that as we allocate more and more memory, the stack and heap may collide (because they are getting closer to each other). However, there is no need to worry about this problem, because: 1) This layout is happening in virtual memory. Today&rsquo;s processors are generally 64-bit, and the capacity is very large. 2) Before the conflict, it is very likely that your physical memory has been exhausted long ago, this should be your first concern.</p>
-
-</blockquote><h2 id="stack" class="headerLink">
+<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>The thing to remember here is that the stack and the heap are moving closer to each other as they are growing. The stack grows from <em>high address -&gt; low address</em>, and the heap grows from <em>low address -&gt; high address</em>. After understanding this, you will get a better understanding when you see that the <code>sp</code> pointer is subtracted in the assembly code.</p>
+<p>It seems that as we allocate more and more memory, the stack and heap may collide (because they are getting closer to each other). However, there is no need to worry about this problem, because: 1) This layout is happening in virtual memory. Today&rsquo;s processors are generally 64-bit, and the capacity is very large. 2) Before the conflict, it is very likely that your physical memory has been exhausted long ago; this should be your first concern.</p></div></div></div><h2 id="stack" class="headerLink">
     <a href="#stack" class="header-mark"></a>Stack</h2><h3 id="terms" class="headerLink">
     <a href="#terms" class="header-mark"></a>Terms</h3><ul>
-<li><strong>Stack pointer(SP)</strong>: the value of a specific register, which stores the address of the <em>top</em> of the stack</li>
-<li><strong>Stack frame</strong>: created as function calls are made, it is a frame of data(for one function call) that gets pushed onto the stack.</li>
-<li><strong>push</strong>: allocating space on the stack</li>
-<li><strong>pop</strong>: free space on the stack</li>
+<li><em>Stack pointer(SP)</em>: the value of a specific register, which stores the address of the <em>top</em> of the stack</li>
+<li><em>Stack frame</em>: created as function calls are made, it is a frame of data(for one function call) that gets pushed onto the stack.</li>
+<li><em>push</em>: allocating space on the stack</li>
+<li><em>pop</em>: free space on the stack</li>
 </ul>
 <h3 id="stack-allocation" class="headerLink">
-    <a href="#stack-allocation" class="header-mark"></a>Stack allocation</h3><p>The biggest feature of the stack is the last in first out (LIFO), which is also the pattern we follow when allocating and freeing space on the stack. Allocating space on the stack is quite simple, we just need to modify the value of the stack pointer. Naturally, from the bottom of the stack (<code>A</code> in the figure below) to the top of the stack (the position pointed to by <code>sp</code>) is the space we have allocated.</p>
+    <a href="#stack-allocation" class="header-mark"></a>Stack allocation</h3><p>The biggest feature of the stack is the last-in-first-out (LIFO), which is also the pattern we follow when allocating and freeing space on the stack. Allocating space on the stack is quite simple; we just need to modify the value of the stack pointer. Naturally, from the bottom of the stack (<code>A</code> in the figure below) to the top of the stack (the position pointed to by <code>sp</code>) is the space we have allocated.</p>
 <p>The following figure<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> shows the simple logic behind:</p>
 <hr>
-<p><img class="tw-inline" loading="lazy" src='/img/stack_and_sp.png'     ></p>
+<figure><img src="/img/stack_and_sp.png">
+</figure>
+
 <hr>
-<p>It should be emphasized again here that the stack grows from <strong>high address -&gt; low address</strong>, so from left to right in the above figure is <strong>high address -&gt; low address</strong>.</p>
+<p>It should be emphasized again that the stack grows from <em>high address -&gt; low address</em>, so from left to right in the above figure is <em>high address -&gt; low address</em>.</p>
 <p>How does the function call work(simplified version)?</p>
 <ul>
 <li>Function call: subtract the value of <code>sp</code>  -&gt; construct the stack frame for the called function, push them to the stack -&gt; enter the callee</li>
-<li>Function exit: just reverse the above process</li>
+<li>Function exit: reverse the above process</li>
 </ul>
-<blockquote>
-  <p>The full procedure of function call can be found on <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-
-</blockquote><blockquote>
-  <p>📒 The problem to be worried about when allocating space on the stack is: do not keep allocating which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. <em>For example, in Python, you can use <code>sys.getrecursionlimit()</code> to modify the size limit of the stack</em>. In some programming languages, we can also change the recursive function to the tail recursion version, which can benefit from the optimizations.</p>
-
-</blockquote><h3 id="an-example-fibonacci-sequence" class="headerLink">
-    <a href="#an-example-fibonacci-sequence" class="header-mark"></a>An example: fibonacci sequence</h3><p>When explaining recursion in CS courses, we usually use the Fibonacci sequence as an example. Now we use <code>F(n)</code> to represent the <code>n</code>th value of the Fibonacci sequence, then the formulas are:</p>
+<div class="details admonition quote open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"/></svg></span>Quote<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>The full procedure of the function call can be found on <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p></div></div></div><div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>The problem to be worried about when allocating space on the stack is: do not keep allocating, which causes the stack to blow up (that is, the famous Stack Overflow problem). Keep this in mind when writing recursive functions. You can choose to implement the function in an iterative way or consider increasing the size limit of the stack. For example, in Python, you can use <code>sys.getrecursionlimit()</code> to modify the size limit of the stack. In some programming languages, we can also transform the recursive function to a tail-recursion version, which can benefit from the optimizations.</p></div></div></div><h3 id="an-example-fibonacci-sequence" class="headerLink">
+    <a href="#an-example-fibonacci-sequence" class="header-mark"></a>An example: Fibonacci sequence</h3><p>When explaining recursion in CS courses, we usually use the Fibonacci sequence as an example. Now we use <code>F(n)</code> to represent the <code>n</code>th value of the Fibonacci sequence, then the formulas are:</p>
 <ul>
 <li><code>F(0) = 0</code></li>
 <li><code>F(1) = 1</code></li>
@@ -527,54 +545,52 @@
 </span></span><span class="line"><span class="cl"><span class="n">stack</span><span class="p">:</span> <span class="n">F</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                         <span class="c1"># Function return, return to the body of F(4)</span></span></span></code></pre>
 </div>
 <h3 id="the-data-on-the-stack" class="headerLink">
-    <a href="#the-data-on-the-stack" class="header-mark"></a>The data on the stack</h3><p><strong>Memory space management on the stack is achieved by modifying the value of the <code>sp</code> pointer</strong>, so we can conclude that:</p>
+    <a href="#the-data-on-the-stack" class="header-mark"></a>The data on the stack</h3><p><em>Memory space management on the stack is achieved by modifying the value of the <code>sp</code> pointer</em>, so we can conclude that:</p>
 <ol>
-<li>It is very efficient when allocating or freeing the space on the stack. We can think of it as <code>O(1)</code> complexity.</li>
-<li>The logic of this LIFO of the stack is relatively simple. The compiler can shandle it for us. As developers, we do not need to intervene in this process.</li>
+<li>It is very efficient when allocating or freeing the space on the stack, as we only need to change the <code>sp</code>. We can think of it as <code>O(1)</code> complexity.</li>
+<li>The logic of this LIFO of the stack is relatively simple. The compiler can handle it for us. As developers, we do not need to intervene in this process.</li>
 <li>To modify the <code>sp</code> pointer, we need to know how much space will be used, so the data on the stack should be a fixed and known size(at compile time). As for data of variable size, this is the problem to be solved by the heap.</li>
 </ol>
 <h2 id="heap" class="headerLink">
-    <a href="#heap" class="header-mark"></a>Heap</h2><p>The disadvantage of the stack allocation is: <strong>it can not handle variable size data</strong>, and we can&rsquo;t know how much the value of <code>sp</code> needs to be modified at this time.</p>
-<p>How do you bridge the gap between variable-sized data and stack? This requires the use of pointers. Although the size of the actual data stored is unknown, the size of the pointer is fixed (usually, it is equal to the word size of the underlying machine), so we can <strong>store a fixed-size pointer on the stack</strong>, let it point to <strong>the real data stored on the heap</strong>.</p>
+    <a href="#heap" class="header-mark"></a>Heap</h2><p>The disadvantage of the stack allocation is: <em>it can not handle variable-size data</em>, and we can&rsquo;t know how much the value of <code>sp</code> needs to be modified at this time.</p>
+<p>How do you bridge the gap between variable-sized data and a stack? This requires the use of pointers. Although the size of the actual data stored is unknown, the size of the pointer is fixed (usually, it is equal to the word size of the underlying machine), so we can <em>store a fixed-size pointer on the stack</em>, let it point to <em>the real data stored on the heap</em>.</p>
 <h3 id="heap-allocation" class="headerLink">
-    <a href="#heap-allocation" class="header-mark"></a>Heap allocation</h3><p>As mentioned earlier, allocating memory on the heap is finding a large enough space on the heap, returning a pointer to this location, and then pushing the pointer onto the stack.</p>
-<p>Later, when we want to access this data, we can dereference the pointer. The <code>*</code> operator in C or Rust is used for this purpose. Hopefully understanding this will make it easier for you to learn pointers. :)</p>
+    <a href="#heap-allocation" class="header-mark"></a>Heap allocation</h3><p>As mentioned earlier, allocating memory on the heap involves finding a large enough space on the heap, returning a pointer that points to this location, and then pushing the pointer onto the stack.</p>
+<p>Later, when we want to access this data, we can dereference the pointer. The <code>*</code> operator in C or Rust is used for this purpose. Hopefully, understanding this will make it easier for you to learn pointers. :)</p>
 <p>Unlike simply modifying the <code>sp</code> value on stack allocation, memory management on the heap is much more complicated. Including the following points:</p>
 <ol>
-<li>The location and size of the memory that can be allocated on the heap are arbitrary (within the physical memory size limit), we need to invent some algorithm and data structure to trace the usage. This brings great difficulties to memory management on the heap.</li>
+<li>The location and size of the memory that can be allocated on the heap are arbitrary (within the physical memory size limit). We need to invent an algorithm and a data structure to trace the usage. This brings great difficulties to memory management on the heap.</li>
 <li>The efficiency of allocating space on the heap is also relatively low. We need to find a space of sufficient size. This process of finding is more time-consuming than directly modifying the value of <code>sp</code>.</li>
 <li>We must also deal with the problem of &ldquo;fragmentation&rdquo;. Because the allocated space on the heap is scattered everywhere, a lot of fragments will be left in the memory in the process of heap allocation. The extreme case is: the total size of the fragments meets your requirements, but because they are scattered all over the memory and cannot be used together, the program throws an out-of-memory warning.</li>
 </ol>
-<blockquote>
-  <p>📒 The memory that can be allocated on the heap is way larger than the stack, but better management mechanisms are needed to handle this more complex situation. <strong>For developers, it also causes a certain burden. We can&rsquo;t rely on the compiler to automatically handle it for us, we have to manage the memory manually</strong>. If you forget to call <code>free()</code> after allocating space, then your program will have a <strong>memory leak problem</strong>. Not to mention other issues such as dangling pointers and double-free.</p>
-
-</blockquote><h3 id="the-data-on-the-heap" class="headerLink">
+<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>The memory that can be allocated on the heap is way larger than the stack, but better management mechanisms are needed to handle this more complex situation. <em>For developers, it also causes a certain burden. We can&rsquo;t rely on the compiler to automatically handle it for us; we have to manage the memory manually</em>. If you forget to call <code>free()</code> after allocating space, then your program will have a <em>memory leak problem</em>. Not to mention other issues such as dangling pointers and double-free.</p></div></div></div><h3 id="the-data-on-the-heap" class="headerLink">
     <a href="#the-data-on-the-heap" class="header-mark"></a>The data on the heap</h3><p>After having a certain understanding of the allocation of memory space on the heap, it is not difficult for us to draw the following conclusions:</p>
 <ol>
 <li>Variable-size data is stored on the heap. More flexibility at the expense of a little performance</li>
-<li>Sometimes it can be fixed-size data, but you don&rsquo;t want to put it on the stack. Why is this the case? For example, in Rust, data on the stack is copied by default. Sometimes for performance considerations, you may want to put large data on the heap to avoid the overhead of multiple copies. I don&rsquo;t know if this reminds you of the optimization that we often did. i.e. passing function parameter by reference rather than value.</li>
+<li>Sometimes it can be fixed-size data, but you don&rsquo;t want to put it on the stack. Why is this the case? For example, in Rust, data on the stack is copied by default. Sometimes, for performance considerations, you may want to put large data on the heap to avoid the overhead of multiple copies. I don&rsquo;t know if this reminds you of the optimization that we often did: passing a function parameter by reference rather than by value.</li>
 </ol>
 <h2 id="wrap-up" class="headerLink">
-    <a href="#wrap-up" class="header-mark"></a>Wrap up</h2><ol>
-<li>Stack and heap are concepts in memory management, they are different from the concept of stack and heap in the data structure. The reason why the stack is called the stack is because we follow the classical LIFO pattern when we manage the memory on the stack, and the name of the heap implies disorganization.</li>
+    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h2><ol>
+<li>Stack and heap are concepts in memory management; they are different from the concepts of stack and heap in the data structure. The stack is named for its use of the classic LIFO (last-in, first-out) discipline in memory management, whereas the heap’s name reflects its less structured, more flexible organization.</li>
 <li>Generally speaking, it is more efficient to allocate and free memory space on the stack. For this reason, Rust operates on the stack by default.</li>
-<li>Data of &ldquo;fixed size&rdquo; is generally placed on the stack, and data of &ldquo;variable size&rdquo; is generally placed on the heap. However, sometimes for performance considerations, fixed-size data can also be stored on the heap.</li>
+<li>Data of &ldquo;fixed size&rdquo; is generally placed on the stack, and data of &ldquo;variable size&rdquo; is generally placed on the heap. However, sometimes, for performance considerations, fixed-size data can also be stored on the heap.</li>
 </ol>
-<p>In the subject of CS, you can often see the layered design. For example, OSI model in the computer network. Programming languages themselves can also be divided into high-level languages and low-level languages. I would like to share with you a sentence from a performance engineering teacher<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> - &ldquo;<strong>Many times, if you want to learn this level well, you must understand the underlying level. You don&rsquo;t have to work at that level, but after knowing the details of that level. It will help you learn this level quite well</strong>&rdquo;. At least for me, after knowing the difference between stack and heap, the following questions seem to me to have a very reasonable explanation:</p>
+<p>In the subject of CS, you can often see the layered design. For example, the OSI model is used in computer networks. Programming languages themselves can also be divided into high-level languages and low-level languages. I would like to share with you a sentence from a performance engineering teacher<sup id="fnref2:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> - &ldquo;<em>Many times, if you want to learn this level well, you must understand the underlying level. You don&rsquo;t have to work at that level, but after knowing the details of that level. It will help you learn this level quite well</em>&rdquo;. At least for me, after knowing the difference between stack and heap, the following questions seem to me to have a very reasonable explanation:</p>
 <ol>
-<li>What are pointers in C/C++ language used for? Why do they exist?</li>
+<li>What are pointers in the C/C++ language used for? Why do they exist?</li>
 <li>Why does tail recursion optimization exist? Why do we have to consider the problem of deep recursion when writing recursive functions?</li>
 <li>Why does Rust put data on the stack by default?</li>
 <li>Why did I see someone recommend passing references when implementing a function?</li>
 </ol>
-<blockquote>
-  <p>📒 In my humble opinion, the abstraction layer design is the most important concept in CS.</p>
-
-</blockquote><p>Should you choose a language with GC that is easy to use but less efficient, or choose to manually manage memory yourself to make your code more efficient? It depends on the job at hand. If you want to develop speed, of course, it is the former, and if you focus on performance, it is the latter. Of course, in the middle is no GC + basically no need to manually manage memory by yourself + efficient = Rust language 🚀. Why not learn some Rust 😉</p>
-<blockquote>
-  <p>⚠️ Some details are ignored when I write this article. I only wrote down what I think is important. If you want to learn more, you may check the refs.</p>
-
-</blockquote><h2 id="refs" class="headerLink">
+<p>Should you choose a language with GC that is easy to use but less efficient, or choose to manually manage memory yourself to make your code more efficient? It depends on the job at hand. If you want to develop speed, of course, it is the former, and if you focus on performance, it is the latter. Of course, in the middle is no GC + basically no need to manually manage memory by yourself + efficient = Rust language 🚀. Why not learn some Rust 😉</p>
+<h2 id="refs" class="headerLink">
     <a href="#refs" class="header-mark"></a>Refs</h2><div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -598,11 +614,11 @@
         </div>
         <div class="post-info-line print:!tw-hidden">
             <div class="post-info-md"></div>
-            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap" data-hashtags="System-programming"><svg class="icon"
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="System programming: stack and heap" data-hashtags="System-programming"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-hashtag="System-programming"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="What is stack and heap" data-web><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="System programming: stack and heap"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="System programming: stack and heap"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="System programming: stack and heap"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="Share on Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/en/what-is-the-heap-and-stack/" data-title="System programming: stack and heap" data-web><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/></svg></button><script>
         function shareOnMastodon(title, link) {
             const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
@@ -619,7 +635,7 @@
             window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
         }
     </script>
-    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;What is stack and heap&#34;, &#34;https://martinlwx.github.io/en/what-is-the-heap-and-stack/&#34;)"><svg class="icon"
+    <button title="Share on Mastodon"onclick="javascript:shareOnMastodon(&#34;System programming: stack and heap&#34;, &#34;https://martinlwx.github.io/en/what-is-the-heap-and-stack/&#34;)"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg></button></div>
         </div>
     </div>

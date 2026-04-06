@@ -4,21 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noodp" /><title>什么是堆和栈 - MartinLwx&#39;s Blog</title><meta name="Description" content="Welcome to my blog :)"><meta property="og:url" content="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/">
+    <meta name="robots" content="noodp" /><title>系统编程：堆与栈 - MartinLwx&#39;s Blog</title><meta name="Description" content="Welcome to my blog :)"><meta property="og:url" content="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/">
   <meta property="og:site_name" content="MartinLwx&#39;s Blog">
-  <meta property="og:title" content="什么是堆和栈">
+  <meta property="og:title" content="系统编程：堆与栈">
   <meta property="og:description" content="引言如果你一直都是是用动态语言，比如 Python、Javascript 这种，你很可能并不会注意到栈和堆的区别。因为这些语言有垃圾收集器（Garbage collector，GC）存在，会自动帮你做好内存管理，你只要集中注意力编程即可。坏消息是 GC 并不是没有成本的事情，实际上设计再好的 GC 算法，也会降低代码的性能。如果你接触编程的时间足够久，那么想必你可能会听到过什么“递归层数太深栈爆炸了”这种话，此时你可能会点开搜索引擎稍微了解一下栈和堆的区别，有可能你就刚好点进了这一篇文章 :)">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2022-09-19T19:01:04+08:00">
     <meta property="article:modified_time" content="2022-09-19T19:01:04+08:00">
-    <meta property="article:tag" content="System-Programming">
+    <meta property="article:tag" content="系统编程">
     <meta property="og:image" content="https://martinlwx.github.io/logo.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://martinlwx.github.io/logo.png">
-  <meta name="twitter:title" content="什么是堆和栈">
+  <meta name="twitter:title" content="系统编程：堆与栈">
   <meta name="twitter:description" content="引言如果你一直都是是用动态语言，比如 Python、Javascript 这种，你很可能并不会注意到栈和堆的区别。因为这些语言有垃圾收集器（Garbage collector，GC）存在，会自动帮你做好内存管理，你只要集中注意力编程即可。坏消息是 GC 并不是没有成本的事情，实际上设计再好的 GC 算法，也会降低代码的性能。如果你接触编程的时间足够久，那么想必你可能会听到过什么“递归层数太深栈爆炸了”这种话，此时你可能会点开搜索引擎稍微了解一下栈和堆的区别，有可能你就刚好点进了这一篇文章 :)">
 <meta name="application-name" content="MartinLwx&#39;s blog">
 <meta name="apple-mobile-web-app-title" content="MartinLwx&#39;s blog">
@@ -29,12 +29,12 @@
 
 <link rel="canonical" href="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" /><link rel="prev" href="https://martinlwx.github.io/zh-cn/vim-macro-101/" /><link rel="next" href="https://martinlwx.github.io/zh-cn/pattern-matching-in-python/" />
 <link rel="stylesheet" href="/css/main.min.css"><link rel="stylesheet" href="/css/style.min.css"><script type="application/ld+json">{"@context": "https://schema.org","@type": "BlogPosting",
-        "headline": "什么是堆和栈",
+        "headline": "系统编程：堆与栈",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/"
-        },"genre": "posts","keywords":["heap","stack","system programming"],"wordcount":  3911 ,
+        },"genre": "posts","keywords":["heap","stack","system programming"],"wordcount":  3804 ,
         "url": "https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/","datePublished": "2022-09-19T19:01:04+08:00","dateModified": "2022-09-19T19:01:04+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -194,7 +194,6 @@
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
-    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
     </div><dialog id="toc-dialog" class="tw-max-w-full tw-w-full tw-max-h-full tw-h-full tw-ml-16">
@@ -219,11 +218,10 @@
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
-    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
         </div>
-    </dialog><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title" data-pagefind-meta="date:2022-09-19" data-pagefind-body>什么是堆和栈</h1><div class="post-meta">
+    </dialog><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "true")</script><article class="page single print:!tw-w-full print:!tw-max-w-none print:!tw-m-0 print:!tw-p-0"><h1 class="single-title" data-pagefind-meta="date:2022-09-19" data-pagefind-body>系统编程：堆与栈</h1><div class="post-meta">
             <div class="post-meta-line">
                 <span class="post-author"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
@@ -232,9 +230,9 @@
             <div class="post-meta-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;约 3911 字&nbsp;
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;约 3804 字&nbsp;
                     <svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;预计阅读 18 分钟&nbsp;</div>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;预计阅读 17 分钟&nbsp;</div>
         </div><div class="details toc print:!tw-block" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -260,19 +258,24 @@
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
-    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content" data-pagefind-body><h2 id="引言" class="headerLink">
     <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>如果你一直都是是用动态语言，比如 Python、Javascript 这种，你很可能并不会注意到栈和堆的区别。因为这些语言有垃圾收集器（Garbage collector，GC）存在，会自动帮你做好内存管理，你只要集中注意力编程即可。坏消息是 GC 并不是没有成本的事情，实际上设计再好的 GC 算法，也会降低代码的性能。如果你接触编程的时间足够久，那么想必你可能会听到过什么“递归层数太深栈爆炸了”这种话，此时你可能会点开搜索引擎稍微了解一下栈和堆的区别，有可能你就刚好点进了这一篇文章 :)</p>
-<blockquote>
-  <p>📒 虽然 GC 会降低代码性能，但是免去了开发人员手动管理内存的心智负担，可以大大加速软件开发的速度，这是牺牲性能换取开发速度。但到了软件后期出现性能瓶颈的时候，就不得不研究如何重构甚至重写关键部分的代码提高性能了。</p>
-
-</blockquote><p>这里的栈和堆并不是数据结构里面的堆和栈，而是指内存管理的两种机制。了解栈和堆的细节差异有助于我们理解一些比较接近底层的编程语言，这里说的编程语言<em>比如 Rust、C 和 C++ 等</em>。在 Rust 中，最为重要的概念就是所有权的问题，Rust 的很多设计都是围绕它展开，掌握了所有权就能在学习 Rust 的时候如鱼得水😄。</p>
+<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>虽然 GC 会降低代码性能，但是免去了开发人员手动管理内存的心智负担，可以大大加速软件开发的速度，这是牺牲性能换取开发速度。但到了软件后期出现性能瓶颈的时候，就不得不研究如何重构甚至重写关键部分的代码提高性能了。</p></div></div></div><p>这里的栈和堆并不是数据结构里面的堆和栈，而是指内存管理的两种机制。了解栈和堆的细节差异有助于我们理解一些比较接近底层的编程语言，这里说的编程语言<em>比如 Rust、C 和 C++ 等</em>。在 Rust 中，最为重要的概念就是所有权的问题，Rust 的很多设计都是围绕它展开，掌握了所有权就能在学习 Rust 的时候如鱼得水😄。</p>
 <h2 id="程序在内存上的布局" class="headerLink">
     <a href="#%e7%a8%8b%e5%ba%8f%e5%9c%a8%e5%86%85%e5%ad%98%e4%b8%8a%e7%9a%84%e5%b8%83%e5%b1%80" class="header-mark"></a>程序在内存上的布局</h2><p>我们知道，要运行一个程序必须将程序加载到内存里面，在程序运行的过程中，数据也是需要读取到内存上的，那么你有没有想过这一切在内存上是如何分布的呢？下面我会给出一个比较简单的示意图<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>：如下所示：</p>
 <hr>
-<p><img class="tw-inline" loading="lazy" src='/img/program_layout_in_memory.png'     ></p>
+<figure><img src="/img/program_layout_in_memory.png">
+</figure>
+
 <hr>
 <p>在上图中，不同部分存放的东西分别是：</p>
 <ul>
@@ -283,13 +286,15 @@
 <li>stack</li>
 </ul>
 <p>关于栈和堆会在后面进行单独说明</p>
-<blockquote>
-  <p>📒 这里要记住的就是：栈和堆是在向彼此靠近的，栈是从<strong>高地址 -&gt; 低地址</strong>增长，而堆是<strong>低地址 -&gt; 高地址</strong>增长。这样你在看汇编代码的时候看到<strong>入栈时 sp 指针是做减法</strong>你就能理解了。</p>
-
-</blockquote><blockquote>
-  <p>📒 虽然看起来，随着我们申请内存越来越多，栈和堆可能会冲突（因为他们在彼此靠近），但是实际上并不需要担心这个问题，因为：1）这个布局是发生在虚拟内存上的，现在的处理器一般是 64 位的，容量非常大。2）在它们冲突之前，很有可能你的物理内存早就耗尽了，还是先担心这个</p>
-
-</blockquote><h2 id="栈" class="headerLink">
+<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>这里要记住的就是：栈和堆是在向彼此靠近的，栈是从<strong>高地址 -&gt; 低地址</strong>增长，而堆是<strong>低地址 -&gt; 高地址</strong>增长。这样你在看汇编代码的时候看到<strong>入栈时 sp 指针是做减法</strong>你就能理解了</p>
+<p>虽然看起来，随着我们申请内存越来越多，栈和堆可能会冲突（因为他们在彼此靠近），但是实际上并不需要担心这个问题，因为：1）这个布局是发生在虚拟内存上的，现在的处理器一般是 64 位的，容量非常大。2）在它们冲突之前，很有可能你的物理内存早就耗尽了</p></div></div></div><h2 id="栈" class="headerLink">
     <a href="#%e6%a0%88" class="header-mark"></a>栈</h2><h3 id="术语" class="headerLink">
     <a href="#%e6%9c%af%e8%af%ad" class="header-mark"></a>术语</h3><ul>
 <li><strong>Stack pointer(SP)</strong>：实际上是一个寄存器，里面存放栈顶的地址</li>
@@ -298,10 +303,12 @@
 <li><strong>出栈</strong>：在栈上释放空间</li>
 </ul>
 <h3 id="栈上的内存管理是如何进行的" class="headerLink">
-    <a href="#%e6%a0%88%e4%b8%8a%e7%9a%84%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e6%98%af%e5%a6%82%e4%bd%95%e8%bf%9b%e8%a1%8c%e7%9a%84" class="header-mark"></a>栈上的内存管理是如何进行的</h3><p>栈最大的特点就是先进后出（Last in first out, LIFO），这是我们在栈上申请空间和释放空间的时候的遵循的模式，这也是它叫做栈的原因。在内存上申请空间其实并不神秘，就是要标记哪些范围的地址是这个程序要用的。对栈来说，<strong>只要修改 stack pointer 的值即可</strong>，自然的，从栈底（下图中的 <code>A</code>）到栈顶（<code>sp</code> 指向的位置）就是我们栈上申请了的空间</p>
+    <a href="#%e6%a0%88%e4%b8%8a%e7%9a%84%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e6%98%af%e5%a6%82%e4%bd%95%e8%bf%9b%e8%a1%8c%e7%9a%84" class="header-mark"></a>栈上的内存管理是如何进行的</h3><p>栈最大的特点就是先进后出（Last in first out, LIFO），这是我们在栈上申请空间和释放空间的时候的遵循的模式，这也是它叫做栈的原因。在内存上申请空间其实并不神秘，就是要标记哪些范围的地址是这个程序要用的。对栈来说，<strong>只要修改 stack pointer 的值即可</strong>，从栈底（下图中的 <code>A</code>）到栈顶（<code>sp</code> 指向的位置）就是我们栈上申请了的空间</p>
 <p>下面的图<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>就展现了这个简单的逻辑：</p>
 <hr>
-<p><img class="tw-inline" loading="lazy" src='/img/stack_and_sp.png'     ></p>
+<figure><img src="/img/stack_and_sp.png">
+</figure>
+
 <hr>
 <p>这里仍要再次强调，栈是从<strong>高地址 -&gt; 低地址</strong>增长，所以上图从左到右是高地址 -&gt; 低地址，所以在栈上申请空间（入栈）的时候实际上 <strong><code>sp</code> 是做减法</strong>.</p>
 <p>函数调用也是用栈完成的，简单来说：</p>
@@ -309,13 +316,22 @@
 <li>调用函数的时候：修改 <code>sp</code> 指针 -&gt; 构造被调用的函数的 stack frame，其中包括函数参数和其他一些必要的数据，将其入栈 -&gt; 进入 Callee</li>
 <li>函数退出的时候：上面的过程反过来就行</li>
 </ul>
-<blockquote>
-  <p>对这个过程的详细解释可以参考 <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
-
-</blockquote><blockquote>
-  <p>📒 在栈上申请内存空间的时候需要担心的问题是：不要申请太多导致栈爆了（也就是大名鼎鼎的 Stack Overflow）。这一点在写递归函数的时候要特别注意。你可以选择改成迭代的算法，也可以考虑增加栈的大小限制。<em>比如在 Python 里面可以用 <code>sys.getrecursionlimit()</code> 来修改栈的大小限制</em>。有的编程语言还会对尾递归进行优化，此时也可以选择将普通的递归函数改写为尾递归的形式。</p>
-
-</blockquote><h3 id="以斐波那契数列的递归函数看栈的变化" class="headerLink">
+<div class="details admonition quote open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"/></svg></span>Quote<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>对这个过程的详细解释可以参考 <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p></div></div></div><div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>在栈上申请内存空间的时候需要担心的问题是：不要申请太多导致栈爆了（也就是大名鼎鼎的 Stack Overflow）。这一点在写递归函数的时候要特别注意。为了解决这个问题，你可以选择将递归改成迭代的算法，也可以考虑增加栈的大小限制</p>
+<p>比如在 Python 里面可以用 <code>sys.getrecursionlimit()</code> 来修改栈的大小限制。有的编程语言还会对尾递归进行优化，此时也可以选择将普通的递归函数改写为尾递归的形式。</p></div></div></div><h3 id="以斐波那契数列的递归函数看栈的变化" class="headerLink">
     <a href="#%e4%bb%a5%e6%96%90%e6%b3%a2%e9%82%a3%e5%a5%91%e6%95%b0%e5%88%97%e7%9a%84%e9%80%92%e5%bd%92%e5%87%bd%e6%95%b0%e7%9c%8b%e6%a0%88%e7%9a%84%e5%8f%98%e5%8c%96" class="header-mark"></a>以斐波那契数列的递归函数看栈的变化</h3><p>CS 课程中讲解递归的时候一般都会讲到斐波那契数列，现在我们用 <code>F(n)</code> 表示斐波那契数列的第 <code>n</code> 个值，那么有：</p>
 <ul>
 <li><code>F(0) = 0</code></li>
@@ -528,26 +544,30 @@
 <h3 id="栈上存放的是什么数据" class="headerLink">
     <a href="#%e6%a0%88%e4%b8%8a%e5%ad%98%e6%94%be%e7%9a%84%e6%98%af%e4%bb%80%e4%b9%88%e6%95%b0%e6%8d%ae" class="header-mark"></a>栈上存放的是什么数据</h3><p><strong>栈上的内存空间管理是通过修改 <code>sp</code> 指针的值实现的</strong>，很容易知道下面几点：</p>
 <ol>
-<li>栈上的内存申请和释放都十分高效，为 <code>O(1)</code>，只要修改 <code>sp</code> 的值即可</li>
+<li>栈上的内存申请和释放都十分高效，为 <code>O(1)</code>，因为只需要修改 <code>sp</code> 的值即可</li>
 <li>栈的这种 LIFO 的逻辑比较简单，编译器其实就能帮我们处理好，作为开发者我们不需要干预这个过程</li>
-<li>修改 <code>sp</code> 指针决定要申请多大的空间，意味着我们必须知道要申请的数据有多大（编译时要能确定），所以<strong>栈适合存放的数据是固定已知大小的</strong>。而大小不固定的数据是用堆来解决的</li>
+<li>修改 <code>sp</code> 指针决定要申请多大的空间，意味着我们必须知道要申请的数据有多大（<strong>编译时</strong>要能确定），所以<strong>栈适合存放固定大小的数据</strong>。而大小不固定的数据是用堆来解决的</li>
 </ol>
 <h2 id="堆" class="headerLink">
-    <a href="#%e5%a0%86" class="header-mark"></a>堆</h2><p>栈的不足之处是：<strong>无法处理大小可变的数据</strong>，我们无法知道此时 <code>sp</code> 的值要修改为多少。</p>
+    <a href="#%e5%a0%86" class="header-mark"></a>堆</h2><p>栈的不足之处是：<strong>无法处理大小可变的数据</strong>，我们无法知道此时 <code>sp</code> 的值要怎么修改</p>
 <p>如何在大小可变的数据和栈之间搭建起桥梁呢？这就需要用到指针了。虽然<strong>实际存储的数据大小未知</strong>，但是指针的大小是固定已知的（只要保证寻址范围能覆盖到整个内存就行，一般跟机器字长相等），所以我们<strong>可以在栈上存储一个固定大小的指针</strong>，让这个它指向堆上存储的真正数据。</p>
 <h3 id="堆上的内存管理是如何进行的" class="headerLink">
-    <a href="#%e5%a0%86%e4%b8%8a%e7%9a%84%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e6%98%af%e5%a6%82%e4%bd%95%e8%bf%9b%e8%a1%8c%e7%9a%84" class="header-mark"></a>堆上的内存管理是如何进行的</h3><p>正如前面提到的，在堆上申请内存其实就是在堆上找到一个足够大的空间，并返回这个位置的指针，而后指针入栈。</p>
+    <a href="#%e5%a0%86%e4%b8%8a%e7%9a%84%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e6%98%af%e5%a6%82%e4%bd%95%e8%bf%9b%e8%a1%8c%e7%9a%84" class="header-mark"></a>堆上的内存管理是如何进行的</h3><p>正如前面提到的，在堆上申请内存其实就是在堆上找到一个足够大的空间，并返回指向这个位置的指针，而后指针入栈。</p>
 <p>后面我们想要访问这个数据的时候，就对指针解引用即可。C 语言或者 Rust 里面的 <code>*</code> 操作符就是用来干这个的。不知道看到这里，以前难懂的指针是不是稍微能理解一点了 :)</p>
 <p>不同于栈里面简单修改 <code>sp</code> 指针即可，堆上的内存管理复杂得多。包括下面几点：</p>
 <ol>
 <li>堆上可以分配的内存的位置是任意的、大小也是任意的（不超过物理内存大小即可），而栈只要遵循先进后出就行。为了管理堆上已分配和待分配堆空间，我们需要设计相应的算法和数据结构，这就给堆上的内存管理带来很大的困难</li>
 <li>在堆上申请空间的效率也比较低。最基本的，我们起码要找到一个足够大小的空间，这个找的过程肯定是比直接修改 <code>sp</code> 的值耗时的。</li>
-<li>还要处理好「碎片化」的问题。因为堆上申请空间是这边分配一块那边分配一块，在重复的申请空间和释放空间的过程中，会在内存里面留下很多碎片。极端的情况是：碎片加起来的可分配大小满足你的要求，但是因为他们散落在内存各个地方无法利用从而导致了内存不足</li>
+<li>还要处理好「内存碎片化」的问题。因为堆上申请空间是这边分配一块那边分配一块，在重复的申请空间和释放空间的过程中，会在内存里面留下很多碎片。极端的情况是：碎片加起来的可分配大小满足你的要求，但是因为他们散落在内存各个地方无法利用从而导致了内存不足</li>
 </ol>
-<blockquote>
-  <p>📒 堆上可以分配的内存比较大，但是需要更良好的管理机制来处理这种比较复杂的情况。<strong>对开发人员来说，也造成了一定的负担，我们无法依赖编译器自动帮我们处理，而是要自己手动管理内存</strong>，<em>比如在 C 语言中你进行了 <code>malloc()</code> 函数申请空间之后要是忘记用 <code>free()</code> 释放，那么你的程序就会存在内存泄露的问题</em>。更别谈还有其他的诸如悬垂指针等问题。</p>
-
-</blockquote><h3 id="堆上存放的是什么数据" class="headerLink">
+<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>堆上可以分配的内存比较大，但是需要更良好的管理机制来处理这种比较复杂的情况。<strong>对开发人员来说，也造成了一定的负担，我们无法依赖编译器自动帮我们处理，而是要自己手动管理内存</strong>，比如在 C 语言中你进行了 <code>malloc()</code> 函数申请空间之后要是忘记用 <code>free()</code> 释放，那么你的程序就会存在内存泄露的问题。更别谈还有其他的诸如悬垂指针等问题。</p></div></div></div><h3 id="堆上存放的是什么数据" class="headerLink">
     <a href="#%e5%a0%86%e4%b8%8a%e5%ad%98%e6%94%be%e7%9a%84%e6%98%af%e4%bb%80%e4%b9%88%e6%95%b0%e6%8d%ae" class="header-mark"></a>堆上存放的是什么数据</h3><p>对堆上内存空间的分配有一定了解之后，我们不难得出下面的几个结论：</p>
 <ol>
 <li>堆上存放的是容量可变的数据。更灵活的同时，代价是牺牲了一点性能</li>
@@ -566,15 +586,8 @@
 <li>为什么 Rust 默认数据放在栈上？</li>
 <li>为什么以前会看到 C/C++ 传递函数参数的时候要用引用这种说法，说这样会比较快？</li>
 </ol>
-<blockquote>
-  <p>📒 在 CS 里面，我认为最重要的概念就是封装。逐层封装，对上一层隐藏细节的这种设计实在很不错。</p>
-
-</blockquote><p>选择带有 GC 好上手但效率较低的语言还是选择自己手动管理内存让代码效率更高呢？这点其实取决于你手头的工作。如果要开发速度当然是前者了，如果注重性能那就是后者。当然，夹在中间的是没有 GC + 基本不用自己手动管理内存 + 效率高的 Rust 语言🚀，要不学点 Rust😉</p>
-<blockquote>
-  <p>⚠️ 本文在组织的时候可以忽略了一些细节，我只讲了我认为比较重要的几点。如果想要了解更多，值得一看的材料参考下面的资料引用</p>
-
-</blockquote><h2 id="参考" class="headerLink">
-    <a href="#%e5%8f%82%e8%80%83" class="header-mark"></a>参考</h2><div class="footnotes" role="doc-endnotes">
+<p>选择带有 GC 好上手但效率较低的语言还是选择自己手动管理内存让代码效率更高呢？这点其实取决于你手头的工作。如果要开发速度当然是前者了，如果注重性能那就是后者。当然，夹在中间的是没有 GC + 基本不用自己手动管理内存 + 效率高的 Rust 语言🚀，要不学点 Rust😉</p>
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
@@ -597,11 +610,11 @@
         </div>
         <div class="post-info-line print:!tw-hidden">
             <div class="post-info-md"></div>
-            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈" data-hashtags="System-programming"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-hashtag="System-programming"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="什么是堆和栈" data-web><svg class="icon"
+            <div class="post-info-share"><button title="分享到 Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="系统编程：堆与栈" data-hashtags="系统编程"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="分享到 Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-hashtag="系统编程"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="分享到 Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="系统编程：堆与栈"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="分享到 Line" data-sharer="line" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="系统编程：堆与栈"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="分享到 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="系统编程：堆与栈"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></button><button title="分享到 Telegram" data-sharer="telegram" data-url="https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/" data-title="系统编程：堆与栈" data-web><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/></svg></button><script>
         function shareOnMastodon(title, link) {
             const SHARE_MASTODON_DOMAIN = "share_mastodon_domain"
@@ -618,14 +631,14 @@
             window.open(url, '_blank', "width=500,height=500,left=500,toolbar=0,status=0");
         }
     </script>
-    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;什么是堆和栈&#34;, &#34;https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/&#34;)"><svg class="icon"
+    <button title="分享到 Mastodon"onclick="javascript:shareOnMastodon(&#34;系统编程：堆与栈&#34;, &#34;https://martinlwx.github.io/zh-cn/what-is-the-heap-and-stack/&#34;)"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg></button></div>
         </div>
     </div>
 
     <div class="post-info-more">
         <section class="post-tags"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/zh-cn/tags/system-programming/">System-Programming</a></section>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/zh-cn/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">系统编程</a></section>
         <section class="print:!tw-hidden">
             <span><button class="tw-text-fgColor-link-muted hover:tw-text-fgColor-link-muted-hover" onclick="window.history.back();">返回</button></span>&nbsp;|&nbsp;<span><a href="/zh-cn/">主页</a></span>
         </section>
