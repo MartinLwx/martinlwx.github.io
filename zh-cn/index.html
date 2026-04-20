@@ -31,6 +31,20 @@
 <link rel="stylesheet" href="/css/main.min.css"><link rel="stylesheet" href="/css/style.min.css"><script type="application/ld+json">
         {"@context": "https://schema.org",
         "@graph": [{"@type": "BlogPosting",
+        "headline": "Drain: 简单有效的日志解析算法",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://martinlwx.github.io/zh-cn/log-parsing-algorithm-drain/"
+        },"genre": "posts","keywords":["日志解析","Drain"],"wordcount":  2576 ,
+        "url": "https://martinlwx.github.io/zh-cn/log-parsing-algorithm-drain/","datePublished": "2026-04-20T00:32:07+08:00","dateModified": "2026-04-20T00:32:07+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
+            "@type": "Organization",
+            "name": "MartinLwx"},"author": {
+                "@type": "Person",
+                "name": "MartinLwx",
+                "url": "https://github.com/MartinLwx"
+            },"description": "对 Drain 这个简单有效的日志解析算法做介绍"
+    },{"@type": "BlogPosting",
         "headline": "后缀数组：快速查找模式串的所有出现位置",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
@@ -100,20 +114,6 @@
                 "name": "MartinLwx",
                 "url": "https://github.com/MartinLwx"
             },"description": ""
-    },{"@type": "BlogPosting",
-        "headline": "异步编程+漏桶算法：批量调用 LLM API",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/"
-        },"genre": "posts","keywords":["异步编程","漏桶算法","大模型","模型评测"],"wordcount":  2437 ,
-        "url": "https://martinlwx.github.io/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/","datePublished": "2025-06-18T23:07:55+08:00","dateModified": "2025-06-25T23:07:55+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
-            "@type": "Organization",
-            "name": "MartinLwx"},"author": {
-                "@type": "Person",
-                "name": "MartinLwx",
-                "url": "https://github.com/MartinLwx"
-            },"description": "介绍了如何用异步编程加漏桶算法处理模型评测中需要批量调用 LLM API 的场景"
     }]}
         </script></head>
 
@@ -250,6 +250,23 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></svg></a><a href="mailto:martinlwx@163.com" title="Email" rel=" me"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg></a><a href="/zh-cn/index.xml" title="RSS" target="_blank" rel="noopener noreferrer me"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg></a></div></div><article class="single summary"><h1 class="single-title">
+        <a href="/zh-cn/log-parsing-algorithm-drain/">Drain: 简单有效的日志解析算法</a>
+    </h1><div class="post-meta">
+        <span class="post-author"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
+        </span>&nbsp;<span class="post-publish">发布于 <time datetime="2026-04-20">2026-04-20</time></span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>软件工程</a></span></div><div class="content"><h2 id="研究背景" class="headerLink">
+    <a href="#%e7%a0%94%e7%a9%b6%e8%83%8c%e6%99%af" class="header-mark"></a>研究背景</h2><p>很多云平台都有各种日志，但是并不是结构化的，但利用机器学习/数据挖掘从日志中挖掘信息的时候又希望输入是结构化数据</p>
+<p>因此，如何<strong>从非结构化日志中提取结构化信息</strong>是一件很重要的事情，一个朴素的想法是：使用正则表达式自己做解析提取，但是这个方法有很多缺点<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<ul>
+<li>日志的量太多，肉眼看日志然后写正则表达式不可取</li>
+<li>日志来自系统里的每一个组件，每一个组件背后的开发者可能都有自己的写日志习惯，一个个适配太麻烦</li>
+</ul>
+<p>在 Drain 算法被提出的时候（2017 年），很多日志解析手段都聚焦于<strong>离线批处理</strong>场景，但云平台的日志经常都是流式产生的，因此 Drain 算法聚焦<strong>在线流式处理</strong>场景，它可以自动从非结构化日志中挖掘日志模板，从而得到结构化数据</p></div><div class="post-footer">
+        <a href="/zh-cn/log-parsing-algorithm-drain/">阅读全文</a><div class="post-tags"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/zh-cn/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">软件工程</a>,&nbsp;<a href="/zh-cn/tags/%E8%AE%BA%E6%96%87/">论文</a></div></div>
+</article>
+<article class="single summary"><h1 class="single-title">
         <a href="/zh-cn/suffix-array-tutorial/">后缀数组：快速查找模式串的所有出现位置</a>
     </h1><div class="post-meta">
         <span class="post-author"><svg class="icon"
@@ -317,17 +334,6 @@
 <p>如果依靠人工经验的话，数据量太大不大现实，就在这时我想起了以前数据挖掘课程上学过的一个算法：Apriori 算法 :)</p></div><div class="post-footer">
         <a href="/zh-cn/use-apriori-algorithm-for-association-rule-mining/">阅读全文</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/zh-cn/tags/machine-learning/">Machine-Learning</a>,&nbsp;<a href="/zh-cn/tags/data-mining/">Data Mining</a></div></div>
-</article>
-<article class="single summary"><h1 class="single-title">
-        <a href="/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/">异步编程&#43;漏桶算法：批量调用 LLM API</a>
-    </h1><div class="post-meta">
-        <span class="post-author"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
-        </span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-06-18">2025-06-18</time></span>&nbsp;<span class="post-category">收录于 </span>&nbsp;<span class="post-category">类别 <a href="/zh-cn/categories/ml-dl/"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>ML-DL</a></span></div><div class="content"><h2 id="背景" class="headerLink">
-    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>最近在工作中着手模型评测平台的搭建，其中有这么一个场景：需要调用其他部门提供的 LLM API 进行在评测集上跑模型评测，但这个 LLM API 有请求速率限制 - 最多 1 秒调用 2 次（2 RPS）。所以我的任务概括来说就是：<em>如何在严格遵守 API 速率请求的情况下，最大提高并发度加快模型评测速度</em>。本文的内容主要记录了对这个任务的尝试，以及最后的解决方案</p></div><div class="post-footer">
-        <a href="/zh-cn/async-and-leaky-bucket-algorithm-batch-llm-api-call/">阅读全文</a><div class="post-tags"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/zh-cn/tags/python/">Python</a>,&nbsp;<a href="/zh-cn/tags/llm/">LLM</a>,&nbsp;<a href="/zh-cn/tags/algorithm/">Algorithm</a>,&nbsp;<a href="/zh-cn/tags/performance-engineering/">Performance-Engineering</a></div></div>
 </article>
 <ul class="pagination"><li class="page-item active">
                     <span class="page-link">
