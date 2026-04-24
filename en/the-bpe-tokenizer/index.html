@@ -14,7 +14,7 @@
     <meta property="article:published_time" content="2023-08-24T22:06:37+08:00">
     <meta property="article:modified_time" content="2024-03-20T10:06:37+08:00">
     <meta property="article:tag" content="NLP">
-    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="LLM-Architecture">
     <meta property="og:image" content="https://martinlwx.github.io/logo.png">
 
   <meta name="twitter:card" content="summary_large_image">
@@ -35,7 +35,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://martinlwx.github.io/en/the-bpe-tokenizer/"
-        },"genre": "posts","keywords":["BPE tokenizer"],"wordcount":  1904 ,
+        },"genre": "posts","keywords":["BPE tokenizer"],"wordcount":  2036 ,
         "url": "https://martinlwx.github.io/en/the-bpe-tokenizer/","datePublished": "2023-08-24T22:06:37+08:00","dateModified": "2024-03-20T10:06:37+08:00","license": "\u003ca rel=\"license noopener\" href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" target=\"_blank\"\u003eCC BY-NC-ND 4.0\u003c/a\u003e","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -185,7 +185,7 @@
         <li><a href="#how-to-use-a-trained-bpe">How to use a trained BPE?</a></li>
         <li><a href="#bpe-example">BPE example</a></li>
         <li><a href="#bpe-tokenizer-in-huggingface">BPE tokenizer in Huggingface</a></li>
-        <li><a href="#implemene-a-bpe-tokenizer">Implemene a BPE tokenizer</a></li>
+        <li><a href="#implement-a-bpe-tokenizer">Implement a BPE tokenizer</a></li>
         <li><a href="#wrap-up">Wrap-up</a></li>
       </ul>
     </li>
@@ -202,7 +202,7 @@
         <li><a href="#how-to-use-a-trained-bpe">How to use a trained BPE?</a></li>
         <li><a href="#bpe-example">BPE example</a></li>
         <li><a href="#bpe-tokenizer-in-huggingface">BPE tokenizer in Huggingface</a></li>
-        <li><a href="#implemene-a-bpe-tokenizer">Implemene a BPE tokenizer</a></li>
+        <li><a href="#implement-a-bpe-tokenizer">Implement a BPE tokenizer</a></li>
         <li><a href="#wrap-up">Wrap-up</a></li>
       </ul>
     </li>
@@ -213,12 +213,12 @@
             <div class="post-meta-line">
                 <span class="post-author"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><a href="https://github.com/MartinLwx" title="Author" target="_blank" rel="noopener noreferrer author" class="author">MartinLwx</a>
-                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/nlp/"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>NLP</a></span></div>
+                </span>&nbsp;<span class="post-category">included in </span>&nbsp;<span class="post-category">category <a href="/en/categories/llm/"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>LLM</a></span></div>
             <div class="post-meta-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;<time datetime="2023-08-24">2023-08-24</time>&nbsp;<svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg>&nbsp;<time datetime="2024-03-20">2024-03-20</time>&nbsp;<svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1904 words&nbsp;
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2036 words&nbsp;
                     <svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;9 minutes&nbsp;</div>
         </div><div class="details toc print:!tw-block" id="toc-static"  kept="">
@@ -235,33 +235,40 @@
         <li><a href="#how-to-use-a-trained-bpe">How to use a trained BPE?</a></li>
         <li><a href="#bpe-example">BPE example</a></li>
         <li><a href="#bpe-tokenizer-in-huggingface">BPE tokenizer in Huggingface</a></li>
-        <li><a href="#implemene-a-bpe-tokenizer">Implemene a BPE tokenizer</a></li>
+        <li><a href="#implement-a-bpe-tokenizer">Implement a BPE tokenizer</a></li>
         <li><a href="#wrap-up">Wrap-up</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content" data-pagefind-body><h2 id="a-taxonomy-of-tokenization-methods" class="headerLink">
-    <a href="#a-taxonomy-of-tokenization-methods" class="header-mark"></a>A taxonomy of tokenization methods</h2><p>In NLP, one crux of problems is - how to tokenize the text. There are three methods available:</p>
+            </div><div class="content" id="content" data-pagefind-body><div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>You can find the BPE implementation <a href="https://github.com/MartinLwx/blog-demos/blob/main/nlp/bpe-tokenizer/example.py" target="_blank" rel="noopener noreferrer">here</a>.</p></div></div></div><h2 id="a-taxonomy-of-tokenization-methods" class="headerLink">
+    <a href="#a-taxonomy-of-tokenization-methods" class="header-mark"></a>A taxonomy of tokenization methods</h2><p>In NLP, one crux of the problems is - how to tokenize the text. There are three methods available:</p>
 <ul>
 <li>Char-level</li>
 <li>Word-level</li>
 <li>Subword-level</li>
 </ul>
-<p>Let&rsquo;s talk about the Char-level tokenizer. That is, we tokenize the text into a char stream. <em>For instance, <code>highest -&gt; h, i, g, h, e, s, t</code></em>. One advantage of the Char-level tokenizer is that the size of Vocab won&rsquo;t be that large. The size of Vocab is equal to the size of the alphabet. So you probably won&rsquo;t meet the infamous Out-of-vocabulary(OOV) problem. However, the downside is that <strong>the char itself does not convey too much information</strong>, and <strong>we will get too many tokens after tokenizing</strong>. <em>Try to imagine that a simple word highest will give us 7 tokens</em>😨</p>
-<p>The Word-level tokenizer is slightly better. In the Word-level tokenizer, we usually divide text into individual words using whitespace or punctuation marks. so the number of tokens after tokenizing won&rsquo;t be too high. <em>For instance, <code>Today is a good day</code> -&gt; <code>Today, is, a, good, day</code></em>. However, the Word-level tokenizer is not perfect. In English, the words <code>high, higher, highest</code> are semantically similar, with the latter two being comparative forms, but Word-level tokenization would treat them as three separate words.</p>
-<p>🤔️ Is there a better way such that we most likely avoid the OOV problem, have a reasonable number of tokens after tokenizing, and also consider compound words, tense variations, etc.? This is where subword level tokenization comes into play. Using the same example as before, a subword tokenizer will most likely tokenize it as <code>high, er</code>, <code>high, est</code>. Therefore, <strong>the subword level tokenization involves representing a word using multiple subwords</strong>. The method I&rsquo;m introducing today, BPE (<strong>B</strong>yte-<strong>P</strong>air <strong>E</strong>ncoding), belongs to the subword level category.</p>
-<p>There is one <em>subtle</em> thing to think about - <strong>What does the byte in the byte pair mean</strong>? We know that every char is 1 byte if we are using the ASCII encoding. However, what if we are using utf-8 encoding? A char may be 1 ~ 4 bytes. 🤔️ So, <strong>if BPE is applied to utf-8 text, what does a byte pair refer to</strong>? Thus, I feel there&rsquo;s a bit of ambiguity here. Therefore, <strong>a better way to understand it might be that a byte pair is essentially a char pair, where char here refers to a utf-8 character</strong>.</p>
+<p>Let&rsquo;s talk about the Char-level tokenizer. That is, we tokenize the text into a char stream. For instance, <code>highest -&gt; h, i, g, h, e, s, t</code>. One advantage of the Char-level tokenizer is that the size of the Vocab won&rsquo;t be that large. The size of Vocab is equal to the size of the alphabet. So you probably won&rsquo;t meet the infamous Out-of-vocabulary(OOV) problem. However, the downside is that <em>the char itself does not convey too much information</em>, and <em>we will get too many tokens after tokenizing</em>. Try to imagine that a simple word highest will give us 7 tokens😨</p>
+<p>The Word-level tokenizer is slightly better. In the Word-level tokenizer, we usually divide text into individual words using whitespace or punctuation marks. So the number of tokens after tokenizing won&rsquo;t be too high. For instance, <code>Today is a good day</code> -&gt; <code>Today, is, a, good, day</code>. However, the Word-level tokenizer is not perfect. In English, the words <code>high, higher, highest</code> are semantically similar, with the latter two being comparative forms, but Word-level tokenization would treat them as three separate words.</p>
+<p>🤔️ Is there a better way such that we most likely avoid the OOV problem, have a reasonable number of tokens after tokenizing, and also consider compound words, tense variations, etc.? This is where subword-level tokenization comes into play. Using the same example as before, a subword tokenizer will most likely tokenize it as <code>high, er</code>, <code>high, est</code>. Therefore, <em>the subword-level tokenization involves representing a word using multiple subwords</em>. The method I&rsquo;m introducing today, BPE (<em>B</em>yte-<em>P</em>air <em>E</em>ncoding), belongs to the subword level category.</p>
+<p>There is one <em>subtle</em> thing to think about - <em>What does the byte in the byte pair mean</em>? We know that every character is 1 byte if we are using the ASCII encoding. However, what if we are using UTF-8 encoding? A char may be 1 ~ 4 bytes. 🤔️ So, <em>if BPE is applied to UTF-8 text, what does a byte pair refer to</em>? Thus, I feel there&rsquo;s a bit of ambiguity here. Therefore, <em>a better way to understand it might be that a byte pair is essentially a character pair, where character here refers to a UTF-8 character</em>.</p>
 <h3 id="bpe-training-phase" class="headerLink">
     <a href="#bpe-training-phase" class="header-mark"></a>BPE training phase</h3><p>Now let&rsquo;s figure out how the BPE tokenizer got trained. Let&rsquo;s assume that we have some documents $D={d_1,d_2,&hellip;}$</p>
 <ol>
 <li>For each $d$, we will transform the documents into word list <em>in some way</em>. For instance, you may choose to split the document by whitespace to get words</li>
-<li>Count the word freq for each word $w$ in $D$, and we can also get the alphabet of $D$ as the initial vocab(plus the <code>&lt;/w&gt;</code>). The alphabet contains all the <em>unique</em> utf-8 char in all documents $D$</li>
-<li>For each word, transform the word into a utf-8 char list. We call it a split. For example, <code>highest -&gt; h, i, g, h, e, s, t</code></li>
-<li>Append <code>&lt;/w&gt;</code> to each utf-8 list. e.g. <code>highest -&gt; h, i, g, h, e, s, t, &lt;/w&gt;</code></li>
+<li>Count the word freq for each word $w$ in $D$, and we can also get the alphabet of $D$ as the initial vocab(plus the <code>&lt;/w&gt;</code>). The alphabet contains all the <em>unique</em> UTF-8 character in all documents $D$</li>
+<li>For each word, transform the word into a UTF-8 character list. We call it a split. For example, <code>highest -&gt; h, i, g, h, e, s, t</code></li>
+<li>Append <code>&lt;/w&gt;</code> to each UTF-8 list. e.g. <code>highest -&gt; h, i, g, h, e, s, t, &lt;/w&gt;</code></li>
 <li>Repeat the following steps until <em>any</em> one of the two conditions is met: 1) Vocab reaches the upper limit. 2) Reach the maximum number of iterations
 <ol>
-<li>Find <strong>the most frequent pair</strong>, add it to a merge table, and add the merged result to the vocab</li>
+<li>Find <em>the most frequent pair</em>, add it to a merge table, and add the merged result to the vocab</li>
 <li>Update all splits of all words. For example, the most frequent pair may be <code>(h, i)</code> in our previous example, then we will add <code>hi</code> to the Vocab and change the split <code>highest -&gt; hi, g, h, e, s, t, &lt;/w&gt;</code></li>
 </ol>
 </li>
@@ -280,9 +287,9 @@
     </div>
     <div class="details-content">
         <div class="admonition-content"><p>💡 You can observe that when the BPE algorithm merges the most frequently occurring pair, it doesn&rsquo;t cross over words.</p></div></div></div><h3 id="how-to-use-a-trained-bpe" class="headerLink">
-    <a href="#how-to-use-a-trained-bpe" class="header-mark"></a>How to use a trained BPE?</h3><p>After we trained a BPE tokenizer, we will obtain a merge table and a vocab. Assuming that we now need to tokenize the text <code>s</code></p>
+    <a href="#how-to-use-a-trained-bpe" class="header-mark"></a>How to use a trained BPE?</h3><p>After we train a BPE tokenizer, we will obtain a merge table and a vocab. Assuming that we now need to tokenize the text <code>s</code></p>
 <ol>
-<li>Use the same method as during training, start by splitting <code>s</code> into individual words, with each word further divided into utf-8 char. Remember to append <code>&lt;/w&gt;</code> in each split</li>
+<li>Use the same method as during training, start by splitting <code>s</code> into individual words, with each word further divided into UTF-8 character. Remember to append <code>&lt;/w&gt;</code> in each split</li>
 <li>Iterate through the merge table and check if each merge rule can be applied to update the split of each word.</li>
 </ol>
 <div class="details admonition note open">
@@ -294,7 +301,7 @@
     <div class="details-content">
         <div class="admonition-content"><p>💡 An important detail here is that the merge rules we extracted are sorted in descending order of frequency. Thus, by <em>sequentially</em> traversing the merge table, we are <em>implicitly</em> incorporating the notion of prioritizing the merging of the most frequently occurring pairs.</p></div></div></div><h3 id="bpe-example" class="headerLink">
     <a href="#bpe-example" class="header-mark"></a>BPE example</h3><p>Let&rsquo;s use a motivating example to see how BPE got trained.</p>
-<p><em>Let&rsquo;s say the corpus is</em></p>
+<p>Let&rsquo;s say the corpus is</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -386,7 +393,7 @@
       tw-scrollbar-thin
       "><span class="line"><span class="cl"><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;highest&#34;</span><span class="p">,</span> <span class="s2">&#34;higher&#34;</span><span class="p">,</span> <span class="s2">&#34;lower&#34;</span><span class="p">,</span> <span class="s2">&#34;lowest&#34;</span><span class="p">,</span> <span class="s2">&#34;cooler&#34;</span><span class="p">,</span> <span class="s2">&#34;coolest&#34;</span><span class="p">]</span></span></span></code></pre>
 </div>
-<p>We do not need to compute the word frequency here in that each word appears exactly once. First, let&rsquo;s transformer each word into utf-8 chars and append <code>&lt;/w&gt;</code></p>
+<p>We do not need to compute the word frequency here, in that each word appears exactly once. First, let&rsquo;s transformer each word into UTF-8 characters and append <code>&lt;/w&gt;</code></p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -575,7 +582,9 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="p">{</span>
+      "><span class="line"><span class="cl"><span class="c1"># Vocab: [es]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Merge table: [(e, s) -&gt; es]</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;highest&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;es&#34;</span><span class="p">,</span> <span class="s2">&#34;t&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;higher&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;lower&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;l&#34;</span><span class="p">,</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
@@ -674,7 +683,12 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="p">{</span>
+      "><span class="line"><span class="cl"><span class="c1"># Vocab: [es, est]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Merge table: [</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (e, s) -&gt; es, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (es, t) -&gt; est,</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ]</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;highest&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;est&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;higher&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;lower&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;l&#34;</span><span class="p">,</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
@@ -773,7 +787,13 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="p">{</span>
+      "><span class="line"><span class="cl"><span class="c1"># Vocab: [es, est, est&lt;/w&gt;]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Merge table: [</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (e, s) -&gt; es, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (es, t) -&gt; est,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (est, &lt;/w&gt;) -&gt; est&lt;/w&gt;,</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ]</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;highest&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;est&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;higher&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;lower&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;l&#34;</span><span class="p">,</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="s2">&#34;e&#34;</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
@@ -872,7 +892,14 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="p">{</span>
+      "><span class="line"><span class="cl"><span class="c1"># Vocab: [es, est, est&lt;/w&gt;, er]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Merge table: [</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (e, s) -&gt; es, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (es, t) -&gt; est,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (est, &lt;/w&gt;) -&gt; est&lt;/w&gt;,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (e, r) -&gt; er,</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ]</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;highest&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;est&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;higher&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;er&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;lower&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;l&#34;</span><span class="p">,</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="s2">&#34;er&#34;</span><span class="p">,</span> <span class="s2">&#34;&lt;/w&gt;&#34;</span><span class="p">],</span>
@@ -971,7 +998,15 @@
       tw-overflow-y-hidden
       tw-overflow-x-auto
       tw-scrollbar-thin
-      "><span class="line"><span class="cl"><span class="p">{</span>
+      "><span class="line"><span class="cl"><span class="c1"># Vocab: [es, est, est&lt;/w&gt;, er, er&lt;/w&gt;]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Merge table: [</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (e, s) -&gt; es, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (es, t) -&gt; est,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (est, &lt;/w&gt;) -&gt; est&lt;/w&gt;,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (e, r) -&gt; er,</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   (er, &lt;/w&gt;) -&gt; er&lt;/w&gt;,</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ]</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;highest&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;est&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;higher&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;i&#34;</span><span class="p">,</span> <span class="s2">&#34;g&#34;</span><span class="p">,</span> <span class="s2">&#34;h&#34;</span><span class="p">,</span> <span class="s2">&#34;er&lt;/w&gt;&#34;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;lower&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;l&#34;</span><span class="p">,</span> <span class="s2">&#34;o&#34;</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="s2">&#34;er&lt;/w&gt;&#34;</span><span class="p">],</span>
@@ -982,7 +1017,7 @@
 </div>
 <p>I believe the example above is quite clear enough. We can find that the BPE tokenizer finds two meaningful suffixes <code>er</code> and <code>est</code> :)</p>
 <h3 id="bpe-tokenizer-in-huggingface" class="headerLink">
-    <a href="#bpe-tokenizer-in-huggingface" class="header-mark"></a>BPE tokenizer in Huggingface</h3><p>The API provided by the Huggingface is quite simple. You may notice that it uses <code>Char</code> in the class name, which confirms what I mentioned earlier.</p>
+    <a href="#bpe-tokenizer-in-huggingface" class="header-mark"></a>BPE tokenizer in Huggingface</h3><p>The API provided by Huggingface is quite simple. You may notice that it uses <code>Char</code> in the class name, which confirms what I mentioned earlier.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -1083,8 +1118,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">min_frequency</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre>
 </div>
-<h3 id="implemene-a-bpe-tokenizer" class="headerLink">
-    <a href="#implemene-a-bpe-tokenizer" class="header-mark"></a>Implemene a BPE tokenizer</h3><p>The best way to understand how an algorithm works is to always try to implement one. Here I implement a <code>BPE</code> class which follows the algorithm described earlier. If you initialize with <code>debug=True</code>, you can observe how the entire BPE update process works</p>
+<h3 id="implement-a-bpe-tokenizer" class="headerLink">
+    <a href="#implement-a-bpe-tokenizer" class="header-mark"></a>Implement a BPE tokenizer</h3><p>The best way to understand how an algorithm works is to always try to implement one. Here, I implement a <code>BPE</code> class which follows the algorithm described earlier. If you initialize with <code>debug=True</code>, you can observe how the entire BPE update process works</p>
 <p>First, let&rsquo;s check the constructor and the <code>train</code> method</p>
 <div class="code-block highlight is-closed show-line-numbers  tw-group tw-my-2">
   <div class="
@@ -1374,7 +1409,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">pairs_freq</span></span></span></code></pre>
 </div>
-<p>Now we can implement a <code>tokenize</code> method</p>
+<p>Now we can implement a <code>tokenize</code> method.</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -1488,7 +1523,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="p">[])</span></span></span></code></pre>
 </div>
-<p>Try to tokenize the <code>corpus</code> mentioned earlier using our hand crafted <code>BPE</code> tokenizer</p>
+<p>Try to tokenize the <code>corpus</code> mentioned earlier using our handcrafted <code>BPE</code> tokenizer</p>
 <div class="code-block highlight is-open show-line-numbers  tw-group tw-my-2">
   <div class="
     
@@ -1681,8 +1716,8 @@
 </div>
 <p>🤔️ This indicates that our implementation is correct, and thanks to <code>&lt;/w&gt;</code>, we can see the word boundaries between words and even reconstruct the original input.</p>
 <h3 id="wrap-up" class="headerLink">
-    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h3><p>The BPE tokenize is simple and practical, but <strong>when you delve into its implementation, you will encounter several details. However, it&rsquo;s precisely by engaging with these intricacies that your understanding of BPE becomes more profound</strong>.</p>
-<p>Let&rsquo;s also talk about some limitations of BPE. For instance, you will notice that we are using whitespace to split text, which <strong>works for whitespaced language</strong>. However, for languages like Chinese, spaces don&rsquo;t define word boundaries, which makes things more complex and calls for a better tokenizing method.</p>
+    <a href="#wrap-up" class="header-mark"></a>Wrap-up</h3><p>The BPE tokenization is simple and practical, but <em>when you delve into its implementation, you will encounter several details. However, it&rsquo;s precisely by engaging with these intricacies that your understanding of BPE becomes more profound</em>.</p>
+<p>Let&rsquo;s also talk about some limitations of BPE. For instance, you will notice that we are using whitespace to split text, which <em>works for whitespaced language</em>. However, for languages like Chinese, spaces don&rsquo;t define word boundaries, which makes things more complex and calls for a better tokenizing method.</p>
 </div>
 
         <div class="post-footer" id="post-footer">
@@ -1695,7 +1730,7 @@
         </div>
         <div class="post-info-line print:!tw-hidden">
             <div class="post-info-md"></div>
-            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/the-bpe-tokenizer/" data-title="BPE Tokenization Demystified: Implementation and Examples" data-hashtags="NLP,LLM"><svg class="icon"
+            <div class="post-info-share"><button title="Share on Twitter" data-sharer="twitter" data-url="https://martinlwx.github.io/en/the-bpe-tokenizer/" data-title="BPE Tokenization Demystified: Implementation and Examples" data-hashtags="NLP,LLM-Architecture"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></button><button title="Share on Facebook" data-sharer="facebook" data-url="https://martinlwx.github.io/en/the-bpe-tokenizer/" data-hashtag="NLP"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></button><button title="Share on Hacker News" data-sharer="hackernews" data-url="https://martinlwx.github.io/en/the-bpe-tokenizer/" data-title="BPE Tokenization Demystified: Implementation and Examples"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></button><button title="Share on Line" data-sharer="line" data-url="https://martinlwx.github.io/en/the-bpe-tokenizer/" data-title="BPE Tokenization Demystified: Implementation and Examples"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg></button><button title="Share on 微博" data-sharer="weibo" data-url="https://martinlwx.github.io/en/the-bpe-tokenizer/" data-title="BPE Tokenization Demystified: Implementation and Examples"><svg class="icon"
@@ -1723,7 +1758,7 @@
 
     <div class="post-info-more">
         <section class="post-tags"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/nlp/">NLP</a>,&nbsp;<a href="/en/tags/llm/">LLM</a></section>
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/nlp/">NLP</a>,&nbsp;<a href="/en/tags/llm-architecture/">LLM-Architecture</a></section>
         <section class="print:!tw-hidden">
             <span><button class="tw-text-fgColor-link-muted hover:tw-text-fgColor-link-muted-hover" onclick="window.history.back();">Back</button></span>&nbsp;|&nbsp;<span><a href="/en/">Home</a></span>
         </section>
