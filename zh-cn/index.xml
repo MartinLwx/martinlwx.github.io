@@ -4,9 +4,23 @@
         <link>https://martinlwx.github.io/zh-cn/</link>
         <description>Welcome to my blog :)</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Mon, 20 Apr 2026 00:32:07 &#43;0800</lastBuildDate>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Fri, 08 May 2026 20:56:00 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/zh-cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Dynamic Time Warping: 从欧式距离到时序对齐</title>
+    <link>https://martinlwx.github.io/zh-cn/dynamic-time-warping/</link>
+    <pubDate>Fri, 08 May 2026 20:56:00 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/zh-cn/dynamic-time-warping/</guid>
+    <description><![CDATA[<div class="details admonition note open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg></span>Note<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>你可以在 <a href="https://github.com/MartinLwx/blog-demos/blob/main/data_analysis/dtw/dtw.ipynb" target="_blank" rel="noopener noreferrer">这里</a> 找到本篇博客的算法 Demo</p>]]></description>
+</item><item>
     <title>Drain: 简单有效的日志解析算法</title>
     <link>https://martinlwx.github.io/zh-cn/log-parsing-algorithm-drain/</link>
     <pubDate>Mon, 20 Apr 2026 00:32:07 &#43;0800</pubDate><author>
@@ -107,13 +121,5 @@
 \end{aligned}
 $$</p>
 <p>这里的 $n, m$ 表示的是不同的位置，这里假设 $\mathbf k$ 和 $\mathbf v$ 是都是位置 $n$ 的，而 $\mathbf q$ 是位置 $m$ 的，并且 $m &gt; n$</p>]]></description>
-</item><item>
-    <title>Transformer 架构变化：RMSNorm 指南</title>
-    <link>https://martinlwx.github.io/zh-cn/rmsnorm-in-a-nutshell/</link>
-    <pubDate>Sun, 11 May 2025 14:01:26 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/zh-cn/rmsnorm-in-a-nutshell/</guid>
-    <description><![CDATA[<h2 id="引言" class="headerLink">
-    <a href="#%e5%bc%95%e8%a8%80" class="header-mark"></a>引言</h2><p>从 2017 年 Transformer 架构被提出以来，到现在 2025 已经 8 年过去了，Transformer 架构已经发生了很多变化。比如，现如今越来越多的大模型采用的是 RMSNorm<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 而不是 LayerNorm。今天这篇文章就是对 RMSNorm 的一个简单介绍，在了解 RMSNorm 之前，我们不妨先回顾一下什么是 LayerNorm</p>]]></description>
 </item></channel>
 </rss>
