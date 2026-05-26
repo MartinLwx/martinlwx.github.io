@@ -4,7 +4,29 @@
         <link>https://martinlwx.github.io/zh-cn/categories/%E5%B7%A5%E5%85%B7/</link>
         <description>工具 - 分类 - MartinLwx&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Sat, 03 Jan 2026 15:32:52 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/categories/%E5%B7%A5%E5%85%B7/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Mon, 25 May 2026 21:03:15 &#43;0800</lastBuildDate><atom:link href="https://martinlwx.github.io/zh-cn/categories/%E5%B7%A5%E5%85%B7/" rel="self" type="application/rss+xml" /><item>
+    <title>OpenCode &amp; OpenSpec：SDD 实践</title>
+    <link>https://martinlwx.github.io/zh-cn/when-opencode-meet-openspec-sdd-in-practice/</link>
+    <pubDate>Mon, 25 May 2026 21:03:15 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/zh-cn/when-opencode-meet-openspec-sdd-in-practice/</guid>
+    <description><![CDATA[<h2 id="背景" class="headerLink">
+    <a href="#%e8%83%8c%e6%99%af" class="header-mark"></a>背景</h2><p>作为一名程序员，还是会被近几年 AI 编程领域的突飞猛进吓一跳，印象中，有这么几个明显的阶段</p>
+<ul>
+<li><strong>LLM for Tab 补全</strong>：代码主要是程序员编写，LLM 只是会预测下一段要放什么。典型代表比如 <a href="https://www.tabnine.com/" target="_blank" rel="noopener noreferrer">Tabline</a>、<a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">Copilot</a></li>
+<li><strong>氛围编程（Vibe Coding）</strong>：程序员不再逐行写代码，而是用自然语言描述需求，让 LLM 帮你做跨文件修改。典型代表比如 <a href="https://cursor.com/" target="_blank" rel="noopener noreferrer">Cursor</a>、<a href="https://claude.ai/login" target="_blank" rel="noopener noreferrer">Claude</a></li>
+<li><strong>Spec-Driven Development （SDD）</strong>：氛围编程有许多毛病，比如上下文漂移、软件架构不稳定等，这导致它很难在生产环境中落地。因此社区乃至工业界都开始探寻超越 Prompt 工程的方法去让 LLM 可以长时间稳定生成可用的代码，而不是一堆 AI 垃圾（AI Slop）。SDD 就是目前看来很有希望的一个方向</li>
+</ul>
+<h2 id="sdd-如何解决氛围编程的问题" class="headerLink">
+    <a href="#sdd-%e5%a6%82%e4%bd%95%e8%a7%a3%e5%86%b3%e6%b0%9b%e5%9b%b4%e7%bc%96%e7%a8%8b%e7%9a%84%e9%97%ae%e9%a2%98" class="header-mark"></a>SDD 如何解决氛围编程的问题？</h2><div class="details admonition warning open">
+    <div class="details-summary admonition-title">
+        <span class="icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>Warning<span class="details-icon"><svg class="icon"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
+    </div>
+    <div class="details-content">
+        <div class="admonition-content"><p>事实上，在编程领域以外也存在这样的失败模式，但我们这里只关注 AI 编程领域</p>]]></description>
+</item><item>
     <title>RIME 小鹤双拼极简配置：从零搭建</title>
     <link>https://martinlwx.github.io/zh-cn/config-rime-from-scratch/</link>
     <pubDate>Sat, 03 Jan 2026 15:32:52 &#43;0800</pubDate><author>
