@@ -4,9 +4,18 @@
         <link>https://martinlwx.github.io/en/</link>
         <description>Welcome to my blog :)</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 03 Jun 2026 21:09:30 &#43;0800</lastBuildDate>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 08 Jul 2026 20:00:00 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Understanding Visitor Pattern: the art of double dispatch</title>
+    <link>https://martinlwx.github.io/en/visitor-pattern-understanding-double-dispatch/</link>
+    <pubDate>Wed, 08 Jul 2026 20:00:00 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/visitor-pattern-understanding-double-dispatch/</guid>
+    <description><![CDATA[<h2 id="background" class="headerLink">
+    <a href="#background" class="header-mark"></a>Background</h2><p>In the age of AI coding, writing code is no longer the primary bottleneck. The harder challenge is guiding coding agents to produce high-quality implementations. This usually means providing high-level constraints—such as software architecture and design patterns—instead of low-level implementation details.</p>
+<p>Because of this shift, I believe understanding these concepts has become more important than ever. Take design patterns as an example. Before you can ask a coding agent to apply a particular pattern, you need to understand what the pattern is, what problem it solves, and when it should be used. Only then can you describe your intent precisely <em>in natural language</em>.</p>]]></description>
+</item><item>
     <title>Handing Obsidian Over to AI: My Experience with LLM Wiki</title>
     <link>https://martinlwx.github.io/en/a-taste-of-llm-wiki/</link>
     <pubDate>Wed, 03 Jun 2026 21:09:30 &#43;0800</pubDate><author>
@@ -75,46 +84,46 @@
     <a href="#suffix-array" class="header-mark"></a>Suffix array</h2><p>By definition, a suffix array (denoted as <code>sa</code>) contains the starting indices of all suffixes. It&rsquo;s simply an <code>int</code> array where <code>sa[i]</code> represents the starting index of the corresponding suffix.</p>
 <p>Taking <code>fizzbuzz</code> as an example, its suffix array is <code>4 0 1 5 7 3 6 2</code>. The details are shown in the following table.</p>
 <table>
-  <thead>
-      <tr>
-          <th>Suffix array <code>sa</code></th>
-          <th>Corresponding suffix</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>4</td>
-          <td><code>buzz</code></td>
-      </tr>
-      <tr>
-          <td>0</td>
-          <td><code>fizzbuzz</code></td>
-      </tr>
-      <tr>
-          <td>1</td>
-          <td><code>izzbuzz</code></td>
-      </tr>
-      <tr>
-          <td>5</td>
-          <td><code>uzz</code></td>
-      </tr>
-      <tr>
-          <td>7</td>
-          <td><code>z</code></td>
-      </tr>
-      <tr>
-          <td>3</td>
-          <td><code>zbuzz</code></td>
-      </tr>
-      <tr>
-          <td>6</td>
-          <td><code>zz</code></td>
-      </tr>
-      <tr>
-          <td>2</td>
-          <td><code>zzbuzz</code></td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th>Suffix array <code>sa</code></th>
+					<th>Corresponding suffix</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>4</td>
+					<td><code>buzz</code></td>
+			</tr>
+			<tr>
+					<td>0</td>
+					<td><code>fizzbuzz</code></td>
+			</tr>
+			<tr>
+					<td>1</td>
+					<td><code>izzbuzz</code></td>
+			</tr>
+			<tr>
+					<td>5</td>
+					<td><code>uzz</code></td>
+			</tr>
+			<tr>
+					<td>7</td>
+					<td><code>z</code></td>
+			</tr>
+			<tr>
+					<td>3</td>
+					<td><code>zbuzz</code></td>
+			</tr>
+			<tr>
+					<td>6</td>
+					<td><code>zz</code></td>
+			</tr>
+			<tr>
+					<td>2</td>
+					<td><code>zzbuzz</code></td>
+			</tr>
+	</tbody>
 </table>
 <h2 id="how-to-generate-a-suffix-array" class="headerLink">
     <a href="#how-to-generate-a-suffix-array" class="header-mark"></a>How to generate a suffix array</h2><h3 id="naive-way" class="headerLink">
@@ -159,23 +168,5 @@
     </author><guid>https://martinlwx.github.io/en/async-and-leaky-bucket-algorithm-batch-llm-api-call/</guid>
     <description><![CDATA[<h2 id="background" class="headerLink">
     <a href="#background" class="header-mark"></a>Background</h2><p>Recently, at work, I&rsquo;ve been working on setting up a LLM evaluation platform. There&rsquo;s one particular scenario: we need to call an LLM API provided by another department to run model evaluations on a test dataset, but this LLM API has a rate limit of a maximum of 2 calls per second (2 RPS). Thus, my task essentially boils down to: <em>How to maximize concurrency to speed up model evaluation while strictly adhering to the API rate limits</em>. In this brief post, I will share my thoughts about approaching this task.</p>]]></description>
-</item><item>
-    <title>Programming with Categories: Functor</title>
-    <link>https://martinlwx.github.io/en/why-functor/</link>
-    <pubDate>Sun, 01 Jun 2025 22:50:47 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/why-functor/</guid>
-    <description><![CDATA[<h2 id="intro" class="headerLink">
-    <a href="#intro" class="header-mark"></a>Intro</h2><p>What&rsquo;s a functor? You might use it daily without realizing it. For example, calling <code>map</code> on a collection means you&rsquo;re using a functor.</p>
-<p>This post explains functors from two perspectives: category theory and programming. By this end, you will have a deeper understanding of the concept.</p>
-<h2 id="functor-in-category-theory" class="headerLink">
-    <a href="#functor-in-category-theory" class="header-mark"></a>Functor in category theory</h2><div class="details admonition warning open">
-    <div class="details-summary admonition-title">
-        <span class="icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg></span>Warning<span class="details-icon"><svg class="icon"
-    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
-    </div>
-    <div class="details-content">
-        <div class="admonition-content"><p>This section assumes you know what a category is. If you haven&rsquo;t heard of it before, think of a category as a collection of objects and the relationships between them.</p>]]></description>
 </item></channel>
 </rss>
