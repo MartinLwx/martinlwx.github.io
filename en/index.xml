@@ -4,9 +4,23 @@
         <link>https://martinlwx.github.io/en/</link>
         <description>Welcome to my blog :)</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>martinlwx@163.com (MartinLwx)</managingEditor>
-            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 08 Jul 2026 20:00:00 &#43;0800</lastBuildDate>
+            <webMaster>martinlwx@163.com (MartinLwx)</webMaster><copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright><lastBuildDate>Thu, 03 Sep 2026 00:13:29 &#43;0800</lastBuildDate>
             <atom:link href="https://martinlwx.github.io/en/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Time-series data downsampling: LTTB &amp; MinMaxLTTB</title>
+    <link>https://martinlwx.github.io/en/time-series-data-downsampling-lttb-and-minmaxlttb/</link>
+    <pubDate>Thu, 03 Sep 2026 00:13:29 &#43;0800</pubDate><author>
+        <name>MartinLwx</name>
+    </author><guid>https://martinlwx.github.io/en/time-series-data-downsampling-lttb-and-minmaxlttb/</guid>
+    <description><![CDATA[<h2 id="background" class="headerLink">
+    <a href="#background" class="header-mark"></a>Background</h2><p>Recently, I needed to process some time-series data at work and perform downsampling. To do this, I dug into the LTTB (Largest-Triangle-Three-Buckets) and MinMaxLTTB algorithms.</p>
+<p>Technically speaking, time-series downsampling generally falls into two categories<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<ul>
+<li><em>Characteristic Preserving</em>: The goal is to keep <em>statistical properties</em> (like mean, variance, etc.) as consistent as possible before and after downsampling.</li>
+<li><em>Value Preserving</em>: This approach selects representative data points directly from the raw dataset to <em>preserve the overall visual shape</em>.</li>
+</ul>
+<p>Both LTTB and MinMaxLTTB are essentially value-preserving algorithms—their core objective is to retain the original trend and shape of the data after downsampling.</p>]]></description>
+</item><item>
     <title>Understanding Visitor Pattern: the art of double dispatch</title>
     <link>https://martinlwx.github.io/en/visitor-pattern-understanding-double-dispatch/</link>
     <pubDate>Wed, 08 Jul 2026 20:00:00 &#43;0800</pubDate><author>
@@ -160,13 +174,5 @@
     <description><![CDATA[<h2 id="introduction" class="headerLink">
     <a href="#introduction" class="header-mark"></a>Introduction</h2><p>In my recent work, I&rsquo;ve been analyzing the correlation between various features in Android APKs. These features include IP characteristics, URL attributes, permission settings, and more. Feature correlation refers to identifying relationships between different features from the data, such as certain feature combinations that frequently appear together.</p>
 <p>Relying solely on manual analysis would be impractical given the massive dataset—that&rsquo;s when I remembered an algorithm from my data mining course: the Apriori algorithm! :)</p>]]></description>
-</item><item>
-    <title>Async &#43; Leaky Bucket: How to Batch LLM API Calls Efficiently</title>
-    <link>https://martinlwx.github.io/en/async-and-leaky-bucket-algorithm-batch-llm-api-call/</link>
-    <pubDate>Wed, 18 Jun 2025 23:07:55 &#43;0800</pubDate><author>
-        <name>MartinLwx</name>
-    </author><guid>https://martinlwx.github.io/en/async-and-leaky-bucket-algorithm-batch-llm-api-call/</guid>
-    <description><![CDATA[<h2 id="background" class="headerLink">
-    <a href="#background" class="header-mark"></a>Background</h2><p>Recently, at work, I&rsquo;ve been working on setting up a LLM evaluation platform. There&rsquo;s one particular scenario: we need to call an LLM API provided by another department to run model evaluations on a test dataset, but this LLM API has a rate limit of a maximum of 2 calls per second (2 RPS). Thus, my task essentially boils down to: <em>How to maximize concurrency to speed up model evaluation while strictly adhering to the API rate limits</em>. In this brief post, I will share my thoughts about approaching this task.</p>]]></description>
 </item></channel>
 </rss>
