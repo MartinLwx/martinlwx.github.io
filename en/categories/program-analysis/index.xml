@@ -12,48 +12,51 @@
     </author><guid>https://martinlwx.github.io/en/call-graph-generation-using-class-hierarchy-analysis/</guid>
     <description><![CDATA[<h2 id="the-key-to-call-graph-construction" class="headerLink">
     <a href="#the-key-to-call-graph-construction" class="header-mark"></a>The key to call graph construction</h2><p>For an OOP programming language, the key challenge in call graph construction is handling the virtual call, as it may involve <em>multiple target methods</em>, as shown in the following table<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
-<table>
-	<thead>
-			<tr>
-					<th></th>
-					<th>Static Call</th>
-					<th>Special Call</th>
-					<th>Virtual Call</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>Instruction</td>
-					<td><code>invokestatic</code></td>
-					<td><code>invokespecial</code></td>
-					<td><code>invokeinterface, invokevirtual</code></td>
-			</tr>
-			<tr>
-					<td>Receiver Objects</td>
-					<td>❌</td>
-					<td>✅</td>
-					<td>✅</td>
-			</tr>
-			<tr>
-					<td>Target Methods</td>
-					<td>Static Method</td>
-					<td>Constructor, Private Instance Method, Superclass Instance Method</td>
-					<td>Other Instance Method</td>
-			</tr>
-			<tr>
-					<td>Count of Possible Target Methods</td>
-					<td>1</td>
-					<td>1</td>
-					<td>$\ge 1$ (polymorphism)</td>
-			</tr>
-			<tr>
-					<td>Determinancy</td>
-					<td>Compile-time</td>
-					<td>Compile-time</td>
-					<td>Run-time</td>
-			</tr>
-	</tbody>
-</table>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Static Call</th>
+            <th>Special Call</th>
+            <th>Virtual Call</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Instruction</td>
+            <td><code>invokestatic</code></td>
+            <td><code>invokespecial</code></td>
+            <td><code>invokeinterface, invokevirtual</code></td>
+        </tr>
+        <tr>
+            <td>Receiver Objects</td>
+            <td>❌</td>
+            <td>✅</td>
+            <td>✅</td>
+        </tr>
+        <tr>
+            <td>Target Methods</td>
+            <td>Static Method</td>
+            <td>Constructor, Private Instance Method, Superclass Instance Method</td>
+            <td>Other Instance Method</td>
+        </tr>
+        <tr>
+            <td>Count of Possible Target Methods</td>
+            <td>1</td>
+            <td>1</td>
+            <td>$\ge 1$ (polymorphism)</td>
+        </tr>
+        <tr>
+            <td>Determinancy</td>
+            <td>Compile-time</td>
+            <td>Compile-time</td>
+            <td>Run-time</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
 <h2 id="the-method-call-and-method-signature" class="headerLink">
     <a href="#the-method-call-and-method-signature" class="header-mark"></a>The method call and method signature</h2><p>Let&rsquo;s take Java as an example; a method call may have this form.</p>]]></description>
 </item><item>
@@ -69,7 +72,7 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>Note: The Three-Address Code is the basics of the Basic Block (BB), and the Basic Block is the foundation of the Control Flow Graph (CFG). Therefore, before reading this post, it&rsquo;s recommended that you first understand the Three-Address Code. You may refer to my <a href="https://martinlwx.github.io/en/three-address-code/" rel="">previous post</a></p>]]></description>
+        <div class="admonition-content"><p>Note: The Three-Address Code is the basics of the Basic Block (BB), and the Basic Block is the foundation of the Control Flow Graph (CFG). Therefore, before reading this post, it&rsquo;s recommended that you first understand the Three-Address Code. You may refer to my <a href="https://martinlwx.github.io/en/three-address-code/" rel="">previous post</a></p></div></div></div>]]></description>
 </item><item>
     <title>What is Three-Address Code (3AC/TAC)</title>
     <link>https://martinlwx.github.io/en/three-address-code/</link>
@@ -83,7 +86,10 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p><strong>Further reading</strong></p>]]></description>
+        <div class="admonition-content"><p><strong>Further reading</strong></p>
+<ul>
+<li><a href="https://martinlwx.github.io/en/from-basic-block-to-control-flow-graph/" target="_blank" rel="noopener noreferrer">From Basic Block to Control Flow graph</a></li>
+</ul></div></div></div>]]></description>
 </item><item>
     <title>Tree-sitter and its Query</title>
     <link>https://martinlwx.github.io/en/tree-sitter-and-its-query/</link>
@@ -97,6 +103,11 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p><strong>Updates</strong>：</p>]]></description>
+        <div class="admonition-content"><p><strong>Updates</strong>：</p>
+<ul>
+<li><em>2025-11-13</em>: Update the Python Binding&rsquo;s Query syntax to align with the latest version.</li>
+<li><em>2025-04-26</em>: Add a new chapter - Playground in Neovim.</li>
+</ul>
+<p>You can find the demo code in this <a href="https://github.com/MartinLwx/blog-demos/tree/main/tree-sitter-query" target="_blank" rel="noopener noreferrer">repo</a>.</p></div></div></div>]]></description>
 </item></channel>
 </rss>

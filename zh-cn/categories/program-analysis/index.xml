@@ -12,48 +12,51 @@
     </author><guid>https://martinlwx.github.io/zh-cn/call-graph-generation-using-class-hierarchy-analysis/</guid>
     <description><![CDATA[<h2 id="调用图生成的核心问题" class="headerLink">
     <a href="#%e8%b0%83%e7%94%a8%e5%9b%be%e7%94%9f%e6%88%90%e7%9a%84%e6%a0%b8%e5%bf%83%e9%97%ae%e9%a2%98" class="header-mark"></a>调用图生成的核心问题</h2><p>对于 OOP 语言来说，搭建调用图的核心问题是<em>有多态的场景下</em>如何确定到底是哪一个方法被调用了，下面是 Java 的一些可能的函数调用 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
-<table>
-	<thead>
-			<tr>
-					<th></th>
-					<th>Static Call</th>
-					<th>Special Call</th>
-					<th>Virtual Call</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>Instruction</td>
-					<td><code>invokestatic</code></td>
-					<td><code>invokespecial</code></td>
-					<td><code>invokeinterface, invokevirtual</code></td>
-			</tr>
-			<tr>
-					<td>Receiver Objects</td>
-					<td>❌</td>
-					<td>✅</td>
-					<td>✅</td>
-			</tr>
-			<tr>
-					<td>Target Methods</td>
-					<td>Static Method</td>
-					<td>Constructor, Private Instance Method, Superclass Instance Method</td>
-					<td>Other Instance Method</td>
-			</tr>
-			<tr>
-					<td>Count of Possible Target Methods</td>
-					<td>1</td>
-					<td>1</td>
-					<td>$\ge 1$ (polymorphism)</td>
-			</tr>
-			<tr>
-					<td>Determinancy</td>
-					<td>Compile-time</td>
-					<td>Compile-time</td>
-					<td>Run-time</td>
-			</tr>
-	</tbody>
-</table>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Static Call</th>
+            <th>Special Call</th>
+            <th>Virtual Call</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Instruction</td>
+            <td><code>invokestatic</code></td>
+            <td><code>invokespecial</code></td>
+            <td><code>invokeinterface, invokevirtual</code></td>
+        </tr>
+        <tr>
+            <td>Receiver Objects</td>
+            <td>❌</td>
+            <td>✅</td>
+            <td>✅</td>
+        </tr>
+        <tr>
+            <td>Target Methods</td>
+            <td>Static Method</td>
+            <td>Constructor, Private Instance Method, Superclass Instance Method</td>
+            <td>Other Instance Method</td>
+        </tr>
+        <tr>
+            <td>Count of Possible Target Methods</td>
+            <td>1</td>
+            <td>1</td>
+            <td>$\ge 1$ (polymorphism)</td>
+        </tr>
+        <tr>
+            <td>Determinancy</td>
+            <td>Compile-time</td>
+            <td>Compile-time</td>
+            <td>Run-time</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
 <p>其中 Virtual Call 因为包含了多态，方法调用存在<em>多个</em>可能的目标方法</p>]]></description>
 </item><item>
     <title>从 Basic Block 到 Control Flow Graph</title>
@@ -68,7 +71,7 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>注意：三地址码是 Basic Block（BB）的基础，而 Basic Block 是 Control Flow Graph（CFG） 的基础，因此在阅读本文之前，你最好了解一下三地址码，可以参考我写好的<a href="https://martinlwx.github.io/zh-cn/three-address-code/" rel="">上一篇博客</a></p>]]></description>
+        <div class="admonition-content"><p>注意：三地址码是 Basic Block（BB）的基础，而 Basic Block 是 Control Flow Graph（CFG） 的基础，因此在阅读本文之前，你最好了解一下三地址码，可以参考我写好的<a href="https://martinlwx.github.io/zh-cn/three-address-code/" rel="">上一篇博客</a></p></div></div></div>]]></description>
 </item><item>
     <title>三地址码(3AC/TAC)是什么</title>
     <link>https://martinlwx.github.io/zh-cn/three-address-code/</link>
@@ -82,6 +85,9 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p><strong>进一步阅读</strong></p>]]></description>
+        <div class="admonition-content"><p><strong>进一步阅读</strong></p>
+<ul>
+<li><a href="https://martinlwx.github.io/zh-cn/from-basic-block-to-control-flow-graph/" target="_blank" rel="noopener noreferrer">从 Basic Block 到 Control Flow graph</a></li>
+</ul></div></div></div>]]></description>
 </item></channel>
 </rss>

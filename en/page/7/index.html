@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-	<meta name="generator" content="Hugo 0.165.0">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noodp" ><title>Page 7   - MartinLwx&#39;s Blog</title><meta name="Description" content="Welcome to my blog :)"><meta property="og:url" content="https://martinlwx.github.io/en/">
@@ -40,7 +39,8 @@
                         "name": "true"
                     },"name": "MartinLwx's Blog"
             }]}
-        </script></head>
+        </script>	<meta name="generator" content="Hugo 0.169.0">
+</head>
 
 
 <body data-instant-intensity="viewport" class="tw:flex tw:min-h-screen tw:flex-col"><script>
@@ -201,7 +201,10 @@
     <a href="#q2-roman-numerals" class="header-mark"></a>Q2: Roman Numerals</h3><blockquote>
   <p>Write a regular expression that finds any string of letters that resemble a Roman numeral and aren&rsquo;t part of another word. A Roman numeral is made up of the letters I, V, X, L, C, D, M and is at least one letter long.</p>
 <blockquote>
-  <p>For the purposes of this problem, don&rsquo;t worry about whether or not a Roman numeral is valid. For example, &ldquo;VIIIII&rdquo; is not a Roman numeral, but it is fine if your regex matches it.</p></div><div class="post-footer">
+  <p>For the purposes of this problem, don&rsquo;t worry about whether or not a Roman numeral is valid. For example, &ldquo;VIIIII&rdquo; is not a Roman numeral, but it is fine if your regex matches it.</p>
+
+</blockquote>
+</blockquote></div><div class="post-footer">
         <a href="/en/hw09-of-cs61a-of-ucb/">Read more...</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/exercise-solution/">Exercise Solution</a></div></div>
 </article>
@@ -219,7 +222,23 @@
   <p><strong>Important:</strong> Your code for this part should go in <code>buffer.py</code>.</p>
 
 </blockquote><p>Your job in this part is to implement the <code>current</code> and <code>pop_first</code> methods of the <code>Buffer</code> class.</p>
-<p><code>current</code> should return the current token of the current line we&rsquo;re on in the <code>Buffer</code> instance <em>without</em> removing it. If there are no more tokens in the current line, then <code>current</code> should move onto the next valid line, and return the <strong>first</strong> token of <em>this</em> line. If there are no more tokens left to return from the entire source (we&rsquo;ve reached the end of all input lines), then <code>current</code> should return <code>None</code> (this logic is already provided for you in the <code>except StopIteration</code> block).</p></div><div class="post-footer">
+<p><code>current</code> should return the current token of the current line we&rsquo;re on in the <code>Buffer</code> instance <em>without</em> removing it. If there are no more tokens in the current line, then <code>current</code> should move onto the next valid line, and return the <strong>first</strong> token of <em>this</em> line. If there are no more tokens left to return from the entire source (we&rsquo;ve reached the end of all input lines), then <code>current</code> should return <code>None</code> (this logic is already provided for you in the <code>except StopIteration</code> block).</p>
+<p>If we call <code>current</code> multiple times in a row, we should get the same result since calls to <code>current</code> won&rsquo;t change what token we&rsquo;re returning.</p>
+<blockquote>
+  <p>You may find <code>self.index</code> helpful while implementing these functions, but you are not required to reference it in your solution.</p>
+
+</blockquote><blockquote>
+  <p><strong>Hint:</strong> What instance attribute can we use to keep track of where we are in the current line?</p>
+
+</blockquote><blockquote>
+  <p><strong>Hint:</strong> If we&rsquo;ve reached the end of the current line, then <code>self.more_on_line()</code> will return <code>False</code>. In that case, how do we &ldquo;reset&rdquo; our position to the beginning of the next line?</p>
+
+</blockquote><p><code>pop_first</code> should return the current token of the <code>Buffer</code> instance, and move onto the next potential token (to be returned on the next call to <code>pop_first</code>). If there are no more tokens left to return from the entire source (we&rsquo;ve reached the end of all input lines), then <code>pop_first</code> should return <code>None</code>.</p>
+<blockquote>
+  <p><strong>Hint:</strong> Do we need to update anything to move onto the next potential token?</p>
+
+</blockquote>
+</blockquote></div><div class="post-footer">
         <a href="/en/lab11-cs61a-of-ucb/">Read more...</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/exercise-solution/">Exercise Solution</a></div></div>
 </article>
@@ -232,7 +251,9 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>Education</a></span></div><div class="content"><h3 id="q1-my-filter" class="headerLink">
     <a href="#q1-my-filter" class="header-mark"></a>Q1: My Filter</h3><blockquote>
   <p>Write a procedure <code>my-filter</code>, which takes a predicate <code>func</code> and a list <code>lst</code>, and returns a new list containing only elements of the list that satisfy the predicate. The output should contain the elements in the same order that they appeared in the original list.</p>
-<p><strong>Note:</strong> Make sure that you are not just calling the built-in <code>filter</code> function in Scheme - we are asking you to re-implement this!</p></div><div class="post-footer">
+<p><strong>Note:</strong> Make sure that you are not just calling the built-in <code>filter</code> function in Scheme - we are asking you to re-implement this!</p>
+
+</blockquote></div><div class="post-footer">
         <a href="/en/hw08-of-cs61a-of-ucb/">Read more...</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/exercise-solution/">Exercise Solution</a></div></div>
 </article>
@@ -262,7 +283,9 @@
     <a href="#q1-vending-machine" class="header-mark"></a>Q1: Vending Machine</h3><blockquote>
   <p>In this question you&rsquo;ll create a <a href="https://en.wikipedia.org/wiki/Vending_machine" target="_blank" rel="noopener noreferrer">vending machine</a> that only outputs a single product and provides change when needed.</p>
 <p>Create a class called <code>VendingMachine</code> that represents a vending machine for some product. A <code>Vending Machine</code>object returns strings describing its interactions. Remember to match <strong>exactly</strong> the strings in the doctests &ndash; including punctuation and spacing!</p>
-<p>Fill in the <code>VendingMachine</code> class, adding attributes and methods as appropriate, such that its behavior matches the following doctests:</p></div><div class="post-footer">
+<p>Fill in the <code>VendingMachine</code> class, adding attributes and methods as appropriate, such that its behavior matches the following doctests:</p>
+
+</blockquote></div><div class="post-footer">
         <a href="/en/hw06-of-cs61a-of-ucb/">Read more...</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/exercise-solution/">Exercise Solution</a></div></div>
 </article>
@@ -395,7 +418,10 @@
 <h3 id="q1-subsequences" class="headerLink">
     <a href="#q1-subsequences" class="header-mark"></a>Q1: Subsequences</h3><blockquote>
   <p>A subsequence of a sequence <code>S</code> is a subset of elements from <code>S</code>, in the same order they appear in <code>S</code>. Consider the list <code>[1, 2, 3]</code>. Here are a few of it&rsquo;s subsequences <code>[]</code>, <code>[1, 3]</code>, <code>[2]</code>, and <code>[1, 2, 3]</code>.</p>
-<p>Write a function that takes in a list and returns all possible subsequences of that list. The subsequences should be returned as a list of lists, where each nested list is a subsequence of the original input.</p></div><div class="post-footer">
+<p>Write a function that takes in a list and returns all possible subsequences of that list. The subsequences should be returned as a list of lists, where each nested list is a subsequence of the original input.</p>
+<p>In order to accomplish this, you might first want to write a function <code>insert_into_all</code> that takes an item and a list of lists, adds the item to the beginning of each nested list, and returns the resulting list.</p>
+
+</blockquote></div><div class="post-footer">
         <a href="/en/lab09-cs61a-of-ucb/">Read more...</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/exercise-solution/">Exercise Solution</a></div></div>
 </article>
@@ -439,7 +465,16 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>Education</a></span></div><div class="content"><h3 id="q1-generate-permutations" class="headerLink">
     <a href="#q1-generate-permutations" class="header-mark"></a>Q1: Generate Permutations</h3><blockquote>
   <p>Given a sequence of unique elements, a <em>permutation</em> of the sequence is a list containing the elements of the sequence in some arbitrary order. For example, <code>[2, 1, 3]</code>, <code>[1, 3, 2]</code>, and <code>[3, 2, 1]</code> are some of the permutations of the sequence <code>[1, 2, 3]</code>.</p>
-<p>Implement <code>gen_perms</code>, a generator function that takes in a sequence <code>seq</code> and returns a generator that yields all permutations of <code>seq</code>. For this question, assume that <code>seq</code> will not be empty.</p></div><div class="post-footer">
+<p>Implement <code>gen_perms</code>, a generator function that takes in a sequence <code>seq</code> and returns a generator that yields all permutations of <code>seq</code>. For this question, assume that <code>seq</code> will not be empty.</p>
+<p>Permutations may be yielded in any order. Note that the doctests test whether you are yielding all possible permutations, but not in any particular order. The built-in <code>sorted</code> function takes in an iterable object and returns a list containing the elements of the iterable in non-decreasing order.</p>
+<blockquote>
+  <p><em>Hint:</em> If you had the permutations of all the elements in <code>seq</code> not including the first element, how could you use that to generate the permutations of the full <code>seq</code>?</p>
+
+</blockquote><blockquote>
+  <p><em>Hint:</em> Remember, it&rsquo;s possible to loop over generator objects because generators are iterators!</p>
+
+</blockquote>
+</blockquote></div><div class="post-footer">
         <a href="/en/hw05-of-cs61a-of-ucb/">Read more...</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/exercise-solution/">Exercise Solution</a></div></div>
 </article>
@@ -453,7 +488,13 @@
     <a href="#mutability" class="header-mark"></a>Mutability</h2><hr>
 <blockquote>
   <p>Write a function which takes in a list <code>lst</code>, an argument <code>entry</code>, and another argument <code>elem</code>. This function will check through each item in <code>lst</code> to see if it is equal to <code>entry</code>. Upon finding an item equal to <code>entry</code>, the function should modify the list by placing <code>elem</code> into <code>lst</code> right after the item. At the end of the function, the modified list should be returned.</p>
-<p>See the doctests for examples on how this function is utilized.</p></div><div class="post-footer">
+<p>See the doctests for examples on how this function is utilized.</p>
+<p><strong>Important:</strong> Use list mutation to modify the original list. No new lists should be created or returned.</p>
+<blockquote>
+  <p><strong>Note:</strong> If the values passed into <code>entry</code> and <code>elem</code> are equivalent, make sure you&rsquo;re not creating an infinitely long list while iterating through it. If you find that your code is taking more than a few seconds to run, the function may be in a loop of inserting new values.</p>
+
+</blockquote>
+</blockquote></div><div class="post-footer">
         <a href="/en/lab06-cs61a-of-ucb/">Read more...</a><div class="post-tags"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg>&nbsp;<a href="/en/tags/exercise-solution/">Exercise Solution</a></div></div>
 </article>
@@ -485,7 +526,7 @@
                     </span>
                 </li></ul></div></main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
-                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.165.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 1.0.2"><svg class="icon"
+                    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.169.0">Hugo</a>&nbsp;|&nbsp;Theme - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreferrer" title="DoIt 1.0.2"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"/></svg> DoIt</a>
                 </div><div class="footer-line"><svg class="icon"
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 448c-110.532 0-200-89.451-200-200 0-110.531 89.451-200 200-200 110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200zm107.351-101.064c-9.614 9.712-45.53 41.396-104.065 41.396-82.43 0-140.484-61.425-140.484-141.567 0-79.152 60.275-139.401 139.762-139.401 55.531 0 88.738 26.62 97.593 34.779a11.965 11.965 0 0 1 1.936 15.322l-18.155 28.113c-3.841 5.95-11.966 7.282-17.499 2.921-8.595-6.776-31.814-22.538-61.708-22.538-48.303 0-77.916 35.33-77.916 80.082 0 41.589 26.888 83.692 78.277 83.692 32.657 0 56.843-19.039 65.726-27.225 5.27-4.857 13.596-4.039 17.82 1.738l19.865 27.17a11.947 11.947 0 0 1-1.152 15.518z"/></svg>2019 - 2026<span class="author">&nbsp;<a href="https://github.com/MartinLwx" target="_blank" rel="noopener noreferrer">MartinLwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>

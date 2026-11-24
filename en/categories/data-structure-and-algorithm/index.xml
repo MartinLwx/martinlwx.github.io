@@ -17,7 +17,7 @@
     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/></svg></span>
     </div>
     <div class="details-content">
-        <div class="admonition-content"><p>You can find the code demo <a href="https://github.com/MartinLwx/blog-demos/blob/main/data_analysis/dtw/dtw.ipynb" target="_blank" rel="noopener noreferrer">here</a></p>]]></description>
+        <div class="admonition-content"><p>You can find the code demo <a href="https://github.com/MartinLwx/blog-demos/blob/main/data_analysis/dtw/dtw.ipynb" target="_blank" rel="noopener noreferrer">here</a></p></div></div></div>]]></description>
 </item><item>
     <title>Suffix array: find the needle in the hay</title>
     <link>https://martinlwx.github.io/en/suffix-array-tutorial/</link>
@@ -27,48 +27,51 @@
     <description><![CDATA[<h2 id="suffix-array" class="headerLink">
     <a href="#suffix-array" class="header-mark"></a>Suffix array</h2><p>By definition, a suffix array (denoted as <code>sa</code>) contains the starting indices of all suffixes. It&rsquo;s simply an <code>int</code> array where <code>sa[i]</code> represents the starting index of the corresponding suffix.</p>
 <p>Taking <code>fizzbuzz</code> as an example, its suffix array is <code>4 0 1 5 7 3 6 2</code>. The details are shown in the following table.</p>
-<table>
-	<thead>
-			<tr>
-					<th>Suffix array <code>sa</code></th>
-					<th>Corresponding suffix</th>
-			</tr>
-	</thead>
-	<tbody>
-			<tr>
-					<td>4</td>
-					<td><code>buzz</code></td>
-			</tr>
-			<tr>
-					<td>0</td>
-					<td><code>fizzbuzz</code></td>
-			</tr>
-			<tr>
-					<td>1</td>
-					<td><code>izzbuzz</code></td>
-			</tr>
-			<tr>
-					<td>5</td>
-					<td><code>uzz</code></td>
-			</tr>
-			<tr>
-					<td>7</td>
-					<td><code>z</code></td>
-			</tr>
-			<tr>
-					<td>3</td>
-					<td><code>zbuzz</code></td>
-			</tr>
-			<tr>
-					<td>6</td>
-					<td><code>zz</code></td>
-			</tr>
-			<tr>
-					<td>2</td>
-					<td><code>zzbuzz</code></td>
-			</tr>
-	</tbody>
-</table>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+        <tr>
+            <th>Suffix array <code>sa</code></th>
+            <th>Corresponding suffix</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>4</td>
+            <td><code>buzz</code></td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td><code>fizzbuzz</code></td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td><code>izzbuzz</code></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><code>uzz</code></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><code>z</code></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><code>zbuzz</code></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><code>zz</code></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><code>zzbuzz</code></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
 <h2 id="how-to-generate-a-suffix-array" class="headerLink">
     <a href="#how-to-generate-a-suffix-array" class="header-mark"></a>How to generate a suffix array</h2><h3 id="naive-way" class="headerLink">
     <a href="#naive-way" class="header-mark"></a>Naive way</h3><p>Let $N$ represent the length of the string. The naive algorithm is straightforward: generate all possible suffixes and then sort them using an efficient sorting algorithm. This requires one sort iteration, which may involve $O(N log\ N)$ comparisons. In the worst case, each string comparison takes $O(N)$ time. Therefore, the overall time complexity would be</p>]]></description>
